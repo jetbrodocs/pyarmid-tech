@@ -1,35 +1,41 @@
 ---
-title: "Pyramid Technoplast Site Visit — Voice Memo Transcript"
+title: "Pyramid Technoplast Site Visit — Voice Memo Transcripts"
 status: draft
 created: 2026-08-07
 updated: 2026-08-07
 tags: [transcript, site-visit, raw, pyramid-technoplast]
 ---
 
-# Pyramid Technoplast Site Visit — Voice Memo Transcript
+# Pyramid Technoplast Site Visit — Voice Memo Transcripts
 
-Verbatim machine transcript of a voice memo recorded by Rohan P. after the site visit.
+Verbatim machine transcripts of voice memos recorded by Rohan P. around the site visit.
+Two recordings, listed oldest first.
 
-| Field | Value |
-|---|---|
-| Source file | `pyramid techno.m4a` |
-| Recorded | 2026-08-06 |
-| Duration | 6 min 38 s |
-| Speaker | Rohan P. |
-| Method | Apple on-device speech recognition, 30-second segments with 2-second overlap |
+| # | Source file | Recorded | Duration | Covers |
+|---|---|---|---|---|
+| 1 | `pyramid techno.m4a` | 2026-08-06 | 6 min 38 s | Visit debrief — company, procurement gap, three pain points, Phlo pitch |
+| 2 | `New Recording 28.m4a` | 2026-08-07 | 1 min 47 s | Team structure, split procurement model, three core problems to build around |
+
+Method for both: Apple on-device speech recognition, 30-second segments with 2-second overlap.
+
+**Source audio lives alongside this file** in `00-inbox/`. These are the only copies — they were
+moved here from `~/Downloads` on 2026-08-07 so that everything for this project sits in one place.
 
 ## Read This First
 
-This text is **unedited machine output**. It has not been corrected. Known defects:
+This text is **unedited machine output**. It has not been corrected. Known defects across both
+recordings:
 
-- **The product is spelled "Phlo".** The transcriber writes it as "flow" throughout. Every
-  occurrence below is wrong.
+- **The product is spelled "Phlo".** The transcriber writes it as "flow" throughout.
+- **"nine" is repeatedly mangled to "online".** In recording 2, "online plants" and "online
+  locations" both mean "all nine".
 - **The incumbent ERP name is unrecoverable.** It appears as "Ugi RP" and "Oogi RP".
   Most plausibly Udyog ERP. `[UNKNOWN: needs confirmation from Rohan's own notes]`
-- **The 03:16 segment is corrupted.** "An misogyny happens inside with the VP" is not
+- **Recording 1, segment 03:16 is corrupted.** "An misogyny happens inside with the VP" is not
   recoverable from the audio. `[UNKNOWN: actual wording]`
 - Place names are mangled: "Baruch" is Bharuch, "Silva" is Silvassa.
-- "tram" is drum. "13,018" is 2018.
+- "tram" is drum. "13,018" is 2018. "LR raging" is LR ageing. "strapped in inventory" is
+  trapped in inventory. "role materials" is raw materials.
 
 The overlap between segments means the last few words of each block repeat at the start of
 the next. This is expected.
@@ -37,7 +43,11 @@ the next. This is expected.
 For the corrected and structured version, see
 [obs-pyramid-technoplast-site-visit.md](../10-observations/obs-pyramid-technoplast-site-visit.md).
 
-## Transcript
+---
+
+## Recording 1 — Visit Debrief
+
+`pyramid techno.m4a` · recorded 2026-08-06 · 6 min 38 s
 
 **[00:00]** OK, so I visited Pyramid techno Plast today met with Jay, the promoter the procurement team Sales team, as well as had a conversation with the IT person at the plant whose name is Gautam
 
@@ -69,7 +79,22 @@ For the corrected and structured version, see
 
 **[06:32]** That is a big problem. That is what we're gonna solve with flow.
 
+---
+
+## Recording 2 — Team Structure and Core Problems
+
+`New Recording 28.m4a` · recorded 2026-08-07 · 1 min 47 s
+
+**[00:00]** Nine plants all nine plants have plant teams online plants have stole teams handle everything separately and individually there There's a fleet management team across online locations a team of four that handles the entire fleet of hundred trucks The core Requirement of HDPE and steel
+
+**[00:28]** E and steel is led by the promoters themselves since it's a sensitive procurement process they handle it by themselves look at market conditions to look at their future requirement based on purchase orders from their clients or customers they look at the current stock and then they make a decision on procurement Similarly, the others role materials are being handled by the procurement
+
+**[00:56]** Serving handled by the procurement teams directly, so whatever indents are raised by The plant teams they converted into POS By the purchase team and handled from their LR raging is a big problem that they're facing Fleet management is another very dominant problem that they're facing inventory aging and I think the promoter wants Said it very
+
+**[01:24]** Date very vocally that a lot of cash is being strapped in inventory Which means that capital is stuck for a long long period of time and that needs to be solved for as as well as that's those other three core problems around which we can base the system
+
 ## Open Questions
 
 1. What is the actual name of the incumbent ERP? The audio yields "Ugi RP" / "Oogi RP".
-2. What was said at 03:16, in the passage that transcribes as "An misogyny happens inside with the VP"?
+2. What was said at recording 1, 03:16, in the passage that transcribes as "An misogyny happens inside with the VP"?
+3. Recording 2, 00:00 — "stole teams" is most likely **store teams**, but could be "sales teams". The distinction matters for the process map. `[UNKNOWN: confirm]`
