@@ -1,0 +1,10 @@
+# Source audio — kept on disk in 00-inbox/, deliberately out of git history.
+# These are the only copies of the recordings; do not delete them from the working tree.
+*.m4a
+*.mp3
+*.wav
+*.mov
+*.mp4
+
+# macOS
+.DS_Store
