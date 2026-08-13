@@ -2,14 +2,37 @@
 
 ## Project Description
 
-<!-- Replace this with a 2-3 sentence description of the project -->
-[TODO: Describe the project — what site, facility, or system is being documented? What is the goal of the documentation effort?]
+Pyramid Technoplast Ltd is a listed Indian manufacturer (BSE/NSE) of HM-HDPE plastic containers, composite drums, CR (cold-rolled steel) drums, IBC containers, and MS barrels. Nine plants across Gujarat and Maharashtra, ~100 owned trucks, drivers on payroll. This project documents Pyramid's processes and designs **Phlo** — an ERP replacement that covers the gap between PO creation and sales order, with fleet management, LR ageing, and inventory ageing as three core problem pillars. Phlo pushes entries to Tally for accounting.
 
 ## Domain Glossary
 
 | Term | Definition |
 |---|---|
-| <!-- Add terms as you encounter them --> | |
+| Phlo | Jetbro's ERP product being built for Pyramid. Replaces the incumbent system. Pushes entries to Tally |
+| Pyramid | Pyramid Technoplast Ltd — the client. Listed manufacturer of HDPE/composite/CR drums, IBC containers, MS barrels |
+| NMD | Narrow Mouth Drum (industry term: Tight Head Drum) |
+| WMD | Wide Mouth Drum (industry term: Open Head Drum) |
+| FOT | Full Open Top Drum |
+| CR drums | Cold-Rolled steel drums (also called CRCA — Cold Rolled Close Annealed) |
+| IBC | Intermediate Bulk Container (1000L range) |
+| MS Barrel | Mild Steel barrel |
+| M/Z Can | Mouth-Zip Can |
+| LR | Lorry Receipt — proof of goods handed to transporter. LR ageing = LRs pending beyond acceptable days |
+| GRN | Goods Receipt Note — confirmation of goods received at destination |
+| Indent | Internal purchase request raised by plant team |
+| PO | Purchase Order |
+| Group SKU | Parent/listing-level product keyed by capacity/size (e.g., NMD-210 = Narrow Mouth Drum 210 LTR) |
+| SKU | Sellable variant — differentiated by weight (wall thickness), colour, or customer branding |
+| HSN | Harmonized System of Nomenclature — Indian GST tax classification code |
+| GSTIN | GST Identification Number (15-character) |
+| RCM | Reverse Charge Mechanism — buyer pays GST instead of seller |
+| TCS | Tax Collected at Source |
+| RODTEP | Remission of Duties and Taxes on Exported Products |
+| e-Way Bill | Electronic waybill required for goods movement above Rs 50,000 |
+| IRN | Invoice Reference Number — unique ID from e-Invoice system |
+| Incumbent ERP | Current system — likely "Udyog ERP" (name unconfirmed). Implemented at GST rollout ~2018. Covers indent-to-PO and sales order onward; gap in between |
+| Path A (procurement) | Core raw materials (HDPE resin, steel) — procurement run by promoters directly |
+| Path B (procurement) | All other raw materials — procurement run by purchase team via indent → PO flow |
 
 ## Skills
 
@@ -49,7 +72,11 @@ This project includes skills installed in `.claude/skills/`. Claude Code auto-di
 
 | Name | Role | Notes |
 |---|---|---|
-| <!-- Add team members --> | | |
+| Jay | Promoter, Pyramid | Decision maker. Phlo pitched to him. Vocal that cash is trapped in inventory |
+| Bijaykumar Agarwal | Chairman & MD, Pyramid | Per public filings |
+| Gautam | IT, Pyramid | Based at plant |
+| Rohan P. | Jetbro | Conducted site visit 2026-08-06. Voice memo source for initial observations |
+| Chaitya | Jetbro | Project lead |
 
 ## Branding
 
@@ -73,8 +100,7 @@ Documents carry `created:` and `updated:` dates in their frontmatter. These matt
 
 ## Project-Specific Rules
 
-<!-- Add any rules that apply only to this project -->
-<!-- Examples: -->
-<!-- - All observations must be reviewed within 48 hours of capture -->
-<!-- - Use metric units only -->
-<!-- - Reference SAP transaction codes where applicable -->
+- The product is **Phlo** (not "flow"). Always spell it Phlo.
+- The incumbent ERP name is unconfirmed — do not put it in client-facing documents until verified.
+- Nine plants operate separately and individually — any process assumption must account for per-plant variation.
+- Promoters personally handle HDPE and steel procurement (Path A). Do not assume the standard indent-to-PO flow applies to core materials.
