@@ -10,6 +10,7 @@ tags: [screen-spec, ux, lr-tracking]
 
 **Module / PRD:** PRD-01 Phlo Pyramid — LR Tracking
 **Purpose:** Issue new Lorry Receipt for dispatch; link to PO, assign truck and driver.
+**Primary User:** Plant team (confirmed 2026-08-17)
 
 ## Entry Points
 

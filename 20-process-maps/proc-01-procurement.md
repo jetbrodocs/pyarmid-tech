@@ -21,10 +21,10 @@ sources:
 
 **Two distinct paths exist:**
 
-| Path | Materials | Run By | Notes |
-|---|---|---|---|
-| **A** | Core raw materials (HDPE resin, steel) | Promoters directly | Treated as sensitive. Drives majority of material value |
-| **B** | All other raw materials | Purchase team via indent | Standard requisition flow |
+| Path  | Materials                              | Run By                   | Notes                                                   |
+| ----- | -------------------------------------- | ------------------------ | ------------------------------------------------------- |
+| **A** | Core raw materials (HDPE resin, steel) | Promoters directly       | Treated as sensitive. Drives majority of material value |
+| **B** | All other raw materials                | Purchase team via indent | Standard requisition flow                               |
 
 ```
 Path A: Promoters → [Decision] → PO → Vendor → [THE GAP] → Receipt → Sales Order
@@ -36,36 +36,36 @@ Path B: Plant → Indent → Approval → Purchase Team → PO → Vendor → [T
 
 ## Roles Involved
 
-| Role | Responsibility |
-|---|---|
-| Promoters | Path A: personally assess market, forward requirement, stock; make procurement decision |
-| Plant teams (9) | Path B: raise indents; receive goods at plant level |
-| Purchase team | Path B: evaluate vendors/quotes/technical docs; convert indent to PO |
-| VP | Routes manual steps in the gap (approver/coordinator/record-keeper — exact role unclear) |
-| Vendors | Receive PO, raise invoice, dispatch goods |
-| Store teams (9) | `[UNVERIFIED: may handle goods receipt — "store" vs "sales" ambiguous in source]` |
+| Role            | Responsibility                                                                           |
+| --------------- | ---------------------------------------------------------------------------------------- |
+| Promoters       | Path A: personally assess market, forward requirement, stock; make procurement decision  |
+| Plant teams (9) | Path B: raise indents; receive goods at plant level                                      |
+| Purchase team   | Path B: evaluate vendors/quotes/technical docs; convert indent to PO                     |
+| VP              | Routes manual steps in the gap (approver/coordinator/record-keeper — exact role unclear) |
+| Vendors         | Receive PO, raise invoice, dispatch goods                                                |
+| ~~Store teams~~ | ~~Role unclear~~ — **Resolved: Plant teams handle goods receipt (confirmed 2026-08-17)** |
 
 ## Inputs
 
-| Input | Source | Notes |
-|---|---|---|
-| Market conditions | External | Path A input — promoters assess |
-| Forward requirement | Customer purchase orders | Path A input — drives HDPE/steel demand |
-| Current stock position | Internal (per plant) | Path A input |
-| Indent / purchase request | Plant team | Path B trigger — raised in ERP |
-| Vendor quotes | Vendors | Path B — evaluated by purchase team |
-| Technical documentation | Vendors | Path B — evaluated alongside quotes |
+| Input                     | Source                   | Notes                                   |
+| ------------------------- | ------------------------ | --------------------------------------- |
+| Market conditions         | External                 | Path A input — promoters assess         |
+| Forward requirement       | Customer purchase orders | Path A input — drives HDPE/steel demand |
+| Current stock position    | Internal (per plant)     | Path A input                            |
+| Indent / purchase request | Plant team               | Path B trigger — raised in ERP          |
+| Vendor quotes             | Vendors                  | Path B — evaluated by purchase team     |
+| Technical documentation   | Vendors                  | Path B — evaluated alongside quotes     |
 
 ## Outputs
 
-| Output | Destination | Notes |
-|---|---|---|
-| Purchase order | Vendor | Last step captured in ERP before gap |
-| Vendor invoice/bill | Pyramid | Raised after PO — off-system |
-| LR (Lorry Receipt) | Off-system (paper) | Proof of goods handed to transporter |
-| GRN | Off-system | Goods receipt confirmation — pending items observed |
-| Goods in stock | Plant | Available for production |
-| Sales order | ERP | Trail resumes here |
+| Output              | Destination        | Notes                                               |
+| ------------------- | ------------------ | --------------------------------------------------- |
+| Purchase order      | Vendor             | Last step captured in ERP before gap                |
+| Vendor invoice/bill | Pyramid            | Raised after PO — off-system                        |
+| LR (Lorry Receipt)  | Off-system (paper) | Proof of goods handed to transporter                |
+| GRN                 | Off-system         | Goods receipt confirmation — pending items observed |
+| Goods in stock      | Plant              | Available for production                            |
+| Sales order         | ERP                | Trail resumes here                                  |
 
 ---
 
@@ -191,26 +191,26 @@ C4. `[UNKNOWN: formal escalation path]`
 
 ## Systems and Tools
 
-| Step | System/Tool | Notes |
-|---|---|---|
-| 1–5 (Path B) | Incumbent ERP | Indent to PO — captured |
-| 1–3 (Path A) | `[UNKNOWN]` | May or may not use ERP for PO |
-| 6–11 | Paper, Excel, email, WhatsApp, phone | Manual — no central record |
-| 6–11 | VP routes | Single person as bottleneck / audit trail |
-| 12 | Incumbent ERP | Sales order — trail resumes |
-| Accounting | Tally | Downstream — receives pushed entries |
+| Step         | System/Tool                          | Notes                                     |
+| ------------ | ------------------------------------ | ----------------------------------------- |
+| 1–5 (Path B) | Incumbent ERP                        | Indent to PO — captured                   |
+| 1–3 (Path A) | `[UNKNOWN]`                          | May or may not use ERP for PO             |
+| 6–11         | Paper, Excel, email, WhatsApp, phone | Manual — no central record                |
+| 6–11         | VP routes                            | Single person as bottleneck / audit trail |
+| 12           | Incumbent ERP                        | Sales order — trail resumes               |
+| Accounting   | Tally                                | Downstream — receives pushed entries      |
 
 ## Known Issues
 
-| Issue | Impact | Current Workaround |
-|---|---|---|
+| Issue                                | Impact                                                                   | Current Workaround                                               |
+| ------------------------------------ | ------------------------------------------------------------------------ | ---------------------------------------------------------------- |
 | No ERP coverage for PO → Sales Order | Zero visibility on goods in transit, vendor bills, LR status, GRN status | Manual tracking through VP; staff chase via phone/WhatsApp/email |
-| LR ageing | Items pending 5+ and 8+ days; delayed goods receipt | Discovered reactively; no alerting |
-| GRN pendency | Receipts not confirmed; inventory position unclear | Manual follow-up |
-| Cash trapped in inventory | Capital stuck for long periods | Promoter is vocal about this — no current measurement |
-| Nine plants operate separately | Process varies; no central visibility | Each plant manages own indents and receipts |
-| Communication fragmented | No single source of truth | Paper, Excel, email, WhatsApp, phone — none synced |
-| System is reactive | Problems discovered only when someone goes looking | No proactive alerts or dashboards |
+| LR ageing                            | Items pending 5+ and 8+ days; delayed goods receipt                      | Discovered reactively; no alerting                               |
+| GRN pendency                         | Receipts not confirmed; inventory position unclear                       | Manual follow-up                                                 |
+| Cash trapped in inventory            | Capital stuck for long periods                                           | Promoter is vocal about this — no current measurement            |
+| Nine plants operate separately       | Process varies; no central visibility                                    | Each plant manages own indents and receipts                      |
+| Communication fragmented             | No single source of truth                                                | Paper, Excel, email, WhatsApp, phone — none synced               |
+| System is reactive                   | Problems discovered only when someone goes looking                       | No proactive alerts or dashboards                                |
 
 ## Open Questions
 

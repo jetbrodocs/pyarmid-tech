@@ -20,9 +20,9 @@ sources:
 
 **Fleet composition:**
 
-| Type | Size | Management | Notes |
-|---|---|---|---|
-| Own fleet | ~100 trucks | Fleet team (4 people) | Drivers on Pyramid payroll |
+| Type             | Size        | Management             | Notes                                                     |
+| ---------------- | ----------- | ---------------------- | --------------------------------------------------------- |
+| Own fleet        | ~100 trucks | Fleet team (4 people)  | Drivers on Pyramid payroll                                |
 | Contractor fleet | `[UNKNOWN]` | Fleet team coordinates | Used when own fleet occupied or third-party more feasible |
 
 ```
@@ -37,33 +37,32 @@ Dispatch Request → [Own fleet available?] → Yes → Assign truck → Load �
 
 ## Roles Involved
 
-| Role | Responsibility |
-|---|---|
-| Fleet team (4) | Assign trucks, coordinate across 9 plants, track LRs — **4 people for 100+ trucks and 9 sites** |
-| Drivers (~100) | On Pyramid payroll; operate owned trucks |
-| Contractor transporters | External; used for overflow or specific routes |
-| Plant teams (9) | Request dispatch; receive inbound goods |
-| Store teams (9) | `[UNVERIFIED: may handle loading/receiving — role unclear]` |
+| Role                    | Responsibility                                                                                  |
+| ----------------------- | ----------------------------------------------------------------------------------------------- |
+| Fleet team (4)          | Assign trucks, coordinate across 9 plants, track LRs — **4 people for 100+ trucks and 9 sites** |
+| Drivers (~100)          | On Pyramid payroll; operate owned trucks                                                        |
+| Contractor transporters | External; used for overflow or specific routes                                                  |
+| Plant teams (9)         | Request dispatch; receive inbound goods; raise GRN (confirmed 2026-08-17)                       |
 
 **Structural note:** Fleet team of 4 is stretched thin across 9 plants and ~100 trucks. This is the organisational root of LR ageing — insufficient capacity to track all movements.
 
 ## Inputs
 
-| Input | Source | Notes |
-|---|---|---|
-| Dispatch request | Plant/sales/procurement | Goods ready to move |
-| Truck availability | Fleet team knowledge | `[UNKNOWN: is there a system, or head knowledge?]` |
-| Route/destination | Dispatch request | Plant address, customer address |
-| Goods details | Invoice/challan/PO | What's being shipped |
+| Input              | Source                  | Notes                                              |
+| ------------------ | ----------------------- | -------------------------------------------------- |
+| Dispatch request   | Plant/sales/procurement | Goods ready to move                                |
+| Truck availability | Fleet team knowledge    | `[UNKNOWN: is there a system, or head knowledge?]` |
+| Route/destination  | Dispatch request        | Plant address, customer address                    |
+| Goods details      | Invoice/challan/PO      | What's being shipped                               |
 
 ## Outputs
 
-| Output | Destination | Notes |
-|---|---|---|
-| LR (Lorry Receipt) | Sender, transporter, receiver | Paper-based; proof of handoff to transporter |
-| Goods delivered | Destination (plant, customer) | Physical delivery |
-| GRN | Sender (inbound) | Confirms receipt at destination — off-system |
-| POD (Proof of Delivery) | Sender (outbound) | `[UNVERIFIED: may use signed LR copy as POD]` |
+| Output                  | Destination                   | Notes                                         |
+| ----------------------- | ----------------------------- | --------------------------------------------- |
+| LR (Lorry Receipt)      | Sender, transporter, receiver | Paper-based; proof of handoff to transporter  |
+| Goods delivered         | Destination (plant, customer) | Physical delivery                             |
+| GRN                     | Sender (inbound)              | Confirms receipt at destination — off-system  |
+| POD (Proof of Delivery) | Sender (outbound)             | `[UNVERIFIED: may use signed LR copy as POD]` |
 
 ---
 
@@ -198,20 +197,22 @@ D3. `[UNKNOWN: how quickly, impact on schedule]`
 
 **LR ageing is one of three problems Pyramid named as the basis for the system.**
 
-| Observation | Source |
-|---|---|
-| LRs pending 5+ days | Site visit |
-| LRs pending 8+ days | Site visit |
-| No system tracking | Site visit — LRs are paper, off-system |
-| Team of 4 for 100 trucks and 9 plants | Site visit — capacity constraint |
+| Observation                           | Source                                 |
+| ------------------------------------- | -------------------------------------- |
+| LRs pending 5+ days                   | Site visit                             |
+| LRs pending 8+ days                   | Site visit                             |
+| No system tracking                    | Site visit — LRs are paper, off-system |
+| Team of 4 for 100 trucks and 9 plants | Site visit — capacity constraint       |
 
 **Why it happens:**
+
 - No central system — LRs exist on paper at dispatch point
 - Fleet team cannot see all open LRs across 9 plants
 - Discovery is reactive — problems found only when someone chases
 - Communication fragmented across phone, WhatsApp, email
 
 **Impact:**
+
 - Delayed GRN confirmation
 - Inventory position unclear
 - Cash trapped (goods shipped but not confirmed received)
@@ -227,25 +228,25 @@ D3. `[UNKNOWN: how quickly, impact on schedule]`
 
 ## Systems and Tools
 
-| Step | System/Tool | Notes |
-|---|---|---|
+| Step             | System/Tool                 | Notes                                 |
+| ---------------- | --------------------------- | ------------------------------------- |
 | Truck assignment | Head knowledge / fleet team | No system — 4 people know who's where |
-| LR issue | Paper | Physical document |
-| Transit tracking | None | Visibility gap |
-| Communication | Phone, WhatsApp, email | Not synced |
-| LR closure | `[UNKNOWN]` | May be Excel or paper filing |
-| GRN | Off-system | Paper or Excel |
+| LR issue         | Paper                       | Physical document                     |
+| Transit tracking | None                        | Visibility gap                        |
+| Communication    | Phone, WhatsApp, email      | Not synced                            |
+| LR closure       | `[UNKNOWN]`                 | May be Excel or paper filing          |
+| GRN              | Off-system                  | Paper or Excel                        |
 
 ## Known Issues
 
-| Issue | Impact | Current Workaround |
-|---|---|---|
-| LR ageing 5-8+ days | Delayed confirmation, unclear inventory, trapped cash | Reactive chasing via phone/WhatsApp |
-| No transit visibility | Can't see where trucks are or when they'll arrive | Call driver |
-| Fleet team capacity | 4 people for 9 plants + 100 trucks | Stretched thin; things slip |
-| Paper LRs | No central record; easy to lose track | `[UNKNOWN]` |
-| Fragmented communication | Phone, WhatsApp, email not synced | Staff switch channels ad-hoc |
-| No GRN system | Receipts not confirmed promptly | Manual follow-up |
+| Issue                    | Impact                                                | Current Workaround                  |
+| ------------------------ | ----------------------------------------------------- | ----------------------------------- |
+| LR ageing 5-8+ days      | Delayed confirmation, unclear inventory, trapped cash | Reactive chasing via phone/WhatsApp |
+| No transit visibility    | Can't see where trucks are or when they'll arrive     | Call driver                         |
+| Fleet team capacity      | 4 people for 9 plants + 100 trucks                    | Stretched thin; things slip         |
+| Paper LRs                | No central record; easy to lose track                 | `[UNKNOWN]`                         |
+| Fragmented communication | Phone, WhatsApp, email not synced                     | Staff switch channels ad-hoc        |
+| No GRN system            | Receipts not confirmed promptly                       | Manual follow-up                    |
 
 ## Open Questions
 

@@ -4,6 +4,9 @@ status: draft
 created: 2026-08-17
 updated: 2026-08-17
 tags: [analysis, gap-analysis, erp, phlo]
+resolved:
+  - "Q2: Phlo is full ERP replacement, not gap-filler (confirmed 2026-08-17)"
+  - "Q7: Incumbent ERP is UdyogERP (confirmed 2026-08-17)"
 sources:
   - 10-observations/obs-pyramid-technoplast-site-visit.md
   - 10-observations/obs-02-current-erp-system.md
@@ -16,7 +19,7 @@ sources:
 
 ## Summary
 
-The incumbent ERP covers two disconnected stretches: **indent through PO** and **sales order onward**. Everything between — vendor invoices, goods movement, LR tracking, GRN, receipt reconciliation — runs manually on paper, Excel, phone, WhatsApp, and email. This gap is the direct cause of Pyramid's three named problems: **LR ageing, fleet management, and inventory ageing**. Phlo's scope is to fill this gap and provide visibility where none exists.
+**UdyogERP** (the incumbent) covers two disconnected stretches: **indent through PO** and **sales order onward**. Everything between — vendor invoices, goods movement, LR tracking, GRN, receipt reconciliation — runs manually on paper, Excel, phone, WhatsApp, and email. This gap is the direct cause of Pyramid's three named problems: **LR ageing, fleet management, and inventory ageing**. Phlo's scope is to fill this gap and provide visibility where none exists.
 
 ---
 
@@ -95,7 +98,7 @@ Pyramid named three problems as the basis for the system. Each traces directly t
 
 ### 3. Inventory Ageing
 
-**Symptom:** Promoter "said it very vocally" that cash is trapped in inventory for long periods.
+**Symptom:** Promoter "said it very vocally" that cash is trapped in inventory for long periods. **Confirmed: ₹60-66 lakhs stuck** (2026-08-17).
 
 **Root causes:**
 
@@ -211,29 +214,33 @@ Phlo must integrate with:
 
 ## Recommendations
 
-1. **Scope Phlo to the gap.** Don't rebuild indent-to-PO or sales-order-onward. Fill the hole.
+> **Updated 2026-08-17:** Phlo confirmed as **full UdyogERP replacement**, not gap-filler. Recommendations updated accordingly.
 
-2. **Start with LR tracking.** Highest visibility problem, most vocal. Quick win. Entry point for fleet module.
+1. **Phase 1: Fill the gap first.** Start with the procurement gap (LR, GRN, fleet). This is where pain is highest and UdyogERP has zero coverage.
 
-3. **Clarify Path A scope early.** If promoter-run HDPE/steel bypasses the ERP entirely, Phlo may never touch those transactions. Confirm before design.
+2. **Phase 2+: Migrate remaining UdyogERP functions.** Indent-to-PO, sales order, invoicing, GST compliance — migrate in phases as Phlo matures.
 
-4. **Design for nine plants from day one.** Not a single-plant pilot that scales later. Multi-site visibility is the point.
+3. **Start with LR tracking.** Highest visibility problem, most vocal. Quick win. Entry point for fleet module.
 
-5. **Push, don't pull.** Phlo should generate alerts and dashboards proactively. The current system is reactive — Phlo's value is making problems visible before someone chases.
+4. **Clarify Path A scope early.** If promoter-run HDPE/steel bypasses UdyogERP entirely, Phlo may need a parallel capture flow to become full replacement.
 
-6. **Integrate with current ERP for PO data.** Don't re-enter POs. Pull them in as source of truth.
+5. **Design for nine plants from day one.** Not a single-plant pilot that scales later. Multi-site visibility is the point.
 
-7. **Keep Tally as accounting system.** Per the pitch, Phlo pushes entries to Tally. Don't rebuild accounting.
+6. **Push, don't pull.** Phlo should generate alerts and dashboards proactively. UdyogERP is reactive — Phlo's value is making problems visible before someone chases.
+
+7. **Import UdyogERP data initially, then sunset.** Phase 1 pulls PO data from UdyogERP. Later phases build native PO/indent in Phlo.
+
+8. **Keep Tally as accounting system.** Per the pitch, Phlo pushes entries to Tally. Don't rebuild accounting.
 
 ---
 
 ## Open Questions
 
-1. **Path A in scope?** Does HDPE/steel procurement produce POs in ERP? If no, is it intentionally out of Phlo scope, or does Phlo need a parallel capture flow?
+1. **Path A in scope?** Does HDPE/steel procurement produce POs in UdyogERP? If no, Phlo needs a parallel capture flow to become full replacement.
 
-2. **Full replacement or gap-filler?** Is Phlo meant to eventually replace the incumbent ERP entirely, or coexist long-term?
+2. ~~**Full replacement or gap-filler?**~~ **RESOLVED:** Phlo is full UdyogERP replacement. Phase 1 fills gap; later phases migrate remaining functions.
 
-3. **Integration feasibility:** Can the current ERP export PO data via API, file, or only manual re-entry?
+3. **Integration feasibility:** Can UdyogERP export PO data via API, file, or only manual re-entry?
 
 4. **VP role:** What exactly does the VP do in the gap? Approver, coordinator, or record-keeper? Phlo should automate or distribute this.
 

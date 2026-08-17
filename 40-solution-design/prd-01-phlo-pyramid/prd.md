@@ -36,15 +36,14 @@ Phlo Pyramid fills the visibility gap between PO creation and sales order in Pyr
 
 ## Users & Roles
 
-| Role              | Count                 | What they do in Phlo                                               |
-| ----------------- | --------------------- | ------------------------------------------------------------------ |
-| **Plant team**    | 9 teams               | Receive goods, raise GRN, flag discrepancies                       |
-| **Store team**    | 9 teams               | May overlap with plant team — verify goods, update stock           |
-| **Fleet team**    | 4 people              | Assign trucks, track LRs, coordinate across plants                 |
-| **Drivers**       | ~100                  | Update delivery status (if mobile app), confirm handoffs           |
-| **Purchase team** | TBD                   | View PO status, track pending receipts, follow up with vendors     |
-| **VP**            | 1                     | Currently routes manual steps — Phlo should reduce this bottleneck |
-| **Management**    | Promoters, leadership | View dashboards: LR ageing, inventory ageing, fleet status         |
+| Role              | Count                 | What they do in Phlo                                                                                                |
+| ----------------- | --------------------- | ------------------------------------------------------------------------------------------------------------------- |
+| **Plant team**    | 9 teams               | Receive goods, raise GRN, flag discrepancies, verify and update stock (confirmed: plant teams handle goods receipt) |
+| **Fleet team**    | 4 people              | Assign trucks, track LRs, coordinate across plants                                                                  |
+| **Drivers**       | ~100                  | Update delivery status (if mobile app), confirm handoffs                                                            |
+| **Purchase team** | TBD                   | View PO status, track pending receipts, follow up with vendors                                                      |
+| **VP**            | 1                     | Currently routes manual steps — Phlo should reduce this bottleneck                                                  |
+| **Management**    | Promoters, leadership | View dashboards: LR ageing, inventory ageing, fleet status                                                          |
 
 ---
 
@@ -234,11 +233,11 @@ Detailed specs in `screen-specs/`. Summary:
 
 ## Integrations
 
-| System          | Direction | Method                  | Notes                                |
-| --------------- | --------- | ----------------------- | ------------------------------------ |
-| **Current ERP** | Read      | TBD (CSV, API, DB link) | Import POs periodically or on-demand |
-| **Tally**       | Write     | Tally XML import or SDK | Push GRN and invoice entries         |
-| **e-Way Bill**  | TBD       | May stay in current ERP | Dispatch documentation               |
+| System         | Direction | Method                  | Notes                                |
+| -------------- | --------- | ----------------------- | ------------------------------------ |
+| **UdyogERP**   | Read      | CSV export (confirmed)  | Import POs periodically or on-demand |
+| **Tally**      | Write     | Tally XML import or SDK | Push GRN and invoice entries         |
+| **e-Way Bill** | TBD       | May stay in current ERP | Dispatch documentation               |
 
 ---
 
@@ -268,22 +267,20 @@ Detailed specs in `screen-specs/`. Summary:
 
 ## Open Questions
 
-1. **PO import method:** Can current ERP export CSV, or need database link, or manual re-entry?
+**Resolved (2026-08-17):**
 
-2. **Who issues LR?** Plant team, fleet team, or transporter? Determines which role has LR create permission.
+- ~~PO import method~~ → **CSV export from UdyogERP**
+- ~~Who issues LR~~ → **Plant team**
+- ~~Store vs plant team~~ → **Plant teams receive goods (no separate store team)**
+- ~~Path A (HDPE/steel)~~ → **In scope — POs exist in UdyogERP, Phlo tracks like Path B**
+- Capital trapped: **₹60-66 lakhs** stuck in inventory
 
-3. **GRN tolerance thresholds:** What variance is acceptable? Need confirmation from Pyramid.
+**Still Open:**
 
-4. **Ageing thresholds:** What are the actual SLAs for LR turnaround? 3/5/8 days assumed.
+1. **GRN tolerance thresholds:** What variance is acceptable? Need confirmation.
+2. **Ageing thresholds:** What are the actual SLAs for LR turnaround? 3/5/8 days assumed.
+3. **Driver smartphones:** Do all 100 drivers have smartphones? Determines if driver app is feasible.
+4. **Tally version:** Which Tally version does Pyramid use? Affects integration method.
+5. **Outbound LRs:** Is outbound dispatch (to customers) in Phase 1 scope, or only inbound?
 
-5. **Store vs plant team:** Are these the same people? Determines role structure.
-
-6. **Driver smartphones:** Do all 100 drivers have smartphones? Determines if driver app is feasible.
-
-7. **Tally version:** Which Tally version does Pyramid use? Affects integration method.
-
-8. **Path A (HDPE/steel):** Confirm whether promoter-run procurement is in scope or explicitly out.
-
-9. **Outbound LRs:** Is outbound dispatch (to customers) in Phase 1 scope, or only inbound?
-
-10. **Inter-unit transfers:** Do these follow same LR/GRN flow, or separate process?
+6. **Inter-unit transfers:** Do these follow same LR/GRN flow, or separate process?
