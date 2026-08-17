@@ -14,4 +14,4 @@ Deep-dives, comparisons, and tech decisions. Solution design is blocked until te
 
 ## Tech Decisions
 
-- `[PENDING]` — Tech stack decision required before solution design can start.
+- [Tech Stack Decision — Phlo Framework](tech-decision-phlo-stack.md) — **APPROVED.** Fork of enterpriseagentstack/phlo. Event-driven ERP: Python 3.12 + FastAPI + PostgreSQL 16 + Next.js 14. Solution design unblocked.
