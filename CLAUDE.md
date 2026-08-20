@@ -2,20 +2,20 @@
 
 ## Project Description
 
-Pyramid Technoplast Ltd is a listed Indian manufacturer (BSE/NSE) of HM-HDPE plastic containers, composite drums, CR (cold-rolled steel) drums, IBC containers, and MS barrels. Nine plants across Gujarat and Maharashtra, ~100 owned trucks, drivers on payroll. This project documents Pyramid's processes and designs **Phlo** — an ERP replacement that covers the gap between PO creation and sales order, with fleet management, LR ageing, and inventory ageing as three core problem pillars. Phlo pushes entries to Tally for accounting.
+Pyramid Technoplast Ltd is a listed Indian manufacturer (BSE/NSE, CIN L28129MH1997PLC112723) selling **three product categories**: **Plastic Barrels** (HM-HDPE), **MS Barrels** (galvanized mild steel), and **IBC Containers**. Registered office in Mumbai; operating base in Bharuch. Nine plants across Gujarat and Maharashtra, ~100 owned trucks, drivers on payroll. This project documents Pyramid's processes and designs **Phlo** — an ERP replacement that covers the gap between PO creation and sales order, with fleet management, LR ageing, and inventory ageing as three core problem pillars. Phlo pushes entries to Tally for accounting.
 
 ## Domain Glossary
 
 | Term | Definition |
 |---|---|
 | Phlo | Jetbro's ERP product being built for Pyramid. Replaces the incumbent system. Pushes entries to Tally |
-| Pyramid | Pyramid Technoplast Ltd — the client. Listed manufacturer of HDPE/composite/CR drums, IBC containers, MS barrels |
+| Pyramid | Pyramid Technoplast Ltd — the client. Listed manufacturer selling three categories: Plastic Barrels (HM-HDPE), MS Barrels, IBC Containers |
 | NMD | Narrow Mouth Drum (industry term: Tight Head Drum) |
 | WMD | Wide Mouth Drum (industry term: Open Head Drum) |
 | FOT | Full Open Top Drum |
-| CR drums | Cold-Rolled steel drums (also called CRCA — Cold Rolled Close Annealed) |
-| IBC | Intermediate Bulk Container (1000L range) |
-| MS Barrel | Mild Steel barrel |
+| CR / CRCA | Cold Rolled / Cold Rolled Close Annealed — the **input steel grade**, not a product line. The products made from it are sold as **MS Barrels**. Recording 1's "CR drums" and the MS Barrels category are the same thing |
+| IBC | Intermediate Bulk Container, 275–1000 L. An **assembly**: HDPE inner bottle + metal cage + pallet base (wooden / composite / steel / plastic). This is what recording 1 called "a mixture of metal and plastic" |
+| MS Barrel | Galvanized mild steel barrel, 25–250 L. One of the **three** product categories. Variant axes: gauge (20/18) and coating (plain / painted / food-grade / epoxy lacquer). NB the MS catalogue contains a product called "Composite Barrels" — unrelated to the IBC sense of composite |
 | M/Z Can | Mouth-Zip Can |
 | LR | Lorry Receipt — proof of goods handed to transporter. LR ageing = LRs pending beyond acceptable days |
 | GRN | Goods Receipt Note — confirmation of goods received at destination |
@@ -31,8 +31,8 @@ Pyramid Technoplast Ltd is a listed Indian manufacturer (BSE/NSE) of HM-HDPE pla
 | e-Way Bill | Electronic waybill required for goods movement above Rs 50,000 |
 | IRN | Invoice Reference Number — unique ID from e-Invoice system |
 | Incumbent ERP | Current system — likely "Udyog ERP" (name unconfirmed). Implemented at GST rollout ~2018. Covers indent-to-PO and sales order onward; gap in between |
-| Path A (procurement) | Core raw materials (HDPE resin, steel) — procurement run by promoters directly |
-| Path B (procurement) | All other raw materials — procurement run by purchase team via indent → PO flow |
+| Path A (procurement) | The two core input materials — **HDPE resin** (feeds the plastic drum lines) and **steel** (feeds the CR drum lines). Procurement run by the promoters personally, not the purchase team. Treated as sensitive |
+| Path B (procurement) | Everything else — ad-hoc consumables, machinery spares, and all other materials. Run by the purchase team via the indent → approval → PO flow |
 
 ## Skills
 
@@ -104,3 +104,5 @@ Documents carry `created:` and `updated:` dates in their frontmatter. These matt
 - The incumbent ERP name is unconfirmed — do not put it in client-facing documents until verified.
 - Nine plants operate separately and individually — any process assumption must account for per-plant variation.
 - Promoters personally handle HDPE and steel procurement (Path A). Do not assume the standard indent-to-PO flow applies to core materials.
+- **There are three product lines, not five.** Plastic Barrels, MS Barrels, IBC Containers. "CR drums" is the steel grade behind MS Barrels; "composite drum" is not a line — it is either the IBC or a specific MS Barrel product. Do not reintroduce them as separate categories.
+- **HDPE resin is imported** (Marlex HXM TR-571). Import lead times, customs, and forex are part of Path A and are not yet mapped.

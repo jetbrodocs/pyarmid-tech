@@ -1,7 +1,7 @@
 ---
 title: "Observations Index"
 status: active
-updated: 2026-08-13
+updated: 2026-08-20
 ---
 
 # Observations
@@ -10,3 +10,4 @@ updated: 2026-08-13
 - [Item Master — Product Hierarchy and SKU Structure](obs-01-item-master-structure.md) — 3-tier product hierarchy (36 types, 79 groups, 448 SKUs), variant attributes, HSN distribution, scope boundaries
 - [Current ERP System — Screen Inventory](obs-02-current-erp-system.md) — Field-level catalog of incumbent ERP (likely Udyog ERP). Transaction types, master data, GST compliance stack. Reference only — not a design target
 - [Field Catalog](obs-03-field-catalog.md) — Every field organized by entity: Supply Master (69), Account Master (45), Sales Invoice (56), Sales Order, Delivery Challan, Labour Job Issue, E-Way Bill
+- [Plant Visit — Photographic Evidence, Unit VII](obs-04-plant-visit-photos.md) — 34 photos, 2026-08-20. **First primary evidence of production.** Quality system work instructions, blow-moulding parameters, leak-test spec, three visual-defect standards, IBC bill of materials (cage in-house, valves imported from China), dual-sourced resin (SABIC Saudi + IOCL Propel India), per-unit serialisation, and a ~40-country export recollect programme

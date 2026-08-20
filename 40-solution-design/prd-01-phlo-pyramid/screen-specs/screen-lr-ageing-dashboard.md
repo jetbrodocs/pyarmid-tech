@@ -9,7 +9,16 @@ tags: [screen-spec, ux, lr-tracking, dashboard, ageing]
 # Screen Spec — LR Ageing Dashboard
 
 **Module / PRD:** PRD-01 Phlo Pyramid — LR Tracking / Dashboards
-**Purpose:** Surface LR ageing problem; show open LRs by age bracket; enable quick action on overdue items.
+**Purpose:** Surface the LR ageing problem; show open LRs by age bracket **and by stage**; enable quick action on overdue items.
+
+> **Revised 2026-08-17.** Total LR age answers "this is late" but not "late where," and Pyramid has
+> never had the breakdown. Inbound consignments age across four distinct stages with different
+> owners, and one of them — **material sitting at a carrier's facility waiting for a Pyramid team
+> to collect it** — was entirely unmodelled until now. It is also the only stage fully inside
+> Pyramid's control. This dashboard must break age down by stage, not just report a total.
+>
+> The Truck and Driver columns in the critical-LR table only apply to outbound LRs; inbound rows
+> show carrier and docket instead.
 
 ## Entry Points
 
@@ -89,23 +98,52 @@ tags: [screen-spec, ux, lr-tracking, dashboard, ageing]
 
 | Metric         | Value     | Source                                  |
 | -------------- | --------- | --------------------------------------- |
-| Total Open LRs | Count     | Where status NOT IN (Delivered, Closed) |
+| Total Open LRs | Count     | Where status NOT IN (Delivered, Received, Closed) |
 | Overdue (5d+)  | Count + % | Where age ≥ 5                           |
 | Average Age    | X.X days  | Avg of age across open LRs              |
+| **Awaiting collection** | Count + oldest | **New.** Inbound LRs at status "At Facility". The number Pyramid can act on today |
+
+### Ageing by Stage — inbound (new 2026-08-17)
+
+The core panel. Splits total age into the stages that make it up, so the dashboard answers *where*
+the time goes.
+
+| Stage                    | Metric shown                        | Owner                 | Actionable by Pyramid? |
+| ------------------------ | ----------------------------------- | --------------------- | ---------------------- |
+| Awaiting dispatch        | Count + avg days since PO           | Purchase team         | Chase the vendor       |
+| In transit               | Count + avg days since dispatch     | Carrier               | No — chase only        |
+| **At carrier facility**  | **Count + avg + max days waiting**  | **Plant / purchase team** | **Yes — go collect** |
+| Collected, not at plant  | Count + avg days                    | Plant team            | Yes                    |
+| At plant, GRN pending    | Count + avg days                    | Plant team            | Yes                    |
+
+**"At carrier facility" is the headline number on this dashboard.** It is the only stage that is
+both unmeasured today and fully within Pyramid's control. Style it as the primary metric, with
+drill-through to the Collection Tracker.
+
+`[UNKNOWN: real thresholds per stage. Nothing here has been confirmed with Pyramid — the 3/5/8 day
+brackets are a total-age assumption and were never intended as per-stage limits.]`
 
 ### Critical LRs Table (8d+)
 
-| Column          | Value          | Source                    |
-| --------------- | -------------- | ------------------------- |
-| LR #            | Link           | LorryReceipt.lr_number    |
-| PO #            | Link           | PurchaseOrder.po_number   |
-| Plant           | Name           | Location.name             |
-| Vendor/Customer | Name           | From PO or sales order    |
-| Age             | X days         | Calculated                |
-| Status          | Badge          | LorryReceipt.status       |
-| Truck           | Registration # | Truck.registration_number |
-| Driver Phone    | Clickable      | Driver.phone              |
-| Action          | Button         | Quick status update       |
+Columns are direction-dependent.
+
+**Shared columns:** LR # (link), Plant, Age, Status, Action.
+
+| Column (inbound)   | Value          | Source                          |
+| ------------------ | -------------- | ------------------------------- |
+| PO #               | Link           | PurchaseOrder.po_number         |
+| Vendor             | Name           | From PO                         |
+| Carrier            | Name           | Carrier.name                    |
+| Docket #           | Text           | LorryReceipt.carrier_lr_number  |
+| Waiting at facility| X days         | Calculated                      |
+| Carrier Phone      | Clickable      | Carrier.contact_phone           |
+
+| Column (outbound) | Value          | Source                    |
+| ----------------- | -------------- | ------------------------- |
+| Sales Order       | Link           | SalesOrder.so_number      |
+| Customer          | Name           | From sales order          |
+| Truck             | Registration # | Truck.registration_number |
+| Driver Phone      | Clickable      | Driver.phone              |
 
 ### By Plant Breakdown
 
@@ -161,7 +199,9 @@ N/A — dashboard is read-only.
 ## Open Questions
 
 1. **Bucket thresholds configurable?** Should plants have different SLAs? (Assumed configurable)
-2. **Direction filter?** Should dashboard separate inbound vs outbound ageing?
+2. ~~**Direction filter?**~~ **RESOLVED 2026-08-17: yes, and more than a filter.** Inbound and outbound age differently, are owned by different teams, and need different columns. Direction is a primary split on this screen, not a filter chip.
+2a. 🔴 **Per-stage thresholds:** what counts as too long at each stage? Dwell-at-facility in particular needs its own, much shorter, threshold than total LR age. No number exists yet.
+2b. **Who is alerted for inbound?** Assumed the PO owner (purchase or plant team), never the fleet team. Confirm.
 3. **Historical snapshots:** How far back does trend data go? (Assumed 30 days)
 4. **Alert triggers:** Should this dashboard trigger notifications, or is it passive display?
 5. **Mobile view:** How do buckets display on mobile? Horizontal scroll or stacked?

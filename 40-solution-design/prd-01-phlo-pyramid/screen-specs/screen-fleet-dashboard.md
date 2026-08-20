@@ -8,8 +8,13 @@ tags: [screen-spec, ux, fleet, dashboard]
 
 # Screen Spec — Fleet Dashboard
 
-**Module / PRD:** PRD-01 Phlo Pyramid — Fleet Management
-**Purpose:** At-a-glance view of fleet status across all plants; truck availability and active assignments.
+**Module / PRD:** PRD-01 Phlo Pyramid — Fleet Management (**outbound / sales only**)
+**Purpose:** At-a-glance view of fleet status across all plants; truck availability and active **outbound** assignments.
+
+> **Scoped 2026-08-17.** The owned fleet serves sales dispatch only. Inbound procurement moves on
+> third-party carriers and must never appear on this dashboard — no inbound LR, no carrier
+> consignment, no vendor-origin route. Inbound visibility lives on the LR Ageing Dashboard and the
+> Collection Tracker, owned by the purchase and plant teams.
 
 ## Entry Points
 

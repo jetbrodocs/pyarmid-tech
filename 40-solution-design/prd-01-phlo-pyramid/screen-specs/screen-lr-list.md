@@ -9,7 +9,12 @@ tags: [screen-spec, ux, lr-tracking]
 # Screen Spec — LR List
 
 **Module / PRD:** PRD-01 Phlo Pyramid — LR Tracking
-**Purpose:** View all Lorry Receipts with status, ageing, and filters; primary working screen for fleet team.
+**Purpose:** View all Lorry Receipts with status, ageing, and filters. **Inbound and outbound are separate tabs with different columns and different primary users.**
+
+> **Corrected 2026-08-17.** This screen was specced as the fleet team's primary working screen with
+> Truck and Driver as standard columns. Those columns are meaningless on inbound consignments,
+> which move on third-party carriers. **Inbound** is the purchase and plant teams' screen;
+> **outbound** is the fleet team's. Default tab follows the user's role.
 
 ## Entry Points
 
@@ -56,25 +61,48 @@ tags: [screen-spec, ux, lr-tracking]
 
 ## Data Displayed
 
+### Inbound tab (purchase team, plant team)
+
 | Label           | Value / Format                                  | Source (entity.field / API)                       |
 | --------------- | ----------------------------------------------- | ------------------------------------------------- |
 | LR #            | LR-XXXX (link)                                  | LorryReceipt.lr_number                            |
 | PO #            | PO-XXXX (link)                                  | LorryReceipt.po_id → PurchaseOrder.po_number      |
-| Status          | Badge: Issued / In Transit / Delivered / Closed | LorryReceipt.status                               |
-| Direction       | Inbound / Outbound                              | LorryReceipt.direction                            |
-| Plant           | Plant name                                      | LorryReceipt.plant_id → Location.name             |
-| Vendor/Customer | Name                                            | Derived from PO or sales order                    |
-| Truck           | Registration # or "—" if not assigned           | LorryReceipt.truck_id → Truck.registration_number |
-| Driver          | Name or "—"                                     | LorryReceipt.driver_id → Driver.name              |
-| Age             | Xd (days since issue)                           | Calculated: today - LorryReceipt.issued_at        |
-| Issued Date     | DD/MM/YYYY                                      | LorryReceipt.issued_at                            |
+| Status          | Badge: Dispatched / In Transit / **At Facility** / **Collected** / Received / Closed | LorryReceipt.status |
+| Carrier         | Name                                            | Carrier.name                                      |
+| Docket #        | Carrier's reference                             | LorryReceipt.carrier_lr_number                    |
+| Plant           | Destination plant name                          | LorryReceipt.plant_id → Location.name             |
+| Vendor          | Name                                            | Derived from PO                                   |
+| Age             | Xd (days since dispatch)                        | Calculated                                        |
+| **Waiting**     | Xd at facility, or "—"                          | Calculated — `now − arrived_at_facility_at` while uncollected |
+| Dispatch Date   | DD/MM/YYYY                                      | LorryReceipt.dispatched_at                        |
 | Last Updated    | DD/MM/YYYY HH:MM                                | LorryReceipt.updated_at                           |
 
-**Age highlighting:**
+**No Truck or Driver column.** Neither exists on an inbound consignment.
+
+### Outbound tab (fleet team)
+
+| Label        | Value / Format                                  | Source (entity.field / API)                       |
+| ------------ | ----------------------------------------------- | ------------------------------------------------- |
+| LR #         | LR-XXXX (link)                                  | LorryReceipt.lr_number                            |
+| Sales Order  | SO-XXXX (link)                                  | LorryReceipt.sales_order_id                       |
+| Status       | Badge: Issued / In Transit / Delivered / POD Received / Closed | LorryReceipt.status              |
+| Plant        | Dispatching plant                               | LorryReceipt.plant_id → Location.name             |
+| Customer     | Name                                            | Derived from sales order                          |
+| Truck        | Registration # or "—" if not assigned           | LorryReceipt.truck_id → Truck.registration_number |
+| Driver       | Name or "—"                                     | LorryReceipt.driver_id → Driver.name              |
+| Age          | Xd (days since issue)                           | Calculated: today - LorryReceipt.issued_at        |
+| Issued Date  | DD/MM/YYYY                                      | LorryReceipt.issued_at                            |
+| Last Updated | DD/MM/YYYY HH:MM                                | LorryReceipt.updated_at                           |
+
+**Age highlighting (both tabs):**
 
 - 0-2 days: normal
 - 3-4 days: warning (amber)
 - 5+ days: critical (red)
+
+**Waiting highlighting (inbound only):** any non-zero value is amber; the threshold is likely much
+shorter than the LR age threshold. `[UNKNOWN: what counts as too long at a carrier facility —
+needs a number from Pyramid]`
 
 ## CTAs
 

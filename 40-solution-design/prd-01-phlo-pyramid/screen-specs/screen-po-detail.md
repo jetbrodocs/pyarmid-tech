@@ -43,8 +43,8 @@ tags: [screen-spec, ux, procurement]
 │ LINKED DOCUMENTS (tabs or sections)                         │
 │ [LRs (2)] [GRNs (1)] [Invoices (1)]                        │
 │ ┌─────────────────────────────────────────────────────────┐ │
-│ │ LR-001 | In Transit | 12/08 | MH20DE4349 | [View]       │ │
-│ │ LR-002 | Delivered  | 14/08 | GJ05AB1234 | [View]       │ │
+│ │ LR-001 | At Facility 2d ⚠ | 12/08 | Blue Dart | [View] │ │
+│ │ LR-002 | Received   | 14/08 | Gati Trucking | [View]    │ │
 │ └─────────────────────────────────────────────────────────┘ │
 ├─────────────────────────────────────────────────────────────┤
 │ EVENT LOG (collapsible)                                     │
@@ -82,12 +82,16 @@ tags: [screen-spec, ux, procurement]
 
 ### Linked LRs
 
-| Column | Value        | Source                    |
-| ------ | ------------ | ------------------------- |
-| LR #   | Link         | LorryReceipt.lr_number    |
-| Status | Badge        | LorryReceipt.status       |
-| Date   | DD/MM        | LorryReceipt.issued_at    |
-| Truck  | Registration | Truck.registration_number |
+LRs linked to a PO are always **inbound** — they carry material in from a vendor on a third-party
+carrier. There is no truck column here; a PO never moves on a Pyramid truck (corrected 2026-08-17).
+
+| Column   | Value                  | Source                          |
+| -------- | ---------------------- | ------------------------------- |
+| LR #     | Link                   | LorryReceipt.lr_number          |
+| Status   | Badge (incl. "At Facility Xd" warning) | LorryReceipt.status |
+| Date     | DD/MM                  | LorryReceipt.dispatched_at      |
+| Carrier  | Name                   | Carrier.name                    |
+| Docket # | Carrier's reference    | LorryReceipt.carrier_lr_number  |
 
 ### Linked GRNs
 

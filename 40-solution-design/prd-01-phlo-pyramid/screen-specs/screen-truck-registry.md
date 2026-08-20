@@ -8,8 +8,12 @@ tags: [screen-spec, ux, fleet]
 
 # Screen Spec — Truck Registry
 
-**Module / PRD:** PRD-01 Phlo Pyramid — Fleet Management
-**Purpose:** List, add, edit trucks in the fleet; view status and assignments.
+**Module / PRD:** PRD-01 Phlo Pyramid — Fleet Management (**outbound / sales only**)
+**Purpose:** List, add, edit trucks in the owned fleet; view status and **outbound** assignments.
+
+> **Scoped 2026-08-17.** These are Pyramid's ~100 owned trucks, used for sales dispatch to
+> customers. Third-party carriers that bring in procurement material are **not** trucks in this
+> registry — they belong in the separate Carrier Registry.
 
 ## Entry Points
 

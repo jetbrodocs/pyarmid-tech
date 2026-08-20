@@ -2,73 +2,104 @@
 title: "Fleet Management and LR Tracking"
 status: draft
 created: 2026-08-16
-updated: 2026-08-16
-tags: [process, fleet, lr, transport, grn]
+updated: 2026-08-17
+tags: [process, fleet, lr, transport, grn, inbound-logistics]
 sources:
   - 10-observations/obs-pyramid-technoplast-site-visit.md
 ---
 
 # Fleet Management and LR Tracking
 
+> **Correction 2026-08-17 — this document previously described a single transport process.**
+> It is two. The owned fleet serves **outbound sales only**. Inbound procurement runs entirely on
+> **third-party carriers**, with plant or purchase teams tracking consignments and frequently
+> collecting material from the carrier's facility themselves. The earlier version routed inbound
+> raw materials through Pyramid's own trucks and the fleet team. That never happened.
+
 ## Process Overview
 
-- **Purpose:** Move goods (inbound raw materials, outbound finished goods, inter-unit transfers) using own fleet or contractors; track LRs to confirm delivery.
-- **Trigger:** Dispatch requirement — goods ready to move (outbound) or vendor ready to ship (inbound).
-- **End condition:** Goods delivered, LR closed, GRN confirmed (inbound) or POD received (outbound).
+Two transport flows exist. They share the term "LR" and almost nothing else.
+
+| | **Flow A — Outbound (sales)** | **Flow B — Inbound (procurement)** |
+|---|---|---|
+| Moves | Finished goods to customers | Raw materials from vendors to plants |
+| Carrier | Pyramid's ~100 owned trucks; contractor fleet on overflow | Third-party only — courier (e.g. Blue Dart) or trucking company |
+| Drivers | ~100, on Pyramid payroll | Not Pyramid's. Carrier's own |
+| Who runs it | Fleet team (4 people) | Purchase team or plant team, per consignment |
+| Who issues the LR | Pyramid / the transporter at dispatch | **The third-party carrier** |
+| What the LR proves | Handoff to transporter; signed copy returns as POD | **Proof of delivery / proof of receipt** for Pyramid |
+| Last-mile | Truck delivers to customer | Often **Pyramid collects** from the carrier's facility |
+
+- **Purpose:** Move goods and confirm they arrived — outbound to customers, inbound from vendors.
+- **Trigger:** Sales order ready to dispatch (A); vendor dispatches against a PO (B).
+- **End condition:** Goods delivered, LR closed, POD received (A); goods at plant, GRN raised, LR filed as proof of receipt (B).
 - **Frequency:** Continuous across nine plants.
 - **Typical duration:** `[UNKNOWN]` — LR ageing of 5+ and 8+ days observed, but normal cycle time not stated.
 
-**Fleet composition:**
+**Fleet composition (Flow A only):**
 
 | Type             | Size        | Management             | Notes                                                     |
 | ---------------- | ----------- | ---------------------- | --------------------------------------------------------- |
-| Own fleet        | ~100 trucks | Fleet team (4 people)  | Drivers on Pyramid payroll                                |
+| Own fleet        | ~100 trucks | Fleet team (4 people)  | Drivers on Pyramid payroll. **Outbound sales only**       |
 | Contractor fleet | `[UNKNOWN]` | Fleet team coordinates | Used when own fleet occupied or third-party more feasible |
 
 ```
-Dispatch Request → [Own fleet available?] → Yes → Assign truck → Load → Dispatch → LR issued
-                          ↓ No                                              ↓
-                   Use contractor ──────────────────────────────────→ LR issued
-                                                                            ↓
-                                                              Transit → Delivery → GRN/POD
-                                                                            ↓
-                                                                     LR closed
+Flow A (outbound):  Sales Order → Assign truck → Load → Dispatch → LR issued
+                                                                      ↓
+                                                    Transit → Customer → Signed LR / POD → LR closed
+
+Flow B (inbound):   PO → Vendor dispatches → Third-party carrier → LR issued by carrier
+                                                                      ↓
+                                              Transit → Carrier facility → [Deliver or collect?]
+                                                                      ↓
+                                         Team collects ──→ Plant → Verify → GRN → LR filed
 ```
 
 ## Roles Involved
 
-| Role                    | Responsibility                                                                                  |
-| ----------------------- | ----------------------------------------------------------------------------------------------- |
-| Fleet team (4)          | Assign trucks, coordinate across 9 plants, track LRs — **4 people for 100+ trucks and 9 sites** |
-| Drivers (~100)          | On Pyramid payroll; operate owned trucks                                                        |
-| Contractor transporters | External; used for overflow or specific routes                                                  |
-| Plant teams (9)         | Request dispatch; receive inbound goods; raise GRN (confirmed 2026-08-17)                       |
+| Role                    | Flow | Responsibility                                                                                  |
+| ----------------------- | ---- | ----------------------------------------------------------------------------------------------- |
+| Fleet team (4)          | A    | Assign trucks, coordinate outbound across 9 plants, track outbound LRs — **4 people for 100+ trucks and 9 sites** |
+| Drivers (~100)          | A    | On Pyramid payroll; operate owned trucks on outbound runs                                       |
+| Contractor transporters | A    | External; used for outbound overflow or specific routes                                         |
+| Third-party carriers    | B    | Courier or trucking companies. Carry inbound material and **issue the LR**                      |
+| Purchase team           | B    | Track inbound consignments against their POs; chase carriers                                    |
+| Plant teams (9)         | B    | Track inbound consignments; **collect material from carrier facilities**; receive goods; raise GRN (confirmed 2026-08-17) |
 
-**Structural note:** Fleet team of 4 is stretched thin across 9 plants and ~100 trucks. This is the organisational root of LR ageing — insufficient capacity to track all movements.
+**Structural note (Flow A):** Fleet team of 4 is stretched thin across 9 plants and ~100 trucks.
+This is the organisational root of *outbound* LR ageing.
+
+**Structural note (Flow B):** Inbound has **no dedicated owner at all**. Tracking falls to whichever
+purchase or plant person raised or expects the material. There is no team equivalent to the fleet
+team on the inbound side. This is the organisational root of *inbound* LR ageing, and it is a
+different problem with a different fix.
 
 ## Inputs
 
-| Input              | Source                  | Notes                                              |
-| ------------------ | ----------------------- | -------------------------------------------------- |
-| Dispatch request   | Plant/sales/procurement | Goods ready to move                                |
-| Truck availability | Fleet team knowledge    | `[UNKNOWN: is there a system, or head knowledge?]` |
-| Route/destination  | Dispatch request        | Plant address, customer address                    |
-| Goods details      | Invoice/challan/PO      | What's being shipped                               |
+| Input              | Flow | Source                  | Notes                                              |
+| ------------------ | ---- | ----------------------- | -------------------------------------------------- |
+| Dispatch request   | A    | Sales / plant           | Finished goods ready to move                       |
+| Truck availability | A    | Fleet team knowledge    | `[UNKNOWN: is there a system, or head knowledge?]` |
+| Route/destination  | A    | Sales order             | Customer address                                   |
+| PO                 | B    | Purchase team / ERP     | What was ordered, from whom                        |
+| Carrier LR / docket| B    | Third-party carrier     | Consignment reference used to track and to prove receipt |
+| Arrival notice     | B    | Carrier                 | `[UNKNOWN: does the carrier call, SMS, or does Pyramid have to check?]` |
 
 ## Outputs
 
-| Output                  | Destination                   | Notes                                         |
-| ----------------------- | ----------------------------- | --------------------------------------------- |
-| LR (Lorry Receipt)      | Sender, transporter, receiver | Paper-based; proof of handoff to transporter  |
-| Goods delivered         | Destination (plant, customer) | Physical delivery                             |
-| GRN                     | Sender (inbound)              | Confirms receipt at destination — off-system  |
-| POD (Proof of Delivery) | Sender (outbound)             | `[UNVERIFIED: may use signed LR copy as POD]` |
+| Output                  | Flow | Destination                   | Notes                                         |
+| ----------------------- | ---- | ----------------------------- | --------------------------------------------- |
+| LR (outbound)           | A    | Sender, transporter, customer | Paper; proof of handoff to transporter        |
+| POD (Proof of Delivery) | A    | Sender                        | `[UNVERIFIED: may use signed LR copy as POD]` |
+| LR (inbound)            | B    | Pyramid                       | Carrier's document. **Retained as proof of delivery / proof of receipt** |
+| Goods delivered         | Both | Customer (A) / plant (B)      | Physical delivery                             |
+| GRN                     | B    | Pyramid                       | Confirms receipt at plant — off-system        |
 
 ---
 
-## Process Steps
+## Flow A — Outbound Dispatch (Finished Goods to Customer)
 
-### Outbound Dispatch (Finished Goods to Customer)
+This is the **fleet** process. Own trucks and contractor trucks. Run by the fleet team.
 
 1. Sales order triggers dispatch requirement.
    - `[UNKNOWN: who decides when to dispatch — sales, plant, or dispatch team?]`
@@ -77,7 +108,7 @@ Dispatch Request → [Own fleet available?] → Yes → Assign truck → Load �
    - Communication: `[UNKNOWN: phone, WhatsApp, email, or system?]`
 
 3. Fleet team checks own truck availability.
-   - **If available:** Assign owned truck. Go to step 5.
+   - **If available:** Assign owned truck and payroll driver. Go to step 5.
    - **If not available:** Go to step 4.
 
 4. Fleet team arranges contractor truck.
@@ -88,7 +119,7 @@ Dispatch Request → [Own fleet available?] → Yes → Assign truck → Load �
 6. Goods loaded onto truck.
    - `[UNKNOWN: loading verification process, who supervises]`
 
-7. LR (Lorry Receipt) issued.
+7. LR issued.
    - Format: Paper
    - Contains: Goods description, quantity, consignor, consignee, transporter details
    - `[UNKNOWN: who issues — fleet team, plant, or transporter?]`
@@ -97,7 +128,7 @@ Dispatch Request → [Own fleet available?] → Yes → Assign truck → Load �
 
 9. **Goods in transit — visibility gap begins.**
    - No system tracking
-   - Status known only if someone calls driver or transporter
+   - Status known only if someone calls the driver
 
 10. Truck arrives at customer location.
 
@@ -112,42 +143,66 @@ Dispatch Request → [Own fleet available?] → Yes → Assign truck → Load �
 
 ---
 
-### Inbound Receipt (Raw Materials from Vendor)
+## Flow B — Inbound Receipt (Raw Materials from Vendor)
 
-1. Vendor dispatches goods per PO.
+This is **not** a fleet process. No Pyramid truck and no Pyramid driver appear anywhere in it.
 
-2. Transporter issues LR.
-   - Could be: vendor's transporter, Pyramid's own truck (if pickup), or third-party
+1. Vendor dispatches goods against the PO.
+   - Vendor books a third-party carrier — courier (e.g. Blue Dart) for small items, trucking
+     company for bulk.
+   - `[UNKNOWN: does the vendor choose the carrier, or does Pyramid nominate one? Who pays freight?]`
 
-3. LR details communicated to Pyramid.
+2. **Carrier issues the LR.**
+   - This is the carrier's own document, not Pyramid's.
+   - Pyramid retains it as proof of delivery / proof of receipt.
+   - `[UNKNOWN: what identifier does the carrier use — LR number, docket number, consignment note?]`
+
+3. LR details reach Pyramid.
    - Method: Phone, email, WhatsApp — none synced
+   - `[UNKNOWN: does the vendor send the LR copy, or the carrier, or does Pyramid chase it?]`
 
-4. **Goods in transit — visibility gap.**
-   - No system tracking
-   - LR ageing starts here
+4. Purchase team or plant team takes on tracking.
+   - Whoever raised or expects the material owns the follow-up. No dedicated inbound tracker.
+   - `[UNKNOWN: tracked via the carrier's portal/helpline, or by phoning the vendor?]`
 
-5. Truck arrives at plant.
+5. **Goods in transit — visibility gap. LR ageing starts here.**
 
-6. Plant/store team receives goods.
-   - `[UNKNOWN: who — plant team or store team]`
+6. Goods arrive at the carrier's destination facility.
+   - `[UNKNOWN: is Pyramid notified on arrival, or does it have to ask?]`
 
-7. Goods verified against PO/LR.
-   - `[UNKNOWN: verification process, tolerance, discrepancy handling]`
+7. **Decision — does the carrier deliver, or does Pyramid collect?**
+   - **If carrier delivers to plant:** Go to step 10.
+   - **If Pyramid collects:** Go to step 8. Per Rohan (2026-08-17) this is common, not exceptional.
+   - `[UNKNOWN: what determines this — carrier's service level, material type, distance, or cost?]`
 
-8. GRN raised.
-   - Format: Off-system (paper or Excel)
-   - **GRN pendency is part of the problem** — receipts not confirmed promptly
+8. **Plant or purchase team travels to the carrier's facility and collects the material.**
+   - Team verifies the consignment and signs the carrier's LR to take delivery.
+   - `[UNKNOWN: what vehicle is used for collection — company car, hired tempo, or an owned truck as an exception?]`
+   - `[UNKNOWN: how long material typically waits at the facility before someone goes]`
 
-9. LR closed.
+9. Team transports the material to the plant.
+
+10. Material arrives at the plant and is put into store.
+
+11. Goods verified against PO and LR.
+    - `[UNKNOWN: verification process, tolerance, discrepancy handling]`
+
+12. GRN raised.
+    - Format: Off-system (paper or Excel)
+    - **GRN pendency is part of the problem** — receipts not confirmed promptly
+
+13. LR filed as proof of receipt. Tracking ends.
 
 ---
 
-### Inter-Unit Transfer
+## Flow C — Inter-Unit Transfer
 
 1. Sending unit raises transfer requirement.
    - May be sales invoice format (per ERP observation: "Inter-unit transfer handled as sales invoice")
 
-2. Fleet team assigns truck (own or contractor).
+2. Truck assigned.
+   - `[UNKNOWN: does inter-unit movement use the owned fleet, or third-party carriers like inbound?
+     The fleet is sales-only, which leaves this genuinely unresolved. Needs confirmation.]`
 
 3. Goods loaded, LR issued.
 
@@ -162,30 +217,34 @@ Dispatch Request → [Own fleet available?] → Yes → Assign truck → Load �
 
 ## Exception Paths
 
-### Exception A: LR Ageing (5+ Days)
+### Exception A: Inbound LR Ageing (5+ Days)
 
 Observed in site visit. No formal escalation process documented.
 
 A1. LR remains open beyond expected delivery window.
 A2. `[UNKNOWN: is there an alert, or discovered only when someone checks?]`
-A3. Staff chase via phone, WhatsApp, email.
+A3. Purchase or plant staff chase the vendor or carrier via phone, WhatsApp, email.
 A4. `[UNKNOWN: escalation path if goods missing or delayed]`
 
-### Exception B: Goods Damaged in Transit
+### Exception B: Material Sitting Uncollected at Carrier Facility
+
+New to this revision. Follows directly from Flow B step 7–8.
+
+B1. Goods reach the carrier's facility. Pyramid is notified, or discovers it.
+B2. No one is free to go collect, or the arrival is not noticed.
+B3. Material sits at the carrier's facility. **Ageing continues, and the goods are already in the
+    destination city — so the delay is invisible to anyone tracking "transit."**
+B4. `[UNKNOWN: does the carrier charge demurrage or storage after some free period?]`
+B5. Team eventually collects. Return to Flow B step 8.
+
+### Exception C: Goods Damaged in Transit
 
 `[UNVERIFIED]` — process not observed.
 
-B1. Receiver notes damage.
-B2. `[UNKNOWN: claim process, documentation, responsibility determination]`
+C1. Receiver notes damage.
+C2. `[UNKNOWN: claim process against the carrier, documentation, responsibility determination]`
 
-### Exception C: Delivery to Wrong Location
-
-`[UNVERIFIED]` — process not observed.
-
-C1. Goods delivered to incorrect address.
-C2. `[UNKNOWN: recovery process]`
-
-### Exception D: Driver/Truck Unavailable
+### Exception D: Outbound Truck/Driver Unavailable
 
 D1. Assigned truck breaks down or driver unavailable.
 D2. Fleet team reassigns.
@@ -202,12 +261,27 @@ D3. `[UNKNOWN: how quickly, impact on schedule]`
 | LRs pending 5+ days                   | Site visit                             |
 | LRs pending 8+ days                   | Site visit                             |
 | No system tracking                    | Site visit — LRs are paper, off-system |
-| Team of 4 for 100 trucks and 9 plants | Site visit — capacity constraint       |
+| Team of 4 for 100 trucks and 9 plants | Site visit — capacity constraint (outbound only) |
+
+**Where the ageing actually accrues.** The 5–8 day figures come from the site visit without a
+breakdown. This revision splits the candidate causes, because they have different fixes:
+
+| Stage | Flow | Why time is lost | Visible today? |
+|---|---|---|---|
+| Vendor dispatch → carrier pickup | B | Vendor delay; no dispatch confirmation | No |
+| Carrier transit | B | Carrier's own transit time | Only by phoning the carrier |
+| **Arrival at facility → collection** | B | **No one goes to collect; arrival not noticed** | **No — and this stage was entirely unmodelled before 2026-08-17** |
+| Arrival at plant → GRN raised | B | GRN is off-system, done when someone gets to it | No |
+| Outbound dispatch → POD returned | A | Signed LR travels back with the driver | No |
+
+`[UNKNOWN: which of these stages dominates the 5-8 day figure. This is the single most useful
+number to get from Pyramid — it determines where the system should intervene first.]`
 
 **Why it happens:**
 
-- No central system — LRs exist on paper at dispatch point
-- Fleet team cannot see all open LRs across 9 plants
+- No central system — LRs exist on paper, and inbound LRs belong to the carrier
+- No dedicated owner for inbound tracking; it falls to whoever raised the PO
+- Fleet team cannot see all open outbound LRs across 9 plants
 - Discovery is reactive — problems found only when someone chases
 - Communication fragmented across phone, WhatsApp, email
 
@@ -215,61 +289,86 @@ D3. `[UNKNOWN: how quickly, impact on schedule]`
 
 - Delayed GRN confirmation
 - Inventory position unclear
-- Cash trapped (goods shipped but not confirmed received)
+- Cash trapped (goods paid for or committed but not confirmed received)
 - Customer delivery SLAs missed (outbound)
 
 ---
 
 ## Connected Processes
 
-- **Upstream:** Procurement (inbound), Sales order (outbound), Inter-unit transfers
-- **Downstream:** GRN (inbound), Customer delivery confirmation (outbound), Inventory update
-- **Related:** Invoice reconciliation (can't reconcile until delivery confirmed)
+- **Upstream:** Procurement (Flow B), Sales order (Flow A), Inter-unit transfers (Flow C)
+- **Downstream:** GRN (Flow B), Customer delivery confirmation (Flow A), Inventory update
+- **Related:** Invoice reconciliation (can't reconcile until receipt confirmed)
 
 ## Systems and Tools
 
-| Step             | System/Tool                 | Notes                                 |
-| ---------------- | --------------------------- | ------------------------------------- |
-| Truck assignment | Head knowledge / fleet team | No system — 4 people know who's where |
-| LR issue         | Paper                       | Physical document                     |
-| Transit tracking | None                        | Visibility gap                        |
-| Communication    | Phone, WhatsApp, email      | Not synced                            |
-| LR closure       | `[UNKNOWN]`                 | May be Excel or paper filing          |
-| GRN              | Off-system                  | Paper or Excel                        |
+| Step                          | Flow | System/Tool                 | Notes                                 |
+| ----------------------------- | ---- | --------------------------- | ------------------------------------- |
+| Truck assignment              | A    | Head knowledge / fleet team | No system — 4 people know who's where |
+| Outbound LR issue             | A    | Paper                       | Physical document                     |
+| Inbound LR issue              | B    | Carrier's own system        | Pyramid receives a paper copy         |
+| Inbound consignment tracking  | B    | `[UNKNOWN: carrier portal, helpline, or phone calls]` | Owned by purchase/plant team |
+| Transit tracking              | Both | None on Pyramid's side      | Visibility gap                        |
+| Collection from facility      | B    | None                        | Ad-hoc; no record that a trip happened |
+| Communication                 | Both | Phone, WhatsApp, email      | Not synced                            |
+| LR closure / filing           | Both | `[UNKNOWN]`                 | May be Excel or paper filing          |
+| GRN                           | B    | Off-system                  | Paper or Excel                        |
 
 ## Known Issues
 
-| Issue                    | Impact                                                | Current Workaround                  |
-| ------------------------ | ----------------------------------------------------- | ----------------------------------- |
-| LR ageing 5-8+ days      | Delayed confirmation, unclear inventory, trapped cash | Reactive chasing via phone/WhatsApp |
-| No transit visibility    | Can't see where trucks are or when they'll arrive     | Call driver                         |
-| Fleet team capacity      | 4 people for 9 plants + 100 trucks                    | Stretched thin; things slip         |
-| Paper LRs                | No central record; easy to lose track                 | `[UNKNOWN]`                         |
-| Fragmented communication | Phone, WhatsApp, email not synced                     | Staff switch channels ad-hoc        |
-| No GRN system            | Receipts not confirmed promptly                       | Manual follow-up                    |
+| Issue                    | Flow | Impact                                                | Current Workaround                  |
+| ------------------------ | ---- | ----------------------------------------------------- | ----------------------------------- |
+| LR ageing 5-8+ days      | Both | Delayed confirmation, unclear inventory, trapped cash | Reactive chasing via phone/WhatsApp |
+| No inbound tracking owner| B    | Consignments tracked by whoever remembers             | Purchase/plant team improvises      |
+| Uncollected material at carrier facility | B | Goods have arrived but are not at the plant; ageing invisible | Someone eventually drives over |
+| No transit visibility    | Both | Can't see where goods are or when they'll arrive      | Call driver (A) or carrier (B)      |
+| Fleet team capacity      | A    | 4 people for 9 plants + 100 trucks                    | Stretched thin; things slip         |
+| Paper LRs                | Both | No central record; easy to lose track                 | `[UNKNOWN]`                         |
+| Fragmented communication | Both | Phone, WhatsApp, email not synced                     | Staff switch channels ad-hoc        |
+| No GRN system            | B    | Receipts not confirmed promptly                       | Manual follow-up                    |
 
 ## Open Questions
 
-1. **Truck assignment:** Is there any system (even Excel), or pure head knowledge?
+**Inbound (Flow B) — new or reframed by the 2026-08-17 correction:**
 
-2. **Who issues LR?** Plant team, fleet team, or transporter?
+1. **Which carriers?** Is there a standing set (Blue Dart and a few truckers), or per-vendor choice?
 
-3. **Own vs contractor decision:** What criteria — availability only, or also cost, route, urgency?
+2. **Who nominates the carrier** — the vendor or Pyramid? Who pays freight?
 
-4. **LR return process:** How does signed LR/POD get back to Pyramid — physical, photo, or courier?
+3. **What identifier does the carrier's LR carry** — LR number, docket number, consignment note? Phlo needs to store and search on whatever the teams actually quote to each other.
 
-5. **LR ageing measurement:** Is anything measured today? Where does that data live?
+4. **Deliver vs collect — what decides it?** Carrier service level, material type, distance, cost?
 
-6. **GRN trigger:** What prompts GRN creation — LR return, phone call, or goods inspection?
+5. **How often is collection needed,** and how long does material typically wait at the facility?
 
-7. **Store vs plant team:** Who physically receives and verifies goods?
+6. **What vehicle does the collection trip use?** If an owned truck is sometimes borrowed for this, the fleet/sales boundary is not absolute and the data model must allow it.
 
-8. **Inter-unit transfer reconciliation:** How do sending and receiving units sync records?
+7. **Does the carrier charge storage/demurrage** after a free period? If so, uncollected material has a direct, quantifiable cost — useful for the commercial case.
 
-9. **Driver management:** How are ~100 drivers scheduled, tracked, paid? Is there a roster?
+8. **How is an inbound consignment tracked today** — carrier portal, helpline, or phoning the vendor?
 
-10. **Contractor rates:** How are contractor transporters selected and rates negotiated?
+9. **Who owns inbound tracking** when purchase and plant both have a claim? This determines the RBAC model for inbound LRs.
 
-11. **Delivery windows:** Are there SLAs for delivery? What happens when missed?
+**Outbound (Flow A):**
 
-12. **Vehicle maintenance:** How are 100 trucks maintained? Downtime tracking?
+10. **Truck assignment:** Is there any system (even Excel), or pure head knowledge?
+
+11. **Own vs contractor decision:** What criteria — availability only, or also cost, route, urgency?
+
+12. **POD return process:** How does the signed LR get back to Pyramid — physical, photo, or courier?
+
+13. **Delivery windows:** Are there SLAs for customer delivery? What happens when missed?
+
+14. **Driver management:** How are ~100 drivers scheduled, tracked, paid? Is there a roster?
+
+15. **Vehicle maintenance:** How are 100 trucks maintained? Downtime tracking?
+
+16. **Contractor rates:** How are contractor transporters selected and rates negotiated?
+
+**Both:**
+
+17. **LR ageing measurement:** Is anything measured today? Where does that data live? Which stage dominates the 5–8 days?
+
+18. **GRN trigger:** What prompts GRN creation — material arriving at plant, or an inspection?
+
+19. **Inter-unit transfers:** Own fleet or third-party? This is unresolved now that the fleet is sales-only.

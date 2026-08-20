@@ -16,6 +16,14 @@ tech_decision: 30-analysis/tech-decision-phlo-stack.md
 
 Phlo Pyramid fills the visibility gap between PO creation and sales order in Pyramid Technoplast's operations. The incumbent ERP captures indent-to-PO and sales-order-onward, but everything in between — vendor invoices, goods dispatch, LR tracking, GRN, receipt reconciliation — runs manually on paper, phone, and WhatsApp. This PRD defines the system that closes that gap, addressing Pyramid's three stated problems: **LR ageing, fleet management, and inventory ageing**.
 
+> **Correction 2026-08-17 — inbound and outbound transport are separate domains.** Inbound
+> procurement moves on **third-party carriers** (courier, e.g. Blue Dart, or trucking companies).
+> Pyramid's ~100 owned trucks are **sales/outbound only** and never carry procurement material.
+> Plant or purchase teams track inbound consignments themselves, and **frequently collect material
+> from the carrier's facility in person**. Requirements, data model, events, and screens below have
+> been revised accordingly. Anything in this PRD that pairs an inbound LR with a Pyramid truck or
+> driver is wrong and has been corrected.
+
 ## Goals
 
 1. **Close the procurement gap.** Track vendor invoices, dispatch, transit, arrival, GRN, and reconciliation — the 9 steps currently invisible.
@@ -38,11 +46,11 @@ Phlo Pyramid fills the visibility gap between PO creation and sales order in Pyr
 
 | Role              | Count                 | What they do in Phlo                                                                                                |
 | ----------------- | --------------------- | ------------------------------------------------------------------------------------------------------------------- |
-| **Plant team**    | 9 teams               | Receive goods, raise GRN, flag discrepancies, verify and update stock (confirmed: plant teams handle goods receipt) |
-| **Fleet team**    | 4 people              | Assign trucks, track LRs, coordinate across plants                                                                  |
-| **Drivers**       | ~100                  | Update delivery status (if mobile app), confirm handoffs                                                            |
-| **Purchase team** | TBD                   | View PO status, track pending receipts, follow up with vendors                                                      |
-| **VP**            | 1                     | Currently routes manual steps — Phlo should reduce this bottleneck                                                  |
+| **Plant team**    | 9 teams               | Track inbound consignments, **collect material from carrier facilities**, receive goods, raise GRN, flag discrepancies, verify and update stock (confirmed: plant teams handle goods receipt) |
+| **Fleet team**    | 4 people              | Assign trucks, track **outbound** LRs, coordinate sales dispatch across plants. **No inbound role**                  |
+| **Drivers**       | ~100                  | Pyramid payroll, **outbound only**. Update delivery status (if mobile app), confirm handoffs                         |
+| **Purchase team** | TBD                   | View PO status, **track inbound consignments against their POs**, chase carriers and vendors, follow up on pending receipts |
+
 | **Management**    | Promoters, leadership | View dashboards: LR ageing, inventory ageing, fleet status                                                          |
 
 ---
@@ -68,14 +76,45 @@ Phlo Pyramid fills the visibility gap between PO creation and sales order in Pyr
 
 ### Module: LR Tracking
 
+> **Revised 2026-08-17.** Inbound and outbound LRs are structurally different records, not one
+> record with a direction flag. An **inbound** LR is issued by a third-party carrier and has no
+> Pyramid truck or driver. An **outbound** LR covers an own-fleet or contractor dispatch. The
+> requirements below are split accordingly. See [proc-02-fleet-lr.md](../../20-process-maps/proc-02-fleet-lr.md).
+
+**Shared:**
+
 | ID         | Requirement                                                    | Source                  | Acceptance Criteria                                                    |
 | ---------- | -------------------------------------------------------------- | ----------------------- | ---------------------------------------------------------------------- |
-| REQ-LR-001 | Create LR record when goods dispatched                         | proc-02-fleet-lr step 7 | LR has: number, date, consignor, consignee, transporter, goods summary |
-| REQ-LR-002 | Update LR status: Issued, In Transit, Delivered, Closed        | proc-02-fleet-lr        | Status change emits event; timestamp recorded                          |
+| REQ-LR-002 | Update LR status through its lifecycle                         | proc-02-fleet-lr        | Status change emits event; timestamp recorded                          |
 | REQ-LR-003 | Calculate LR ageing (days since issue, days since last update) | site-visit observation  | Ageing visible on list and dashboard                                   |
-| REQ-LR-004 | Alert when LR exceeds threshold (e.g., 3 days, 5 days)         | site-visit observation  | Configurable threshold; alert sent to fleet team                       |
-| REQ-LR-005 | Link LR to PO, GRN, truck, driver                              | proc-02-fleet-lr        | Full traceability from LR to all related entities                      |
-| REQ-LR-006 | Support both inbound and outbound LRs                          | proc-02-fleet-lr        | Direction field; separate views for procurement vs sales               |
+| REQ-LR-006 | Distinguish inbound and outbound LRs                           | proc-02-fleet-lr        | Direction field drives which fields apply, which statuses are valid, and who is alerted |
+
+**Inbound (procurement — third-party carrier):**
+
+| ID          | Requirement                                          | Source                  | Acceptance Criteria                                                    |
+| ----------- | ---------------------------------------------------- | ----------------------- | ---------------------------------------------------------------------- |
+| REQ-LR-101  | Record an inbound LR against a PO                    | proc-02 Flow B step 2   | Captures carrier name, carrier's LR/docket number, dispatch date, expected arrival, goods summary. **No truck or driver fields** |
+| REQ-LR-102  | Track inbound status: Dispatched, In Transit, **At Carrier Facility**, **Collected**, Received, Closed | proc-02 Flow B | Each transition emits an event with a timestamp |
+| REQ-LR-103  | Record arrival at the carrier's facility             | proc-02 Flow B step 6   | Separate timestamp from plant arrival. Starts the collection clock     |
+| REQ-LR-104  | Record collection by a Pyramid team                  | proc-02 Flow B step 8   | Who collected, when, from which facility. **No record of this exists today in any form** |
+| REQ-LR-105  | Age each stage separately, not just total LR age     | gap-analysis            | Dwell-at-facility is reportable on its own — it is the suspected hidden delay |
+| REQ-LR-106  | Alert on inbound ageing, routed to the PO owner      | site-visit observation  | Configurable threshold. **Not** routed to the fleet team — they have no role inbound |
+| REQ-LR-107  | Link inbound LR to PO and GRN                        | proc-02 Flow B          | Full traceability PO → LR → collection → GRN                           |
+| REQ-LR-108  | Store the LR document as proof of receipt            | Rohan 2026-08-17        | Attach scan/photo. The carrier's LR is Pyramid's proof of delivery / proof of receipt |
+
+**Outbound (sales — own or contractor fleet):**
+
+| ID          | Requirement                                          | Source                  | Acceptance Criteria                                                    |
+| ----------- | ---------------------------------------------------- | ----------------------- | ---------------------------------------------------------------------- |
+| REQ-LR-201  | Create an outbound LR when goods are dispatched      | proc-02 Flow A step 7   | LR has: number, date, consignor, consignee, transporter, goods summary |
+| REQ-LR-202  | Track outbound status: Issued, In Transit, Delivered, POD Received, Closed | proc-02 Flow A | Status change emits event                              |
+| REQ-LR-203  | Link outbound LR to sales order, truck, and driver   | proc-02 Flow A          | Truck and driver are required for own-fleet dispatch                   |
+| REQ-LR-204  | Alert on outbound ageing, routed to the fleet team   | site-visit observation  | Configurable threshold                                                 |
+| REQ-LR-205  | Capture POD (signed LR return)                       | proc-02 Flow A step 12  | Attach scan/photo; closes the LR                                       |
+
+`[UNKNOWN: can carriers be integrated for automatic inbound status (API or tracking-number lookup),
+or is every inbound status a manual entry? This materially changes build cost for REQ-LR-102/103
+and is not accounted for in the tech decision.]`
 
 ### Module: GRN (Goods Receipt Note)
 
@@ -87,16 +126,24 @@ Phlo Pyramid fills the visibility gap between PO creation and sales order in Pyr
 | REQ-GRN-004 | Record quality status: Accepted, Rejected, Pending QC | existing Phlo events        | QC_ACCEPTED, QC_REJECTED events                   |
 | REQ-GRN-005 | GRN confirmation triggers inventory update            | Phlo architecture           | GOODS_RECEIVED event updates inventory projection |
 
-### Module: Fleet Management
+### Module: Fleet Management — outbound / sales only
+
+> **Scoped 2026-08-17.** The owned fleet moves **finished goods to customers**. It is never used for
+> procurement. Every requirement below applies to outbound dispatch. Truck assignment must never
+> offer a vendor-to-plant route.
 
 | ID         | Requirement                                                    | Source                    | Acceptance Criteria                                      |
 | ---------- | -------------------------------------------------------------- | ------------------------- | -------------------------------------------------------- |
-| REQ-FL-001 | Register trucks (own fleet)                                    | proc-02-fleet-lr          | Truck record: number, type, capacity, status, home plant |
-| REQ-FL-002 | Register drivers                                               | proc-02-fleet-lr          | Driver record: name, license, phone, assigned truck      |
-| REQ-FL-003 | Assign truck to dispatch                                       | proc-02-fleet-lr step 3-5 | Assignment event: truck, driver, route, estimated time   |
-| REQ-FL-004 | Track truck status: Available, Assigned, In Transit, Returning | proc-02-fleet-lr          | Status visible on fleet dashboard                        |
+| REQ-FL-001 | Register trucks (own fleet)                                    | proc-02 Flow A            | Truck record: number, type, capacity, status, home plant |
+| REQ-FL-002 | Register drivers                                               | proc-02 Flow A            | Driver record: name, license, phone, assigned truck      |
+| REQ-FL-003 | Assign truck to an **outbound** dispatch                       | proc-02 Flow A step 3-5   | Assignment event: truck, driver, route, estimated time. Route origin is always a plant; destination is always a customer |
+| REQ-FL-004 | Track truck status: Available, Assigned, In Transit, Returning | proc-02 Flow A            | Status visible on fleet dashboard                        |
 | REQ-FL-005 | Show fleet utilization by plant                                | gap-analysis              | Dashboard: trucks available vs assigned per plant        |
-| REQ-FL-006 | Support contractor trucks                                      | proc-02-fleet-lr step 4   | Contractor flag; transporter name captured               |
+| REQ-FL-006 | Support contractor trucks for outbound overflow                | proc-02 Flow A step 4     | Contractor flag; transporter name captured               |
+| REQ-FL-007 | Fleet screens exclude inbound LRs entirely                     | Rohan 2026-08-17          | No inbound consignment appears in truck assignment, fleet dashboard, or driver views |
+
+`[UNKNOWN: are owned trucks ever borrowed for a collection run to a carrier facility? If yes,
+REQ-FL-007 needs an exception and TruckAssignment must accept a non-sales purpose.]`
 
 ### Module: Dashboards & Ageing
 
@@ -128,12 +175,25 @@ Phlo Pyramid fills the visibility gap between PO creation and sales order in Pyr
 | **PurchaseOrder**    | id, po_number, vendor_id, plant_id, status, created_at, total_amount                           | Imported from current ERP |
 | **POLineItem**       | id, po_id, item_id, quantity, rate, received_qty                                               | Per-item detail           |
 | **VendorInvoice**    | id, invoice_number, po_id, vendor_id, amount, date, status                                     | Vendor bill against PO    |
-| **LorryReceipt**     | id, lr_number, po_id, truck_id, driver_id, direction (in/out), status, issued_at, delivered_at | Core tracking entity      |
+| **LorryReceipt**     | id, lr_number, direction (in/out), po_id, sales_order_id, status, issued_at, delivered_at, document_url | Core tracking entity. **Direction determines which of the two field groups below applies** |
+| ↳ *inbound fields*   | carrier_id, carrier_lr_number, dispatched_at, expected_arrival_at, arrived_at_facility_at, collected_at, collected_by_user_id, facility_location | **`truck_id` and `driver_id` are NULL on inbound.** The carrier's vehicle and driver are not Pyramid's and are not tracked |
+| ↳ *outbound fields*  | truck_id, driver_id, is_contractor, contractor_name, pod_received_at, pod_document_url         | Own or contractor fleet   |
+| **Carrier**          | id, name, type (courier/trucking), contact_phone, tracking_url_template, is_active             | **New 2026-08-17.** Third-party inbound carriers, e.g. Blue Dart. `[UNKNOWN: standing panel or per-vendor choice]` |
 | **GoodsReceiptNote** | id, grn_number, po_id, lr_id, plant_id, received_at, status                                    | Receipt confirmation      |
 | **GRNLineItem**      | id, grn_id, item_id, expected_qty, received_qty, variance, qc_status                           | Per-item receipt          |
-| **Truck**            | id, registration_number, type, capacity, status, home_plant_id, is_contractor                  | Fleet registry            |
-| **Driver**           | id, name, license_number, phone, truck_id, status                                              | Driver registry           |
-| **TruckAssignment**  | id, truck_id, driver_id, lr_id, assigned_at, released_at                                       | Assignment tracking       |
+| **Truck**            | id, registration_number, type, capacity, status, home_plant_id, is_contractor                  | Fleet registry — **outbound only** |
+| **Driver**           | id, name, license_number, phone, truck_id, status                                              | Driver registry — **outbound only**, Pyramid payroll drivers |
+| **TruckAssignment**  | id, truck_id, driver_id, lr_id, assigned_at, released_at                                       | Assignment tracking — **outbound only** |
+
+**Modelling note (2026-08-17).** The previous model put `truck_id` and `driver_id` directly on
+`LorryReceipt` for both directions. That cannot represent an inbound consignment, which has a
+carrier and a docket number but no Pyramid vehicle. Two options, to settle before implementation:
+
+1. **One table, nullable field groups** (as shown above) — simpler queries for a combined ageing view, but half the columns are always NULL and nothing at the schema level stops an inbound LR from being given a truck.
+2. **Separate `InboundConsignment` and `OutboundDispatch` entities** — honest to the domain, enforces the split, but ageing dashboards must union two tables.
+
+`[DECISION NEEDED: option 1 or 2. Event sourcing makes this less costly to change later than it
+would be in a CRUD system — projections can be rebuilt — but the event payloads differ either way.]`
 
 ### Existing Entities (from Phlo framework)
 
@@ -152,10 +212,25 @@ Phlo Pyramid fills the visibility gap between PO creation and sales order in Pyr
 | ----------------------- | --------------------------- | ------------------------------------------------- |
 | PO_IMPORTED             | PO imported from ERP        | po_id, po_number, vendor_id, plant_id, line_items |
 | VENDOR_INVOICE_RECEIVED | Invoice recorded            | invoice_id, po_id, amount, date                   |
-| LR_ISSUED               | LR created                  | lr_id, lr_number, po_id, truck_id, direction      |
-| LR_IN_TRANSIT           | Truck departs               | lr_id, departed_at                                |
+| LR_ISSUED               | LR created                  | lr_id, lr_number, direction, po_id \| sales_order_id |
+| LR_IN_TRANSIT           | Goods depart                | lr_id, departed_at                                |
 | LR_DELIVERED            | Goods arrive at destination | lr_id, delivered_at, signed_by                    |
 | LR_CLOSED               | LR complete and reconciled  | lr_id, closed_at                                  |
+
+**Inbound-specific (new 2026-08-17):**
+
+| Event Type                  | Trigger                                  | Payload                                                |
+| --------------------------- | ---------------------------------------- | ------------------------------------------------------ |
+| INBOUND_LR_RECORDED         | Carrier's LR captured against a PO       | lr_id, po_id, carrier_id, carrier_lr_number, dispatched_at, expected_arrival_at |
+| INBOUND_ARRIVED_AT_FACILITY | Goods reach the carrier's facility       | lr_id, facility_location, arrived_at. **Starts the collection clock** |
+| INBOUND_COLLECTED           | Pyramid team collects from the facility  | lr_id, collected_at, collected_by_user_id. **No equivalent record exists today** |
+| INBOUND_ARRIVED_AT_PLANT    | Material reaches the plant               | lr_id, plant_id, arrived_at                            |
+
+**Outbound-specific:**
+
+| Event Type       | Trigger                    | Payload                              |
+| ---------------- | -------------------------- | ------------------------------------ |
+| POD_RECEIVED     | Signed LR returns to Pyramid | lr_id, received_at, document_url   |
 | GRN_CREATED             | Receipt initiated           | grn_id, po_id, lr_id, plant_id                    |
 | GRN_LINE_RECEIVED       | Line item received          | grn_id, item_id, expected_qty, received_qty       |
 | GRN_VERIFIED            | Receipt confirmed           | grn_id, verified_by                               |
@@ -177,7 +252,25 @@ Phlo Pyramid fills the visibility gap between PO creation and sales order in Pyr
   - Warning: 3 days
   - Critical: 5 days
   - Escalation: 8 days
-- Alert sent to fleet team when threshold crossed
+
+**Stage ageing (added 2026-08-17).** Total LR age is not enough. Each inbound stage ages
+independently, because they have different owners and different fixes:
+
+| Stage age | From → to | Owner | Why it matters |
+|---|---|---|---|
+| Dispatch lag | PO → `INBOUND_LR_RECORDED` | Purchase team | Vendor is slow to ship |
+| Transit | `INBOUND_LR_RECORDED` → `INBOUND_ARRIVED_AT_FACILITY` | Carrier | Outside Pyramid's control |
+| **Dwell at facility** | `INBOUND_ARRIVED_AT_FACILITY` → `INBOUND_COLLECTED` | Plant / purchase team | **Fully inside Pyramid's control and invisible today** |
+| Collection to plant | `INBOUND_COLLECTED` → `INBOUND_ARRIVED_AT_PLANT` | Plant team | Short, but unmeasured |
+| Receipt to GRN | `INBOUND_ARRIVED_AT_PLANT` → `GRN_CREATED` | Plant team | Known pendency problem |
+
+**Alert routing:**
+
+- **Inbound** ageing alerts go to the **PO owner** (purchase or plant team). The fleet team has no inbound role and must not be alerted.
+- **Outbound** ageing alerts go to the **fleet team**.
+
+`[UNKNOWN: real SLAs. The 3/5/8 day thresholds are assumed, and no per-stage threshold has been
+proposed to Pyramid yet — dwell-at-facility likely needs its own, much shorter, threshold.]`
 
 ### GRN Variance
 
@@ -204,7 +297,8 @@ MAINTENANCE ←─────────────────────�
 ### Multi-Plant Rules
 
 - Users see only their plant(s) by default
-- Fleet team sees all plants
+- Fleet team sees all plants — **outbound LRs and fleet screens only**. Inbound consignments are not theirs
+- Purchase team sees inbound LRs for the POs they own, across plants
 - Management sees consolidated + per-plant drill-down
 - Data is not shared between plants except via explicit transfer
 
@@ -218,16 +312,18 @@ Detailed specs in `screen-specs/`. Summary:
 | ----------------------- | ------------------------------------------------ | ------------------------- |
 | **PO List**             | View imported POs, filter by status/plant/vendor | Purchase team, plant team |
 | **PO Detail**           | See PO lines, linked invoices, LRs, GRNs         | Purchase team             |
-| **LR List**             | All LRs with status and ageing                   | Fleet team                |
-| **LR Detail**           | LR info, truck, driver, status timeline          | Fleet team, plant team    |
-| **LR Create/Update**    | Issue new LR, update status                      | Fleet team, drivers       |
+| **LR List**             | All LRs with status and ageing; inbound/outbound tabs | Purchase team, plant team (inbound); fleet team (outbound) |
+| **LR Detail**           | LR info, status timeline. Carrier + collection detail (inbound) or truck + driver (outbound) | Purchase team, plant team, fleet team |
+| **LR Create/Update**    | Record an inbound carrier LR, or issue an outbound LR | Purchase/plant team (inbound); fleet team, drivers (outbound) |
+| **Collection Tracker**  | **New 2026-08-17.** Material sitting at carrier facilities awaiting collection, by plant, sorted by dwell time | Plant team, purchase team |
 | **GRN Create**          | Record goods receipt                             | Plant team                |
 | **GRN Detail**          | Line items, variances, QC status                 | Plant team                |
-| **Fleet Dashboard**     | Trucks by status, by plant                       | Fleet team, management    |
-| **LR Ageing Dashboard** | Open LRs sorted by age, alerts                   | Fleet team, management    |
-| **Inventory Pipeline**  | Ordered → dispatched → in transit → received     | Management                |
-| **Truck Registry**      | List/add/edit trucks                             | Fleet team                |
-| **Driver Registry**     | List/add/edit drivers                            | Fleet team                |
+| **Fleet Dashboard**     | Trucks by status, by plant — **outbound only**   | Fleet team, management    |
+| **LR Ageing Dashboard** | Open LRs sorted by age, split by stage and direction | Purchase team, fleet team, management |
+| **Inventory Pipeline**  | Ordered → dispatched → at carrier → collected → received | Management          |
+| **Truck Registry**      | List/add/edit trucks — **outbound fleet only**   | Fleet team                |
+| **Driver Registry**     | List/add/edit drivers — **outbound fleet only**  | Fleet team                |
+| **Carrier Registry**    | **New 2026-08-17.** List/add/edit third-party inbound carriers | Purchase team |
 
 ---
 
@@ -238,6 +334,7 @@ Detailed specs in `screen-specs/`. Summary:
 | **UdyogERP**   | Read      | CSV export (confirmed)  | Import POs periodically or on-demand |
 | **Tally**      | Write     | Tally XML import or SDK | Push GRN and invoice entries         |
 | **e-Way Bill** | TBD       | May stay in current ERP | Dispatch documentation               |
+| **Third-party carriers** (Blue Dart, trucking cos.) | Read | `[UNKNOWN — unresolved]` | **New 2026-08-17.** Inbound consignment status. Options: carrier API, tracking-number lookup, or pure manual entry. Nothing in the tech decision accounts for this, and it materially changes build cost |
 
 ---
 
@@ -246,11 +343,13 @@ Detailed specs in `screen-specs/`. Summary:
 **In scope:**
 
 - PO import (manual CSV upload initially)
-- LR tracking (create, status updates, ageing)
+- **Inbound** LR tracking — carrier LR capture, status updates, **arrival at facility**, **collection**, stage ageing
+- Carrier registry
+- **Outbound** LR tracking (create, status updates, ageing)
 - GRN workflow (receive, verify, flag variance)
-- Fleet registry (trucks, drivers)
-- Truck assignment
-- Dashboards: LR ageing, fleet status, PO ageing
+- Fleet registry (trucks, drivers) — outbound
+- Truck assignment — outbound sales dispatch only
+- Dashboards: LR ageing (by stage and direction), collection tracker, fleet status, PO ageing
 - Multi-plant support
 
 **Deferred to Phase 2:**
@@ -270,17 +369,28 @@ Detailed specs in `screen-specs/`. Summary:
 **Resolved (2026-08-17):**
 
 - ~~PO import method~~ → **CSV export from UdyogERP**
-- ~~Who issues LR~~ → **Plant team**
+- ~~Who issues LR~~ → **Corrected 2026-08-17.** Inbound: the **third-party carrier** issues it; the plant or purchase team records it in Phlo. Outbound: Pyramid issues it at dispatch
 - ~~Store vs plant team~~ → **Plant teams receive goods (no separate store team)**
 - ~~Path A (HDPE/steel)~~ → **In scope — POs exist in UdyogERP, Phlo tracks like Path B**
+- ~~Does the fleet serve procurement?~~ → **No. Fleet is sales/outbound only. Inbound runs on third-party carriers** (corrected 2026-08-17)
 - Capital trapped: **₹60-66 lakhs** stuck in inventory
 
 **Still Open:**
 
 1. **GRN tolerance thresholds:** What variance is acceptable? Need confirmation.
-2. **Ageing thresholds:** What are the actual SLAs for LR turnaround? 3/5/8 days assumed.
-3. **Driver smartphones:** Do all 100 drivers have smartphones? Determines if driver app is feasible.
+2. **Ageing thresholds:** What are the actual SLAs for LR turnaround? 3/5/8 days assumed, and no per-stage threshold has been proposed.
+3. **Driver smartphones:** Do all 100 drivers have smartphones? Determines if driver app is feasible. (Outbound only — inbound drivers are the carrier's.)
 4. **Tally version:** Which Tally version does Pyramid use? Affects integration method.
 5. **Outbound LRs:** Is outbound dispatch (to customers) in Phase 1 scope, or only inbound?
+6. **Inter-unit transfers:** Do these follow same LR/GRN flow, or separate process? Own fleet or third-party carrier?
 
-6. **Inter-unit transfers:** Do these follow same LR/GRN flow, or separate process?
+**Added 2026-08-17 (inbound carrier correction):**
+
+7. 🔴 **Where do the 5–8 days go?** Split inbound LR ageing across vendor dispatch, carrier transit, dwell at facility, and plant-arrival-to-GRN. Decides what Phlo builds first.
+8. 🔴 **Carrier integration:** API, tracking-number lookup, or manual entry only? Unbudgeted in the tech decision.
+9. **Data model decision:** one `LorryReceipt` table with nullable field groups, or separate inbound/outbound entities? See Data Model note.
+10. **Carrier set:** standing panel or per-vendor choice? Who nominates, who pays freight?
+11. **Deliver vs collect:** what determines it, and how often is collection the case?
+12. **Demurrage:** do carriers charge storage after a free period?
+13. **Collection vehicle:** if an owned truck is ever used, REQ-FL-007 needs an exception.
+14. **Who owns inbound tracking** — purchase or plant team? Determines RBAC and alert routing.

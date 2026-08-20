@@ -10,7 +10,7 @@ PRDs and screen specs for Phlo Pyramid. Tech stack approved — see `30-analysis
 
 ## PRDs
 
-- [PRD-01: Phlo Pyramid — Procurement Gap & Fleet Management](prd-01-phlo-pyramid/prd.md) — Gap-filler covering PO tracking, LR tracking, GRN workflow, fleet management, ageing dashboards. Addresses three pillars: LR ageing, fleet management, inventory ageing.
+- [PRD-01: Phlo Pyramid — Procurement Gap & Fleet Management](prd-01-phlo-pyramid/prd.md) — PO tracking, inbound LR tracking on third-party carriers (incl. collection from carrier facilities), GRN workflow, outbound fleet management, ageing dashboards. Addresses three pillars: LR ageing, fleet management, inventory ageing. Phase 1 of a full UdyogERP replacement.
 
 ## Cross-Cutting
 

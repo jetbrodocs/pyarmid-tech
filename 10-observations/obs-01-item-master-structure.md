@@ -2,7 +2,7 @@
 title: "Item Master — Product Hierarchy and SKU Structure (Plastic Barrels Vertical)"
 status: draft
 created: 2026-08-13
-updated: 2026-08-13
+updated: 2026-08-18
 tags: [observation, item-master, sku, product-hierarchy]
 source: 00-inbox/HDPE_Ecomm_SKU_Structure_Normalized.xlsx
 ---
@@ -19,7 +19,7 @@ source: 00-inbox/HDPE_Ecomm_SKU_Structure_Normalized.xlsx
 
 Managing product catalog for the Plastic Barrels vertical. Items are organized in a 3-tier hierarchy: Product Type (family) → Group SKU (parent product by capacity/size) → SKU (sellable variant by colour/weight/branding). This structure governs how finished goods and accessories are identified, priced, and tracked across sales, inventory, and production.
 
-From site visit (2026-08-06): Pyramid manufactures three product lines — HDPE plastic drums, composite drums (metal + plastic), and CR (cold-rolled steel) drums. This item master covers only the HDPE plastic drums vertical. The incumbent ERP (likely Udyog ERP, name unconfirmed) has a Supply Master with duplicate entries — noted by Rohan as one of the "small, small problems". Nine plants each manage items separately and individually.
+Pyramid sells three product categories — **Plastic Barrels** (HM-HDPE), **MS Barrels** (galvanized mild steel), and **IBC Containers** (corrected 2026-08-18 against the company catalogue; the site-visit audio described these as "plastic drums", "CR drums" and "a mixture of metal and plastic"). This item master covers only the Plastic Barrels vertical. The incumbent ERP (likely Udyog ERP, name unconfirmed) has a Supply Master with duplicate entries — noted by Rohan as one of the "small, small problems". Nine plants each manage items separately and individually.
 
 ## Inputs
 
@@ -162,13 +162,20 @@ Full list of all 30 accessory types: Bung, Cap Seal, Cap Spanner, Cliching Cover
 
 ## Scope Boundary — What This Item Master Does NOT Cover
 
+> **Corrected 2026-08-18.** This table previously listed five verticals. Pyramid sells **three**.
+> "Composite drums" and "CR drums" were descriptive phrases from the site-visit audio, not separate
+> categories — see [as-is-operating-model.md](../30-analysis/as-is-operating-model.md).
+
 | Vertical | Status | Notes |
 |---|---|---|
-| Plastic Barrels (HDPE) | **Covered** | All 448 SKUs in this master |
-| Composite drums (metal + plastic) | **Not covered** | Mentioned in site visit as second product line |
-| CR drums (cold-rolled steel) | **Not covered** | Third product line per site visit. CRCA 210 LTR CLOSE MOI appears in e-Way Bill (HSN 73101090) |
-| IBC Containers | **Not covered** | "1000 LTR BULK CONTAINER" appears in delivery challan |
-| MS Barrels | **Not covered** | Overlaps with CR drums category above |
+| **Plastic Barrels** (HM-HDPE) | **Covered** | All 448 SKUs in this master. Runs on imported Marlex HXM TR-571 granules |
+| **MS Barrels** (galvanized mild steel) | **Not covered** | 7 products, 25–250 L. Variant axes are gauge (20/18) and coating (plain / painted / food-grade / epoxy lacquer). This is what the site-visit audio called "CR drums" — CRCA is the input grade, MS Barrels is the product line. "CRCA 210 LTR CLOSE MOI" in the e-Way Bill (HSN 73101090) is an MS Barrel |
+| **IBC Containers** | **Not covered** | 275–1000 L. An assembly: HDPE inner bottle + metal cage + pallet base, in 4 pallet variants (wooden / composite / steel / plastic). This is what the audio called "a mixture of metal and plastic". "1000 LTR BULK CONTAINER" in the delivery challan is an IBC |
+
+**Two of the three lines have no SKU structure documented anywhere in this project.** The variant
+model differs by line — plastic is `capacity × weight × colour × branding`, MS is plausibly
+`product × gauge × coating`, and the IBC is an assembly with a bill of materials rather than a
+moulding. A single item-master design has to accommodate all three.
 
 ---
 

@@ -29,16 +29,17 @@ tags: [screen-spec, ux, dashboard, inventory]
 ├─────────────────────────────────────────────────────────────┤
 │ PIPELINE FUNNEL (visual)                                    │
 │                                                             │
-│   ORDERED        DISPATCHED      IN TRANSIT      RECEIVED   │
-│  ┌────────┐     ┌────────┐      ┌────────┐     ┌────────┐  │
-│  │ ₹45L   │ ──▶ │ ₹32L   │ ──▶  │ ₹28L   │ ──▶ │ ₹12L   │  │
-│  │ 12 POs │     │ 8 POs  │      │ 15 LRs │     │ 5 GRNs │  │
-│  └────────┘     └────────┘      └────────┘     └────────┘  │
-│                                                             │
-│  Total Pipeline Value: ₹1.17 Cr                             │
+│  ORDERED    DISPATCHED   IN TRANSIT  AT CARRIER   RECEIVED  │
+│ ┌────────┐ ┌────────┐  ┌────────┐  ┌────────┐  ┌────────┐  │
+│ │ ₹45L   │▶│ ₹32L   │ ▶│ ₹28L   │ ▶│ ₹9L  ⚠ │ ▶│ ₹12L   │  │
+│ │ 12 POs │ │ 8 POs  │  │ 15 LRs │  │ 4 LRs  │  │ 5 GRNs │  │
+│ └────────┘ └────────┘  └────────┘  └────────┘  └────────┘  │
+│                                     uncollected             │
+│  Total Pipeline Value: ₹1.26 Cr                             │
 ├─────────────────────────────────────────────────────────────┤
 │ BY STAGE TABS                                               │
-│ [Ordered (12)] [Dispatched (8)] [In Transit (15)] [Today]  │
+│ [Ordered (12)] [Dispatched (8)] [In Transit (15)]           │
+│ [At Carrier (4) ⚠] [Received Today]                         │
 ├─────────────────────────────────────────────────────────────┤
 │ DETAIL TABLE (for selected tab)                             │
 │                                                             │
@@ -70,7 +71,13 @@ tags: [screen-spec, ux, dashboard, inventory]
 | Ordered          | ₹ sum | Count POs  | POs where status = Pending, no dispatch       |
 | Dispatched       | ₹ sum | Count POs  | POs where GOODS_DISPATCHED but not in transit |
 | In Transit       | ₹ sum | Count LRs  | LRs where status = In Transit                 |
+| **At Carrier**   | ₹ sum | Count LRs  | **New 2026-08-17.** LRs where status = At Facility (arrived, not yet collected) |
 | Received (Today) | ₹ sum | Count GRNs | GRNs created today                            |
+
+**Why "At Carrier" earns its own stage.** This is stock Pyramid has paid for, that has physically
+reached its destination city, and that is not in the plant because nobody has collected it. It is
+the sharpest possible illustration of the ₹60–66 lakhs trapped in inventory — and unlike transit
+time, it is entirely within Pyramid's power to fix. Show it in warning styling whenever non-zero.
 
 ### Stage Detail Table
 

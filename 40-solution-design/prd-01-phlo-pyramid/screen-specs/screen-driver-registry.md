@@ -8,8 +8,12 @@ tags: [screen-spec, ux, fleet]
 
 # Screen Spec — Driver Registry
 
-**Module / PRD:** PRD-01 Phlo Pyramid — Fleet Management
+**Module / PRD:** PRD-01 Phlo Pyramid — Fleet Management (**outbound / sales only**)
 **Purpose:** List, add, edit drivers; view assignments and contact info.
+
+> **Scoped 2026-08-17.** These are Pyramid's ~100 payroll drivers, who run outbound sales
+> dispatch. Carrier drivers on inbound consignments are not Pyramid's employees, are not tracked
+> here, and are reached through the carrier's contact number on the LR Detail screen instead.
 
 ## Entry Points
 
