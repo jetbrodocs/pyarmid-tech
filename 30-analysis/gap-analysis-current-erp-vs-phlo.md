@@ -2,12 +2,12 @@
 title: "Gap Analysis — Current ERP vs Phlo Scope"
 status: draft
 created: 2026-08-17
-updated: 2026-08-17
+updated: 2026-08-21
 tags: [analysis, gap-analysis, erp, phlo]
 resolved:
   - "Q2: Phlo is full ERP replacement, not gap-filler (confirmed 2026-08-17)"
   - "Q7: Incumbent ERP is UdyogERP (confirmed 2026-08-17)"
-  - "Q5: Plant teams receive goods and raise GRN; no separate store team (confirmed 2026-08-17)"
+  - "Q5: Store teams exist at all nine plants (corrected 2026-08-21 — R2, R33 confirm)"
   - "Q9: Capital trapped in inventory is Rs 60-66 lakhs (confirmed 2026-08-17)"
   - "Owned fleet is outbound/sales only; inbound procurement runs on third-party carriers (corrected 2026-08-17)"
 sources:
@@ -60,19 +60,19 @@ the sales order and has no UdyogERP coverage either — it is a third, separate 
 
 ### What the ERP Does Not Cover
 
-| Missing Capability          | Current State            | Impact                                          |
-| --------------------------- | ------------------------ | ----------------------------------------------- |
-| Vendor invoice tracking     | Off-system (paper/email) | No record of what's owed until manually entered |
-| Goods dispatch confirmation | Phone/WhatsApp           | No visibility on when vendor shipped            |
-| Inbound LR tracking         | Paper copy of the carrier's LR | LRs pending 5-8+ days — discovered reactively |
-| Carrier facility arrival    | None                     | Goods reach the destination city unnoticed      |
-| Collection from carrier     | None — not even paper    | No record a collection trip happened, or is due |
-| Transit visibility          | None                     | Can't see where goods are                       |
-| GRN workflow                | Off-system               | Receipts not confirmed promptly                 |
-| Receipt reconciliation      | Manual                   | `[UNKNOWN: who owns it]`                        |
-| Fleet assignment (outbound) | Head knowledge           | 4 people track 100 trucks across 9 plants       |
-| Driver/vehicle tracking (outbound) | None              | No location, no status                          |
-| Inventory in pipeline       | Not calculated           | Cash trapped — goods shipped but not received   |
+| Missing Capability                 | Current State                  | Impact                                          |
+| ---------------------------------- | ------------------------------ | ----------------------------------------------- |
+| Vendor invoice tracking            | Off-system (paper/email)       | No record of what's owed until manually entered |
+| Goods dispatch confirmation        | Phone/WhatsApp                 | No visibility on when vendor shipped            |
+| Inbound LR tracking                | Paper copy of the carrier's LR | LRs pending 5-8+ days — discovered reactively   |
+| Carrier facility arrival           | None                           | Goods reach the destination city unnoticed      |
+| Collection from carrier            | None — not even paper          | No record a collection trip happened, or is due |
+| Transit visibility                 | None                           | Can't see where goods are                       |
+| GRN workflow                       | Off-system                     | Receipts not confirmed promptly                 |
+| Receipt reconciliation             | Manual                         | `[UNKNOWN: who owns it]`                        |
+| Fleet assignment (outbound)        | Head knowledge                 | 4 people track 100 trucks across 9 plants       |
+| Driver/vehicle tracking (outbound) | None                           | No location, no status                          |
+| Inventory in pipeline              | Not calculated                 | Cash trapped — goods shipped but not received   |
 
 ---
 
@@ -115,7 +115,7 @@ Pyramid named three problems as the basis for the system. Each traces directly t
 - Communication fragmented (phone, WhatsApp, email)
 - 4 people for 100 trucks and 9 plants is a capacity constraint
 
-**Gap connection:** Fleet operations happen entirely outside UdyogERP. No coverage at all. Note this is a *different* gap from the procurement gap — outbound dispatch sits after the sales order, not between PO and sales order.
+**Gap connection:** Fleet operations happen entirely outside UdyogERP. No coverage at all. Note this is a _different_ gap from the procurement gap — outbound dispatch sits after the sales order, not between PO and sales order.
 
 ### 3. Inventory Ageing
 
@@ -134,21 +134,21 @@ Pyramid named three problems as the basis for the system. Each traces directly t
 
 ## Gap Anatomy: Step-by-Step
 
-| Step                        | Current State            | Who Handles        | System                                 | Visibility |
-| --------------------------- | ------------------------ | ------------------ | -------------------------------------- | ---------- |
-| **1. PO created**           | In ERP                   | Purchase team      | ERP                                    | Full       |
-| **2. PO sent to vendor**    | `[UNKNOWN]`              | Purchase team      | `[UNKNOWN: email, portal, or manual?]` | Partial    |
-| **3. Vendor confirms**      | `[UNKNOWN]`              | Vendor             | None                                   | None       |
-| **4. Vendor dispatches**    | Phone/email notification | Vendor             | None                                   | None       |
-| **5. LR issued**            | Paper                    | **Third-party carrier** | Carrier's own system, not Pyramid's | None       |
-| **6. Transit**              | None                     | Third-party carrier | Carrier's own tracking, unintegrated  | **Zero**   |
-| **7. Arrival at carrier facility** | None              | Third-party carrier | None                                  | **Zero**   |
-| **8. Collection by Pyramid** | Physical trip           | Plant or purchase team | None — no record the trip happened | **Zero**   |
-| **9. Arrival at plant**     | Physical                 | Plant team         | None                                   | None       |
-| **10. Goods verified**      | Manual                   | Plant team         | None                                   | None       |
-| **11. GRN raised**          | Paper/Excel              | Plant team         | None                                   | None       |
-| **12. Receipt reconciled**  | Manual                   | `[UNKNOWN]`        | None                                   | None       |
-| **13. Sales order created** | In ERP                   | Sales team         | ERP                                    | Full       |
+| Step                               | Current State            | Who Handles             | System                                 | Visibility |
+| ---------------------------------- | ------------------------ | ----------------------- | -------------------------------------- | ---------- |
+| **1. PO created**                  | In ERP                   | Purchase team           | ERP                                    | Full       |
+| **2. PO sent to vendor**           | `[UNKNOWN]`              | Purchase team           | `[UNKNOWN: email, portal, or manual?]` | Partial    |
+| **3. Vendor confirms**             | `[UNKNOWN]`              | Vendor                  | None                                   | None       |
+| **4. Vendor dispatches**           | Phone/email notification | Vendor                  | None                                   | None       |
+| **5. LR issued**                   | Paper                    | **Third-party carrier** | Carrier's own system, not Pyramid's    | None       |
+| **6. Transit**                     | None                     | Third-party carrier     | Carrier's own tracking, unintegrated   | **Zero**   |
+| **7. Arrival at carrier facility** | None                     | Third-party carrier     | None                                   | **Zero**   |
+| **8. Collection by Pyramid**       | Physical trip            | Plant or purchase team  | None — no record the trip happened     | **Zero**   |
+| **9. Arrival at plant**            | Physical                 | Plant team              | None                                   | None       |
+| **10. Goods verified**             | Manual                   | Plant team              | None                                   | None       |
+| **11. GRN raised**                 | Paper/Excel              | Plant team              | None                                   | None       |
+| **12. Receipt reconciled**         | Manual                   | `[UNKNOWN]`             | None                                   | None       |
+| **13. Sales order created**        | In ERP                   | Sales team              | ERP                                    | Full       |
 
 **Steps 2–12 are the gap.** Phlo must cover all of them.
 
@@ -164,22 +164,22 @@ Based on gap analysis, Phlo needs these capabilities:
 
 ### Must Have (fills the gap)
 
-| Capability                  | Addresses            | Notes                                               |
-| --------------------------- | -------------------- | --------------------------------------------------- |
-| **Vendor invoice tracking** | Gap step 3-4         | Record vendor bills against POs                     |
-| **Dispatch confirmation**   | Gap step 4-5         | Vendor marks goods shipped                          |
-| **Inbound LR capture and tracking** | LR ageing    | Digital record of the **carrier's** LR — carrier name, docket/LR number, expected arrival. Status tracking and ageing alerts. No Pyramid truck or driver involved |
-| **Carrier arrival + collection tracking** | LR ageing, gap steps 7-8 | **New 2026-08-17.** Mark "arrived at carrier facility", then "collected by us". Makes dwell time at the facility visible for the first time |
-| **GRN workflow**            | Gap step 9-11        | Digital receipt confirmation with variance handling |
-| **Receipt reconciliation**  | Gap step 12          | Match GRN to PO to invoice                          |
-| **Outbound LR + POD**       | Fleet management     | Own-fleet dispatch to customer; signed LR returns as POD |
-| **Fleet assignment**        | Fleet management (outbound only) | Truck availability, assignment, scheduling for **sales dispatch**. Never used for procurement |
-| **Driver/vehicle registry** | Fleet management (outbound only) | Know who has what truck                  |
-| **Transit visibility**      | Both pillars         | Outbound: own driver checkpoint updates. Inbound: carrier status, which Pyramid does not control — `[UNKNOWN: can carriers be integrated, or is this manual entry?]` |
-| **Inventory pipeline view** | Inventory ageing     | See what's ordered, dispatched, in transit, arrived |
-| **Ageing dashboards**       | All three pillars    | LR ageing, PO ageing, inventory ageing              |
-| **Alerting**                | Reactive → proactive | Push notifications when things age                  |
-| **Tally push**              | Per pitch            | Entries flow to Tally for accounting                |
+| Capability                                | Addresses                        | Notes                                                                                                                                                                |
+| ----------------------------------------- | -------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Vendor invoice tracking**               | Gap step 3-4                     | Record vendor bills against POs                                                                                                                                      |
+| **Dispatch confirmation**                 | Gap step 4-5                     | Vendor marks goods shipped                                                                                                                                           |
+| **Inbound LR capture and tracking**       | LR ageing                        | Digital record of the **carrier's** LR — carrier name, docket/LR number, expected arrival. Status tracking and ageing alerts. No Pyramid truck or driver involved    |
+| **Carrier arrival + collection tracking** | LR ageing, gap steps 7-8         | **New 2026-08-17.** Mark "arrived at carrier facility", then "collected by us". Makes dwell time at the facility visible for the first time                          |
+| **GRN workflow**                          | Gap step 9-11                    | Digital receipt confirmation with variance handling                                                                                                                  |
+| **Receipt reconciliation**                | Gap step 12                      | Match GRN to PO to invoice                                                                                                                                           |
+| **Outbound LR + POD**                     | Fleet management                 | Own-fleet dispatch to customer; signed LR returns as POD                                                                                                             |
+| **Fleet assignment**                      | Fleet management (outbound only) | Truck availability, assignment, scheduling for **sales dispatch**. Never used for procurement                                                                        |
+| **Driver/vehicle registry**               | Fleet management (outbound only) | Know who has what truck                                                                                                                                              |
+| **Transit visibility**                    | Both pillars                     | Outbound: own driver checkpoint updates. Inbound: carrier status, which Pyramid does not control — `[UNKNOWN: can carriers be integrated, or is this manual entry?]` |
+| **Inventory pipeline view**               | Inventory ageing                 | See what's ordered, dispatched, in transit, arrived                                                                                                                  |
+| **Ageing dashboards**                     | All three pillars                | LR ageing, PO ageing, inventory ageing                                                                                                                               |
+| **Alerting**                              | Reactive → proactive             | Push notifications when things age                                                                                                                                   |
+| **Tally push**                            | Per pitch                        | Entries flow to Tally for accounting                                                                                                                                 |
 
 ### Should Have (completes the picture)
 
@@ -228,18 +228,18 @@ Phlo must integrate with:
 
 ## Findings Summary
 
-| #   | Finding                                                   | Evidence                            | Impact                                        |
-| --- | --------------------------------------------------------- | ----------------------------------- | --------------------------------------------- |
-| 1   | Gap is precisely defined: PO to sales order, 11 steps     | Process maps, observations          | Phlo scope is clear and bounded               |
-| 2   | **LR ageing and inventory ageing** trace to the gap. **Fleet does not** — it sits after the sales order | Site visit; correction 2026-08-17 | Two of three pillars are solved by filling the gap; fleet is a separate build |
-| 3   | Zero system coverage in the gap today                     | Observations                        | Greenfield build — no legacy to migrate       |
-| 4   | Fleet is entirely head-knowledge based, and **outbound only** | 4 people, 100 trucks, 9 plants   | Highest risk of things slipping — on the sales side |
-| 4a  | **Inbound has no owner at all** — no team, no system, no head-knowledge holder | Correction 2026-08-17 | Worse than fleet: at least fleet has four people. Inbound LR tracking is nobody's job |
-| 4b  | **Material waits uncollected at carrier facilities**, unmeasured and unrecorded | Correction 2026-08-17 | Plausibly a large share of the 5–8 day LR ageing. Was invisible to the entire project until now |
-| 5   | Nine plants operate separately                            | Site visit                          | Solution must be multi-plant from day one     |
-| 6   | Current ERP has solid GST compliance                      | e-Way Bill, e-Invoice, IRN visible  | Don't rebuild this — integrate or leave alone |
-| 7   | Path A (HDPE/steel) scope is uncertain                    | "Does it bypass ERP?" open question | Biggest value materials may be out of scope   |
-| 8   | ~~VP is single point of routing in gap~~ **RETRACTED 2026-08-20** | Mis-transcription of "UdyogERP" | No such person is evidenced. Who coordinates the gap is unknown |
+| #   | Finding                                                                                                 | Evidence                            | Impact                                                                                          |
+| --- | ------------------------------------------------------------------------------------------------------- | ----------------------------------- | ----------------------------------------------------------------------------------------------- |
+| 1   | Gap is precisely defined: PO to sales order, 11 steps                                                   | Process maps, observations          | Phlo scope is clear and bounded                                                                 |
+| 2   | **LR ageing and inventory ageing** trace to the gap. **Fleet does not** — it sits after the sales order | Site visit; correction 2026-08-17   | Two of three pillars are solved by filling the gap; fleet is a separate build                   |
+| 3   | Zero system coverage in the gap today                                                                   | Observations                        | Greenfield build — no legacy to migrate                                                         |
+| 4   | Fleet is entirely head-knowledge based, and **outbound only**                                           | 4 people, 100 trucks, 9 plants      | Highest risk of things slipping — on the sales side                                             |
+| 4a  | **Inbound has no owner at all** — no team, no system, no head-knowledge holder                          | Correction 2026-08-17               | Worse than fleet: at least fleet has four people. Inbound LR tracking is nobody's job           |
+| 4b  | **Material waits uncollected at carrier facilities**, unmeasured and unrecorded                         | Correction 2026-08-17               | Plausibly a large share of the 5–8 day LR ageing. Was invisible to the entire project until now |
+| 5   | Nine plants operate separately                                                                          | Site visit                          | Solution must be multi-plant from day one                                                       |
+| 6   | Current ERP has solid GST compliance                                                                    | e-Way Bill, e-Invoice, IRN visible  | Don't rebuild this — integrate or leave alone                                                   |
+| 7   | Path A (HDPE/steel) scope is uncertain                                                                  | "Does it bypass ERP?" open question | Biggest value materials may be out of scope                                                     |
+| 8   | ~~VP is single point of routing in gap~~ **RETRACTED 2026-08-20**                                       | Mis-transcription of "UdyogERP"     | No such person is evidenced. Who coordinates the gap is unknown                                 |
 
 ---
 
@@ -275,7 +275,7 @@ Phlo must integrate with:
 
 4. ~~**VP role**~~ **VOID 2026-08-20 — the VP does not exist.** Replacement: **who coordinates the PO→GRN stretch?** Currently unevidenced.
 
-5. ~~**Store vs plant teams:** Who receives goods?~~ **RESOLVED 2026-08-17:** plant teams receive goods and raise GRN. No separate store team.
+5. ~~**Store vs plant teams:** Who receives goods?~~ **CORRECTED 2026-08-21:** Store teams exist at all nine plants (R2: "all nine plants have store teams"; R33: "store guy that handles HDPE raw material storage"). Store teams receive and store goods; plant teams raise GRN.
 
 6. **Contractor fleet:** How are contractors selected, booked, paid? Does Phlo manage this, or just track? (Outbound only.)
 
