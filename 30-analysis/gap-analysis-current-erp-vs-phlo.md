@@ -7,7 +7,7 @@ tags: [analysis, gap-analysis, erp, phlo]
 resolved:
   - "Q2: Phlo is full ERP replacement, not gap-filler (confirmed 2026-08-17)"
   - "Q7: Incumbent ERP is UdyogERP (confirmed 2026-08-17)"
-  - "Q5: Plant teams receive goods and raise GRN; no separate store team (confirmed 2026-08-17)"
+  - "Q5: Store teams exist at all nine plants (corrected 2026-08-21 - R2 clean transcript and R33 confirm)"
   - "Q9: WITHDRAWN 2026-08-21 - the Rs 60-66 lakh figure is not to be used; no verified figure exists"
   - "Owned fleet is outbound/sales only; inbound procurement runs on third-party carriers (corrected 2026-08-17)"
 sources:
@@ -275,7 +275,7 @@ Phlo must integrate with:
 
 4. ~~**VP role**~~ **VOID 2026-08-20 — the VP does not exist.** Replacement: **who coordinates the PO→GRN stretch?** Currently unevidenced.
 
-5. ~~**Store vs plant teams:** Who receives goods?~~ **RESOLVED 2026-08-17:** plant teams receive goods and raise GRN. No separate store team.
+5. ~~**Store vs plant teams:** Who receives goods?~~ **CORRECTED 2026-08-21:** **store teams exist at all nine plants** (R2 clean transcript: *"all nine plants have store teams"*; R33 confirms). A plant team = production + store. The **store team** owns goods receipt and chases the vendor invoice, LR and GRN; the **purchase team sits at HO**. Supersedes the 2026-08-17 answer, which rested on an ambiguous ASR transcript.
 
 6. **Contractor fleet:** How are contractors selected, booked, paid? Does Phlo manage this, or just track? (Outbound only.)
 

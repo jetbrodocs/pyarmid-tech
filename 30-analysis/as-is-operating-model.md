@@ -236,6 +236,16 @@ Capacity 275–1,000 L.
 the only line with a genuine bill of materials spanning both core input materials, and the only one
 where the pallet is a bought-in or fabricated component in its own right.
 
+**IBC component sourcing** 🟢 (obs-04, obs-06): cage, steel tube and pallet are **fabricated
+in-house** — Pyramid runs its own tube mill from GP coil. **Valves and cam locks are imported from
+China** (Qingdao XiFa). Wooden pallets are bought; composite, steel and plastic pallets are made.
+UN certification is held — `31HA1/Y/0826` observed on a finished unit.
+
+**IBC serialisation** 🟢 (obs-04): every unit carries a decodable serial —
+`PTL-VII-L1-26-H-3493` = `PTL` (Pyramid Technoplast Ltd) · `VII` (Unit 7) · `L1` (Line 1) ·
+`26` (year) · `H` (month code, 8th letter = August) · `3493` (sequence). **Phlo does not need to
+invent a serial scheme — it needs to capture the one that exists.**
+
 **We have deep data on one of three product lines.** The 448-SKU item master covers plastic barrels
 only. MS Barrels and IBC — between them the entire steel side of the business — have no catalogue,
 no SKU structure, and no variant model in this project.
@@ -280,10 +290,17 @@ fact**, and it collapses if the series is shared, restarted, or non-sequential. 
 confirming because transaction volume drives everything about system sizing and rollout effort, and
 we currently have no volume figure at all.
 
-**On "store teams".** R2's audio is ambiguous between "store teams" and "sales teams". The project
-resolved this on 2026-08-17 to *plant teams handle goods receipt, with no separate store team*
-(🟡, CS). The original transcript ambiguity is unresolved in the audio itself, so this remains a
-working answer rather than a confirmed one.
+**On "store teams" — corrected 2026-08-21.** The clean re-transcript of R2 says plainly:
+**"All nine plants have store teams that handle everything separately and individually"** (🟢, R2).
+Recording 33 confirms independently: *"there's a store guy that handles the HDPE raw material
+storage."*
+
+The 2026-08-17 working answer — *"plant teams handle goods receipt, no separate store team"* — rested
+on an ambiguous ASR transcript and is **retracted**. **Store teams exist at all nine plants.**
+
+Rohan added the operating detail on 2026-08-21: a **plant team comprises production + store**, the
+**store team chases the vendor invoice, the LR and the GRN**, and the **purchase team sits at HO**,
+not at the plants.
 
 ---
 
@@ -999,7 +1016,7 @@ Where this model's load-bearing claims actually come from.
 | **Fleet is sales-only; inbound is third-party; teams collect from carrier facilities** | **RP** | **Yes — one conversation** |
 | Incumbent ERP is "UdyogERP" | **R1 (clean transcript)** | No — **confirmed on record 2026-08-20** |
 | ~~₹60–66 lakhs trapped in inventory~~ | **CS** | **WITHDRAWN 2026-08-21 — never verified, no longer to be used** |
-| **Plant teams receive goods; no separate store team** | **CS** | **Yes** — and contradicts an ambiguous transcript |
+| ~~Plant teams receive goods; no separate store team~~ **RETRACTED 2026-08-21 — store teams exist at all nine plants** | **CS** → R2 clean, R33 | Was single-sourced and wrong. The clean re-transcript settled it |
 | **Path A POs exist in UdyogERP** | **CS** | **Yes** |
 | Phlo is a full ERP replacement, not a gap-filler | CS | **Yes** — and it drives the entire scope |
 
