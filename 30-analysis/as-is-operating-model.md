@@ -156,13 +156,33 @@ apart from internal efficiency. `[UNKNOWN: what the rating requires them to evid
 | Site | Role | Conf. | Prov. |
 |---|---|---|---|
 | **Nine plants** across Gujarat and Maharashtra | Manufacturing | 🟢 | R1, R2 |
-| Bharuch, Gujarat | "Majority base" — main site | 🟢 | R1 |
-| Silvassa | Plant | 🟢 | R1 |
-| Wada, Maharashtra | Plant | 🟢 | R1 |
-| **One recycling plant** (additional to the nine) | Reprocessing | 🟢 | R1 |
-| Remaining ~6 plant locations | Not named in any source | 🔴 | — |
-| Unit numbering | Units are numbered; Unit 7 and Unit 8 confirmed in system data | 🟢 | SYS |
-| Which units map to which locations | Unknown — "Unit 7" cannot be tied to a town | 🔴 | — |
+| **Full plant map — obtained 2026-08-21** | See table below | 🟡 | RP |
+
+#### Plant map 🟡 (RP, 2026-08-21) — first complete numbering the project has had
+
+| Unit | Location | Makes | Visited? |
+|---|---|---|---|
+| 1 | Silvassa | `[UNKNOWN]` | No |
+| 2 | Silvassa | `[UNKNOWN]` | No |
+| 3 | Bharuch | HDPE | No |
+| 4 | Bharuch | HDPE | No |
+| 5 | Bharuch | HDPE + IBC | No |
+| 6 | Bharuch | **MS steel drums** | **Yes** — rec-32 "an MS plant… manufacturing of MS steel barrels" |
+| 7 | Bharuch | HDPE + IBC | **Yes** — rec-33 "I'm at unit number seven"; all 34 photos; serials read `PTL-VII-…` |
+| 8 | **Wada** (Khanivali), Maharashtra | `[UNKNOWN]` | No |
+| 9 | Bharuch | **Recycling** — separate GST entity | **Yes** — rec-32 "one was a recycling plant, obviously a different entity" |
+
+**Corroboration.** Unit 8 is confirmed independently: the e-Way Bill gives *Pyramid Technoplast Ltd.
+U-VIII, Khanivali-401204* under GSTIN `27AACCP5074E3ZF` — Khanivali sits in Wada taluka, Maharashtra.
+Unit 7 in Gujarat is confirmed by the inter-unit invoice (Unit 8 Maharashtra → Unit 7 Gujarat, IGST).
+The map also resolves a long-standing ambiguity: **the recycling plant is one of the nine, not a
+tenth** — R1's phrasing (*"nine plants… and then there is a recycling plant as well"*) had implied
+otherwise.
+
+⚠️ **One inconsistency to settle.** RP stated on 2026-08-21 that *"we haven't visited Wada and
+Bharuch."* But units 6, 7 and 9 are all in Bharuch on this map, and all three were visited — Unit 7
+is the subject of every photograph. The unvisited sites are almost certainly **Silvassa (1, 2) and
+Wada (8)**. Recorded here rather than silently corrected.
 
 **"All nine plants handle everything separately and individually"** (🟢, R2) is the single most
 consequential structural fact in this document. It is stated about plant teams and repeated about
@@ -249,7 +269,7 @@ Nobody at Pyramid has described their production strategy in these terms.
 | Fleet team | 4 people, covering all 9 sites and all 100 trucks | 🟢 | R2 |
 | Plant teams | 9 — one per plant | 🟢 | R2 |
 | Store teams | Referenced as 9, but see note below | 🟡 | R2 |
-| Capital trapped in inventory | ₹60–66 lakhs | 🟡 | CS |
+| Capital trapped in inventory | ~~₹60–66 lakhs~~ **WITHDRAWN 2026-08-21 (RP): do not use this figure.** No figure is available | ❌ | — |
 | **Invoice volume** | Unit 8 reached serial **2684** by 12 Aug in FY 26-27 | 🟠 | JB from SYS |
 
 **On the invoice-volume inference.** The observed invoice number is `P8/26-27/02684`, read as
@@ -485,10 +505,10 @@ Two things follow, and neither appears in any process map:
    lands at one unit and is redistributed to another. That is a **raw-material distribution hub**
    pattern, and it fits the imported-resin finding — you clear a bulk import at one port/unit and
    then break it out across nine plants.
-2. **₹33 lakh in one transfer sits against a stated ₹60–66 lakh of trapped capital.** A single
+2. **₹33 lakh moves in a single inter-unit transfer.** A single
    inter-unit resin movement is roughly half the headline working-capital figure. Either the
-   ₹60–66 L figure means something narrower than total trapped inventory, or resin transfers are a
-   material part of what is trapped. Worth resolving — the commercial case rests on that number.
+   That is a material amount of working capital in one movement, and inter-unit resin transfers may
+   be a significant part of what is tied up. No overall figure for trapped capital exists.
 
 **Each such transfer also carries real IGST cash out** (₹5.97 L here), recoverable later as input
 credit. Inter-unit movement is therefore not free: it consumes working capital in its own right.
@@ -710,7 +730,7 @@ full list — it is a single query and it defines the tenancy model.]`
 | Receipt reconciliation (GRN ↔ PO ↔ invoice) | Manual. `[UNKNOWN: who owns it]` | 🟠 | JB |
 | Payment run process, approval limits | — | 🔴 | — |
 | Costing method | — | 🔴 | — |
-| Working capital cycle | ₹60–66 lakhs trapped is the only figure we have | 🟡 | CS |
+| Working capital cycle | **WITHDRAWN 2026-08-21 (RP): do not use this figure.** **No figure exists** | 🔴 | — |
 
 ### 3.12 The Recycling Plant 🔴
 
@@ -860,7 +880,7 @@ gap.
 
 ### Pillar 3 — Inventory ageing
 
-Promoter "said it very vocally" that cash is trapped 🟢. ₹60–66 lakhs 🟡. Root causes span the whole
+Promoter "said it very vocally" that cash is trapped 🟢. **WITHDRAWN 2026-08-21 (RP): do not use this figure.** Root causes span the whole
 model: no pipeline visibility, GRN lag, over-stocking, no ageing reports, and — newly — material
 sitting uncollected at carrier facilities.
 
@@ -978,7 +998,7 @@ Where this model's load-bearing claims actually come from.
 | **Three product lines** (Plastic / MS / IBC), imported Marlex resin, customers, certifications | **RP + WEB** | No — publicly checkable |
 | **Fleet is sales-only; inbound is third-party; teams collect from carrier facilities** | **RP** | **Yes — one conversation** |
 | Incumbent ERP is "UdyogERP" | **R1 (clean transcript)** | No — **confirmed on record 2026-08-20** |
-| **₹60–66 lakhs trapped in inventory** | **CS** | **Yes** |
+| ~~₹60–66 lakhs trapped in inventory~~ | **CS** | **WITHDRAWN 2026-08-21 — never verified, no longer to be used** |
 | **Plant teams receive goods; no separate store team** | **CS** | **Yes** — and contradicts an ambiguous transcript |
 | **Path A POs exist in UdyogERP** | **CS** | **Yes** |
 | Phlo is a full ERP replacement, not a gap-filler | CS | **Yes** — and it drives the entire scope |

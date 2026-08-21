@@ -2,8 +2,9 @@
 title: "Procurement — Indent to Receipt"
 status: draft
 created: 2026-08-16
-updated: 2026-08-18
+updated: 2026-08-21
 tags: [process, procurement, indent, po, grn]
+demo_areas: [2, 3, 5]
 sources:
   - 10-observations/obs-pyramid-technoplast-site-visit.md
   - 10-observations/obs-02-current-erp-system.md
@@ -58,8 +59,9 @@ Path B: Plant → Indent → Approval → Purchase Team → PO → Vendor → [T
 | Role            | Responsibility                                                                           |
 | --------------- | ---------------------------------------------------------------------------------------- |
 | Promoters       | **Path A outright** — personally assess market, forward requirement, stock; make the procurement decision. HDPE resin and steel only |
-| Plant teams (9) | Path B: raise indents; receive goods at plant level                                      |
-| Purchase team   | **Path B only** — evaluate vendors/quotes/technical docs; convert indent to PO. No role in HDPE resin or steel buying |
+| Plant teams (9) | **= production + store** (RP, 2026-08-21). Path B: raise indents; receive goods |
+| **Store teams (9)** | One per plant. Own goods receipt. **Chase the vendor invoice, the LR and the GRN** (RP, 2026-08-21) — this is who fills the coordination role the phantom "VP" was standing in for |
+| Purchase team   | **Path B only**, and **sits at HO, not at the plants** (RP, 2026-08-21). Evaluate vendors/quotes/technical docs; convert indent to PO. No role in HDPE resin or steel buying |
 
 | Vendors         | Receive PO, raise invoice, dispatch goods                                                |
 | ~~Store teams~~ | ~~Role unclear~~ — **Resolved: Plant teams handle goods receipt (confirmed 2026-08-17)** |
@@ -123,7 +125,8 @@ and every material that is not HDPE resin or steel.
    - Output: Indent record
 
 3. Indent goes through approval.
-   - `[UNKNOWN: who approves, what criteria, how long]`
+   - **Approval sits at HO** — procurement team, and in some cases promoters or management (RP, 2026-08-21)
+   - `[UNKNOWN: levels and thresholds — deliberately deferred, not needed for the demo]`
 
 4. Purchase team evaluates options:
    - Vendor quotes
@@ -242,7 +245,7 @@ C4. `[UNKNOWN: formal escalation path]`
 
 | Issue                                | Impact                                                                   | Current Workaround                                               |
 | ------------------------------------ | ------------------------------------------------------------------------ | ---------------------------------------------------------------- |
-| No ERP coverage for PO → Sales Order | Zero visibility on goods in transit, vendor bills, LR status, GRN status | Staff chase via phone/WhatsApp/email. `[UNKNOWN: who coordinates]` |
+| No ERP coverage for PO → Sales Order | Zero visibility on goods in transit, vendor bills, LR status, GRN status | **The store team chases** — vendor invoice, LR and GRN — via phone/WhatsApp/email |
 | LR ageing                            | Items pending 5+ and 8+ days; delayed goods receipt                      | Discovered reactively; no alerting                               |
 | No owner for inbound tracking        | Consignments tracked by whoever raised the PO; nothing is anyone's job   | Purchase or plant team improvises per consignment                |
 | Material uncollected at carrier facility | Goods have reached the destination city but are not at the plant; ageing continues invisibly | Someone eventually drives over to collect |
@@ -256,7 +259,7 @@ C4. `[UNKNOWN: formal escalation path]`
 
 1. **Path A in scope?** Does promoter-run HDPE/steel procurement produce POs in the ERP, or bypass it entirely? This determines whether the highest-value materials are even within Phlo scope.
 
-2. ~~**VP's role**~~ **VOID 2026-08-20 — there is no VP.** The role came from a mis-transcription of "UdyogERP". Replacement question: **who actually coordinates the PO→GRN stretch today?** No evidence names anyone.
+2. ~~**VP's role**~~ **VOID 2026-08-20 — there is no VP.** **ANSWERED 2026-08-21 (RP):** coordination is **split** — the **purchase team at HO** owns the buy side, the **plant store team** chases vendor invoice, LR and GRN. Nobody owns the middle, which is precisely where the gap is.
 
 3. ~~**Store vs plant teams:** Who physically receives goods and raises GRN?~~ **RESOLVED 2026-08-17:** plant teams receive goods and raise GRN. There is no separate store team.
 

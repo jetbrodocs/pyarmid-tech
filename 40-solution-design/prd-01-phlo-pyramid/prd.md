@@ -1,6 +1,6 @@
 ---
 title: "PRD — Phlo Pyramid: Procurement Gap & Fleet Management"
-status: draft
+status: superseded
 created: 2026-08-17
 updated: 2026-08-17
 tags: [prd, solution-design, phlo, pyramid]
@@ -8,6 +8,19 @@ tech_decision: 30-analysis/tech-decision-phlo-stack.md
 ---
 
 # PRD — Phlo Pyramid: Procurement Gap & Fleet Management
+
+> # ⚠️ SUPERSEDED — 2026-08-21
+>
+> **Do not build on this document.** Written 2026-08-17, before the fleet correction, the product-line
+> correction, the GSTIN finding, the plant photographs, the VP retraction and the 2026-08-20 visit.
+>
+> Its **Non-Goals** section explicitly excludes production and BOM, both of which are now in scope.
+> It scopes Phlo as a gap-filler between PO and sales order; Phlo is now a full replacement covering
+> 13 demo areas.
+>
+> Kept for history. **Start at [demo-build-brief.md](../demo-build-brief.md).**
+> Its screen specs have been **moved out** to [`40-solution-design/screen-specs/`](../screen-specs/_index.md)
+> and are maintained there as a shared library. The scope of this document is not salvageable.
 
 > Tech stack approved: Phlo framework fork (Python 3.12 + FastAPI + PostgreSQL 16 + Next.js 14).
 > See `30-analysis/tech-decision-phlo-stack.md`.
@@ -79,7 +92,7 @@ Phlo Pyramid fills the visibility gap between PO creation and sales order in Pyr
 > **Revised 2026-08-17.** Inbound and outbound LRs are structurally different records, not one
 > record with a direction flag. An **inbound** LR is issued by a third-party carrier and has no
 > Pyramid truck or driver. An **outbound** LR covers an own-fleet or contractor dispatch. The
-> requirements below are split accordingly. See [proc-02-fleet-lr.md](../../20-process-maps/proc-02-fleet-lr.md).
+> requirements below are split accordingly. See [proc-02-fleet-lr.md](../20-process-maps/proc-02-fleet-lr.md).
 
 **Shared:**
 
@@ -306,7 +319,7 @@ MAINTENANCE ←─────────────────────�
 
 ## Screens
 
-Detailed specs in `screen-specs/`. Summary:
+Detailed specs in [`../screen-specs/`](../screen-specs/_index.md). Summary:
 
 | Screen                  | Purpose                                          | Primary Users             |
 | ----------------------- | ------------------------------------------------ | ------------------------- |
@@ -373,7 +386,7 @@ Detailed specs in `screen-specs/`. Summary:
 - ~~Store vs plant team~~ → **Plant teams receive goods (no separate store team)**
 - ~~Path A (HDPE/steel)~~ → **In scope — POs exist in UdyogERP, Phlo tracks like Path B**
 - ~~Does the fleet serve procurement?~~ → **No. Fleet is sales/outbound only. Inbound runs on third-party carriers** (corrected 2026-08-17)
-- Capital trapped: **₹60-66 lakhs** stuck in inventory
+- ~~Capital trapped: ₹60-66 lakhs~~ — **WITHDRAWN 2026-08-21 (RP): do not use this figure.**
 
 **Still Open:**
 

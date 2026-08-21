@@ -4,7 +4,40 @@ status: draft
 updated: 2026-08-17
 ---
 
-# Screen Specs — PRD-01 Phlo Pyramid
+# Screen Specs — temporary holding area
+
+> ## ⚠️ This folder is temporary
+>
+> **Parked here 2026-08-21**, moved out of `prd-01-phlo-pyramid/screen-specs/`.
+>
+> **Why:** `prd-01` is being **retired**, not just superseded — its scope (a gap-filler between PO
+> and sales order) is wrong at the premise level. These 15 specs are not wrong, so they were lifted
+> clear before the PRD goes.
+>
+> **This is not a new convention.** Screen specs belong under the PRD they derive from, at
+> `40-solution-design/<prd>/screen-specs/` — as `CLAUDE.md` and the `/screen-specs` skill both
+> define. **Once the replacement PRDs exist, these move back in under them** and this folder goes
+> away.
+>
+> ### Where each spec is headed
+>
+> | Future PRD | Specs to move in |
+> |---|---|
+> | **prd-02 — Procurement & Inbound** *(areas 2, 3, 4, 5)* | `po-list` · `po-detail` · `po-ageing-dashboard` · `lr-list` · `lr-detail` · `lr-create` · `lr-ageing-dashboard` · `grn-list` · `grn-detail` · `grn-create` — **10** |
+> | **prd-03 — Inventory & Production** *(areas 1, 6, 7)* | `inventory-pipeline` — **1** |
+> | **prd-04 — Order to Dispatch** *(areas 8, 9, 10, 11)* | none yet — **0** |
+> | **prd-05 — Fleet** *(areas 12, 13)* | `fleet-dashboard` · `truck-registry` · `driver-registry` · `truck-assignment` — **4** |
+>
+> ### Before reuse
+>
+> All 15 carry corrections from the 2026-08-17→21 review, so they reflect current understanding.
+> **But the PO and LR specs still assume purchase orders are *imported from UdyogERP*.** Phlo now
+> owns the whole chain, so a PO is *created* in Phlo. Layouts, field tables, validations and
+> conditional states hold up; that data-source assumption does not.
+>
+> **Coverage is 5 of 13 demo areas.** Nothing exists for indent (2), inventory management (6),
+> production (7), demand planning (8), sales orders (9), dispatch (10), sales invoice (11) or fleet
+> cost (13).
 
 Per-screen UX specifications for the Phlo Pyramid implementation. **15 screens specified, 2 more identified 2026-08-17.**
 
@@ -13,7 +46,7 @@ Per-screen UX specifications for the Phlo Pyramid implementation. **15 screens s
 > Dart, or trucking companies), and plant or purchase teams frequently **collect material from the
 > carrier's facility themselves**. Every LR screen below now splits by direction, the Fleet screens
 > are scoped to outbound, and two new screens are needed. See
-> [proc-02-fleet-lr.md](../../../20-process-maps/proc-02-fleet-lr.md).
+> [proc-02-fleet-lr.md](../../20-process-maps/proc-02-fleet-lr.md).
 
 ## LR Tracking
 

@@ -2,8 +2,9 @@
 title: "Fleet Management and LR Tracking"
 status: draft
 created: 2026-08-16
-updated: 2026-08-17
+updated: 2026-08-21
 tags: [process, fleet, lr, transport, grn, inbound-logistics]
+demo_areas: [4, 12]
 sources:
   - 10-observations/obs-pyramid-technoplast-site-visit.md
 ---
@@ -63,16 +64,22 @@ Flow B (inbound):   PO → Vendor dispatches → Third-party carrier → LR issu
 | Drivers (~100)          | A    | On Pyramid payroll; operate owned trucks on outbound runs                                       |
 | Contractor transporters | A    | External; used for outbound overflow or specific routes                                         |
 | Third-party carriers    | B    | Courier or trucking companies. Carry inbound material and **issue the LR**                      |
-| Purchase team           | B    | Track inbound consignments against their POs; chase carriers                                    |
+| Purchase team (HO)      | B    | Raise the PO; track inbound consignments against it. **Sits at HO, not at the plants** (RP, 2026-08-21) |
+| **Store team (9)**      | B    | **The inbound chasers.** Own goods receipt and **chase the vendor invoice, the LR and the GRN** (RP, 2026-08-21) |
 | Plant teams (9)         | B    | Track inbound consignments; **collect material from carrier facilities**; receive goods; raise GRN (confirmed 2026-08-17) |
 
 **Structural note (Flow A):** Fleet team of 4 is stretched thin across 9 plants and ~100 trucks.
 This is the organisational root of *outbound* LR ageing.
 
-**Structural note (Flow B):** Inbound has **no dedicated owner at all**. Tracking falls to whichever
-purchase or plant person raised or expects the material. There is no team equivalent to the fleet
-team on the inbound side. This is the organisational root of *inbound* LR ageing, and it is a
-different problem with a different fix.
+**Structural note (Flow B), revised 2026-08-21.** Inbound now has a named owner: the **plant store
+team** chases the vendor invoice, the LR and the GRN, while the **purchase team at HO** owns the buy
+side. Earlier versions of this map said inbound had *no dedicated owner at all* — that was wrong.
+
+But it is **chasing, not tracking**. There is still no system, the store team is a plant-level
+function with no cross-plant view, and there is no inbound equivalent of the fleet team. Coordination
+is split across HO and nine plants with nobody owning the middle — which is exactly where the gap
+sits. This remains the organisational root of *inbound* LR ageing, and it is a different problem from
+outbound with a different fix.
 
 ## Inputs
 
@@ -222,9 +229,14 @@ This is **not** a fleet process. No Pyramid truck and no Pyramid driver appear a
 Observed in site visit. No formal escalation process documented.
 
 A1. LR remains open beyond expected delivery window.
-A2. `[UNKNOWN: is there an alert, or discovered only when someone checks?]`
-A3. Purchase or plant staff chase the vendor or carrier via phone, WhatsApp, email.
+A2. **No alert exists today.** Discovery is reactive — the problem surfaces only when someone checks.
+A3. The **store team** chases the vendor or carrier via phone, WhatsApp, email.
 A4. `[UNKNOWN: escalation path if goods missing or delayed]`
+
+> **To-be requirement (RP, 2026-08-21): Phlo must alert the store team on an ageing LR.**
+> Per stage, with configurable thresholds, scoped to the destination plant — **not** to the fleet
+> team, which has no inbound role. This is the direct counter to the reactive discovery described
+> above, and a must-have for the demo. See `40-solution-design/demo-build-brief.md` §3.
 
 ### Exception B: Material Sitting Uncollected at Carrier Facility
 

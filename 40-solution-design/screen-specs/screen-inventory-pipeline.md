@@ -76,7 +76,7 @@ tags: [screen-spec, ux, dashboard, inventory]
 
 **Why "At Carrier" earns its own stage.** This is stock Pyramid has paid for, that has physically
 reached its destination city, and that is not in the plant because nobody has collected it. It is
-the sharpest possible illustration of the ₹60–66 lakhs trapped in inventory — and unlike transit
+the sharpest possible illustration of capital tied up in inventory — and unlike transit
 time, it is entirely within Pyramid's power to fix. Show it in warning styling whenever non-zero.
 
 ### Stage Detail Table

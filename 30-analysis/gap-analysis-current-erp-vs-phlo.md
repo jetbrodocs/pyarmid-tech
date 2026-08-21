@@ -8,7 +8,7 @@ resolved:
   - "Q2: Phlo is full ERP replacement, not gap-filler (confirmed 2026-08-17)"
   - "Q7: Incumbent ERP is UdyogERP (confirmed 2026-08-17)"
   - "Q5: Plant teams receive goods and raise GRN; no separate store team (confirmed 2026-08-17)"
-  - "Q9: Capital trapped in inventory is Rs 60-66 lakhs (confirmed 2026-08-17)"
+  - "Q9: WITHDRAWN 2026-08-21 - the Rs 60-66 lakh figure is not to be used; no verified figure exists"
   - "Owned fleet is outbound/sales only; inbound procurement runs on third-party carriers (corrected 2026-08-17)"
 sources:
   - 10-observations/obs-pyramid-technoplast-site-visit.md
@@ -119,7 +119,7 @@ Pyramid named three problems as the basis for the system. Each traces directly t
 
 ### 3. Inventory Ageing
 
-**Symptom:** Promoter "said it very vocally" that cash is trapped in inventory for long periods. **Confirmed: ₹60-66 lakhs stuck** (2026-08-17).
+**Symptom:** Promoter "said it very vocally" that cash is trapped in inventory for long periods. **WITHDRAWN 2026-08-21 (RP): do not use this figure.**
 
 **Root causes:**
 
@@ -283,7 +283,7 @@ Phlo must integrate with:
 
 8. **Measurement baseline:** What is actually measured today for LR ageing, inventory ageing? Need baseline to show improvement.
 
-9. ~~**Capital trapped:** How much cash is stuck in inventory?~~ **RESOLVED 2026-08-17: ₹60–66 lakhs.**
+9. **Capital trapped:** **WITHDRAWN 2026-08-21 (RP): do not use this figure.** No verified figure exists. Do not quote one.
 
 10. **e-Way Bill:** Does Phlo need to generate e-Way Bills, or does current ERP handle all dispatch documentation?
 
