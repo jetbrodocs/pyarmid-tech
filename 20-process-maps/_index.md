@@ -1,7 +1,7 @@
 ---
 title: "Process Maps Index"
 status: active
-updated: 2026-08-21
+updated: 2026-08-24
 ---
 
 # Process Maps
@@ -88,7 +88,10 @@ Every distinct process seen or described during the visits, and where it is now 
 
 ## Known gap on the critical path
 
-**`proc-04` cannot show raw-material consumption without the BOMs.** The slot exists at Stage 3, but
-no bill of materials is behind it, and the ERP's `BOM ID` field was empty on the sampled item. Demo
-area 7 — the *"affecting Raw Material Inventory"* half of the brief — stays hypothetical until the
-three BOMs (IBC, HDPE Drum, MS Steel Drum) arrive.
+~~`proc-04` cannot show raw-material consumption without the BOMs.~~ **BOMs received 2026-08-21** —
+see [obs-06](../10-observations/obs-06-bom-analysis.md). Real BOMs exist for all three lines.
+`proc-04` Stage 1b now carries the charge data and structural requirements.
+
+**Remaining gap:** the **cage is not linked to the finished IBC** in `FG-BOM-W` — four levels of cage
+BOM exist but are consumed by nothing. This must be resolved before a run can correctly deduct steel.
+See obs-06 §5.

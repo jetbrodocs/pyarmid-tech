@@ -2,7 +2,7 @@
 title: "Sales Order to Dispatch"
 status: draft
 created: 2026-08-21
-updated: 2026-08-21
+updated: 2026-08-24
 tags: [process, sales-order, demand, dispatch, invoice, fleet]
 demo_areas: [8, 9, 10, 11, 12]
 sources:

@@ -2,7 +2,7 @@
 title: "Visit Debrief — Recordings 32, 33 and 34"
 status: draft
 created: 2026-08-21
-updated: 2026-08-21
+updated: 2026-08-24
 tags: [observation, site-visit, production, fleet-cost, job-work, bom, ibc]
 sources:
   - 00-inbox/transcript-recording-32.md
@@ -137,6 +137,10 @@ reads as design intent, not observation.]`
 **The recycling plant is a separate GST entity.** Stated plainly, and consistent with the e-Way
 Bill GSTIN analysis showing multiple registrations under one PAN.
 
+**Concrete example (confirmed 2026-08-21):** **Units 6 (MS) and 7 (HDPE/IBC) share a GSTIN** —
+both Bharuch. Movement between them uses a **delivery challan**. Unit 9 (recycling), also Bharuch,
+holds a **separate** GSTIN — movement to/from Unit 9 always requires a sale-purchase invoice.
+
 ### Cross-state split fulfilment — an unsolved problem 🟡
 
 > *"Cross-state purchase. Duplication issue… when half is coming from Gujarat, half is coming from
@@ -236,6 +240,10 @@ of production"* than IBC.
 
 Per the plant map obtained 2026-08-21, these are **Unit 9** (recycling) and **Unit 6** (MS), both at
 Bharuch. Together with Unit 7 that makes three plants visited, all in Bharuch.
+
+**GSTIN fact (confirmed 2026-08-21):** Units 6 and 7 **share a GSTIN** — inter-plant movement between
+them travels on a **delivery challan, not an invoice**. Unit 9 (recycling) holds a **separate GST
+registration** even though it is also in Bharuch — co-location does not imply shared registration.
 
 ---
 

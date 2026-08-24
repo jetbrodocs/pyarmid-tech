@@ -2,7 +2,7 @@
 title: "Fleet Management and LR Tracking"
 status: draft
 created: 2026-08-16
-updated: 2026-08-21
+updated: 2026-08-24
 tags: [process, fleet, lr, transport, grn, inbound-logistics]
 demo_areas: [4, 12]
 sources:
@@ -205,7 +205,7 @@ This is **not** a fleet process. No Pyramid truck and no Pyramid driver appear a
 ## Flow C — Inter-Unit Transfer
 
 1. Sending unit raises transfer requirement.
-   - May be sales invoice format (per ERP observation: "Inter-unit transfer handled as sales invoice")
+   - **Document depends on GSTIN:** same GSTIN → **delivery challan**; different GSTIN or state → **sale-purchase invoice**. Example: U6 (MS) ↔ U7 (HDPE/IBC), both Bharuch, **share a GSTIN** — challan. U9 (recycling), also Bharuch but **separate GSTIN** — always invoice. Full rule in [proc-05](proc-05-inventory.md) Stage 4
 
 2. Truck assigned.
    - `[UNKNOWN: does inter-unit movement use the owned fleet, or third-party carriers like inbound?
@@ -383,4 +383,4 @@ number to get from Pyramid — it determines where the system should intervene f
 
 18. **GRN trigger:** What prompts GRN creation — material arriving at plant, or an inspection?
 
-19. **Inter-unit transfers:** Own fleet or third-party? This is unresolved now that the fleet is sales-only.
+19. **Inter-unit transfers:** Own fleet or third-party? Unresolved. The transfer **document** is now clear (challan or invoice by GSTIN — see Flow C step 1), but the **carrier** is not.

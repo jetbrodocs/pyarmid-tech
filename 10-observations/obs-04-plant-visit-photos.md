@@ -2,7 +2,7 @@
 title: "Plant Visit — Photographic Evidence, Unit VII"
 status: draft
 created: 2026-08-20
-updated: 2026-08-20
+updated: 2026-08-24
 tags: [observation, site-visit, production, quality, ibc, photos]
 source: 00-inbox/plant-visit-2026-08-20/ — 34 photographs, 2026-08-20
 ---
@@ -24,7 +24,7 @@ page. Nothing here is inference unless marked.
 - **Unit VII** — confirmed by the serial number scheme on finished goods (`PTL-VII-…`).
 - A single large shed containing **both plastic and steel operations**: blow moulding, granulating,
   tube mill, punching presses, cage assembly, IBC assembly, screen printing, warehousing.
-- `[UNKNOWN: which town. Unit VII was previously believed to be Gujarat, from the inter-unit invoice.]`
+- **Bharuch, Gujarat** (confirmed 2026-08-21). Units 6, 7 and 9 are all in Bharuch. Units 6 and 7 share a GSTIN; Unit 9 (recycling) holds a separate registration.
 
 ## Activity
 
@@ -291,7 +291,7 @@ Signage in Hindi and English. **"NO CHILD LABOUR — 18 years"** notice. A safet
 
 ## Open Questions
 
-1. **Which town is Unit VII?** The serial confirms the unit number, not the location.
+1. ~~**Which town is Unit VII?**~~ **Resolved 2026-08-21: Bharuch.** Units 6, 7 and 9 are all in Bharuch. Units 6 and 7 share a GSTIN.
 2. **Does the serial sequence reset monthly or annually?** Determines whether 3,493 is a monthly or year-to-date figure — and whether it is the project's first real volume number.
 3. **Is the serial captured anywhere digitally,** or only marked on the unit and written on the production sheet?
 4. **Where does the production sheet live?** It is referenced repeatedly in the work instructions but was not photographed. It is probably the single most important undocumented record in the plant.

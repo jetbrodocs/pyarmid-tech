@@ -2,7 +2,7 @@
 title: "Tech Stack Decision — Phlo Framework"
 status: approved
 created: 2026-08-17
-updated: 2026-08-17
+updated: 2026-08-24
 tags: [analysis, tech-decision, phlo, architecture]
 sources:
   - github.com/enterpriseagentstack/phlo (cloned and reviewed)

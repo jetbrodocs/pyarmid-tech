@@ -2,7 +2,7 @@
 title: "Inventory — Visibility, Movement and Control"
 status: draft
 created: 2026-08-21
-updated: 2026-08-21
+updated: 2026-08-24
 tags: [process, inventory, stock, stores, reuse, inter-plant]
 demo_areas: [1, 6]
 sources:

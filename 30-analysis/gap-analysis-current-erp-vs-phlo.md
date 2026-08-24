@@ -2,7 +2,7 @@
 title: "Gap Analysis — Current ERP vs Phlo Scope"
 status: draft
 created: 2026-08-17
-updated: 2026-08-17
+updated: 2026-08-24
 tags: [analysis, gap-analysis, erp, phlo]
 resolved:
   - "Q2: Phlo is full ERP replacement, not gap-filler (confirmed 2026-08-17)"
@@ -206,7 +206,7 @@ Based on gap analysis, Phlo needs these capabilities:
 | ------------------------------------ | --------------------------------------------------------------------------------- |
 | **Path A procurement (HDPE, steel)** | Does promoter-run procurement produce POs in ERP? If no, may be out of Phlo scope |
 | **Full ERP replacement**             | Is Phlo gap-filler only, or eventual full replacement?                            |
-| **Production/BOM**                   | Current ERP has BOM fields but unclear if used                                    |
+| **Production/BOM**                   | ERP's BOM field was empty, but **real BOMs exist in Excel** (received 2026-08-21, obs-06). All three lines have BOMs. Production planning method still unknown |
 
 ---
 
@@ -239,7 +239,7 @@ Phlo must integrate with:
 | 5   | Nine plants operate separately                            | Site visit                          | Solution must be multi-plant from day one     |
 | 6   | Current ERP has solid GST compliance                      | e-Way Bill, e-Invoice, IRN visible  | Don't rebuild this — integrate or leave alone |
 | 7   | Path A (HDPE/steel) scope is uncertain                    | "Does it bypass ERP?" open question | Biggest value materials may be out of scope   |
-| 8   | ~~VP is single point of routing in gap~~ **RETRACTED 2026-08-20** | Mis-transcription of "UdyogERP" | No such person is evidenced. Who coordinates the gap is unknown |
+| 8   | ~~VP is single point of routing in gap~~ **RETRACTED 2026-08-20** | Mis-transcription of "UdyogERP" | **Answered 2026-08-21 (RP):** coordination split — purchase team at HO (buy side), plant store team (vendor invoice, LR, GRN). Nobody owns the middle |
 
 ---
 
@@ -273,7 +273,7 @@ Phlo must integrate with:
 
 3. **Integration feasibility:** Can UdyogERP export PO data via API, file, or only manual re-entry?
 
-4. ~~**VP role**~~ **VOID 2026-08-20 — the VP does not exist.** Replacement: **who coordinates the PO→GRN stretch?** Currently unevidenced.
+4. ~~**VP role**~~ **VOID 2026-08-20 — the VP does not exist.** Replacement: **who coordinates the PO→GRN stretch?** **ANSWERED 2026-08-21 (RP):** coordination split — purchase team at HO (buy side), plant store team (vendor invoice, LR, GRN). Nobody owns the middle.
 
 5. ~~**Store vs plant teams:** Who receives goods?~~ **CORRECTED 2026-08-21:** **store teams exist at all nine plants** (R2 clean transcript: *"all nine plants have store teams"*; R33 confirms). A plant team = production + store. The **store team** owns goods receipt and chases the vendor invoice, LR and GRN; the **purchase team sits at HO**. Supersedes the 2026-08-17 answer, which rested on an ambiguous ASR transcript.
 

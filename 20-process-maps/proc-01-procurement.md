@@ -2,7 +2,7 @@
 title: "Procurement — Indent to Receipt"
 status: draft
 created: 2026-08-16
-updated: 2026-08-21
+updated: 2026-08-24
 tags: [process, procurement, indent, po, grn]
 demo_areas: [2, 3, 5]
 sources:
@@ -42,9 +42,9 @@ the core input of every line.
 bought in as a component via Path B? Same question for its pallet bases (wooden / composite / steel /
 plastic). One product line may straddle both procurement paths.]`
 
-`[UNKNOWN: HDPE resin is **imported** (Marlex HXM TR-571). Import lead time, customs clearance, CHA,
-port or bonded storage, LC and forex are not mapped anywhere in this project, and none of them appear
-in the steps below.]`
+`[UNKNOWN: HDPE resin is **dual-sourced** — imported (SABIC, Saudi Arabia) and domestic (IOCL Propel,
+India), per photographic evidence at Unit 7. The import leg (lead time, customs, CHA, port storage,
+LC, forex) is not mapped. The domestic leg may follow a simpler logistics chain, also unmapped.]`
 
 ```
 Path A: Promoters → [Decision] → PO → Vendor → [THE GAP] → Receipt → Sales Order
@@ -64,7 +64,7 @@ Path B: Plant → Indent → Approval → Purchase Team → PO → Vendor → [T
 | Purchase team   | **Path B only**, and **sits at HO, not at the plants** (RP, 2026-08-21). Evaluate vendors/quotes/technical docs; convert indent to PO. No role in HDPE resin or steel buying |
 
 | Vendors         | Receive PO, raise invoice, dispatch goods                                                |
-| ~~Store teams~~ | ~~Role unclear~~ — **Resolved: Plant teams handle goods receipt (confirmed 2026-08-17)** |
+| ~~Store teams~~ | ~~Role unclear~~ — ~~Resolved 2026-08-17: no separate store team~~ **RE-RESOLVED 2026-08-21:** store teams **do** exist — see row above. The 2026-08-17 resolution was wrong |
 
 ## Inputs
 
@@ -145,7 +145,7 @@ and every material that is not HDPE resin or steel.
 
 **CRITICAL:** Steps 6–12 happen outside the ERP. Manual handling via paper, Excel, email, WhatsApp, phone calls. No visibility. This is the core problem Phlo solves.
 
-> **Corrected 2026-08-20:** earlier versions said "VP routes manual steps". **There is no VP** — the word came from a mis-transcription of "UdyogERP". Who actually coordinates this stretch is now an open question with no evidence behind it either way.
+> **Corrected 2026-08-20:** earlier versions said "VP routes manual steps". **There is no VP** — the word came from a mis-transcription of "UdyogERP". **Answered 2026-08-21 (RP):** coordination is split — the **purchase team at HO** owns the buy side; the **plant store team** chases vendor invoice, LR and GRN.
 
 > **Corrected 2026-08-17:** inbound material moves on **third-party carriers**, never on Pyramid's
 > own trucks. The owned fleet is sales-only. Step 9 (collection from the carrier's facility) is new
@@ -250,7 +250,7 @@ C4. `[UNKNOWN: formal escalation path]`
 | No owner for inbound tracking        | Consignments tracked by whoever raised the PO; nothing is anyone's job   | Purchase or plant team improvises per consignment                |
 | Material uncollected at carrier facility | Goods have reached the destination city but are not at the plant; ageing continues invisibly | Someone eventually drives over to collect |
 | GRN pendency                         | Receipts not confirmed; inventory position unclear                       | Manual follow-up                                                 |
-| Cash trapped in inventory            | Capital stuck for long periods                                           | Promoter is vocal about this — no current measurement            |
+| Cash trapped in inventory            | Capital stuck for long periods                                           | Promoter is vocal about this — no current measurement. **The ₹60–66 lakh figure previously cited has been withdrawn; it was never verified** |
 | Nine plants operate separately       | Process varies; no central visibility                                    | Each plant manages own indents and receipts                      |
 | Communication fragmented             | No single source of truth                                                | Paper, Excel, email, WhatsApp, phone — none synced               |
 | System is reactive                   | Problems discovered only when someone goes looking                       | No proactive alerts or dashboards                                |
@@ -261,7 +261,7 @@ C4. `[UNKNOWN: formal escalation path]`
 
 2. ~~**VP's role**~~ **VOID 2026-08-20 — there is no VP.** **ANSWERED 2026-08-21 (RP):** coordination is **split** — the **purchase team at HO** owns the buy side, the **plant store team** chases vendor invoice, LR and GRN. Nobody owns the middle, which is precisely where the gap is.
 
-3. ~~**Store vs plant teams:** Who physically receives goods and raises GRN?~~ **RESOLVED 2026-08-17:** plant teams receive goods and raise GRN. There is no separate store team.
+3. ~~**Store vs plant teams:** Who physically receives goods and raises GRN?~~ ~~RESOLVED 2026-08-17: no separate store team.~~ **RE-RESOLVED 2026-08-21:** store teams **do** exist — nine teams, one per plant. Plant team = production + store. Store teams own goods receipt and chase vendor invoice, LR and GRN.
 
 4. **Full cycle time:** How long from indent to goods-available? How much sits in the gap?
 
@@ -285,6 +285,6 @@ C4. `[UNKNOWN: formal escalation path]`
 
 13. **Who owns inbound tracking** — purchase team or plant team? Both have a claim. Determines RBAC for inbound LRs in Phlo.
 
-9. **Tolerance handling:** What variance is acceptable on receipt vs PO?
+14. **Tolerance handling:** What variance is acceptable on receipt vs PO?
 
-10. **Inter-unit transfers:** HDPE moves between units via sales invoice (per ERP screens). Does this follow same procurement flow, or separate?
+15. **Inter-unit transfers:** HDPE moves between units via sales invoice (per ERP screens). Does this follow same procurement flow, or separate? **Partly answered 2026-08-21:** Units 6 and 7 (both Bharuch) share a GSTIN — movement between them uses a delivery challan, not an invoice. Unit 9 (recycling, also Bharuch) has a separate GSTIN — always invoice.

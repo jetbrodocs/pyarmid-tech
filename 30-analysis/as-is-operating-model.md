@@ -2,7 +2,7 @@
 title: "As-Is Operating Model — Pyramid Technoplast"
 status: draft
 created: 2026-08-17
-updated: 2026-08-20
+updated: 2026-08-24
 tags: [analysis, as-is, operating-model, pre-visit]
 purpose: Pre-visit baseline. Built to be argued with, corrected, and confirmed on site.
 sources:
@@ -15,6 +15,8 @@ sources:
   - 30-analysis/gap-analysis-current-erp-vs-phlo.md
   - https://pyramidtechnoplast.com — product catalogue, fetched 2026-08-18
   - 10-observations/obs-04-plant-visit-photos.md — 34 photographs, 2026-08-20
+  - 10-observations/obs-05-visit-debrief-recordings.md — recordings 32, 33, 34 debrief
+  - 10-observations/obs-06-bom-analysis.md — BOM workbooks for all three lines
 ---
 
 # As-Is Operating Model — Pyramid Technoplast
@@ -401,7 +403,7 @@ than a gap-filler, this blank is larger than it looks.
 | HDPE resin feeds | The **Plastic Barrels** line — drums and cans | 🟢 | RP |
 | Steel feeds | The **MS Barrels** line | 🟢 | RP |
 | Both feed | The **IBC** line — HDPE inner bottle plus metal cage | 🟠 | JB |
-| **Resin is imported** | "Imported HDPE granules from **Marlex HXM TR-571**" (a Chevron Phillips grade) | 🟢 | WEB |
+| **Resin is dual-sourced** | Imported: SABIC (Saudi Arabia). Domestic: IOCL Propel (India). Both observed at Unit 7 (obs-04). Website cites Marlex HXM TR-571 (Chevron Phillips) — may be the flagship grade, not the only one | 🟢 | PHOTO, WEB |
 | Run by | **Promoters personally.** Described as "a sensitive procurement process" | 🟢 | R2 + RP |
 | Purchase team involvement | **None.** These two materials bypass the purchase team entirely | 🟢 | R2 + RP |
 | Decision inputs | Market conditions + forward requirement from customer POs + current stock position | 🟢 | R2 |
@@ -409,8 +411,8 @@ than a gap-filler, this blank is larger than it looks.
 | Does Path A produce a PO in the ERP? | Working answer: **yes, POs exist in UdyogERP** | 🟡 | CS |
 | Is there an indent or approval step? | No — promoters decide directly | 🟢 | RP |
 | Import lead time, customs, CHA, forex, LC | Entirely unmapped, and materially different from domestic buying | 🔴 | — |
-| Is the **IBC metal cage** made in-house from Path A steel, or bought in via Path B? | Unresolved. Decides whether IBC has one supply path or two | 🔴 | — |
-| Are IBC **pallet bases** (wood / steel / plastic / composite) bought or made? | Wooden and steel pallets are unlikely to be in-house | 🔴 | — |
+| Is the **IBC metal cage** made in-house from Path A steel, or bought in via Path B? | **ANSWERED (obs-04, obs-05):** cage is **fabricated in-house** from steel, AND **job-worked externally** — capacity decides. Both paths confirmed | 🟢 | PHOTO, R32, R33 |
+| Are IBC **pallet bases** (wood / steel / plastic / composite) bought or made? | **ANSWERED (obs-05):** wooden pallets are **bought**; composite, steel and plastic pallets are **made in-house** | 🟢 | R32, R33 |
 | Vendor base, contracts, price benchmarks | — | 🔴 | — |
 | Purchase frequency, lot sizes, lead times | — | 🔴 | — |
 | Whether resin is bought on contract or spot | — | 🔴 | — |
@@ -428,18 +430,18 @@ replaces it is narrower and more answerable: **the IBC is an assembly**, so its 
 pallet base may be bought-in components running through Path B while its two principal materials run
 through Path A. One product line, two supply paths.
 
-### The resin is imported — and that reframes Path A 🟢 (WEB)
+### The resin is dual-sourced — and that reframes Path A 🟢 (WEB, PHOTO)
 
-The website states the plastic lines run on **imported HDPE granules, Marlex HXM TR-571** — a
-Chevron Phillips grade. Nothing in this project had recorded that the primary raw material crosses a
-border, and it changes the shape of Path A considerably:
+The website cites **imported HDPE granules, Marlex HXM TR-571** (Chevron Phillips). But photographic
+evidence at Unit 7 (obs-04) shows **two sources on the floor**: **SABIC** (Saudi Arabia) and
+**IOCL Propel** (India). At least one leg crosses a border, which changes the shape of Path A:
 
 | Consequence | Why it matters |
 |---|---|
 | Long lead times | Import cycles run in weeks. Forward-requirement planning against customer POs (R2) makes far more sense against a multi-week lead time than a domestic one |
 | Customs clearance, CHA, port handling | An entire actor set — clearing agent, port, bonded storage — that appears in no process map in this project |
 | Forex exposure and letters of credit | Plausibly a large part of what "**sensitive**" means. Promoters personally handling FX and LC is ordinary for an Indian mid-cap |
-| Single-grade dependence | A named grade from a named producer is concentrated supply risk |
+| ~~Single-grade dependence~~ | ~~A named grade from a named producer is concentrated supply risk~~ **Mitigated**: dual-sourcing (SABIC + IOCL Propel) confirmed, though grade diversity is still unknown |
 | **Possible link to the collection pattern** | 🟠 (JB): imported material clears at a port and moves inland. Whether "collect it from the carrier's facility" is partly a **port / CFS clearance** pattern rather than a courier-depot one is unknown — and the two need very different modelling |
 
 **This is website marketing copy, not an operational statement.** It may describe the flagship grade
@@ -499,7 +501,7 @@ on site, because it is both load-bearing and single-sourced.
 | Goods receipt | Plant team receives, verifies against PO, raises GRN | 🟡 | CS |
 | GRN format | Off-system — paper or Excel | 🟢 | R1 |
 | GRN pendency | A named problem — GRNs pending | 🟢 | R1 |
-| Separate store team? | Working answer: **no** | 🟡 | CS |
+| Separate store team? | **YES — nine store teams, one per plant.** Plant team = production + store. Store team chases vendor invoice, LR, GRN. Purchase team sits at HO. ~~Working answer "no" retracted~~ | 🟢 | R2 clean, R33 |
 | Stock visibility across nine plants | None consolidated | 🟢 | R1 |
 | **Raw material moves between units** | Sampled transfer: Unit 8 (MH) → Unit 7 (GJ), **25,500 units of HM-HDPE granules @ ₹130 = ₹33.15 L**, plus 18% IGST. Invoice P8/26-27/02684 | 🟢 | SYS |
 | Inventory over-stocking | "Inventory is being stocked for more than necessary" | 🟢 | R1 |
@@ -548,7 +550,7 @@ generic "Path B procurement" throughout.
 | Machines, lines, capacity per plant | — | 🔴 | — |
 | Shift patterns, headcount on floor | — | 🔴 | — |
 | Production planning method | — | 🔴 | — |
-| BOM usage | BOM ID field **exists but was empty** on the sampled item. Production planning may be manual | 🟢 (field) / 🟠 (usage) | SYS, JB |
+| BOM usage | BOM ID field exists but was **empty in the ERP**. However, **real BOMs exist outside the ERP** in Excel workbooks — received 2026-08-21, analysed in obs-06. All three lines have BOMs. 🔴 The cage is missing from the finished IBC BOM | 🟢 | SYS, obs-06 |
 | Work orders | A **Work Order button exists** on Labour Job Issue IV — so work orders are a real object | 🟢 | SYS |
 | Scrap and yield rates | — | 🔴 | — |
 | Changeover between colours / weights | — | 🔴 | — |
@@ -749,13 +751,24 @@ full list — it is a single query and it defines the tenancy model.]`
 | Costing method | — | 🔴 | — |
 | Working capital cycle | **WITHDRAWN 2026-08-21 (RP): do not use this figure.** **No figure exists** | 🔴 | — |
 
-### 3.12 The Recycling Plant 🔴
+### 3.12 The Recycling Plant 🟡
 
-Mentioned exactly once, in one clause of R1: *"and then there is one more recycling plant as well."*
+**Unit 9**, Bharuch. Visited 2026-08-20 — rec-32: *"one was a recycling plant, obviously a different
+entity."*
 
-Nothing else is known. Not what it processes, whether it takes in Pyramid's own production scrap or
-buys external waste, whether regrind re-enters the drum lines, whether it is a cost centre or sells
-externally, its headcount, or whether it runs on the same ERP.
+**Separate GST entity** despite co-location with Units 6 and 7 in Bharuch (confirmed 2026-08-21).
+Movement to/from Unit 9 always requires a sale-purchase invoice, never a challan.
+
+| Element | As-is | Conf. | Prov. |
+|---|---|---|---|
+| Location | Bharuch | 🟢 | R32, RP |
+| GSTIN | **Separate** from Units 6 and 7 | 🟢 | RP |
+| What it produces | Recycled plastic granules from scrap and regrind | 🟢 | R32 |
+| Output destination | **Sold externally AND reused as input in other plants** | 🟢 | R32 |
+| Steel scrap | **Not recyclable** — steel, if not made correctly, gets wasted | 🟢 | R33 |
+| In-plant granulation | Separate from Unit 9. Unit 7 has its own granulation loop (obs-04, PTL/WI/PD/04) | 🟢 | PHOTO |
+| Demo scope | **Out of scope** (obs-06) | 🟡 | RP |
+| Headcount, capacity, process detail | — | 🔴 | — |
 
 🟠 (JB): for an HDPE manufacturer, a captive recycling operation usually exists to reclaim resin —
 the single largest input cost, and the one the promoters personally procure. If so, it sits directly
@@ -806,7 +819,7 @@ Jetbro has seen.
 | Purchase team | ? | Vendor evaluation, PO creation for Path B | 🟢 / 🔴 size |
 | Fleet team | 4 | Truck assignment across 9 sites | 🟢 |
 | Sales team | ? | Met on the visit; nothing recorded | 🔴 |
-| Store teams | 9? | Existence itself is in question | 🟡 |
+| Store teams | **9 — confirmed.** One per plant. Own goods receipt; chase vendor invoice, LR, GRN | 🟢 |
 | Gautam | 1 | IT, plant-based | 🟢 |
 | Drivers | ~100 | Payroll | 🟢 |
 
@@ -832,8 +845,9 @@ top of the visit agenda for three days.
 **What the sentence actually says** is narrower and was already known: the PO→sales-order stretch is
 absent from UdyogERP. It names nobody.
 
-**Who actually coordinates that stretch is now genuinely unknown** — not unanswered, but unasked.
-No evidence in the project speaks to it either way.
+**Answered 2026-08-21 (RP):** coordination is **split** — the **purchase team at HO** owns the buy
+side; the **plant store team** chases vendor invoice, LR and GRN. Nobody owns the middle, which is
+precisely where the gap sits.
 
 **The methodological point.** This is the third correction of the same shape — after the fleet
 error and the five-vs-three product lines. In each case a *reading* of ambiguous source material was
@@ -922,7 +936,7 @@ How well we actually know each area. This is the honest answer to "do we have an
 |---|---|---|
 | Product catalogue — Plastic Barrels | ████████░░ 80% | 448-SKU master, fully analysed |
 | Product catalogue — MS Barrels | ███░░░░░░░ 30% | 7 products, gauges and coatings from the website. No SKU structure |
-| Product catalogue — IBC | ██░░░░░░░░ 20% | 4 pallet variants from the website. No BOM, no SKU structure |
+| Product catalogue — IBC | █████░░░░░ 50% | 4 pallet variants from website. **Full BOM received 2026-08-21** (obs-06): 4-level assembly, component sourcing confirmed. No SKU structure |
 | GST / compliance | ████████░░ 80% | 12 ERP screens |
 | ERP sales-side transactions | ███████░░░ 70% | Screenshots |
 | Procurement Path B | ██████░░░░ 60% | R1, well described |
@@ -934,7 +948,7 @@ How well we actually know each area. This is the honest answer to "do we have an
 | Outbound fleet ops | ██░░░░░░░░ 20% | Existence known, process inferred |
 | Finance / Tally | ██░░░░░░░░ 20% | One sentence |
 | Sales operations | ██░░░░░░░░ 20% | Team met, nothing recorded |
-| Stores / inventory ops | ██░░░░░░░░ 20% | Symptoms only |
+| Stores / inventory ops | ████░░░░░░ 40% | Store teams confirmed (9), coordination split known, all-Excel confirmed, inter-plant GSTIN rules documented |
 | ERP purchase-side | █░░░░░░░░░ 10% | Never seen |
 | Job work | ██░░░░░░░░ 20% | Full field structure for both forms; still zero process. **Screen-printing hypothesis eliminated — it is in-house** |
 | **Production** | ██████░░░░ 55% | **Transformed 2026-08-20.** Process parameters, mould handling, leak-test spec, reject handling, three defect standards, equipment — all from photographed work instructions |
@@ -942,7 +956,7 @@ How well we actually know each area. This is the honest answer to "do we have an
 | IBC bill of materials | ███████░░░ 70% | Cage/tube/pallet in-house; valves and cam locks imported from China |
 | **Exports** | ██░░░░░░░░ 20% | **New 2026-08-20.** ~40-country recollect programme confirmed; volumes and process unmapped |
 | In-plant granulation | ██████░░░░ 60% | `PTL/WI/PD/04` photographed in full |
-| **Recycling plant (separate site)** | ░░░░░░░░░░ 0% | **Still one clause.** The granulation loop seen at Unit VII is in-plant regrind, not that site |
+| **Recycling plant (Unit 9)** | ██░░░░░░░░ 20% | Visited 2026-08-20. Separate GSTIN, Bharuch, produces recycled granules (sold + reused). In-plant granulation at U7 is separate. Process detail still 🔴 |
 | Quality / UN certification | ███████░░░ 70% | UN marking decoded off a finished IBC; leak-test spec and reject flow transcribed |
 
 **The blunt summary.** We have a good model of *how Pyramid records commercial transactions* and a

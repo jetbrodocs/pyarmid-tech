@@ -2,7 +2,7 @@
 title: "Current ERP System — Screen Inventory and Data Model"
 status: draft
 created: 2026-08-13
-updated: 2026-08-17
+updated: 2026-08-24
 tags: [observation, erp, current-system, screens, udyogerp]
 source: 00-inbox/current-erp-screen-extract.md
 ---
@@ -17,7 +17,7 @@ source: 00-inbox/current-erp-screen-extract.md
 
 ## Activity
 
-Pyramid operates a desktop ERP system (Windows-based, **UdyogERP** — confirmed 2026-08-17). Implemented at GST rollout ~2018. Used for indent-through-PO and sales order onward. Described by Rohan as "reactive, not proactive." Tally runs downstream for accounting.
+Pyramid operates a desktop ERP system (Windows-based, likely **UdyogERP** — name inferred from audio transcription but **unconfirmed for client-facing use**; transcribes as "Ugi RP" / "Oogi RP"). Implemented at GST rollout ~2018. Used for indent-through-PO and sales order onward. Described by Rohan as "reactive, not proactive." Tally runs downstream for accounting.
 
 **Critical gap (from site visit):** Everything between PO creation and sales order generation is absent from the system. Vendor invoices, goods movement, LRs, GRNs, receipt and reconciliation — all happen manually, through paper, WhatsApp, email, and phone. None synced. This is the core problem Phlo solves.
 
@@ -567,7 +567,7 @@ Example item: **ZIG ZAG EASY BASE RING**
 | Customer contact data incomplete            | Visible on Zydex example | No email, no WhatsApp, no cell — communication likely via phone/in-person | Limits digital communication capabilities                                                                                                                |
 | Two Labour Job Issue variants (III & IV)    | Structural               | Users must know which form to use for which scenario                      | Training burden; risk of using wrong form                                                                                                                |
 | BOM ID field empty                          | At least on sample item  | BOM may not be actively used in current system                            | Production planning may be manual                                                                                                                        |
-| PO-to-Sales Order gap                       | Every procurement cycle  | Manual handling via paper, phone, email, WhatsApp `[UNKNOWN: who coordinates — the "VP" in earlier versions was a mis-transcription]`     | No visibility on goods in transit, pending LRs (5-8+ days), pending GRNs, missing raw materials, critical spares not received. Cash trapped in inventory |
+| PO-to-Sales Order gap                       | Every procurement cycle  | Manual handling via paper, phone, email, WhatsApp. Coordination split: purchase at HO owns buy side, **plant store team** chases vendor invoice, LR and GRN | No visibility on goods in transit, pending LRs (5-8+ days), pending GRNs, missing raw materials, critical spares not received. Cash trapped in inventory |
 | Communication fragmented                    | Constant                 | Staff switch between paper, ERP, Excel, email, WhatsApp, phone calls      | No single source of truth. Management has no holistic picture                                                                                            |
 | Duplicate master entries                    | Ongoing                  | [UNKNOWN]                                                                 | Noted as "small problem" — cleanup scope, not primary driver                                                                                             |
 | System is reactive, not proactive           | Structural               | Management only discovers problems when they go looking                   | No alerts, no pipeline visibility, no aging reports                                                                                                      |

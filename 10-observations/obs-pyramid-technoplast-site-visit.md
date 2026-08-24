@@ -2,7 +2,7 @@
 title: "Pyramid Technoplast — Site Visit Observation"
 status: draft
 created: 2026-08-07
-updated: 2026-08-20
+updated: 2026-08-24
 tags: [observation, site-visit, procurement, erp, fleet, pyramid-technoplast]
 ---
 
@@ -72,7 +72,7 @@ ageing** — with the promoter vocal that cash is trapped in inventory.
 
 - **Area:** Nine plants across Gujarat and Maharashtra, plus one recycling plant.
 - **Station/Cell:** Bharuch is the main base. Silvassa and Wada (Maharashtra) also named.
-- **Address/Building:** `[UNKNOWN: specific site visited not stated]`
+- **Address/Building:** Visit on 2026-08-06 — specific plant not stated in recording. Subsequent visit (2026-08-20) covered Units 6, 7 and 9, all **Bharuch, Gujarat**.
 
 ## Activity
 
@@ -124,7 +124,7 @@ column maps each to Pyramid's own catalogue name, checked against the company we
 | Jay — promoter | 1 | `[UNKNOWN]` | Decision maker; Phlo pitched to him. Vocal that cash is trapped in inventory |
 | Promoters (as a group) | `[UNKNOWN]` | `[UNKNOWN]` | **Personally run HDPE and steel procurement** — treated as sensitive |
 | Plant teams | 9 teams | `[UNKNOWN]` | One per plant. Raise indents. Each handles everything separately and individually |
-| Store teams | 9 teams | `[UNKNOWN]` | One per plant. Same decentralised pattern. `[UNKNOWN: "store" vs "sales" — audio ambiguous]` |
+| Store teams | 9 teams | `[UNKNOWN]` | One per plant. Same decentralised pattern. **Confirmed as "store teams"** — clean transcript of recording 2 reads *"All nine plants have store teams that handle everything separately and individually."* Independently supported by rec-33: *"there's a store guy that handles the HDPE raw material storage."* |
 | Fleet management team | 4 people | `[UNKNOWN]` | **One team of four covering all nine locations and all 100 trucks** |
 | Procurement / purchase team | `[UNKNOWN]` | `[UNKNOWN]` | Converts plant indents into POs. Handles all non-core raw materials |
 | Sales team | `[UNKNOWN]` | `[UNKNOWN]` | Met on the visit; contribution not detailed in either recording |
@@ -184,8 +184,10 @@ Run by the procurement team.
 - **Then:** Request goes through approval → purchase team converts the indent into a PO after
   evaluating vendors, quotes, technical documentation and technical quotations. *All in the ERP.*
 - **Then — the gap:** Vendor raises an invoice or bill. Goods move. LRs, GRNs, receipt and
-  reconciliation happen here. **None of this is in the ERP.** It runs manually and routes
-  `[UNKNOWN: who coordinates — the "VP" was a mis-transcription, see correction above]`.
+  reconciliation happen here. **None of this is in the ERP.** Coordination is **split**: purchase
+  at HO owns the buy side; the **plant store team** chases vendor invoice, LR and GRN.
+  *(Confirmed via HANDOVER 2026-08-21, replacing [UNKNOWN] — the earlier "VP" reference was a
+  mis-transcription of "UdyogERP".)*
 - **Goes to:** Sales order is generated, and the ERP trail resumes.
 
 In Rohan's words: everything up until the PO happens in the ERP, and everything from the sales
@@ -203,7 +205,7 @@ Two framings, from two recordings. They agree on substance but differ in emphasi
 
 | # | Problem | Frequency | Current Workaround | Impact |
 |---|---|---|---|---|
-| 1 | ERP does not cover PO → sales order. The stretch where goods move and money is owed is off-system | Every procurement cycle | Manual handling, off-system `[UNKNOWN: who coordinates]` | No system audit trail. System is reactive — it reports only when someone goes looking |
+| 1 | ERP does not cover PO → sales order. The stretch where goods move and money is owed is off-system | Every procurement cycle | Manual handling, off-system. Coordination split: purchase at HO (buy side), plant store team (vendor invoice, LR, GRN) | No system audit trail. System is reactive — it reports only when someone goes looking |
 | 2 | Pendency and stuck inventory nobody can see | Ongoing | Chasing by phone, email, WhatsApp | Inventory stocked beyond need; LRs pending 5+ and 8+ days; GRNs pending; raw materials missing in transport; critical machinery spares not received |
 | 3 | Communication fragmented across paper, email, WhatsApp, calls and Excel — none of it synced | Constant | Staff switch channels as the situation demands | No single source of truth. Management has no holistic picture and no honest data about its own operations |
 | 4 | Duplicate entries in the masters | `[UNKNOWN]` | `[UNKNOWN]` | **Explicitly judged not material.** Called one of the "small, small problems", not enough on its own to justify solving the ERP problem. Log as cleanup scope, not as a wedge |
@@ -272,8 +274,7 @@ the source audio in `00-inbox/` — the original transcript was removed 2026-08-
 - **The incumbent ERP name is not trustworthy.** It transcribes as "Ugi RP" / "Oogi RP", most
   plausibly Udyog ERP. Do not put it in anything client-facing until confirmed.
 - ~~**The VP's role in the gap is inferred.**~~ **VOID 2026-08-20 — there is no VP.** The corrupted passage resolved to *"Nothing between PO creation and an SO generation happens inside UdyogERP."* See the correction block at the top.
-- **"Store teams" is uncertain.** Recording 2 yields "stole teams", most likely *store* but
-  possibly *sales*. The distinction changes who owns goods receipt.
+- ~~**"Store teams" is uncertain.**~~ **Resolved 2026-08-20.** Clean re-transcription of recording 2 confirms *"store teams"*. Independently supported by rec-33: *"there's a store guy that handles the HDPE raw material storage."*
 - The product is **Phlo**; the transcriber writes "flow" throughout.
 - Silent corrections applied: Baruch → Bharuch, Silva → Silvassa, tram → drum, 13,018 → 2018,
   "online plants/locations" → "all nine", "LR raging" → LR ageing, "strapped" → trapped,
@@ -290,13 +291,13 @@ the source audio in `00-inbox/` — the original transcript was removed 2026-08-
 **Still open**
 
 1. What is the incumbent ERP actually called? Confirm from Rohan's own notes before it appears in any document Pyramid sees.
-2. ~~What is the VP's actual role?~~ **VOID 2026-08-20 — no VP exists.** Replacement: **who coordinates the PO→GRN stretch?**
-3. "Store teams" or "sales teams"? This determines who owns goods receipt at each plant.
+2. ~~What is the VP's actual role?~~ **VOID 2026-08-20 — no VP exists.** ~~Replacement: who coordinates the PO→GRN stretch?~~ **Resolved 2026-08-21:** coordination is **split** — purchase at HO owns the buy side, plant store team chases vendor invoice, LR and GRN.
+3. ~~"Store teams" or "sales teams"?~~ **Resolved: store teams.** Confirmed by clean re-transcription of recording 2 and independently by rec-33.
 4. Does Path A (promoter-run HDPE and steel procurement) produce POs in the ERP, or does it bypass the system entirely? This decides whether the biggest-value purchases are even in scope for Phlo.
 5. What are the headcounts of the procurement and sales teams?
-6. How much capital is actually trapped in inventory? The promoter is vocal about it but gave no figure — and a number here is the strongest commercial lever available.
+6. ~~How much capital is actually trapped in inventory?~~ **The ₹60–66 lakh figure previously circulated in project documents has been withdrawn — it was never verified.** No verified figure exists. Do not quote one. The promoter is vocal about the problem, but no number is available.
 7. What is measured today for LR ageing and inventory ageing, if anything, and where does that measurement live?
-8. Which of the nine plants was visited, and does the same process run at all nine?
+8. ~~Which of the nine plants was visited?~~ **Partially resolved 2026-08-20:** Three plants visited, all Bharuch — **Unit 7** (HDPE/IBC), **Unit 6** (MS barrels), **Unit 9** (recycling). Does the same process run at all nine? Still open.
 9. What did the sales team contribute? They were met, but nothing from that conversation is in either recording.
 10. What is the full procurement cycle time, and how much of it sits in the off-system gap?
 11. Are commercials, timeline, or a next meeting agreed? None are mentioned in either recording.

@@ -2,7 +2,7 @@
 title: "Production — Planning, Execution and Quality"
 status: draft
 created: 2026-08-21
-updated: 2026-08-21
+updated: 2026-08-24
 tags: [process, production, bom, quality, serialisation, job-work]
 demo_areas: [7]
 sources:
