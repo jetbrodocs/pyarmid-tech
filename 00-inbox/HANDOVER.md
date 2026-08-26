@@ -293,7 +293,7 @@ Pyramid will recognise them. That is the point.
 | `40-solution-design/` | Build brief, open questions, superseded prd-01, parked screen specs |
 
 **The photographs are re-readable.** The ERP screenshots were never preserved and left us with a
-transcription nobody can verify — don't repeat that. Use `00-inbox/plant-visit-2026-08-20/`.
+transcription nobody can verify — don't repeat that. Use [Google Drive](https://drive.google.com/drive/folders/1gx7V5k8k9796nm53BsHBn-ZJLJfcive3?usp=sharing) for plant visit photos.
 
 ### Existing screen specs
 

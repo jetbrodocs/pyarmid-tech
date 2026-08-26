@@ -4,12 +4,12 @@ status: draft
 created: 2026-08-20
 updated: 2026-08-24
 tags: [observation, site-visit, production, quality, ibc, photos]
-source: 00-inbox/plant-visit-2026-08-20/ — 34 photographs, 2026-08-20
+source: Google Drive — 34 photographs, 2026-08-20 (https://drive.google.com/drive/folders/1gx7V5k8k9796nm53BsHBn-ZJLJfcive3?usp=sharing)
 ---
 
 # Plant Visit — Photographic Evidence, Unit VII
 
-**34 photographs**, converted from HEIC and filed in `00-inbox/plant-visit-2026-08-20/`.
+**34 photographs** from Unit VII plant visit. Original images on [Google Drive](https://drive.google.com/drive/folders/1gx7V5k8k9796nm53BsHBn-ZJLJfcive3?usp=sharing).
 Seven `.MOV` clips from the same set were not processed.
 
 **This is the first primary evidence of production in the project.** Everything below is read
