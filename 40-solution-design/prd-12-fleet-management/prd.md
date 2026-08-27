@@ -2,7 +2,7 @@
 title: "PRD-12 — Fleet Management"
 status: draft
 created: 2026-08-24
-updated: 2026-08-24
+updated: 2026-08-27
 demo_areas: [12]
 tags: [prd, fleet, trucks, drivers, dispatch, outbound, assignment]
 tech_decision: 30-analysis/tech-decision-phlo-stack.md
@@ -26,13 +26,13 @@ Today fleet assignment is head knowledge. Four people decide which truck goes wh
 
 ## As-Is State
 
-| What exists | What does not |
-|---|---|
-| ~100 owned trucks | Vehicle registry in any system |
-| ~100 payroll drivers | Driver assignment records |
-| Fleet team of 4 across 9 plants | Truck availability dashboard |
+| What exists                                 | What does not                            |
+| ------------------------------------------- | ---------------------------------------- |
+| ~100 owned trucks                           | Vehicle registry in any system           |
+| ~100 payroll drivers                        | Driver assignment records                |
+| Fleet team of 4 across 9 plants             | Truck availability dashboard             |
 | Contractor overflow when own fleet occupied | Selection criteria for contractor vs own |
-| Head knowledge of who's where | Trip history or route planning |
+| Head knowledge of who's where               | Trip history or route planning           |
 
 Source: proc-02 Flow A, site visit.
 
@@ -46,12 +46,12 @@ Source: proc-02 Flow A, site visit.
 
 ## Roles Involved
 
-| Role | Responsibility | Source |
-|---|---|---|
-| **Fleet team (4)** | Assign trucks across 9 plants; manage contractor overflow | proc-02 Flow A |
-| **Dispatch person** | Requests fleet assignment for an SO | proc-03 §Stage 5 |
-| **Drivers (~100)** | On payroll; operate owned trucks | proc-02 Flow A |
-| **Management** | Fleet utilization, cost visibility | gap-analysis |
+| Role                | Responsibility                                            | Source           |
+| ------------------- | --------------------------------------------------------- | ---------------- |
+| **Fleet team (4)**  | Assign trucks across 9 plants; manage contractor overflow | proc-02 Flow A   |
+| **Dispatch person** | Requests fleet assignment for an SO                       | proc-03 §Stage 5 |
+| **Drivers (~100)**  | On payroll; operate owned trucks                          | proc-02 Flow A   |
+| **Management**      | Fleet utilization, cost visibility                        | gap-analysis     |
 
 **Not involved:** Store team, purchase team. They have no fleet role. Fleet is outbound only.
 
@@ -59,67 +59,67 @@ Source: proc-02 Flow A, site visit.
 
 ### Vehicle and Driver Registry
 
-| ID | Requirement | Source | Acceptance Criteria |
-|---|---|---|---|
+| ID         | Requirement                                                        | Source         | Acceptance Criteria                                                           |
+| ---------- | ------------------------------------------------------------------ | -------------- | ----------------------------------------------------------------------------- |
 | REQ-FM-001 | Vehicle registry: registration, type, capacity, home plant, status | proc-02 Flow A | All owned trucks registered. Status: Available, In Transit, Under Maintenance |
-| REQ-FM-002 | Driver registry: name, license number, contact, home plant, status | proc-02 Flow A | All payroll drivers registered. Status: Available, On Trip, Off Duty |
-| REQ-FM-003 | Vehicle-driver pairing history | proc-02 Flow A | Track which driver drove which truck on which trip |
+| REQ-FM-002 | Driver registry: name, license number, contact, home plant, status | proc-02 Flow A | All payroll drivers registered. Status: Available, On Trip, Off Duty          |
+| REQ-FM-003 | Vehicle-driver pairing history                                     | proc-02 Flow A | Track which driver drove which truck on which trip                            |
 
 ### Fleet Assignment
 
-| ID | Requirement | Source | Acceptance Criteria |
-|---|---|---|---|
-| REQ-FM-004 | Assign truck and driver to a dispatch | proc-03 §Stage 5, HANDOVER §5 step 15 | Assignment links dispatch, truck, driver, route. Event emitted |
-| REQ-FM-005 | Availability check before assignment | proc-02 Flow A step 3 | Show available trucks and drivers at the requesting plant (or nearby) |
-| REQ-FM-006 | Assignment across plants | proc-02 Flow A | Fleet team can assign a truck from one plant to a dispatch at another |
-| REQ-FM-007 | Outbound LR generated on dispatch | proc-02 Flow A step 7 | LR carries truck registration, driver, goods, consignee |
+| ID         | Requirement                           | Source                                | Acceptance Criteria                                                   |
+| ---------- | ------------------------------------- | ------------------------------------- | --------------------------------------------------------------------- |
+| REQ-FM-004 | Assign truck and driver to a dispatch | proc-03 §Stage 5, HANDOVER §5 step 15 | Assignment links dispatch, truck, driver, route. Event emitted        |
+| REQ-FM-005 | Availability check before assignment  | proc-02 Flow A step 3                 | Show available trucks and drivers at the requesting plant (or nearby) |
+| REQ-FM-006 | Assignment across plants              | proc-02 Flow A                        | Fleet team can assign a truck from one plant to a dispatch at another |
+| REQ-FM-007 | Outbound LR generated on dispatch     | proc-02 Flow A step 7                 | LR carries truck registration, driver, goods, consignee               |
 
 ### Trip Tracking
 
-| ID | Requirement | Source | Acceptance Criteria |
-|---|---|---|---|
-| REQ-FM-008 | Trip record: dispatch, truck, driver, departure, arrival, route | proc-02 Flow A | Each dispatch creates a trip. Timestamps for departure and arrival |
-| REQ-FM-009 | Trip status: Assigned, Loading, In Transit, Delivered, Returning, Completed | proc-02 Flow A | Status transitions emit events |
-| REQ-FM-010 | POD capture: proof of delivery received | proc-02 Flow A step 12 | Mark POD received; attach signed LR scan |
-| REQ-FM-011 | Trip history per vehicle and per driver | proc-02 Q14 | Click a truck or driver to see all trips |
+| ID         | Requirement                                                                 | Source                 | Acceptance Criteria                                                |
+| ---------- | --------------------------------------------------------------------------- | ---------------------- | ------------------------------------------------------------------ |
+| REQ-FM-008 | Trip record: dispatch, truck, driver, departure, arrival, route             | proc-02 Flow A         | Each dispatch creates a trip. Timestamps for departure and arrival |
+| REQ-FM-009 | Trip status: Assigned, Loading, In Transit, Delivered, Returning, Completed | proc-02 Flow A         | Status transitions emit events                                     |
+| REQ-FM-010 | POD capture: proof of delivery received                                     | proc-02 Flow A step 12 | Mark POD received; attach signed LR scan                           |
+| REQ-FM-011 | Trip history per vehicle and per driver                                     | proc-02 Q14            | Click a truck or driver to see all trips                           |
 
 ### Fleet Availability Dashboard
 
-| ID | Requirement | Source | Acceptance Criteria |
-|---|---|---|---|
+| ID         | Requirement                                                | Source       | Acceptance Criteria                                                  |
+| ---------- | ---------------------------------------------------------- | ------------ | -------------------------------------------------------------------- |
 | REQ-FM-012 | Fleet dashboard: all trucks by status, plant, current trip | gap-analysis | Fleet team sees cross-plant view of truck locations and availability |
-| REQ-FM-013 | Driver availability by plant | proc-02 Q14 | Which drivers are available, on trip, or off duty |
+| REQ-FM-013 | Driver availability by plant                               | proc-02 Q14  | Which drivers are available, on trip, or off duty                    |
 
 ### Assumptions
 
-| ID | Assumption | Reality | Source |
-|---|---|---|---|
-| A-FM-01 | Demo uses own trucks only, no contractors | Contractors used on overflow in reality | HANDOVER §3 |
-| A-FM-02 | Truck availability is binary (available or not) | No maintenance schedule or downtime tracking evidenced | proc-02 Q15 |
-| A-FM-03 | One truck carries one dispatch (no consolidation) | No evidence of multi-dispatch truck loading | `[UNKNOWN]` |
+| ID      | Assumption                                              | Reality                                                  | Source         |
+| ------- | ------------------------------------------------------- | -------------------------------------------------------- | -------------- |
+| A-FM-01 | Demo uses own trucks only, no contractors               | Contractors used on overflow in reality                  | HANDOVER §3    |
+| A-FM-02 | Truck availability is binary (available or not)         | No maintenance schedule or downtime tracking evidenced   | proc-02 Q15    |
+| A-FM-03 | One truck carries one dispatch (no consolidation)       | No evidence of multi-dispatch truck loading              | `[UNKNOWN]`    |
 | A-FM-04 | Fleet team assigns centrally; plants cannot self-assign | "4 people across 9 plants" suggests central coordination | proc-02 Flow A |
 
 ## Data Model
 
 ### Entities
 
-| Entity | Key Attributes | Notes |
-|---|---|---|
-| **Vehicle** | id, registration_number, type, capacity_tonnes, home_plant_id, status, is_active | Owned truck |
-| **Driver** | id, name, license_number, license_expiry, contact_phone, home_plant_id, status, is_active | Payroll driver |
-| **FleetAssignment** | id, dispatch_id, vehicle_id, driver_id, assigned_at, assigned_by_user_id | Truck + driver to dispatch |
-| **Trip** | id, fleet_assignment_id, departure_plant_id, destination, departed_at, arrived_at, pod_received_at, pod_document_url, status | Trip record |
+| Entity              | Key Attributes                                                                                                               | Notes                      |
+| ------------------- | ---------------------------------------------------------------------------------------------------------------------------- | -------------------------- |
+| **Vehicle**         | id, registration_number, type, capacity_tonnes, home_plant_id, status, is_active                                             | Owned truck                |
+| **Driver**          | id, name, license_number, license_expiry, contact_phone, home_plant_id, status, is_active                                    | Payroll driver             |
+| **FleetAssignment** | id, dispatch_id, vehicle_id, driver_id, assigned_at, assigned_by_user_id                                                     | Truck + driver to dispatch |
+| **Trip**            | id, fleet_assignment_id, departure_plant_id, destination, departed_at, arrived_at, pod_received_at, pod_document_url, status | Trip record                |
 
 ### Event Types
 
-| Event | Trigger | Payload |
-|---|---|---|
-| FLEET_ASSIGNED | Truck and driver assigned to dispatch | assignment_id, dispatch_id, vehicle_id, driver_id |
-| TRIP_DEPARTED | Truck leaves plant | trip_id, vehicle_id, departed_at |
-| TRIP_ARRIVED | Truck reaches customer | trip_id, arrived_at |
-| TRIP_POD_RECEIVED | Signed LR / POD returned | trip_id, pod_received_at |
-| TRIP_COMPLETED | Trip cycle closed (truck available again) | trip_id, vehicle_id, driver_id |
-| VEHICLE_STATUS_CHANGED | Truck goes to/from maintenance | vehicle_id, old_status, new_status |
+| Event                  | Trigger                                   | Payload                                           |
+| ---------------------- | ----------------------------------------- | ------------------------------------------------- |
+| FLEET_ASSIGNED         | Truck and driver assigned to dispatch     | assignment_id, dispatch_id, vehicle_id, driver_id |
+| TRIP_DEPARTED          | Truck leaves plant                        | trip_id, vehicle_id, departed_at                  |
+| TRIP_ARRIVED           | Truck reaches customer                    | trip_id, arrived_at                               |
+| TRIP_POD_RECEIVED      | Signed LR / POD returned                  | trip_id, pod_received_at                          |
+| TRIP_COMPLETED         | Trip cycle closed (truck available again) | trip_id, vehicle_id, driver_id                    |
+| VEHICLE_STATUS_CHANGED | Truck goes to/from maintenance            | vehicle_id, old_status, new_status                |
 
 ## Business Rules
 
@@ -132,16 +132,16 @@ Source: proc-02 Flow A, site visit.
 
 ## Screens
 
-| Screen | Purpose | Primary users |
-|---|---|---|
-| **Fleet Dashboard** | All trucks by status, plant, current trip. Cross-plant view | Fleet team |
-| **Fleet Assignment** | Assign truck and driver to a dispatch. Show available options | Fleet team |
-| **Trip List** | All trips: status, truck, driver, route, dates | Fleet team, management |
-| **Trip Detail** | Full trip: dispatch, loading, departure, arrival, POD, linked invoice | Fleet team |
-| **Vehicle Registry** | Add/edit trucks: registration, type, capacity, home plant | Fleet team |
-| **Driver Registry** | Add/edit drivers: name, license, contact, home plant | Fleet team |
-| **Vehicle History** | All trips for a given truck | Fleet team, management |
-| **Driver History** | All trips for a given driver | Fleet team |
+| Screen               | Purpose                                                               | Primary users          |
+| -------------------- | --------------------------------------------------------------------- | ---------------------- |
+| **Fleet Dashboard**  | All trucks by status, plant, current trip. Cross-plant view           | Fleet team             |
+| **Fleet Assignment** | Assign truck and driver to a dispatch. Show available options         | Fleet team             |
+| **Trip List**        | All trips: status, truck, driver, route, dates                        | Fleet team, management |
+| **Trip Detail**      | Full trip: dispatch, loading, departure, arrival, POD, linked invoice | Fleet team             |
+| **Vehicle Registry** | Add/edit trucks: registration, type, capacity, home plant             | Fleet team             |
+| **Driver Registry**  | Add/edit drivers: name, license, contact, home plant                  | Fleet team             |
+| **Vehicle History**  | All trips for a given truck                                           | Fleet team, management |
+| **Driver History**   | All trips for a given driver                                          | Fleet team             |
 
 ## Demo Moment
 
@@ -151,12 +151,12 @@ Quick beat — the value is not in the assignment form, it is in the **fleet das
 
 ## Inter-Module Dependencies
 
-| Depends on | For |
-|---|---|
-| prd-10 (Dispatch) | Fleet assigned to a dispatch |
-| prd-09 (Sales Orders) | SO determines destination |
-| **Feeds** prd-13 (Fleet Cost) | Trip record as the cost anchor |
-| **Feeds** prd-10 (Dispatch) | Vehicle and driver details on delivery challan and e-Way Bill |
+| Depends on                    | For                                                           |
+| ----------------------------- | ------------------------------------------------------------- |
+| prd-10 (Dispatch)             | Fleet assigned to a dispatch                                  |
+| prd-09 (Sales Orders)         | SO determines destination                                     |
+| **Feeds** prd-13 (Fleet Cost) | Trip record as the cost anchor                                |
+| **Feeds** prd-10 (Dispatch)   | Vehicle and driver details on delivery challan and e-Way Bill |
 
 ## Open Questions
 
@@ -167,4 +167,4 @@ Quick beat — the value is not in the assignment form, it is in the **fleet das
 5. **Vehicle maintenance.** How are 100 trucks maintained? Any downtime tracking?
 6. **Multi-dispatch loading.** Can one truck carry goods for multiple customers on a single trip?
 7. **Contractor fleet.** How many? How selected? How paid? Deferred for demo but needed for full build.
-8. **Inter-plant transfers.** Does the owned fleet ever move goods between plants, or is that third-party? Unresolved — the fleet is "sales only" but this edge case is not confirmed.
+8. ⛔ **Inter-plant transfers.** Does the owned fleet ever move goods between plants, or is that third-party? Unresolved — the fleet is "sales only" but this edge case is not confirmed. — **Blocks screen-specs.** Cross-PRD: if the owned fleet does move goods between plants, prd-10 needs a non-customer dispatch route and prd-13 needs a cost bucket that is not attributable to a sales invoice. See `30-analysis/prd-audit-findings.md`.

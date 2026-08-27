@@ -2,9 +2,10 @@
 title: "PRD-11 — Sales Invoice Creation"
 status: draft
 created: 2026-08-24
-updated: 2026-08-24
+updated: 2026-08-27
 demo_areas: [11]
-tags: [prd, sales-invoice, gst, tcs, einvoice, irn, tally, freight, screen-charges]
+tags:
+  [prd, sales-invoice, gst, tcs, einvoice, irn, tally, freight, screen-charges]
 tech_decision: 30-analysis/tech-decision-phlo-stack.md
 sources:
   - 20-process-maps/proc-03-sales-order-to-dispatch.md
@@ -25,14 +26,14 @@ The invoice is raised after dispatch (prd-10). It recovers screen printing charg
 
 ## As-Is State
 
-| What exists | What does not |
-|---|---|
-| Sales Invoice in UdyogERP: 56 fields, 5 tabs | Any gap — this screen is working and complete |
-| e-Invoice generation with IRN | — |
-| TCS tracking with cumulative threshold | — |
-| Line-level Courier, Screen, Freight charges | — |
-| Full GST: CGST/SGST/IGST/Cess, RCM, Place of Supply | — |
-| Tally integration (method unknown) | Knowledge of how Tally entries flow |
+| What exists                                         | What does not                                 |
+| --------------------------------------------------- | --------------------------------------------- |
+| Sales Invoice in UdyogERP: 56 fields, 5 tabs        | Any gap — this screen is working and complete |
+| e-Invoice generation with IRN                       | —                                             |
+| TCS tracking with cumulative threshold              | —                                             |
+| Line-level Courier, Screen, Freight charges         | —                                             |
+| Full GST: CGST/SGST/IGST/Cess, RCM, Place of Supply | —                                             |
+| Tally integration (method unknown)                  | Knowledge of how Tally entries flow           |
 
 Source: obs-03 §4 (field catalog), proc-03 §Stage 6.
 
@@ -49,91 +50,91 @@ Source: obs-03 §4 (field catalog), proc-03 §Stage 6.
 
 ## Roles Involved
 
-| Role | Responsibility | Source |
-|---|---|---|
-| **Sales team / billing** | Raise invoice against dispatch | proc-03 §Stage 6 |
-| **Accounts** | TCS, Tally export, account allocation | obs-03 §4 Tab 3-5 |
-| **Management** | Invoice summary, revenue reports | gap-analysis |
+| Role                     | Responsibility                        | Source            |
+| ------------------------ | ------------------------------------- | ----------------- |
+| **Sales team / billing** | Raise invoice against dispatch        | proc-03 §Stage 6  |
+| **Accounts**             | TCS, Tally export, account allocation | obs-03 §4 Tab 3-5 |
+| **Management**           | Invoice summary, revenue reports      | gap-analysis      |
 
 ## Requirements
 
 ### Invoice Creation
 
-| ID | Requirement | Source | Acceptance Criteria |
-|---|---|---|---|
-| REQ-SI-001 | Create Sales Invoice linked to dispatch | proc-03 §Stage 6 | Invoice references dispatch and SO. Line items auto-populated from dispatch |
-| REQ-SI-002 | Invoice header: date, consignee, buyer, place of supply, series, invoice number, due days, due date | obs-03 §4 header | All 10 header fields captured |
-| REQ-SI-003 | Invoice numbering: `P[Unit]/[FY]/[Serial]` | obs-03 §4 | Auto-generated, plant-prefixed, FY-scoped series |
-| REQ-SI-004 | Consignee / Buyer split (ship-to / bill-to) | obs-03 §4 | May differ. Both carried on invoice |
+| ID         | Requirement                                                                                         | Source           | Acceptance Criteria                                                         |
+| ---------- | --------------------------------------------------------------------------------------------------- | ---------------- | --------------------------------------------------------------------------- |
+| REQ-SI-001 | Create Sales Invoice linked to dispatch                                                             | proc-03 §Stage 6 | Invoice references dispatch and SO. Line items auto-populated from dispatch |
+| REQ-SI-002 | Invoice header: date, consignee, buyer, place of supply, series, invoice number, due days, due date | obs-03 §4 header | All 10 header fields captured                                               |
+| REQ-SI-003 | Invoice numbering: `P[Unit]/[FY]/[Serial]`                                                          | obs-03 §4        | Auto-generated, plant-prefixed, FY-scoped series                            |
+| REQ-SI-004 | Consignee / Buyer split (ship-to / bill-to)                                                         | obs-03 §4        | May differ. Both carried on invoice                                         |
 
 ### Line Items and Charges
 
-| ID | Requirement | Source | Acceptance Criteria |
-|---|---|---|---|
-| REQ-SI-005 | Line items: product, HSN, quantity, rate, discount, taxable value | obs-03 §4 Tab 1 | 28 fields per line as documented |
-| REQ-SI-006 | Line-level Courier Charges | obs-03 §4 Tab 1 field 11 | Courier charge per line item |
-| REQ-SI-007 | Line-level Screen Charges | obs-03 §4 Tab 1 field 12 | Recovers in-house screen printing cost (proc-04 §Stage 6) |
-| REQ-SI-008 | Line-level Freight Charges | obs-03 §4 Tab 1 field 13 | Freight per line item |
-| REQ-SI-009 | Line-level discount (% and amount) | obs-03 §4 Tab 1 fields 9-10 | Percentage and absolute discount per line |
+| ID         | Requirement                                                       | Source                      | Acceptance Criteria                                       |
+| ---------- | ----------------------------------------------------------------- | --------------------------- | --------------------------------------------------------- |
+| REQ-SI-005 | Line items: product, HSN, quantity, rate, discount, taxable value | obs-03 §4 Tab 1             | 28 fields per line as documented                          |
+| REQ-SI-006 | Line-level Courier Charges                                        | obs-03 §4 Tab 1 field 11    | Courier charge per line item                              |
+| REQ-SI-007 | Line-level Screen Charges                                         | obs-03 §4 Tab 1 field 12    | Recovers in-house screen printing cost (proc-04 §Stage 6) |
+| REQ-SI-008 | Line-level Freight Charges                                        | obs-03 §4 Tab 1 field 13    | Freight per line item                                     |
+| REQ-SI-009 | Line-level discount (% and amount)                                | obs-03 §4 Tab 1 fields 9-10 | Percentage and absolute discount per line                 |
 
 ### GST
 
-| ID | Requirement | Source | Acceptance Criteria |
-|---|---|---|---|
-| REQ-SI-010 | GST computation: CGST+SGST (intra-state) or IGST (inter-state) based on place of supply | obs-03 §4 | Correct tax type applied per line |
-| REQ-SI-011 | Reverse Charge Mechanism (RCM) | obs-03 §4 Tab 1 fields 21-23 | RCM amounts captured per line where applicable |
-| REQ-SI-012 | Compensation Cess | obs-03 §4 Tab 1 fields 24-26 | Cess rate and amount per line |
-| REQ-SI-013 | Export invoice support | obs-03 §4 header field 4 | Export Type: Without IGST / With IGST. `[ASSUMPTION: out of demo scope per HANDOVER §3, but the field must exist]` |
+| ID         | Requirement                                                                             | Source                       | Acceptance Criteria                                                                                                |
+| ---------- | --------------------------------------------------------------------------------------- | ---------------------------- | ------------------------------------------------------------------------------------------------------------------ |
+| REQ-SI-010 | GST computation: CGST+SGST (intra-state) or IGST (inter-state) based on place of supply | obs-03 §4                    | Correct tax type applied per line                                                                                  |
+| REQ-SI-011 | Reverse Charge Mechanism (RCM)                                                          | obs-03 §4 Tab 1 fields 21-23 | RCM amounts captured per line where applicable                                                                     |
+| REQ-SI-012 | Compensation Cess                                                                       | obs-03 §4 Tab 1 fields 24-26 | Cess rate and amount per line                                                                                      |
+| REQ-SI-013 | Export invoice support                                                                  | obs-03 §4 header field 4     | Export Type: Without IGST / With IGST. `[ASSUMPTION: out of demo scope per HANDOVER §3, but the field must exist]` |
 
 ### e-Invoice and IRN
 
-| ID | Requirement | Source | Acceptance Criteria |
-|---|---|---|---|
-| REQ-SI-014 | Generate e-Invoice | obs-03 §4 header button 5 | Button triggers e-Invoice generation |
+| ID         | Requirement           | Source                             | Acceptance Criteria                               |
+| ---------- | --------------------- | ---------------------------------- | ------------------------------------------------- |
+| REQ-SI-014 | Generate e-Invoice    | obs-03 §4 header button 5          | Button triggers e-Invoice generation              |
 | REQ-SI-015 | Receive and store IRN | obs-03 §8 (e-Way Bill carries IRN) | Invoice Reference Number stored on invoice record |
 
 ### TCS
 
-| ID | Requirement | Source | Acceptance Criteria |
-|---|---|---|---|
-| REQ-SI-016 | TCS: Tax Collected at Source | obs-03 §4 Tab 5 | TCS rate, amount, cumulative threshold tracking |
-| REQ-SI-017 | TCS cumulative threshold | obs-03 §4 Tab 5 fields 4-7 | Total bill amount tracked against exemption limit. TCS applied only above threshold |
+| ID         | Requirement                  | Source                     | Acceptance Criteria                                                                 |
+| ---------- | ---------------------------- | -------------------------- | ----------------------------------------------------------------------------------- |
+| REQ-SI-016 | TCS: Tax Collected at Source | obs-03 §4 Tab 5            | TCS rate, amount, cumulative threshold tracking                                     |
+| REQ-SI-017 | TCS cumulative threshold     | obs-03 §4 Tab 5 fields 4-7 | Total bill amount tracked against exemption limit. TCS applied only above threshold |
 
 ### Tally and Accounting
 
-| ID | Requirement | Source | Acceptance Criteria |
-|---|---|---|---|
-| REQ-SI-018 | Account allocation tab | obs-03 §4 Tab 3-4 | GL account, amount, Dr/Cr per entry |
-| REQ-SI-019 | Tally XML export | HANDOVER §3 | Export button generates Tally-compatible XML. **Not a live push for demo** |
+| ID         | Requirement            | Source            | Acceptance Criteria                                                        |
+| ---------- | ---------------------- | ----------------- | -------------------------------------------------------------------------- |
+| REQ-SI-018 | Account allocation tab | obs-03 §4 Tab 3-4 | GL account, amount, Dr/Cr per entry                                        |
+| REQ-SI-019 | Tally XML export       | HANDOVER §3       | Export button generates Tally-compatible XML. **Not a live push for demo** |
 
 ### Assumptions
 
-| ID | Assumption | Reality | Source |
-|---|---|---|---|
-| A-SI-01 | One invoice per dispatch | Multiple dispatches may consolidate to one invoice, or vice versa | `[UNKNOWN]` |
-| A-SI-02 | e-Invoice generated via API to government portal | Integration method unknown. May be manual on portal | `[UNKNOWN]` |
-| A-SI-03 | Tally entries flow via XML export, not re-keying | proc-03 Q8: "Does Tally receive entries automatically or by re-keying?" | `[UNKNOWN]` |
-| A-SI-04 | Export invoices are out of demo scope | HANDOVER §3. But evidence conflicts — delivery challan shows Export Type "Without IGST", RODTEP field exists | HANDOVER §7 |
+| ID      | Assumption                                       | Reality                                                                                                      | Source      |
+| ------- | ------------------------------------------------ | ------------------------------------------------------------------------------------------------------------ | ----------- |
+| A-SI-01 | One invoice per dispatch                         | Multiple dispatches may consolidate to one invoice, or vice versa                                            | `[UNKNOWN]` |
+| A-SI-02 | e-Invoice generated via API to government portal | Integration method unknown. May be manual on portal                                                          | `[UNKNOWN]` |
+| A-SI-03 | Tally entries flow via XML export, not re-keying | proc-03 Q8: "Does Tally receive entries automatically or by re-keying?"                                      | `[UNKNOWN]` |
+| A-SI-04 | Export invoices are out of demo scope            | HANDOVER §3. But evidence conflicts — delivery challan shows Export Type "Without IGST", RODTEP field exists | HANDOVER §7 |
 
 ## Data Model
 
 ### Entities
 
-| Entity | Key Attributes | Notes |
-|---|---|---|
-| **SalesInvoice** | id, invoice_number, dispatch_id, so_id, customer_id, consignee_id, buyer_id, place_of_supply, date, due_date, due_days, export_type, total_taxable, total_gst, total_amount, irn, tcs_amount, status | Invoice header |
-| **InvoiceLineItem** | id, invoice_id, product_id, hsn_code, quantity, rate, discount_pct, discount_amount, courier_charges, screen_charges, freight_charges, taxable_value, cgst_rate, cgst_amount, sgst_rate, sgst_amount, igst_rate, igst_amount, cess_rate, cess_amount, rcm_cgst, rcm_sgst, rcm_igst, line_total | Per-item (28 fields) |
-| **InvoiceAccountEntry** | id, invoice_id, account_name, amount, dr_cr | GL posting line |
-| **TCSTracking** | id, customer_id, financial_year, cumulative_amount, exemption_limit, tcs_deducted | Per-customer TCS state |
+| Entity                  | Key Attributes                                                                                                                                                                                                                                                                                 | Notes                  |
+| ----------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------- |
+| **SalesInvoice**        | id, invoice_number, dispatch_id, so_id, customer_id, consignee_id, buyer_id, place_of_supply, date, due_date, due_days, export_type, total_taxable, total_gst, total_amount, irn, tcs_amount, status                                                                                           | Invoice header         |
+| **InvoiceLineItem**     | id, invoice_id, product_id, hsn_code, quantity, rate, discount_pct, discount_amount, courier_charges, screen_charges, freight_charges, taxable_value, cgst_rate, cgst_amount, sgst_rate, sgst_amount, igst_rate, igst_amount, cess_rate, cess_amount, rcm_cgst, rcm_sgst, rcm_igst, line_total | Per-item (28 fields)   |
+| **InvoiceAccountEntry** | id, invoice_id, account_name, amount, dr_cr                                                                                                                                                                                                                                                    | GL posting line        |
+| **TCSTracking**         | id, customer_id, financial_year, cumulative_amount, exemption_limit, tcs_deducted                                                                                                                                                                                                              | Per-customer TCS state |
 
 ### Event Types
 
-| Event | Trigger | Payload |
-|---|---|---|
-| INVOICE_CREATED | Invoice raised against dispatch | invoice_id, dispatch_id, so_id, customer_id, line_items[] |
-| INVOICE_FINALIZED | Invoice confirmed and locked | invoice_id, total_amount, gst_amount |
-| EINVOICE_GENERATED | e-Invoice submitted to portal | invoice_id, irn |
-| TALLY_EXPORTED | XML export generated | invoice_id, export_timestamp |
+| Event              | Trigger                         | Payload                                                   |
+| ------------------ | ------------------------------- | --------------------------------------------------------- |
+| INVOICE_CREATED    | Invoice raised against dispatch | invoice_id, dispatch_id, so_id, customer_id, line_items[] |
+| INVOICE_FINALIZED  | Invoice confirmed and locked    | invoice_id, total_amount, gst_amount                      |
+| EINVOICE_GENERATED | e-Invoice submitted to portal   | invoice_id, irn                                           |
+| TALLY_EXPORTED     | XML export generated            | invoice_id, export_timestamp                              |
 
 ## Business Rules
 
@@ -146,14 +147,14 @@ Source: obs-03 §4 (field catalog), proc-03 §Stage 6.
 
 ## Screens
 
-| Screen | Purpose | Primary users |
-|---|---|---|
+| Screen             | Purpose                                                                                      | Primary users        |
+| ------------------ | -------------------------------------------------------------------------------------------- | -------------------- |
 | **Invoice Create** | Raise invoice against dispatch. Auto-populates from SO and dispatch. Add charges, verify GST | Sales team / billing |
-| **Invoice Detail** | Full invoice: lines, charges, GST, TCS, account entries, linked dispatch and SO | All roles |
-| **Invoice List** | All invoices: date, customer, amount, status. Filter by plant, customer, date range | Sales team, accounts |
-| **e-Invoice** | Generate e-Invoice, view IRN status | Billing |
-| **Tally Export** | Generate and download Tally XML | Accounts |
-| **TCS Dashboard** | Per-customer cumulative sales and TCS status for the FY | Accounts |
+| **Invoice Detail** | Full invoice: lines, charges, GST, TCS, account entries, linked dispatch and SO              | All roles            |
+| **Invoice List**   | All invoices: date, customer, amount, status. Filter by plant, customer, date range          | Sales team, accounts |
+| **e-Invoice**      | Generate e-Invoice, view IRN status                                                          | Billing              |
+| **Tally Export**   | Generate and download Tally XML                                                              | Accounts             |
+| **TCS Dashboard**  | Per-customer cumulative sales and TCS status for the FY                                      | Accounts             |
 
 ## Demo Moment
 
@@ -163,17 +164,17 @@ This is a **competence moment**, not a wow moment. The audience (especially acco
 
 ## Inter-Module Dependencies
 
-| Depends on | For |
-|---|---|
-| prd-10 (Dispatch) | Invoice raised against dispatch |
-| prd-09 (Sales Orders) | SO line items flow through |
-| prd-07 (Production) | Screen charges from customer modifications |
-| **Feeds** prd-08 (Demand Planning) | Revenue data for demand trends |
+| Depends on                         | For                                        |
+| ---------------------------------- | ------------------------------------------ |
+| prd-10 (Dispatch)                  | Invoice raised against dispatch            |
+| prd-09 (Sales Orders)              | SO line items flow through                 |
+| prd-07 (Production)                | Screen charges from customer modifications |
+| **Feeds** prd-08 (Demand Planning) | Revenue data for demand trends             |
 
 ## Open Questions
 
 1. **Does Tally receive entries automatically or by re-keying?** Determines whether the XML export is the permanent solution or a stopgap.
 2. **e-Invoice integration method.** API to government portal, or manual submission?
 3. **Can one invoice cover multiple dispatches?** Or is it strictly 1:1?
-4. **Credit note / debit note process.** What happens on returns, price adjustments, quantity corrections? No process evidenced.
+4. ⚠️ **Credit note / debit note process.** What happens on returns, price adjustments, quantity corrections? No process evidenced. — **Scope decision needed before screen-specs:** either bring credit/debit notes into scope as a requirement, or state them as an explicit post-demo exclusion. Leaving it unstated means the invoice module ships with no correction path. See `30-analysis/prd-audit-findings.md`.
 5. **Export invoice handling.** Scoped out for demo, but RODTEP field exists and a delivery challan shows export-type fields. Will need to be addressed post-demo.
