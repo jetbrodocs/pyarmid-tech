@@ -2,7 +2,7 @@
 title: "PRD-12 — Fleet Management"
 status: draft
 created: 2026-08-24
-updated: 2026-08-27
+updated: 2026-08-29
 demo_areas: [12]
 tags: [prd, fleet, trucks, drivers, dispatch, outbound, assignment]
 tech_decision: 30-analysis/tech-decision-phlo-stack.md
@@ -95,6 +95,7 @@ Source: proc-02 Flow A, site visit.
 | ID      | Assumption                                              | Reality                                                  | Source         |
 | ------- | ------------------------------------------------------- | -------------------------------------------------------- | -------------- |
 | A-FM-01 | Demo uses own trucks only, no contractors               | Contractors used on overflow in reality                  | HANDOVER §3    |
+| A-FM-05 | **Fleet is used for outbound customer deliveries only.** No inter-plant leg is modelled | **Demo decision (RP, 2026-08-29).** Whether the owned fleet ever runs inter-plant is genuinely unanswered and deferred post-demo | obs-07 §8 |
 | A-FM-02 | Truck availability is binary (available or not)         | No maintenance schedule or downtime tracking evidenced   | proc-02 Q15    |
 | A-FM-03 | One truck carries one dispatch (no consolidation)       | No evidence of multi-dispatch truck loading              | `[UNKNOWN]`    |
 | A-FM-04 | Fleet team assigns centrally; plants cannot self-assign | "4 people across 9 plants" suggests central coordination | proc-02 Flow A |
@@ -167,4 +168,4 @@ Quick beat — the value is not in the assignment form, it is in the **fleet das
 5. **Vehicle maintenance.** How are 100 trucks maintained? Any downtime tracking?
 6. **Multi-dispatch loading.** Can one truck carry goods for multiple customers on a single trip?
 7. **Contractor fleet.** How many? How selected? How paid? Deferred for demo but needed for full build.
-8. ⛔ **Inter-plant transfers.** Does the owned fleet ever move goods between plants, or is that third-party? Unresolved — the fleet is "sales only" but this edge case is not confirmed. — **Blocks screen-specs.** Cross-PRD: if the owned fleet does move goods between plants, prd-10 needs a non-customer dispatch route and prd-13 needs a cost bucket that is not attributable to a sales invoice. See `30-analysis/prd-audit-findings.md`.
+8. ⚠️ **Inter-plant transfers.** Does the owned fleet ever move goods between plants, or is that third-party? **Still unanswered** — put to Pyramid on 2026-08-29 and the reply was ambiguous. **Deferred by demo decision (RP):** assume outbound-only, build no inter-plant detail (`A-FM-05`). Must be re-asked as a direct yes/no before implementation, since it would give prd-10 a non-customer route and prd-13 a cost bucket with no sales invoice behind it. See obs-07 §8.

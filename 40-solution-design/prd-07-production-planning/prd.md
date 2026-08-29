@@ -2,11 +2,12 @@
 title: "PRD-07 — Production Planning"
 status: draft
 created: 2026-08-24
-updated: 2026-08-27
+updated: 2026-08-29
 demo_areas: [7]
 tags: [prd, production, bom, work-order, serialisation, qc, regrind, routing]
 tech_decision: 30-analysis/tech-decision-phlo-stack.md
 sources:
+  - 10-observations/obs-07-sales-driven-delivery-schedule.md
   - 20-process-maps/proc-04-production.md
   - 10-observations/obs-06-bom-analysis.md
   - 10-observations/obs-04-plant-visit-photos.md
@@ -19,20 +20,27 @@ sources:
 
 ## Summary
 
-Production planning is the **least-known part of the business**. How a run is decided, by whom, how far ahead — all unknown. The demo assumes runs happen against sales orders. **Label that as an assumption, not a fact.**
+**The production trigger is now known.** Pyramid confirmed on 2026-08-29 that runs happen against **firm sales orders**, reaching the plant as the **Daily Dispatch Plan** that sales at Bombay issues each day ([obs-07](../../10-observations/obs-07-sales-driven-delivery-schedule.md)). Work orders are raised against a **dispatch plan line** (prd-08), not against a bare sales order.
+
+Finished goods are held **one to two days at most** — plant space is the binding constraint — so what is produced against today's plan is dispatched the same day. There is no finished-goods buffer to absorb a scheduling error.
 
 Execution is well documented. Pyramid's own work instructions (`PTL/WI/PD/04`, `PTL/WI/PD/05`) give process parameters, QC gates, and reject handling. Real BOMs exist for all three product lines in Excel workbooks. Serialisation already happens — `PTL-VII-L1-26-H-3493`. Phlo captures what exists and adds what does not: BOM explosion, RM consumption, serial ledger, QC records.
 
 **A completed production run MUST deduct raw material via the BOM.** This is a demo requirement (RP, 2026-08-21).
 
-> ### 🔴 Blocking BOM Defect
+> ### ✅ Blocking BOM Defect — Resolved 2026-08-29
 >
-> **The cage is not linked to the finished IBC.** `FG-BOM-W` contains no CAGE, PIPE or BAR line — four levels of cage BOM are consumed by nothing. An IBC run would deduct resin and fasteners and **zero steel**. This must be resolved before module 7 can correctly deduct steel for IBCs. See obs-06 §5.
+> **The cage is now linked to the finished IBC.** A corrected `IBC-DETAILS.xlsx` replaced the earlier file on 2026-08-29. `FG-BOM-W` row 12 carries `CAGE TYPE = MAX`, qty 1, so an IBC run deducts steel. Verified against the file. See [obs-07 §7](../../10-observations/obs-07-sales-driven-delivery-schedule.md).
+>
+> **The finished item was also renamed** — `...CP-FLAT DN75 QD BV 2.5 INCH` → `...CP-FLAT **DN50** QD BV 2.5 INCH`, with the valve-size row corrected from `DN80` to `DN50`. Demo data must use the new name.
+>
+> 🟠 **Two obs-06 findings remain open** — only `FG-BOM-W` changed; the other three sheets are byte-identical. `TOP CROSS BAR (1020)` is still produced and consumed nowhere, and `FG-BOM-W` still duplicates `CORNER PROTECTOR ×4` (rows 15, 23) and `SCREW WITH NYLOCK NUT 6×20 ×5` (rows 19, 29). Neither blocks the demo.
 
 ## As-Is State
 
 | What exists                                                          | What does not                                          |
 | -------------------------------------------------------------------- | ------------------------------------------------------ |
+| A daily **dispatch plan** from sales that the plant produces against               | Digital production records                             |
 | Work instructions with process parameters, QC gates, reject handling | Digital production records                             |
 | Real BOMs in Excel for all three lines                               | BOMs in the ERP (BOM ID field empty on sampled item)   |
 | Work Order button exists in UdyogERP (Labour Job Issue IV)           | Evidence of BOM explosion or RM consumption in the ERP |
@@ -125,7 +133,7 @@ Source: proc-04 throughout, obs-06, obs-04.
 
 | ID      | Assumption                                    | Reality                                                                                                                                    | Source           |
 | ------- | --------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------ | ---------------- |
-| A-PP-01 | Production runs against sales orders          | **Genuinely unknown.** RP: "No idea yet... might be forecast as well as running POs, or against SOs." Commodity lines may be made to stock | proc-04 Q1       |
+| ~~A-PP-01~~ | ~~Production runs against sales orders~~ — **RETIRED 2026-08-29.** Confirmed: runs happen against **firm sales orders**, delivered as the Daily Dispatch Plan (prd-08). `[UNKNOWN: whether this holds identically for all three product lines]` | No longer an assumption | obs-07 §3 |
 | A-PP-02 | One work order per product per run            | No evidence of batch work orders                                                                                                           | `[UNKNOWN]`      |
 | A-PP-03 | QC is a simple pass/fail per unit at the line | Full QC process has multiple gates but may be simplified for system capture                                                                | proc-04 §Stage 4 |
 | A-PP-04 | Serial sequence resets monthly                | Sequence 3493 in month H (August) — could be monthly or YTD                                                                                | proc-04 Q6       |
@@ -201,7 +209,8 @@ Key beats:
 
 | Depends on                              | For                                                                           |
 | --------------------------------------- | ----------------------------------------------------------------------------- |
-| prd-09 (Sales Orders)                   | SO drives work order (assumed)                                                |
+| **prd-08 (Delivery Scheduling)**        | **Dispatch plan line drives the work order** — the production trigger         |
+| prd-09 (Sales Orders)                   | The SO behind the schedule line                                               |
 | prd-06 (Inventory Management)           | RM issued from stock; regrind enters stock                                    |
 | prd-01 (Inventory Visibility)           | RM availability check during BOM explosion                                    |
 | **Feeds** prd-02 (Purchase Indent)      | RM shortfall triggers auto-indent                                             |
@@ -212,10 +221,10 @@ Key beats:
 
 ## Open Questions
 
-> **Audit 2026-08-27.** Questions 1 and 2 block screen-specs. Questions 3–10 can be answered during implementation. See `30-analysis/prd-audit-findings.md`.
+> **Updated 2026-08-29.** Questions 1 and 2 are both **closed** — the production trigger was confirmed by Pyramid and the BOM defect was fixed. This PRD is no longer blocked. Questions 3–10 can be answered during implementation.
 
-1. ⛔ **How is a production run actually decided?** Against firm SOs? Forecast? To keep machines running? Who decides? How far ahead? — **Blocks screen-specs:** the work order creation screen cannot be specified until the trigger is known.
-2. ⛔ 🔴 **Cage-to-IBC BOM link.** Must be resolved or bridged before this module can correctly deduct steel for IBCs. — **Blocks implementation.** See obs-06 §5.
+1. ~~⛔ **How is a production run actually decided?**~~ **Answered 2026-08-29:** against **firm sales orders**, reaching the plant as the Daily Dispatch Plan issued by sales at Bombay. Plant heads manage production and the finished goods held for dispatch. `[UNKNOWN: how far ahead the plan is issued — same morning, or the evening before? See prd-08 OQ7.]`
+2. ~~⛔ 🔴 **Cage-to-IBC BOM link.**~~ **Resolved 2026-08-29** — corrected workbook received; `FG-BOM-W` row 12 carries `CAGE TYPE = MAX`, qty 1. See obs-07 §7.
 3. **How many lines per unit?** Serial says `L1`. Is multi-line production common?
 4. **Does the serial reset monthly or annually?** 3,493 in month H — monthly count or year-to-date?
 5. **Is the serial recorded anywhere digitally today?** Or purely physical marking?
@@ -223,4 +232,4 @@ Key beats:
 7. **Does a refurbished IBC get a new serial?** — Asked in three places: prd-01 OQ4 and prd-06 OQ7. Answer once, update all three.
 8. **Is galvanising in-house or job-worked?** Everything steel is galvanised; no galvanising line was seen at Unit 7.
 9. **Are cycle times and work centres tracked anywhere?** Nothing in the BOM files supports scheduling. `[TODO: no timing data anywhere in this PRD — cycle time, shift duration, throughput rate. Check work instructions at plant.]`
-10. **What consumes TOP CROSS BAR (1020)?** Produced at level 2, consumed nowhere in the supplied BOMs.
+10. 🟠 **What consumes TOP CROSS BAR (1020)?** Produced at level 2, consumed nowhere. **Still open after the 2026-08-29 correction** — the cage sheet was not changed.

@@ -2,11 +2,12 @@
 title: "PRD-10 — Dispatch"
 status: draft
 created: 2026-08-24
-updated: 2026-08-27
+updated: 2026-08-29
 demo_areas: [10]
 tags: [prd, dispatch, delivery-challan, eway-bill, outbound, loading]
 tech_decision: 30-analysis/tech-decision-phlo-stack.md
 sources:
+  - 10-observations/obs-07-sales-driven-delivery-schedule.md
   - 20-process-maps/proc-03-sales-order-to-dispatch.md
   - 20-process-maps/proc-02-fleet-lr.md
   - 10-observations/obs-02-current-erp-system.md
@@ -20,7 +21,11 @@ sources:
 
 Dispatch bridges the sales order and the invoice. The dispatch person picks which SOs ship today — driven by due date and SO age. Fleet is assigned (prd-12), goods loaded, and outbound documents generated: delivery challan, e-Way Bill, outbound LR.
 
-Today dispatch sequencing is head knowledge. The delivery challan and e-Way Bill are generated in UdyogERP — both screens are documented field-by-field. **The process of deciding what ships when is entirely off-system.**
+**Corrected 2026-08-29.** Dispatch sequencing is **not** purely head knowledge. Sales at Bombay issues a **Daily Dispatch Plan** per plant (prd-08), and the plant works to it. The dispatch person executes that plan rather than composing the day's list — which settles the long-standing ambiguity in *"he picks the sales order to ship today, or he executes a list someone else made."* **It is the latter.**
+
+The delivery challan and e-Way Bill are generated in UdyogERP — both screens are documented field-by-field. What remains off-system is the plan itself, and any record of what was actually loaded against which order.
+
+Finished goods are held **one to two days at most**, so the dispatch queue is short-horizon by nature: what is produced today ships today.
 
 ## As-Is State
 
@@ -30,7 +35,7 @@ Today dispatch sequencing is head knowledge. The delivery challan and e-Way Bill
 | Delivery Challan in UdyogERP: 24 fields (7 header, 17 line)                         | Dispatch decision visible to anyone except the dispatch person |
 | e-Way Bill in UdyogERP: 33 fields, government format                                | Loading confirmation or gate-out record                        |
 | Forklift loading photographed                                                       | Any record of what was loaded against which SO                 |
-| _"He picks the sales order to ship today, or he executes a list someone else made"_ | Where or whether the list is written down                      |
+| **A daily dispatch plan issued by sales at Bombay** — the list is real, and it comes from sales | The plan in any system; it arrives informally                  |
 
 Source: proc-03 §Stage 4-5, obs-03 field catalog, obs-04.
 
@@ -140,7 +145,8 @@ Steps 15-16 follow immediately: fleet assignment (prd-12) and outbound document 
 
 | Depends on                              | For                                 |
 | --------------------------------------- | ----------------------------------- |
-| prd-09 (Sales Orders)                   | SOs to dispatch                     |
+| **prd-08 (Delivery Scheduling)**        | **The issued dispatch plan is the queue's source** |
+| prd-09 (Sales Orders)                   | SOs behind the scheduled lines      |
 | prd-12 (Fleet Management)               | Truck and driver assignment         |
 | prd-01 (Inventory Visibility)           | FG availability check               |
 | **Feeds** prd-01 (Inventory Visibility) | GOODS_DISPATCHED decreases FG stock |
@@ -149,10 +155,10 @@ Steps 15-16 follow immediately: fleet assignment (prd-12) and outbound document 
 
 ## Open Questions
 
-> **Audit 2026-08-27.** Question 1 blocks screen-specs and is shared with prd-09 and prd-01 — answer it once, propagate to all three. See `30-analysis/prd-audit-findings.md`.
+> **Updated 2026-08-29.** Questions 1 and 3 are **closed** by Pyramid's answers. This PRD is no longer blocked.
 
-1. ⛔ **Is stock allocated at order time or at dispatch?** Determines when FG is reserved. — **Blocks screen-specs.** Cross-PRD: prd-09 A-SO-02 currently assumes allocation happens at dispatch; prd-01 shows the resulting stock position. All three must agree.
+1. ~~⛔ **Is stock allocated at order time or at dispatch?**~~ **Answered 2026-08-29: neither.** Stock stays free until **loaded onto the truck**. The dispatch queue therefore shows intent, not a reservation — two plan lines can name the same stock until one is loaded. Propagated to prd-09 A-SO-02 and prd-01.
 2. **Can one dispatch serve multiple SOs to the same customer?** Consolidation.
-3. **Does the dispatch person have autonomy, or does someone else make the list?** "He picks... or he executes a list someone else made."
+3. ~~**Does the dispatch person have autonomy, or does someone else make the list?**~~ **Answered 2026-08-29:** sales at Bombay makes the list. The plant executes it. `[UNKNOWN: how much latitude the plant has to resequence within a day — prd-08 A-DS-02 assumes none beyond flagging a shortfall.]`
 4. **Gate-out process.** Is there a physical gate check before the truck leaves? Weight-bridge?
 5. **e-Way Bill integration.** Does Phlo generate via API to the government portal, or is it a data export?

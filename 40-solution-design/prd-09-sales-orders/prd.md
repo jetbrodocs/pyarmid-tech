@@ -2,11 +2,12 @@
 title: "PRD-09 — Sales Orders"
 status: draft
 created: 2026-08-24
-updated: 2026-08-27
+updated: 2026-08-29
 demo_areas: [9]
 tags: [prd, sales-order, customer, allocation, gst]
 tech_decision: 30-analysis/tech-decision-phlo-stack.md
 sources:
+  - 10-observations/obs-07-sales-driven-delivery-schedule.md
   - 20-process-maps/proc-03-sales-order-to-dispatch.md
   - 10-observations/obs-02-current-erp-system.md
   - 10-observations/obs-03-field-catalog.md
@@ -56,7 +57,7 @@ Source: proc-03 §Stage 1-2, obs-02, obs-03. Evidence: 🟢 screen / 🔴 proces
 | ID         | Requirement                                                                 | Source                           | Acceptance Criteria                                                                                                                                                                                                                        |
 | ---------- | --------------------------------------------------------------------------- | -------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | REQ-SO-001 | Create sales order: customer, consignee, lines, quantities, rates, due date | proc-03 §Stage 2, obs-03         | SO record with header and line items                                                                                                                                                                                                       |
-| REQ-SO-002 | `[ASSUMPTION]` Order intake channel                                         | proc-03 Q1: "completely unknown" | **Invent a plausible intake flow and label it as assumption.** No evidence of the actual channel. `[TODO: invented, not observed — the Order Capture screen inherits this. Observe the real intake channel before screen-specs. See OQ1.]` |
+| REQ-SO-002 | Order capture: sales keys in an order received by **email, WhatsApp or verbally**. Channel recorded on the order | **obs-07 §1 — confirmed 2026-08-29** | Order can be created without an attached customer document. Intake channel is a captured field |
 | REQ-SO-003 | Consignee / Buyer split (ship-to / bill-to)                                 | obs-03 field catalog             | Header carries both; may differ                                                                                                                                                                                                            |
 | REQ-SO-004 | Place of supply for GST determination                                       | obs-03                           | State-level. Determines CGST+SGST vs IGST                                                                                                                                                                                                  |
 | REQ-SO-005 | GST computed at order time                                                  | proc-03 §Stage 2                 | Tax amount visible on SO before confirmation                                                                                                                                                                                               |
@@ -89,10 +90,10 @@ Source: proc-03 §Stage 1-2, obs-02, obs-03. Evidence: 🟢 screen / 🔴 proces
 
 | ID      | Assumption                                                           | Reality                                                          | Source      |
 | ------- | -------------------------------------------------------------------- | ---------------------------------------------------------------- | ----------- |
-| A-SO-01 | Order intake is manual entry by sales team                           | Channel unknown — could be email, phone, portal, PDF PO          | proc-03 Q1  |
-| A-SO-02 | Stock is not allocated at order time; allocation happens at dispatch | No evidence either way                                           | proc-03 Q2  |
+| A-SO-01 | Order intake is manual entry by the sales team at Bombay             | **Confirmed 2026-08-29.** Customer orders arrive in **any form** — email, WhatsApp or verbal. Sales keys them in | obs-07 §1, §2 |
+| A-SO-02 | Stock is not reserved at order time                                  | **Confirmed 2026-08-29, and later than assumed:** stock stays free until it is **loaded onto the truck** — not at order, not at dispatch planning | obs-07 §4 |
 | A-SO-03 | Credit check is not enforced in the system                           | Account Master has credit fields, no process evidenced           | proc-03 Q3  |
-| A-SO-04 | Pricing is per-SKU, set at order time                                | Pricing model unknown — could be group SKU with weight surcharge | proc-03 Q10 |
+| A-SO-04 | Pricing is per-SKU with an override, and cost is carried on both RM and FG so margin is visible | **Demo assumption approved 2026-08-29 (RP).** The real pricing model was not answered — this is invented for the demo and must not be presented as observed | obs-07 §6 |
 
 ## Data Model
 
@@ -143,7 +144,7 @@ The SO is not the exciting moment — it is the **starting gun**. Keep it brisk.
 
 | Depends on                              | For                                                |
 | --------------------------------------- | -------------------------------------------------- |
-| **Feeds** prd-08 (Demand Planning)      | SO events feed the pipeline and trend projections  |
+| **Feeds** prd-08 (Delivery Scheduling)  | Delivery schedule lines hang from the SO; plan and pipeline are built from them |
 | **Feeds** prd-07 (Production Planning)  | Confirmed SO with FG shortfall triggers work order |
 | **Feeds** prd-10 (Dispatch)             | SO selected for dispatch                           |
 | **Feeds** prd-11 (Sales Invoice)        | Invoice raised against dispatched SO lines         |
@@ -151,12 +152,12 @@ The SO is not the exciting moment — it is the **starting gun**. Keep it brisk.
 
 ## Open Questions
 
-> **Audit 2026-08-27.** The sales process is unobserved — the screen fields are documented, the workflow is not. Questions 1, 2, 5, and 6 block screen-specs and need one observation session with the sales team to close. See `30-analysis/prd-audit-findings.md`.
+> **Updated 2026-08-29.** Pyramid answered the workflow questions on a call. Questions 1, 2, 5 and 7 are **closed**; question 6 is **deferred by a demo decision**, not answered. This PRD is no longer blocked.
 
-1. ⛔ **How does a customer order arrive?** Channel, format, who receives it. Still open. — **Blocks screen-specs:** the intake screen is currently invented (REQ-SO-002).
-2. ⛔ **Is stock allocated at order time or at dispatch?** — **Blocks screen-specs.** Cross-PRD: the answer must match prd-10 OQ1 and propagate to prd-01.
+1. ~~⛔ **How does a customer order arrive?**~~ **Answered 2026-08-29:** in **any form — email, WhatsApp or verbal.** Received by the sales team at the Bombay office. The formal artefact is what sales then issues to the plant (prd-08), not what the customer sends.
+2. ~~⛔ **Is stock allocated at order time or at dispatch?**~~ **Answered 2026-08-29: neither.** Stock stays free until it is **loaded onto the truck**. Propagated to prd-10 and prd-01.
 3. **How is the delivery due date set?** Customer-driven, or Pyramid decides?
 4. **Is there a credit check?** Account Master has credit limit fields.
-5. ⛔ **Who raises the SO?** Sales team at HO, or at plant? — **Blocks screen-specs:** determines roles and permissions on the SO screen.
-6. ⛔ **Pricing model.** Per-SKU fixed price, or group SKU with weight/size surcharge? — **Blocks screen-specs:** determines the SO line item structure.
-7. **Make-to-stock vs make-to-order by product line?** Commodity drums may be stocked; branded items made to order.
+5. ~~⛔ **Who raises the SO?**~~ **Answered 2026-08-29:** the **sales team at the Bombay office.** Plants receive schedules; they do not raise orders.
+6. ⚠️ **Pricing model.** Per-SKU fixed price, or group SKU with weight/size surcharge? **Not answered — deferred by demo decision (RP, 2026-08-29):** assume per-SKU with override, and carry cost on RM and FG. Still open for the real build.
+7. ~~**Make-to-stock vs make-to-order by product line?**~~ **Answered 2026-08-29: made to order**, against firm sales orders. `[UNKNOWN: whether this holds identically for all three lines — the call did not distinguish.]`

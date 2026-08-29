@@ -2,7 +2,7 @@
 title: "PRD-11 — Sales Invoice Creation"
 status: draft
 created: 2026-08-24
-updated: 2026-08-27
+updated: 2026-08-29
 demo_areas: [11]
 tags:
   [prd, sales-invoice, gst, tcs, einvoice, irn, tally, freight, screen-charges]
@@ -169,12 +169,12 @@ This is a **competence moment**, not a wow moment. The audience (especially acco
 | prd-10 (Dispatch)                  | Invoice raised against dispatch            |
 | prd-09 (Sales Orders)              | SO line items flow through                 |
 | prd-07 (Production)                | Screen charges from customer modifications |
-| **Feeds** prd-08 (Demand Planning) | Revenue data for demand trends             |
+| **Feeds** prd-08 (Delivery Scheduling) | Revenue and fulfilment data for the reporting views |
 
 ## Open Questions
 
 1. **Does Tally receive entries automatically or by re-keying?** Determines whether the XML export is the permanent solution or a stopgap.
 2. **e-Invoice integration method.** API to government portal, or manual submission?
 3. **Can one invoice cover multiple dispatches?** Or is it strictly 1:1?
-4. ⚠️ **Credit note / debit note process.** What happens on returns, price adjustments, quantity corrections? No process evidenced. — **Scope decision needed before screen-specs:** either bring credit/debit notes into scope as a requirement, or state them as an explicit post-demo exclusion. Leaving it unstated means the invoice module ships with no correction path. See `30-analysis/prd-audit-findings.md`.
+4. ~~⚠️ **Credit note / debit note process.**~~ **Scope decision taken 2026-08-29 (RP): excluded from the demo.** The invoice module ships with no correction path for returns, price adjustments or quantity corrections. This is a deliberate exclusion, not an oversight, and must be raised as a post-demo gap — no evidence of Pyramid's actual returns process has been gathered either way.
 5. **Export invoice handling.** Scoped out for demo, but RODTEP field exists and a delivery challan shows export-type fields. Will need to be addressed post-demo.

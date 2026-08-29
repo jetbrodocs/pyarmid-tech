@@ -1,21 +1,40 @@
 ---
 title: "Handover — Pyramid Demo, PRD Authoring"
-status: active
+status: superseded-in-part
 created: 2026-08-21
-updated: 2026-08-21
+updated: 2026-08-29
 audience: The colleague writing the PRDs
 ---
 
 # Handover — Pyramid Demo
 
-**You are writing the PRDs for a Phlo demo to Pyramid Technoplast. Demo date: 2026-08-27.**
+**You are writing the PRDs for a Phlo demo to Pyramid Technoplast.**
+
+> ## ⚠️ Read this first — what has changed since 2026-08-21
+>
+> This document was written as a handover *before* the PRDs existed. **The PRDs are now written**, and
+> several things below have been overtaken. Updated inline on 2026-08-29; the paragraphs marked
+> **Superseded** are kept so the record of what was believed is not destroyed.
+>
+> | Since this was written | Now |
+> |---|---|
+> | 13 PRDs to be authored | **All 13 exist.** One folder each under `40-solution-design/`. Audited 2026-08-27 |
+> | The old `prd-01-phlo-pyramid/`, `demo-build-brief.md`, `open-questions-consolidated.md` and 15 parked screen specs | **All deleted** in the 2026-08-24 restructure. Recover from git (`git show e4c3dea:<path>`) if needed |
+> | Module 8 = **Demand Planning** (greenfield, no as-is) | **Delivery Scheduling.** A real daily process exists — see §12 |
+> | Production trigger unknown | **Confirmed:** firm sales orders, via the daily dispatch plan |
+> | Order intake channel unknown | **Confirmed:** any channel — email, WhatsApp, verbal — into the Bombay sales team |
+> | Cage-to-IBC BOM link 🔴 blocking | **Fixed 2026-08-29.** Corrected workbook received |
+> | Stock allocation timing unknown | **Confirmed:** stock is free until loaded onto the truck |
+>
+> The current state of play lives in **[`40-solution-design/_index.md`](../40-solution-design/_index.md)**
+> and **[`10-observations/obs-07`](../10-observations/obs-07-sales-driven-delivery-schedule.md)**.
+> Where this file and those disagree, **they win.**
 
 This document is everything you need to start. Read it end to end before opening anything else —
 including §2, which will contradict things you may already believe.
 
-> **Where things live.** This file sits at the repo root deliberately, outside the numbered folders.
-> `40-solution-design/demo-build-brief.md` is an earlier, shorter version of the same material; where
-> they differ, **this file wins**.
+> **Where things live.** This file has moved to `00-inbox/`. `demo-build-brief.md`, once an earlier
+> and shorter version of this material, was **deleted on 2026-08-24**.
 
 ---
 
@@ -79,10 +98,9 @@ Each of these reached a process map, the gap analysis and the PRD before being c
 that caused all three was writing a *reading* of ambiguous source material as a *fact*.** Don't
 repeat it — see §9.
 
-**`prd-01-phlo-pyramid/` is superseded and will be retired.** Its scope is wrong at the premise
-level. Do not build on it. But **do read it** — its 47 requirement IDs, 10-entity data model, 29
-event types and business rules are real design work, corrected to current understanding, and exist
-nowhere else.
+~~**`prd-01-phlo-pyramid/` is superseded and will be retired.**~~ **Retired 2026-08-24 — the folder
+was deleted.** Its 47 requirement IDs, 10-entity data model and 29 event types were carried into the
+13 module PRDs. If you need the original, it is at `git show e4c3dea:40-solution-design/prd-01-phlo-pyramid/prd.md`.
 
 ---
 
@@ -126,17 +144,19 @@ travels on a **delivery challan, not an invoice** — the simple path, and the c
 | 4 | LR Tracking | `proc-02` | 🟢 |
 | 5 | GRN Creation | `proc-01` | 🟡 |
 | 6 | Inventory Management | `proc-05` | 🟡 |
-| 7 | Production Planning *(affecting RM inventory)* | `proc-04` | 🔴 planning / 🟢 execution |
-| 8 | Demand Planning | `proc-03` Stage 0 | 🔴 **documented as not existing** |
-| 9 | Sales Orders | `proc-03` | 🟢 screen / 🔴 process |
+| 7 | Production Planning *(affecting RM inventory)* | `proc-04` | 🟢 trigger confirmed / 🟢 execution |
+| 8 | **Delivery Scheduling** *(was Demand Planning)* | `proc-03` Stage 2b | 🟢 **process confirmed 2026-08-29** |
+| 9 | Sales Orders | `proc-03` | 🟢 screen / 🟢 process |
 | 10 | Dispatch | `proc-03` | 🟡 |
 | 11 | Sales Invoice Creation | `proc-03` | 🟢 |
 | 12 | Fleet Management *(attached to dispatch)* | `proc-02` + `proc-03` | 🟡 |
 | 13 | Fleet Tracking and Fleet Cost | `proc-06` | 🟢 model / 🔴 as-is |
 
-**A map existing is not the same as a process being known.** Three maps document an *absence*:
-demand planning (there is none), production planning (unknown), fleet cost (nothing tracked today).
-Read those before writing requirements against them.
+**A map existing is not the same as a process being known.** ~~Three maps document an *absence*:
+demand planning (there is none), production planning (unknown), fleet cost (nothing tracked today).~~
+**Updated 2026-08-29:** two of the three are closed. Production planning is answered, and a real
+delivery-scheduling process exists (forecasting still does not). **`proc-06` fleet cost remains a
+model, not an observed sequence.**
 
 Full matrix: `20-process-maps/_index.md`.
 
@@ -148,9 +168,10 @@ One continuous story. Every module appears once, where it makes sense. This is b
 and the recommended build order.
 
 ```
-  ①  SALES ORDER              Customer order entered. Lines, quantities, due date.        → 8, 9
+  ①  SALES ORDER              Customer order entered. Lines, quantities, due date.        → 9
+  ①b DELIVERY SCHEDULE        Sales at Bombay issues today's plan. U6 + U7 see it.       → 8
   ②  INVENTORY CHECK          Finished-goods position across Units 6 and 7. Shortfall.    → 1, 6
-  ③  PRODUCTION PLAN          Work order raised against the SO for the shortfall.         → 7
+  ③  PRODUCTION PLAN          Work order raised against the dispatch plan line.           → 7, 8
   ④  BOM EXPLOSION            Explodes to resin kg, cages, valves, caps. RM checked.      → 7
   ⑤  RM SHORTFALL → INDENT    Below re-order level → indent raised (configurable).        → 2, 6
   ⑥  APPROVAL AT HO           Indent approved.                                            → 2
@@ -212,14 +233,12 @@ analysis in `10-observations/obs-06-bom-analysis.md`.
 
 **Regrind is a planned BOM input with its own stock balance**, not a by-product.
 
-> ### 🔴 One blocking defect in the supplied BOM
+> ### ✅ The blocking BOM defect — fixed 2026-08-29
 >
-> **The cage is not linked to the finished IBC.** `FG-BOM-W` contains no CAGE, PIPE or BAR line —
-> four levels of cage BOM are consumed by nothing. An IBC run would deduct resin and fasteners and
-> **zero steel**.
->
-> **Fix before building module 7.** One bridging line (`CAGE-BIG ×1` into the final BOM) — but
-> confirm with Santoshi or Pravin/Pawan rather than inventing it.
+> ~~**The cage is not linked to the finished IBC.**~~ **Resolved.** A corrected `IBC-DETAILS.xlsx`
+> replaced the old file: `FG-BOM-W` row 12 now carries `CAGE TYPE = MAX`, qty 1. Verified against the
+> file. The finished item was also renamed `...CP-FLAT **DN50** QD BV 2.5 INCH` (was DN75), with the
+> valve-size row corrected DN80 → DN50. **Demo data must use the new name.**
 >
 > Also: `TOP CROSS BAR (1020)` is produced and consumed nowhere; the MS body sheet is specified two
 > ways (`0.8 × 920` vs `0.97 × 914`); two lines are duplicated in `FG-BOM-W`.
@@ -261,10 +280,12 @@ Pyramid will recognise them. That is the point.
 
 | Assumption | Reality |
 |---|---|
-| **Production runs against sales orders** | Genuinely unknown. Rohan: *"No idea yet… might be forecast as well as running POs, or against SOs."* Commodity lines may be made to stock |
+| ~~**Production runs against sales orders**~~ | **CONFIRMED 2026-08-29 — no longer an assumption.** Runs go against firm sales orders, delivered as the daily dispatch plan. `[UNKNOWN: whether all three lines behave identically]` |
 | **Pyramid does not export** | Scoped out by Rohan, **but the evidence conflicts.** A real Delivery Challan shows `Export Type = "Without IGST"`, `Place of Supply = "Others"`, zero GST; the Supply Master carries a **RODTEP** field; IBCs carry a ~40-country recollect label. Fine to exclude. **Not fine to record as fact** |
 | **±2% GRN tolerance** | Inherited from prd-01 with no basis. Configurable, no default presented as a recommendation |
-| **Order intake channel** | Completely unknown. Invent something plausible and label it |
+| ~~**Order intake channel**~~ | **CONFIRMED 2026-08-29 — no longer an assumption.** Orders arrive by **any channel** (email, WhatsApp, verbal) into the **Bombay** sales team |
+| **Pricing model** | **Still unknown.** Deferred by demo decision: assume per-SKU with override, and carry cost on RM and FG so margin shows. Do not present as observed |
+| **Fleet is outbound-only** | **Still unconfirmed.** Put to Pyramid 2026-08-29; the reply was ambiguous. Demo assumes outbound-only. Re-ask before implementation |
 | **Units 6 and 7 share a GSTIN** | Stated as real. Note Plant 9, also Bharuch, is on a **separate** GST — co-location does not imply shared registration |
 
 ---
@@ -278,37 +299,40 @@ Pyramid will recognise them. That is the point.
 3. **`10-observations/obs-06-bom-analysis.md`** — the BOMs. Essential for module 7.
 4. **`10-observations/obs-04-plant-visit-photos.md`** — production, quality system, serialisation. Strongest evidence in the project.
 5. **`10-observations/obs-05-visit-debrief-recordings.md`** — fleet cost, job work, variable BOM, purchased-vs-made.
-6. **`40-solution-design/open-questions-consolidated.md`** — 179 rows. **Section 10 holds every demo decision.**
+6. ~~**`40-solution-design/open-questions-consolidated.md`**~~ — **deleted 2026-08-24.** Open questions now live per-PRD. Demo decisions are in §3 of this file and in `obs-07` §6.
 7. **`30-analysis/tech-decision-phlo-stack.md`** — approved. Event-sourced, single `/events/emit` write endpoint, GET-only domain routers. **Your data model inherits this.**
-8. **`40-solution-design/prd-01-phlo-pyramid/prd.md`** — superseded scope, but mine it for the 47 requirements, data model, events and business rules.
+8. ~~**`40-solution-design/prd-01-phlo-pyramid/prd.md`**~~ — **deleted 2026-08-24.** Superseded by the 13 module PRDs. Start at **`40-solution-design/_index.md`** instead.
+9. **`10-observations/obs-07-sales-driven-delivery-schedule.md`** — 2026-08-29. The answers that closed every screen-spec blocker. **Read this before anything below it.**
 
 ### The folders
 
 | Folder | Holds |
 |---|---|
 | `00-inbox/` | Raw source — 5 audio files, 5 transcripts, **34 plant photographs**, the ERP field extract, the item master, **the 4 BOM workbooks** |
-| `10-observations/` | 6 observations — what was seen or said |
+| `10-observations/` | **7 observations** — what was seen or said |
 | `20-process-maps/` | 6 process maps — all 13 modules |
 | `30-analysis/` | As-is operating model, gap analysis, tech decision |
-| `40-solution-design/` | Build brief, open questions, superseded prd-01, parked screen specs |
+| `40-solution-design/` | **13 module PRDs**, one folder each, plus `_index.md`. The build brief, open-questions register, prd-01 and the parked screen specs were all deleted 2026-08-24 |
 
 **The photographs are re-readable.** The ERP screenshots were never preserved and left us with a
 transcription nobody can verify — don't repeat that. Use [Google Drive](https://drive.google.com/drive/folders/1gx7V5k8k9796nm53BsHBn-ZJLJfcive3?usp=sharing) for plant visit photos.
 
 ### Existing screen specs
 
-**15 specs parked at `40-solution-design/screen-specs/`**, lifted clear of prd-01. **Temporary** —
-move each under its PRD as you write it. Redistribution map is in that folder's index.
+> **Superseded 2026-08-24.** The 15 parked specs at `40-solution-design/screen-specs/` were **deleted**
+> in the restructure, not migrated. What replaced them is a **Screens table inside each PRD** — screen
+> name, purpose and primary users, with no layout, data points, CTAs, validations or conditional
+> states.
+>
+> **No screen specs currently exist in this project.** The originals are recoverable:
+> `git show e4c3dea:40-solution-design/screen-specs/<file>.md`.
+>
+> ⚠️ If you do recover them: the PO and LR specs assume POs are **imported from UdyogERP**. Phlo now
+> owns the whole chain — a PO is *created* in Phlo. Layouts and validations hold; that assumption does
+> not. Four of them also use `MH20DE4349` as an "owned truck" — it is a real third-party vehicle.
 
-| Future PRD | Modules | Specs waiting |
-|---|---|---|
-| **prd-02 — Procurement & Inbound** | 2, 3, 4, 5 | 10 |
-| **prd-03 — Inventory & Production** | 1, 6, 7 | 1 |
-| **prd-04 — Order to Dispatch** | 8, 9, 10, 11 | **0** |
-| **prd-05 — Fleet** | 12, 13 | 4 |
-
-⚠️ The PO and LR specs still assume POs are **imported from UdyogERP**. Phlo now owns the whole
-chain — a PO is *created* in Phlo. Layouts and validations hold; that assumption doesn't.
+**All 13 PRDs are clear to start screen-specs as of 2026-08-29.** See
+[`40-solution-design/_index.md`](../40-solution-design/_index.md) §Screen-Specs Readiness.
 
 ---
 
@@ -338,6 +362,11 @@ provenance codes. Carry them into the PRDs.
 
 ## 11. Starter prompts
 
+> **Superseded 2026-08-29.** These were written to author the 13 PRDs from scratch. **All 13 now
+> exist**, so the prompts below no longer describe the next task — they are kept for the file layout
+> and reading order they encode. The next task is **screen specs**; see
+> [`40-solution-design/_index.md`](../40-solution-design/_index.md).
+
 Ready to paste. Run them in order.
 
 ### 11.1 — Orientation (run first, before writing anything)
@@ -346,7 +375,7 @@ Ready to paste. Run them in order.
 Read HANDOVER.md at the repo root, then in this order:
   30-analysis/as-is-operating-model.md (coverage map first)
   20-process-maps/_index.md
-  40-solution-design/open-questions-consolidated.md section 10
+  40-solution-design/_index.md  (PRD coverage matrix and demo spine)
 
 Then tell me, without writing any files:
   1. The demo's narrative spine in your own words
@@ -367,7 +396,7 @@ modules 2 (Purchase Indent), 3 (PO Creation), 4 (LR Tracking) and 5 (GRN).
 Sources — read before writing:
   20-process-maps/proc-01-procurement.md
   20-process-maps/proc-02-fleet-lr.md
-  40-solution-design/prd-01-phlo-pyramid/prd.md  (superseded scope; mine the
+  10-observations/obs-07-sales-driven-delivery-schedule.md  (the 2026-08-29 answers; mine the
     requirement IDs, data model, event types and business rules)
 
 Rules:
@@ -380,8 +409,8 @@ Rules:
     with configurable thresholds. Never the fleet team
   - GRN tolerance configurable, no recommended default
   - Every requirement traces to a source. Every assumption is labelled
-  - Then move the 10 relevant specs from 40-solution-design/screen-specs/ into
-    prd-02-procurement-inbound/screen-specs/ and re-scope them
+  - NOTE: the parked screen specs were deleted 2026-08-24. Recover with
+    `git show e4c3dea:40-solution-design/screen-specs/<file>.md` if wanted
 ```
 
 ### 11.3 — Inventory & Production
@@ -415,7 +444,7 @@ orders. Label that as an assumption, do not present it as fact.
 
 ```
 Write 40-solution-design/prd-04-order-to-dispatch/prd.md covering modules
-8 (Demand Planning), 9 (Sales Orders), 10 (Dispatch) and 11 (Sales Invoice).
+8 (Delivery Scheduling), 9 (Sales Orders), 10 (Dispatch) and 11 (Sales Invoice).
 
 Source: 20-process-maps/proc-03-sales-order-to-dispatch.md — read its evidence
 warning first. This is the thinnest-evidenced map in the project.
@@ -449,7 +478,7 @@ Note:
   - Class A costs attach to an invoice: fuel, road tax, driver welfare
     (food, accommodation, sleeping)
   - Class B costs attach to the vehicle: repairs and maintenance, wear and tear
-  - Then move the 4 fleet specs from 40-solution-design/screen-specs/ in.
+  - NOTE: the 4 fleet specs were deleted 2026-08-24; recover from git if wanted.
     Their mock vehicle numbers are real third-party registrations - replace them
 ```
 
@@ -471,13 +500,28 @@ Report findings. Do not fix anything until I have seen the list.
 
 ---
 
-## 12. Open items at handover
+## 12. Open items — updated 2026-08-29
 
 | Item | Status |
 |---|---|
-| **Cage → IBC BOM link** | 🔴 **Blocking module 7.** Confirm with Santoshi or Pravin/Pawan |
-| **Demand planning** | 🔴 No as-is. Phlo introduces the capability |
-| **Production planning method** | 🔴 Unknown. Demo assumes against SO |
-| **Order intake channel** | 🔴 Unknown. Invent and label |
-| **Export contradiction** | 🟠 Scoped out, evidence conflicts. Settle before any full build |
-| **137 open questions** | Mostly build-time detail. Sections 6, 7, 8 and 9 of the register do not gate a demo |
+| **Cage → IBC BOM link** | ✅ **Fixed 2026-08-29.** Corrected workbook; `FG-BOM-W` row 12 = `CAGE TYPE MAX` qty 1 |
+| ~~**Demand planning**~~ | ✅ **Reframed.** Forecasting still does not exist — but a real **daily delivery schedule** does. Module 8 repurposed to Delivery Scheduling |
+| **Production planning method** | ✅ **Answered.** Firm sales orders, via the daily dispatch plan |
+| **Order intake channel** | ✅ **Answered.** Any channel — email, WhatsApp, verbal — into Bombay sales |
+| **Stock allocation timing** | ✅ **Answered.** Stock is free until loaded onto the truck |
+| **Credit / debit notes** | ✅ **Decided.** Excluded from the demo. Deliberate gap, no correction path ships |
+| **Fleet inter-plant boundary** | ⚠️ **Deferred, not answered.** Demo assumes outbound-only. Re-ask as a direct yes/no before implementation |
+| **Pricing model** | ⚠️ **Deferred.** Demo assumes per-SKU with override, cost carried on RM and FG |
+| **Export contradiction** | 🟠 Unchanged. Scoped out, evidence conflicts. Settle before any full build |
+| **Class A/B fleet cost taxonomy** | ⚠️ Design intent, not observed practice. Validate with Pyramid before implementation |
+| **`TOP CROSS BAR (1020)` consumed nowhere** | 🟠 Survived the BOM correction — only `FG-BOM-W` changed |
+| **Duplicate lines in `FG-BOM-W`** | 🟠 `CORNER PROTECTOR ×4` rows 15/23; `SCREW WITH NYLOCK NUT 6×20 ×5` rows 19/29 |
+| **Plant cannot meet the day's plan** | 🔴 **No evidence at all.** `proc-03` Exception D. With FG capped at 1–2 days there is no buffer — highest-value unobserved exception in the project |
+| **Screen specs** | 🔴 None exist. The 15 parked specs were deleted 2026-08-24. All 13 PRDs are clear to start |
+
+### Still true, and still worth re-reading
+
+§2 (**three things that are not true**) and §9 (**how this project works**) are unchanged and remain
+the most important parts of this document. All three propagated errors came from writing a *reading*
+of ambiguous material as a *fact* — the fleet inter-plant question above is a live example of exactly
+that risk, and is why it stays marked deferred rather than answered.

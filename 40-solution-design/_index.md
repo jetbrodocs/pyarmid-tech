@@ -2,7 +2,7 @@
 title: "Solution Design — Index"
 status: draft
 created: 2026-08-24
-updated: 2026-08-27
+updated: 2026-08-29
 tags: [index, solution-design, prd]
 ---
 
@@ -20,9 +20,9 @@ tags: [index, solution-design, prd]
 | 4   | [prd-04-lr-tracking](prd-04-lr-tracking/prd.md)                   | LR Tracking            | 8, 9, 9b            | proc-02          | 🟢                                |
 | 5   | [prd-05-grn](prd-05-grn/prd.md)                                   | GRN Creation           | 10                  | proc-01, proc-02 | 🟡                                |
 | 6   | [prd-06-inventory-management](prd-06-inventory-management/prd.md) | Inventory Management   | 2, 5, 10, 11, 13    | proc-05, proc-04 | 🟡                                |
-| 7   | [prd-07-production-planning](prd-07-production-planning/prd.md)   | Production Planning    | 3, 4, 5, 11, 12, 13 | proc-04, obs-06  | 🔴 planning / 🟢 execution        |
-| 8   | [prd-08-demand-planning](prd-08-demand-planning/prd.md)           | Demand Planning        | 1                   | proc-03 Stage 0  | 🔴 **documented as not existing** |
-| 9   | [prd-09-sales-orders](prd-09-sales-orders/prd.md)                 | Sales Orders           | 1                   | proc-03          | 🟢 screen / 🔴 process            |
+| 7   | [prd-07-production-planning](prd-07-production-planning/prd.md)   | Production Planning    | 3, 4, 5, 11, 12, 13 | proc-04, obs-06, obs-07 | 🟢 trigger confirmed / 🟢 execution |
+| 8   | [prd-08-delivery-scheduling](prd-08-delivery-scheduling/prd.md)   | **Delivery Scheduling** | **1b**, 1           | obs-07, proc-03  | 🟢 **process confirmed**          |
+| 9   | [prd-09-sales-orders](prd-09-sales-orders/prd.md)                 | Sales Orders           | 1                   | proc-03, obs-07  | 🟢 screen / 🟢 process            |
 | 10  | [prd-10-dispatch](prd-10-dispatch/prd.md)                         | Dispatch               | 14, 16              | proc-03, proc-02 | 🟡                                |
 | 11  | [prd-11-sales-invoice](prd-11-sales-invoice/prd.md)               | Sales Invoice Creation | 18                  | proc-03, obs-03  | 🟢                                |
 | 12  | [prd-12-fleet-management](prd-12-fleet-management/prd.md)         | Fleet Management       | 15                  | proc-02 Flow A   | 🟡                                |
@@ -31,9 +31,10 @@ tags: [index, solution-design, prd]
 ## Demo Spine Mapping
 
 ```
-①  Sales Order         → prd-09, prd-08
+①  Sales Order         → prd-09
+①b Delivery Schedule   → prd-08   ← sales at Bombay issues today's plan; U6 + U7 see it
 ②  Inventory Check     → prd-01, prd-06
-③  Production Plan     → prd-07
+③  Production Plan     → prd-07, prd-08   (work order raised against the dispatch plan)
 ④  BOM Explosion       → prd-07
 ⑤  RM Shortfall        → prd-02, prd-06
 ⑥  Approval at HO      → prd-02
@@ -45,7 +46,7 @@ tags: [index, solution-design, prd]
 ⑪  Production Run      → prd-06, prd-07
 ⑫  Customer Mod        → prd-07
 ⑬  Finished Goods      → prd-01, prd-06
-⑭  Dispatch Queue      → prd-10
+⑭  Dispatch Queue      → prd-10, prd-08   (queue sourced from the issued plan)
 ⑮  Fleet Assignment    → prd-12
 ⑯  Outbound Docs       → prd-10, prd-11
 ⑰  Fleet Cost          → prd-13
@@ -73,7 +74,8 @@ prd-10 (Dispatch) → prd-12 (Fleet) → prd-13 (Fleet Cost)
   ↓ invoice
 prd-11 (Sales Invoice)
 
-prd-08 (Demand Planning) — read projection over prd-09 + prd-01
+prd-08 (Delivery Scheduling) — writes the schedule and the daily plan;
+                               also projects pipeline/fulfilment over prd-09 + prd-01
 ```
 
 ## Evidence Gaps
@@ -83,24 +85,44 @@ Three modules have weak or absent evidence:
 | Module                           | Gap                                                                 | Implication                                          |
 | -------------------------------- | ------------------------------------------------------------------- | ---------------------------------------------------- |
 | **Production Planning** (prd-07) | Planning method unknown. Demo assumes against SOs                   | Core assumption drives work order creation           |
-| **Demand Planning** (prd-08)     | No process exists. Phlo introduces it                               | Day-one dashboards will be empty; no historical data |
+| ~~**Demand Planning** (prd-08)~~ | ~~No process exists~~ — **retired 2026-08-29.** A process does exist: the daily delivery schedule. PRD repurposed to **Delivery Scheduling** | Reporting half still cold-starts; the scheduling half has content from day one |
 | **Sales Orders** (prd-09)        | Screen documented; process unobserved. Order intake channel unknown | Intake flow is invented and labelled as assumption   |
 
 ## Blocking Issues
 
-Audited 2026-08-27 — full findings in [`30-analysis/prd-audit-findings.md`](../30-analysis/prd-audit-findings.md). **8 of 13 PRDs are clear to start screen-specs.** The five below are not.
+Audited 2026-08-27; **all screen-spec blockers cleared 2026-08-29** by a call with Pyramid and a corrected BOM workbook. Full audit in [`30-analysis/prd-audit-findings.md`](../30-analysis/prd-audit-findings.md); the answers themselves in [`obs-07`](../10-observations/obs-07-sales-driven-delivery-schedule.md).
 
-| Issue                                           | Affects                | Blocks         | Status                                                                                                            |
-| ----------------------------------------------- | ---------------------- | -------------- | ----------------------------------------------------------------------------------------------------------------- |
-| 🔴 Cage not linked to finished IBC in BOM       | prd-07                 | Implementation | Must resolve before the production module can correctly deduct steel. See obs-06 §5                               |
-| 🔴 Production trigger unknown                   | prd-07                 | Screen-specs   | Work order screen cannot be specified until it is known what starts a run                                         |
-| 🔴 Sales process unobserved                     | prd-09                 | Screen-specs   | Order intake is invented (REQ-SO-002). Needs one observation session with the sales team                          |
-| 🔴 Stock allocation timing — order or dispatch? | prd-09, prd-10, prd-01 | Screen-specs   | One answer, three PRDs. prd-09 A-SO-02 currently assumes dispatch                                                 |
-| 🔴 Inter-plant transfer boundary                | prd-12, prd-10, prd-13 | Screen-specs   | If owned fleet moves goods between plants, prd-10 needs a non-customer route and prd-13 a non-invoice cost bucket |
-| ⚠️ Credit / debit note process                  | prd-11                 | Scope decision | No process evidenced. Either in scope, or an explicit post-demo exclusion                                         |
+| Issue | Affects | Was blocking | Resolution |
+| ----- | ------- | ------------ | ---------- |
+| ✅ Cage not linked to finished IBC in BOM | prd-07 | Implementation | **Fixed.** Corrected workbook received; `FG-BOM-W` row 12 = `CAGE TYPE MAX`, qty 1. Item also renamed DN75 → **DN50** |
+| ✅ Production trigger unknown | prd-07 | Screen-specs | **Answered.** Runs go against **firm sales orders**, delivered as the Daily Dispatch Plan (prd-08). `A-PP-01` retired |
+| ✅ Sales process unobserved | prd-09 | Screen-specs | **Answered.** Orders arrive **any form** (email / WhatsApp / verbal), keyed by sales at **Bombay**. `REQ-SO-002` is no longer invented |
+| ✅ Stock allocation timing | prd-09, prd-10, prd-01 | Screen-specs | **Answered — neither.** Stock stays free until **loaded onto the truck**. Propagated to all three |
+| ⚠️ Inter-plant transfer boundary | prd-12, prd-10, prd-13 | Screen-specs | **Deferred, not answered.** Demo assumes **outbound-only** (`A-FM-05`). Must be re-asked before implementation |
+| ✅ Credit / debit note process | prd-11 | Scope decision | **Excluded from the demo** by decision. Deliberate gap; no correction path ships |
+
+### Still open, not blocking
+
+| Issue | Affects | Note |
+| ----- | ------- | ---- |
+| ⚠️ Pricing model | prd-09 | Not answered. Demo assumes per-SKU with override, plus cost on RM and FG. Real model still unknown |
+| 🟠 `TOP CROSS BAR (1020)` consumed nowhere | prd-07 | Survived the BOM correction — only `FG-BOM-W` changed |
+| 🟠 Duplicate lines in `FG-BOM-W` | prd-07 | `CORNER PROTECTOR ×4` rows 15/23; `SCREW WITH NYLOCK NUT 6×20 ×5` rows 19/29 |
+| ⚠️ Class A/B fleet cost taxonomy and apportionment | prd-13 | Blocks implementation, not screen-specs. Needs validation with Pyramid |
 
 ## Screen-Specs Readiness
 
-| Ready                                                          | Blocked                                                      |
-| -------------------------------------------------------------- | ------------------------------------------------------------ |
-| prd-01, prd-02, prd-03, prd-04, prd-05, prd-06, prd-08, prd-13 | prd-07, prd-09, prd-10, prd-12 (+ prd-11 pending scope call) |
+**All 13 PRDs are clear to start screen-specs** as of 2026-08-29.
+
+| Ready | Caveat |
+| ----- | ------ |
+| prd-01, prd-02, prd-03, prd-04, prd-05, prd-06, prd-07, prd-08, prd-09, prd-10, prd-11, prd-12, prd-13 | prd-12 carries an unanswered inter-plant question, parked behind a demo assumption. prd-08 is newly rewritten and has not been audited |
+
+## Downstream
+
+The 2026-08-29 answers are folded into the PRDs, the **process maps** (`proc-02`, `proc-03`,
+`proc-04`, `20-process-maps/_index.md`) and **`00-inbox/HANDOVER.md`**. Repo-wide link check passes.
+
+`HANDOVER.md` now carries a change banner at the top and an updated §12. Its §2 (*three things that
+are not true*) and §9 (*how this project works*) are unchanged — they remain the most useful parts of
+that document.

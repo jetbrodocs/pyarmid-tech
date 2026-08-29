@@ -2,11 +2,12 @@
 title: "PRD-01 — Inventory Visibility"
 status: draft
 created: 2026-08-24
-updated: 2026-08-27
+updated: 2026-08-29
 demo_areas: [1]
 tags: [prd, inventory, visibility, dashboard, multi-plant]
 tech_decision: 30-analysis/tech-decision-phlo-stack.md
 sources:
+  - 10-observations/obs-07-sales-driven-delivery-schedule.md
   - 20-process-maps/proc-05-inventory.md
   - 10-observations/obs-pyramid-technoplast-site-visit.md
   - 10-observations/obs-05-visit-debrief-recordings.md
@@ -74,6 +75,8 @@ Source: proc-05 §Systems and Tools, obs-02 field catalog.
 | A-IV-01 | Stock valuation uses weighted average cost                                    | No valuation method is documented                                    | `[UNKNOWN]`    |
 | A-IV-02 | All stock categories listed in proc-05 are exhaustive                         | Observed at Unit 7 only; other plants may have additional categories | obs-04         |
 | A-IV-03 | Serial-level tracking applies to finished goods; batch-level to raw materials | Serialisation observed on FG only; batch infra exists but unused     | obs-04, obs-02 |
+| A-IV-04 | **Stock is never shown as reserved.** There is no allocated-vs-free split — stock is free until it is loaded onto a truck | **Confirmed 2026-08-29.** Commitment happens at physical loading, not at order or dispatch planning | obs-07 §4 |
+| A-IV-05 | **Finished-goods stock is near zero most of the time.** FG turns in 1–2 days; plant space is the binding constraint | **Confirmed 2026-08-29.** The FG view will often look empty, and that is correct, not a defect | obs-07 §5 |
 
 ## Data Model
 
@@ -124,5 +127,7 @@ This module is a **read projection** — it consumes events emitted by other mod
 
 1. **What valuation method does Pyramid use for a listed company's reporting?** The ERP's "Include in Stock Valuation" checkbox was unchecked. A listed company must value inventory — the method is unknown.
 2. **Is there a stock-take or physical verification cycle?** No evidence of one exists. Phlo may need to support periodic count adjustments. — Same question as prd-06 OQ1. Answer once, update both.
+
+> **Note added 2026-08-29.** With finished goods turning in one to two days, **the trapped-capital story is a raw-materials story, not a finished-goods one.** Resin, coil and components are where value sits still. The FG views remain necessary for dispatch, but should not be positioned as where the cash is stuck.
 3. **What Excel files exist today, held by whom, at which plants?** Scope of the spreadsheet problem.
 4. **Does a refurbished unit keep its serial?** Affects serial-level traceability. — Asked in three places: prd-06 OQ7 and prd-07 OQ7. Answer once, update all three.

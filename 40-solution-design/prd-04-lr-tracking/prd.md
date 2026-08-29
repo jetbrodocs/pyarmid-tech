@@ -2,7 +2,7 @@
 title: "PRD-04 — LR Tracking"
 status: draft
 created: 2026-08-24
-updated: 2026-08-27
+updated: 2026-08-29
 demo_areas: [4]
 tags: [prd, lr, lorry-receipt, tracking, ageing, inbound, carrier, alert]
 tech_decision: 30-analysis/tech-decision-phlo-stack.md
@@ -183,4 +183,4 @@ Give this moment room. It is the recognition moment for the store teams in the a
 3. **Which carriers?** Standing panel or per-vendor choice? Who nominates — vendor or Pyramid? Who pays freight?
 4. **Deliver vs collect.** What determines whether the carrier delivers to plant or Pyramid collects? How often is collection the case?
 5. **Demurrage.** Do carriers charge storage after a free period? Quantifies the cost of delay.
-6. **Collection vehicle.** What vehicle makes the trip? If an owned truck is ever borrowed, the fleet/sales boundary is not absolute. — Same boundary as prd-12 OQ8 (inter-plant transfers). Both ask whether the fleet is strictly outbound-sales. Answer together.
+6. ⚠️ **Collection vehicle.** What vehicle makes the trip? If an owned truck is ever borrowed, the fleet/sales boundary is not absolute. — Same boundary as prd-12 OQ8. **Deferred by demo decision (RP, 2026-08-29):** the demo assumes the fleet is outbound-only. Re-ask with prd-12 OQ8 before implementation. See obs-07 §8.

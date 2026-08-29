@@ -2,7 +2,7 @@
 title: "PRD Audit Findings"
 status: draft
 created: 2026-08-27
-updated: 2026-08-27
+updated: 2026-08-29
 tags: [analysis, audit, prd, documentation-review]
 ---
 
@@ -10,7 +10,27 @@ tags: [analysis, audit, prd, documentation-review]
 
 ## Summary
 
-Full audit of 13 PRDs completed 2026-08-27. All PRDs structurally complete. **1 blocker, 4 critical** issues require resolution before screen-specs. Procurement chain (prd-01 through prd-06) cleanest; weak-evidence modules (prd-07, 08, 09) have expected gaps. Terminology and event sourcing architecture consistent throughout.
+> ### Update 2026-08-29 — all screen-spec blockers cleared
+>
+> A call with Pyramid and a corrected BOM workbook closed every blocker below except one, which was
+> deferred behind a demo assumption rather than answered. Answers are recorded in
+> [`obs-07`](../10-observations/obs-07-sales-driven-delivery-schedule.md).
+>
+> | Finding | Outcome |
+> |---|---|
+> | `F-07-001` cage-to-IBC BOM link | ✅ **Fixed** — `FG-BOM-W` row 12, `CAGE TYPE = MAX`, qty 1 |
+> | `F-07-002` production trigger | ✅ **Answered** — firm sales orders via the Daily Dispatch Plan |
+> | `F-09-001` / `F-09-002` sales process unobserved | ✅ **Answered** — any channel; sales at Bombay raises the SO |
+> | `F-10-001` stock allocation timing | ✅ **Answered** — stock is free until loaded onto the truck |
+> | `F-11-001` credit / debit notes | ✅ **Decided** — excluded from the demo |
+> | `F-12-001` inter-plant fleet boundary | ⚠️ **Deferred** — demo assumes outbound-only; still unanswered |
+> | `F-09-003` pricing model | ⚠️ **Deferred** — demo assumption approved; real model unknown |
+> | `F-08-001` prd-08 greenfield | ❌ **Superseded** — the premise was wrong. PRD repurposed to **Delivery Scheduling** |
+>
+> **prd-08 has been rewritten and has not been re-audited.** Its findings below describe the retired
+> Demand Planning version.
+
+Full audit of 13 PRDs completed 2026-08-27. All PRDs structurally complete. **1 blocker, 4 critical** issues required resolution before screen-specs. Procurement chain (prd-01 through prd-06) cleanest; weak-evidence modules (prd-07, 08, 09) have expected gaps. Terminology and event sourcing architecture consistent throughout.
 
 ## Findings by Severity
 
@@ -94,7 +114,7 @@ No findings.
 
 ---
 
-### PRD-08: Demand Planning
+### PRD-08: Demand Planning — ⚠️ RETIRED, see update above
 
 | ID       | Sev | Category     | Finding                                                    | Location          | Fix                                    |
 | -------- | --- | ------------ | ---------------------------------------------------------- | ----------------- | -------------------------------------- |
@@ -207,5 +227,6 @@ No findings.
 | prd-12 | ⚠️ Blocked     | F-12-001 (inter-plant boundary) |
 | prd-13 | ✓ Ready        | —                               |
 
-**Ready:** 8/13  
-**Blocked/Conditional:** 5/13
+**Ready at audit (2026-08-27):** 8/13 · **Blocked/Conditional:** 5/13
+
+**Ready as of 2026-08-29: 13/13.** prd-12 proceeds behind a demo assumption rather than an answer; prd-08 was rewritten after this audit and has not been re-audited.

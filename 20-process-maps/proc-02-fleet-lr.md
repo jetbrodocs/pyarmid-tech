@@ -2,7 +2,7 @@
 title: "Fleet Management and LR Tracking"
 status: draft
 created: 2026-08-16
-updated: 2026-08-24
+updated: 2026-08-29
 tags: [process, fleet, lr, transport, grn, inbound-logistics]
 demo_areas: [4, 12]
 sources:
@@ -236,7 +236,7 @@ A4. `[UNKNOWN: escalation path if goods missing or delayed]`
 > **To-be requirement (RP, 2026-08-21): Phlo must alert the store team on an ageing LR.**
 > Per stage, with configurable thresholds, scoped to the destination plant — **not** to the fleet
 > team, which has no inbound role. This is the direct counter to the reactive discovery described
-> above, and a must-have for the demo. See `40-solution-design/demo-build-brief.md` §3.
+> above, and a must-have for the demo. See [`prd-04-lr-tracking`](../40-solution-design/prd-04-lr-tracking/prd.md).
 
 ### Exception B: Material Sitting Uncollected at Carrier Facility
 

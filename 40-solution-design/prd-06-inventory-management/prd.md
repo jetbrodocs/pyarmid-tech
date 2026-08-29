@@ -2,11 +2,12 @@
 title: "PRD-06 — Inventory Management"
 status: draft
 created: 2026-08-24
-updated: 2026-08-27
+updated: 2026-08-29
 demo_areas: [6]
 tags: [prd, inventory, stock, transfers, returns, adjustments, inter-plant]
 tech_decision: 30-analysis/tech-decision-phlo-stack.md
 sources:
+  - 10-observations/obs-07-sales-driven-delivery-schedule.md
   - 20-process-maps/proc-05-inventory.md
   - 20-process-maps/proc-04-production.md
   - 10-observations/obs-04-plant-visit-photos.md
@@ -69,7 +70,7 @@ Source: proc-05 throughout, obs-02 field catalog.
 
 | ID         | Requirement                                                                     | Source                                  | Acceptance Criteria                                                                                         |
 | ---------- | ------------------------------------------------------------------------------- | --------------------------------------- | ----------------------------------------------------------------------------------------------------------- |
-| REQ-IM-004 | Create inter-plant transfer: source plant, destination plant, items, quantities | proc-05 §Stage 4                        | Transfer record created; stock reserved at source                                                           |
+| REQ-IM-004 | Create inter-plant transfer: source plant, destination plant, items, quantities | proc-05 §Stage 4                        | Transfer record created. **Note:** finished goods are never reserved (prd-01 `A-IV-04`) — reservation here applies to raw materials and sub-assemblies only |
 | REQ-IM-005 | Auto-select document type based on GSTIN                                        | proc-05 §Stage 4, rec-32                | Same GSTIN: delivery challan. Different GSTIN or different state: sale-purchase invoice with applicable GST |
 | REQ-IM-006 | Transfer dispatch: stock leaves source plant                                    | proc-05 §Stage 4                        | INTER_PLANT_DISPATCHED event; source stock decreases                                                        |
 | REQ-IM-007 | Transfer receipt: stock arrives at destination                                  | proc-05 §Stage 4                        | INTER_PLANT_RECEIVED event; destination stock increases                                                     |

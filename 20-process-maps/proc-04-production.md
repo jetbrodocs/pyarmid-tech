@@ -2,10 +2,11 @@
 title: "Production — Planning, Execution and Quality"
 status: draft
 created: 2026-08-21
-updated: 2026-08-24
+updated: 2026-08-29
 tags: [process, production, bom, quality, serialisation, job-work]
 demo_areas: [7]
 sources:
+  - 10-observations/obs-07-sales-driven-delivery-schedule.md
   - 10-observations/obs-04-plant-visit-photos.md
   - 10-observations/obs-05-visit-debrief-recordings.md
   - 10-observations/obs-02-current-erp-system.md
@@ -24,14 +25,14 @@ Covers demo area **7 (Production Planning, affecting Raw Material Inventory)**.
 ## Process Overview
 
 - **Purpose:** Convert raw material into finished, QC-passed, serialised packaging.
-- **Trigger:** `[UNKNOWN]`. **Demo assumption (RP, 2026-08-21): production runs against sales orders.**
-- **End condition:** Finished goods, serialised and QC-passed, in the finished-goods store.
+- **Trigger:** **The Daily Dispatch Plan** issued by sales at Bombay, built from firm sales orders (obs-07 §3, confirmed 2026-08-29). See [proc-03](proc-03-sales-order-to-dispatch.md) Stage 2b.
+- **End condition:** Finished goods, serialised and QC-passed, in the finished-goods store — **and usually dispatched the same day.** FG is held 1–2 days at most; plant space is the binding constraint (obs-07 §5).
 - **Lines observed:** blow moulding (HDPE), steel forming and cage assembly (IBC), steel forming (MS barrels).
 
 ```
-[Plan ?] → Work Order → Mould setup → Blow mould / Steel form → De-flash → After-cooler
+Dispatch Plan → Work Order → Mould setup → Blow mould / Steel form → De-flash → After-cooler
                                               ↓
-                         QC gates → PASS → Finishing → Customer marking → Serialise → FG store
+                         QC gates → PASS → Finishing → Customer marking → Serialise → FG store → dispatch same day
                                     ↓ FAIL
                               Serial deleted from production record → Granulate → back to RM
 ```
@@ -50,21 +51,29 @@ Covers demo area **7 (Production Planning, affecting Raw Material Inventory)**.
 
 ---
 
-## Stage 1 — Production Planning 🔴
+## Stage 1 — Production Planning 🟢 — *trigger confirmed 2026-08-29*
 
-**This is the least-known part of the business.**
+**Answered.** Production runs against **firm sales orders**, reaching the plant as the **Daily
+Dispatch Plan** that sales at Bombay issues each day (obs-07 §3). The plant head manages production
+and the finished goods held for dispatch.
 
 | Question | Status |
 |---|---|
-| Against firm sales orders? | **Demo assumption — unverified** |
-| Against forecast? | `[UNKNOWN]` |
-| To keep machines running? | `[UNKNOWN]` |
-| Who decides the run? | `[UNKNOWN]` |
-| How far ahead? | `[UNKNOWN]` |
+| Against firm sales orders? | 🟢 **Yes — confirmed 2026-08-29** |
+| Against forecast? | 🟢 **No.** Pyramid does not forecast |
+| To keep machines running? | 🟢 **No.** Runs are pulled by confirmed demand |
+| Who decides the run? | 🟢 **Sales sets the schedule; the plant head executes it** |
+| How far ahead? | `[UNKNOWN: same morning, or the evening before? See proc-03 OQ12]` |
+| Does it differ by product line? | `[UNKNOWN: the call did not distinguish. Commodity lines may still be made to stock]` |
 | Is a BOM exploded to derive RM needs? | **The Supply Master has a `BOM ID` field. It was EMPTY on the sampled item** — but **real BOMs exist outside the ERP**, in Excel. See [obs-06](../10-observations/obs-06-bom-analysis.md) |
 
-RP, 2026-08-21: *"No idea yet. Given this is a commodity — they might be doing it based on forecast
-as well as running POs, or against SOs."*
+> **Retracted 2026-08-21 note.** This stage previously read *"the least-known part of the business"*,
+> quoting RP: *"No idea yet. Given this is a commodity — they might be doing it based on forecast as
+> well as running POs, or against SOs."* **That is superseded.** It was against SOs.
+
+**Why the plan matters more than it looks.** With FG capped at one to two days of storage, the
+production plan and the dispatch plan are effectively the same document. There is no finished-goods
+buffer between them — what is made today ships today.
 
 **Work Orders exist as an object** 🟢 — Labour Job Issue IV carries a **Work Order button** and a
 **Job No.** column. So the ERP models work orders, at least for job work.
@@ -270,7 +279,9 @@ party's specification after a cancellation.
 
 | Issue | Impact |
 |---|---|
-| Production planning method unknown | Demo area 7 rests on an assumption |
+| ~~Production planning method unknown~~ | **Resolved 2026-08-29** — runs go against firm sales orders via the daily dispatch plan |
+| **No finished-goods buffer** | FG held 1–2 days at most; plant space is the constraint. A missed run has nowhere to absorb, and reaches the customer directly |
+| **The plan arrives informally** | The schedule the plant produces against has no system behind it — see [proc-03](proc-03-sales-order-to-dispatch.md) Stage 2b |
 | **BOM ID field empty** | No evidence BOM explosion is used; RM consumption cannot currently be derived |
 | Production sheet is paper/Excel | Serial ledger, reject deletions and defect data are not digital |
 | Work instructions show **Next Revision Date 01.07.2026**, now passed | Overdue review, or a newer set held off-board |
@@ -279,9 +290,11 @@ party's specification after a cancellation.
 
 ## Open Questions
 
-1. **How is a production run actually decided?** *(10.37 — the demo assumes against SO)*
+> **Updated 2026-08-29.** Q1 answered by Pyramid; Q3 partly closed by a corrected BOM workbook.
+
+1. ~~**How is a production run actually decided?**~~ **Answered 2026-08-29:** against **firm sales orders**, delivered as the Daily Dispatch Plan from sales at Bombay. `[UNKNOWN: how far ahead, and whether all three lines behave the same.]`
 2. **Is any BOM used today?** The field exists and is empty.
-3. ~~**What are the real BOMs?**~~ **RECEIVED 2026-08-21** — see [obs-06](../10-observations/obs-06-bom-analysis.md). Remaining: the **cage is missing from the final IBC BOM**, `TOP CROSS BAR` is consumed nowhere, and the MS body sheet is specified two ways
+3. ~~**What are the real BOMs?**~~ **RECEIVED 2026-08-21** — see [obs-06](../10-observations/obs-06-bom-analysis.md). **Cage link fixed 2026-08-29**: a corrected workbook adds `CAGE TYPE = MAX` qty 1 to `FG-BOM-W` (row 12), and renames the item `DN75` → **`DN50`**. See [obs-07 §7](../10-observations/obs-07-sales-driven-delivery-schedule.md). 🟠 **Still open:** `TOP CROSS BAR (1020)` is consumed nowhere, `FG-BOM-W` carries two duplicated lines, and the MS body sheet is specified two ways
 4. ~~**What UoM does RM consume in?**~~ **ANSWERED 2026-08-21: kg.** Plastic charges are stated in kg against `NOS` output; steel conversions in kg. Consumables too (stretch film 0.05 kg)
 5. **How many lines per unit?** The serial says `L1`.
 6. **Does the serial reset monthly or annually?** Decides whether 3,493 is monthly or year-to-date.
