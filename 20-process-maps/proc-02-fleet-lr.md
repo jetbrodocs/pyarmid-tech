@@ -2,7 +2,7 @@
 title: "Fleet Management and LR Tracking"
 status: draft
 created: 2026-08-16
-updated: 2026-08-29
+updated: 2026-08-30
 tags: [process, fleet, lr, transport, grn, inbound-logistics]
 demo_areas: [4, 12]
 sources:
@@ -171,6 +171,9 @@ This is **not** a fleet process. No Pyramid truck and no Pyramid driver appear a
 4. Purchase team or plant team takes on tracking.
    - Whoever raised or expects the material owns the follow-up. No dedicated inbound tracker.
    - `[UNKNOWN: tracked via the carrier's portal/helpline, or by phoning the vendor?]`
+   - `[UNKNOWN: whether a carrier tracking reference — AWB or docket number — is captured anywhere
+     today, or whether follow-up runs purely on the vendor relationship. Phlo intends to capture one
+     per LR and pull status from it where the carrier allows; see prd-04 REQ-LR-301..306.]`
 
 5. **Goods in transit — visibility gap. LR ageing starts here.**
 

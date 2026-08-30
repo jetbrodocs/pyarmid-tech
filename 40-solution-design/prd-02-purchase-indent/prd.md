@@ -46,7 +46,7 @@ Source: proc-01 §Path B steps 1-5, obs-02 field catalog. **No purchase-side ERP
 | Role                        | Responsibility                                  | Source                                                  |
 | --------------------------- | ----------------------------------------------- | ------------------------------------------------------- |
 | **Plant team / store team** | Raise indent when materials are needed          | proc-01, R1                                             |
-| **Purchase team (HO)**      | Approve indent; evaluate vendors; convert to PO | proc-01, RP 2026-08-21                                  |
+| **Purchase team (HO)**      | Approve indent; evaluate vendors; convert to PO | proc-01, Jetbro 2026-08-21                                  |
 | **Promoters / management**  | Approve in some cases                           | proc-01 step 3: "in some cases promoters or management" |
 
 ## Requirements
@@ -54,7 +54,7 @@ Source: proc-01 §Path B steps 1-5, obs-02 field catalog. **No purchase-side ERP
 | ID         | Requirement                                                                          | Source                                     | Acceptance Criteria                                                                                                                                      |
 | ---------- | ------------------------------------------------------------------------------------ | ------------------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | REQ-PI-001 | Create a purchase indent with item, quantity, plant, reason                          | proc-01 Path B step 2                      | Indent record created; status = Pending Approval                                                                                                         |
-| REQ-PI-002 | Auto-generate indent when stock falls below re-order level                           | HANDOVER §5 step ⑤; RP 2026-08-21          | Configurable re-order level per item per plant. System auto-raises indent when stock dips below. Currently re-order level is 0.00 — Phlo introduces this |
+| REQ-PI-002 | Auto-generate indent when stock falls below re-order level                           | HANDOVER §5 step ⑤; Jetbro 2026-08-21          | Configurable re-order level per item per plant. System auto-raises indent when stock dips below. Currently re-order level is 0.00 — Phlo introduces this |
 | REQ-PI-003 | Indent approval workflow                                                             | proc-01 step 3                             | Indent routes to purchase team at HO for approval. Approved or rejected with reason                                                                      |
 | REQ-PI-004 | Multi-item indent                                                                    | proc-01                                    | One indent can carry multiple line items                                                                                                                 |
 | REQ-PI-005 | Indent status tracking: Draft, Pending Approval, Approved, Rejected, Converted to PO | proc-01                                    | Status visible to plant team and purchase team                                                                                                           |

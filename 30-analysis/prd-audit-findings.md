@@ -2,7 +2,7 @@
 title: "PRD Audit Findings"
 status: draft
 created: 2026-08-27
-updated: 2026-08-29
+updated: 2026-08-30
 tags: [analysis, audit, prd, documentation-review]
 ---
 
@@ -76,6 +76,7 @@ No findings.
 | ID       | Sev | Category | Finding                                                  | Location | Fix                                     |
 | -------- | --- | -------- | -------------------------------------------------------- | -------- | --------------------------------------- |
 | F-04-001 | M   | DEPTH    | Default threshold values need basis — no real SLAs exist | A-LR-02  | Acceptable; sensible defaults post-demo |
+| F-04-003 | m   | SCOPE    | Carrier integration direction set 2026-08-30 — AWB/tracking-ID fetch with manual fallback (`REQ-LR-301`–`306`). Per-carrier feasibility still uninvestigated | REQ-LR-301..306, OQ2 | Does not gate demo or screen-specs |
 | F-04-002 | m   | EVIDENCE | One LR per PO line assumption marked [UNKNOWN]           | A-LR-03  | Already captured correctly              |
 
 **Status:** ✓ Ready for screen-specs

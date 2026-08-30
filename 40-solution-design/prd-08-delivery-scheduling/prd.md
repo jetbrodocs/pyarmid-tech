@@ -97,11 +97,11 @@ is no buffer to absorb a scheduling error.
 
 | ID | Requirement | Source | Acceptance Criteria |
 |---|---|---|---|
-| REQ-DS-004 | Phlo **auto-drafts** a dispatch plan per plant per date from open delivery schedule lines due on or before that date | RP 2026-08-29 | Draft appears without manual assembly. Grouped by plant |
-| REQ-DS-005 | Sales reviews the draft, adjusts lines, then **issues** it | RP 2026-08-29 | Issuing is an explicit action. An unissued draft is not visible to the plant |
+| REQ-DS-004 | Phlo **auto-drafts** a dispatch plan per plant per date from open delivery schedule lines due on or before that date | Jetbro 2026-08-29 | Draft appears without manual assembly. Grouped by plant |
+| REQ-DS-005 | Sales reviews the draft, adjusts lines, then **issues** it | Jetbro 2026-08-29 | Issuing is an explicit action. An unissued draft is not visible to the plant |
 | REQ-DS-006 | An issued plan is immediately visible to the receiving plant head | obs-07 §1 | Both Unit 6 and Unit 7 see only their own plan |
-| REQ-DS-007 | Plant head **acknowledges** the plan | RP 2026-08-29 | Acknowledged state and timestamp visible to sales |
-| REQ-DS-008 | Plant head can **flag a shortfall** against a line, with a reason and a revised quantity | RP 2026-08-29 | Flag is visible to sales. Does not silently alter the plan |
+| REQ-DS-007 | Plant head **acknowledges** the plan | Jetbro 2026-08-29 | Acknowledged state and timestamp visible to sales |
+| REQ-DS-008 | Plant head can **flag a shortfall** against a line, with a reason and a revised quantity | Jetbro 2026-08-29 | Flag is visible to sales. Does not silently alter the plan |
 | REQ-DS-009 | An issued plan can be revised and re-issued by sales; revisions are versioned | `[ASSUMPTION]` | Plant sees the current version and that it superseded an earlier one |
 | REQ-DS-010 | Plan lines carry through to work orders (prd-07) and the dispatch queue (prd-10) | obs-07 §3 | A work order names the plan line it serves |
 
@@ -123,9 +123,9 @@ Carried forward from the previous version. These read the same data; none captur
 | ID | Assumption | Reality | Source |
 |---|---|---|---|
 | A-DS-01 | One dispatch plan per plant per date | Pyramid said schedules go to "the plants and plant heads" — per-plant is inferred | `[ASSUMPTION]` |
-| A-DS-02 | Plants acknowledge and flag, but do not amend the plan | No evidence plants negotiate the schedule | RP 2026-08-29 |
+| A-DS-02 | Plants acknowledge and flag, but do not amend the plan | No evidence plants negotiate the schedule | Jetbro 2026-08-29 |
 | A-DS-03 | Delivery schedule lines are set at order entry | An SO may be taken without dates and scheduled later | `[UNKNOWN]` |
-| A-DS-04 | The plan covers finished goods dispatch only, not inter-plant movement | Fleet inter-plant use is deferred — see obs-07 §8 | RP 2026-08-29 |
+| A-DS-04 | The plan covers finished goods dispatch only, not inter-plant movement | Fleet inter-plant use is deferred — see obs-07 §8 | Jetbro 2026-08-29 |
 
 ## Data Model
 

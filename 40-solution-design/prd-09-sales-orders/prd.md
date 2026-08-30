@@ -93,7 +93,7 @@ Source: proc-03 §Stage 1-2, obs-02, obs-03. Evidence: 🟢 screen / 🔴 proces
 | A-SO-01 | Order intake is manual entry by the sales team at Bombay             | **Confirmed 2026-08-29.** Customer orders arrive in **any form** — email, WhatsApp or verbal. Sales keys them in | obs-07 §1, §2 |
 | A-SO-02 | Stock is not reserved at order time                                  | **Confirmed 2026-08-29, and later than assumed:** stock stays free until it is **loaded onto the truck** — not at order, not at dispatch planning | obs-07 §4 |
 | A-SO-03 | Credit check is not enforced in the system                           | Account Master has credit fields, no process evidenced           | proc-03 Q3  |
-| A-SO-04 | Pricing is per-SKU with an override, and cost is carried on both RM and FG so margin is visible | **Demo assumption approved 2026-08-29 (RP).** The real pricing model was not answered — this is invented for the demo and must not be presented as observed | obs-07 §6 |
+| A-SO-04 | Pricing is per-SKU with an override, and cost is carried on both RM and FG so margin is visible | **Demo assumption approved 2026-08-29 (Jetbro).** The real pricing model was not answered — this is invented for the demo and must not be presented as observed | obs-07 §6 |
 
 ## Data Model
 
@@ -159,5 +159,5 @@ The SO is not the exciting moment — it is the **starting gun**. Keep it brisk.
 3. **How is the delivery due date set?** Customer-driven, or Pyramid decides?
 4. **Is there a credit check?** Account Master has credit limit fields.
 5. ~~⛔ **Who raises the SO?**~~ **Answered 2026-08-29:** the **sales team at the Bombay office.** Plants receive schedules; they do not raise orders.
-6. ⚠️ **Pricing model.** Per-SKU fixed price, or group SKU with weight/size surcharge? **Not answered — deferred by demo decision (RP, 2026-08-29):** assume per-SKU with override, and carry cost on RM and FG. Still open for the real build.
+6. ⚠️ **Pricing model.** Per-SKU fixed price, or group SKU with weight/size surcharge? **Not answered — deferred by demo decision (Jetbro, 2026-08-29):** assume per-SKU with override, and carry cost on RM and FG. Still open for the real build.
 7. ~~**Make-to-stock vs make-to-order by product line?**~~ **Answered 2026-08-29: made to order**, against firm sales orders. `[UNKNOWN: whether this holds identically for all three lines — the call did not distinguish.]`

@@ -26,7 +26,7 @@ Finished goods are held **one to two days at most** — plant space is the bindi
 
 Execution is well documented. Pyramid's own work instructions (`PTL/WI/PD/04`, `PTL/WI/PD/05`) give process parameters, QC gates, and reject handling. Real BOMs exist for all three product lines in Excel workbooks. Serialisation already happens — `PTL-VII-L1-26-H-3493`. Phlo captures what exists and adds what does not: BOM explosion, RM consumption, serial ledger, QC records.
 
-**A completed production run MUST deduct raw material via the BOM.** This is a demo requirement (RP, 2026-08-21).
+**A completed production run MUST deduct raw material via the BOM.** This is a demo requirement (Jetbro, 2026-08-21).
 
 > ### ✅ Blocking BOM Defect — Resolved 2026-08-29
 >
@@ -65,7 +65,7 @@ Source: proc-04 throughout, obs-06, obs-04.
 
 | Role                    | Responsibility                                     | Source                    |
 | ----------------------- | -------------------------------------------------- | ------------------------- |
-| **Santoshi**            | Leads production at Unit 7                         | proc-04                   |
+| **Production Head**     | Leads production at a unit                         | proc-04                   |
 | **Shift Engineer**      | Machine parameters, granulation                    | proc-04 work instructions |
 | **QA Engineer**         | Tests first samples, confirms status               | proc-04 §Stage 3          |
 | **Production Engineer** | Supervises online and in-process tests             | proc-04 §Stage 3          |

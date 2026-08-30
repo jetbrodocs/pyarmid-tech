@@ -160,7 +160,7 @@ Source: obs-03 §4 (field catalog), proc-03 §Stage 6.
 
 **Step 18 in the demo spine.** The final step. Invoice raised with line-level freight and screen charges. IRN generated. Tally XML export button shown (not clicked through to Tally).
 
-This is a **competence moment**, not a wow moment. The audience (especially accounts and Gautam) will verify that Phlo can handle what UdyogERP already handles. If anything is missing — GST fields, TCS, charges — credibility drops. Match the 56 fields.
+This is a **competence moment**, not a wow moment. The audience — especially the accounts team and IT — will verify that Phlo can handle what UdyogERP already handles. If anything is missing — GST fields, TCS, charges — credibility drops. Match the 56 fields.
 
 ## Inter-Module Dependencies
 
@@ -176,5 +176,5 @@ This is a **competence moment**, not a wow moment. The audience (especially acco
 1. **Does Tally receive entries automatically or by re-keying?** Determines whether the XML export is the permanent solution or a stopgap.
 2. **e-Invoice integration method.** API to government portal, or manual submission?
 3. **Can one invoice cover multiple dispatches?** Or is it strictly 1:1?
-4. ~~⚠️ **Credit note / debit note process.**~~ **Scope decision taken 2026-08-29 (RP): excluded from the demo.** The invoice module ships with no correction path for returns, price adjustments or quantity corrections. This is a deliberate exclusion, not an oversight, and must be raised as a post-demo gap — no evidence of Pyramid's actual returns process has been gathered either way.
+4. ~~⚠️ **Credit note / debit note process.**~~ **Scope decision taken 2026-08-29 (Jetbro): excluded from the demo.** The invoice module ships with no correction path for returns, price adjustments or quantity corrections. This is a deliberate exclusion, not an oversight, and must be raised as a post-demo gap — no evidence of Pyramid's actual returns process has been gathered either way.
 5. **Export invoice handling.** Scoped out for demo, but RODTEP field exists and a delivery challan shows export-type fields. Will need to be addressed post-demo.

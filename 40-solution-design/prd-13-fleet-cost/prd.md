@@ -20,7 +20,7 @@ sources:
 
 Pyramid runs **~100 owned trucks** and has **no idea what any of it costs per order**. Nothing about fleet cost is tracked today — not in the ERP, not in Excel, not on paper. Fuel, road tax, driver welfare, repairs — all untracked. Recording 32: _"There is no management for running and maintenance cost of the vehicles."_
 
-**This is a capability Phlo introduces.** There is no as-is process. The cost model comes from recording 32 and RP 2026-08-21 — two cost classes, split by whether a cost attaches to an invoice or to the vehicle.
+**This is a capability Phlo introduces.** There is no as-is process. The cost model comes from recording 32 and Jetbro 2026-08-21 — two cost classes, split by whether a cost attaches to an invoice or to the vehicle.
 
 Fleet cost is one of the four differentiating demo moments: _"~100 trucks and no idea what a delivery costs. A capability they have in no form."_
 
@@ -160,7 +160,7 @@ Show: record a fuel entry and a toll for the trip. The cost-to-serve for this or
 
 > **Audit 2026-08-27.** This module's whole structure rests on Q1 and Q3. Neither blocks screen-specs, but both must be settled before implementation — the Class A/B split is design intent, not observed practice. See `30-analysis/prd-audit-findings.md`.
 
-1. ⚠️ **Is the cost taxonomy (Class A/B) observed practice or Aryan's design proposal?** Recording 32 reads as intent. Validate with Pyramid. — **Validate before implementation:** the entire cost model and both dashboards derive from this split.
+1. ⚠️ **Is the cost taxonomy (Class A/B) observed practice, or our own design proposal?** Recording 32 reads as intent. Validate with Pyramid. — **Validate before implementation:** the entire cost model and both dashboards derive from this split.
 2. **How are drivers advanced money?** Cash, card, company account? How reconciled?
 3. ⚠️ **What basis apportions Class B costs?** Distance, trips, or time? — **Validate before implementation.** REQ-FC-013 assumes distance is captured, but A-FC-04 marks distance capture `[UNKNOWN]`. If distance is not captured, the apportionment basis has to be trips or time and REQ-FC-013 changes.
 4. **Is fuel bought on card, cash, or fleet account?**

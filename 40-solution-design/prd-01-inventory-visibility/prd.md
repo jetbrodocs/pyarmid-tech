@@ -19,7 +19,7 @@ sources:
 
 ## Summary
 
-Inventory visibility is the first of Pyramid's three named problems. **All stock, of every kind, lives in Excel** — confirmed by RP on 2026-08-21. UdyogERP has stock fields (Bin No., Rack No., Re-order Level, Include in Stock Valuation) but no stock data: every field was blank or zero on the sampled item. Nine plants keep their own spreadsheets. Nobody can state the group stock position.
+Inventory visibility is the first of Pyramid's three named problems. **All stock, of every kind, lives in Excel** — confirmed by Jetbro on 2026-08-21. UdyogERP has stock fields (Bin No., Rack No., Re-order Level, Include in Stock Valuation) but no stock data: every field was blank or zero on the sampled item. Nine plants keep their own spreadsheets. Nobody can state the group stock position.
 
 Phlo replaces spreadsheets, not an ERP module. **There is no migration, no legacy stock ledger, and no incumbent to displace. This is greenfield.**
 
@@ -50,7 +50,7 @@ Source: proc-05 §Systems and Tools, obs-02 field catalog.
 | Role                       | What they see                                                      | Source                    |
 | -------------------------- | ------------------------------------------------------------------ | ------------------------- |
 | **Store team (9)**         | Stock at their plant, by category, with drill-down to batch/serial | obs-05 §9, proc-05 §Roles |
-| **Plant team**             | Same as store team (plant team = production + store)               | RP 2026-08-21             |
+| **Plant team**             | Same as store team (plant team = production + store)               | Jetbro 2026-08-21             |
 | **Purchase team (HO)**     | Pipeline view — what's ordered, dispatched, in transit, received   | gap-analysis §Phlo Scope  |
 | **Management / promoters** | Consolidated cross-plant dashboard, ageing, pipeline               | site-visit, pillar 3      |
 

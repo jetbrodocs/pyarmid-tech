@@ -46,7 +46,7 @@ Source: proc-01 §Path B step 5, obs-02, gap-analysis.
 
 | Role | Responsibility | Source |
 |---|---|---|
-| **Purchase team (HO)** | Create PO from approved indent; select vendor; send to vendor | proc-01 step 5, RP 2026-08-21 |
+| **Purchase team (HO)** | Create PO from approved indent; select vendor; send to vendor | proc-01 step 5, Jetbro 2026-08-21 |
 | **Promoters** | Path A: create PO directly (no indent) for HDPE resin and steel | proc-01 Path A |
 | **Plant team** | View PO status against their indents | proc-01 |
 

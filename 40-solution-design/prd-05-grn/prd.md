@@ -46,7 +46,7 @@ Source: proc-01 §The Gap step 12, proc-05 §Stage 1.
 
 | Role                   | Responsibility                              | Source                 |
 | ---------------------- | ------------------------------------------- | ---------------------- |
-| **Store team**         | Receive goods, verify against PO, raise GRN | proc-01, RP 2026-08-21 |
+| **Store team**         | Receive goods, verify against PO, raise GRN | proc-01, Jetbro 2026-08-21 |
 | **Purchase team (HO)** | View GRN status against POs                 | proc-01                |
 | **Management**         | GRN pendency dashboard                      | gap-analysis           |
 

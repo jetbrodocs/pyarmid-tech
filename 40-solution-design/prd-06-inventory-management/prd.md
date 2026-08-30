@@ -51,7 +51,7 @@ Source: proc-05 throughout, obs-02 field catalog.
 
 | Role                   | Responsibility                                                | Source                 |
 | ---------------------- | ------------------------------------------------------------- | ---------------------- |
-| **Store team (9)**     | All stock movements at their plant. Issue RM. Receive returns | proc-05, RP 2026-08-21 |
+| **Store team (9)**     | All stock movements at their plant. Issue RM. Receive returns | proc-05, Jetbro 2026-08-21 |
 | **Plant team**         | Raise transfer requests; consume RM in production             | proc-05, proc-04       |
 | **Purchase team (HO)** | View stock position across plants                             | proc-05                |
 | **Management**         | Approve transfers; view ageing; stock-take oversight          | gap-analysis           |
