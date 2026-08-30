@@ -2,13 +2,19 @@
 title: "Solution Design — Index"
 status: draft
 created: 2026-08-24
-updated: 2026-08-29
+updated: 2026-08-30
 tags: [index, solution-design, prd]
 ---
 
 # Solution Design — Index
 
 13 PRDs, one per module. All trace to process maps, observations, and the gap analysis. Tech stack: event-sourced (Python 3.12 + FastAPI + PostgreSQL 16 + Next.js 14), approved in `30-analysis/tech-decision-phlo-stack.md`.
+
+## Before You Build
+
+**[`demo-data-policy.md`](demo-data-policy.md)** — mandatory read before writing any screen spec.
+Every rate, price, name and date in the demo. **All figures are invented by us; nothing is being
+requested from Pyramid.** Carries the seed rate register and a pre-flight checklist.
 
 ## PRD Coverage Matrix
 

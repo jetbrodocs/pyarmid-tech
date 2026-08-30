@@ -2,7 +2,7 @@
 title: "Handover — Pyramid Demo, PRD Authoring"
 status: superseded-in-part
 created: 2026-08-21
-updated: 2026-08-29
+updated: 2026-08-30
 audience: The colleague writing the PRDs
 ---
 
@@ -25,6 +25,9 @@ audience: The colleague writing the PRDs
 > | Order intake channel unknown | **Confirmed:** any channel — email, WhatsApp, verbal — into the Bombay sales team |
 > | Cage-to-IBC BOM link 🔴 blocking | **Fixed 2026-08-29.** Corrected workbook received |
 > | Stock allocation timing unknown | **Confirmed:** stock is free until loaded onto the truck |
+> | Carrier integration an open question | **Direction set:** AWB / tracking-ID fetch, manual entry as permanent fallback (`prd-04 REQ-LR-301`–`306`) |
+> | Real people's names used in PRDs | **All removed 2026-08-30**, replaced with positions |
+> | Demo numbers undefined | **[`40-solution-design/demo-data-policy.md`](../40-solution-design/demo-data-policy.md)** — read it before writing a screen spec |
 >
 > The current state of play lives in **[`40-solution-design/_index.md`](../40-solution-design/_index.md)**
 > and **[`10-observations/obs-07`](../10-observations/obs-07-sales-driven-delivery-schedule.md)**.
@@ -245,6 +248,15 @@ analysis in `10-observations/obs-06-bom-analysis.md`.
 
 ### Invented: everything else
 
+> **Superseded in part 2026-08-30.** The authoritative version now lives in
+> **[`40-solution-design/demo-data-policy.md`](../40-solution-design/demo-data-policy.md)**, which adds
+> the **seed rate register**, the real-vs-invented tier model, date handling, and a checklist. The
+> names below are still correct and are carried into that document. **Where they differ, the policy
+> wins.**
+>
+> **Key point that is new:** we are **not** asking Pyramid for costs or prices — we invent all of them
+> (decision, 2026-08-30). No corrected figures are coming, so our numbers are the only numbers.
+
 **Do not use real customer, vendor or transaction data.** Real names appear throughout the research
 (Grasim, GACL, Deepak Nitrite, UPL, Asian Paints, Adani Wilmar, Blue Dart, SABIC, IOCL Propel,
 Qingdao XiFa, Anand Freight Carriers). **They are evidence, not demo data.** Showing Pyramid invented
@@ -260,7 +272,7 @@ numbers against a real account name is the one thing that reliably goes wrong in
 | **Component vendors** | Fastline Fittings *(valves, cam locks)* · Precision Closures |
 | **Carriers (inbound)** | Swiftrail Logistics · Cargowing Express |
 | **Own trucks** | Invent registrations. **Do not reuse `MH20DE4349`** — it is a real third-party vehicle from an e-Way Bill, and it is wrongly used as an "owned truck" in four existing screen specs |
-| **Internal people** | Barely needed — one god user. If a name is shown, invent it. **Do not use Santoshi, Girdharlalji, Narayan Ji, Gautam, Jai, Pravin or Pawan** — they are real and several will be in the room |
+| **Internal people** | Barely needed — one god user. **Show a position, not a name** — Plant Head, Store Head, Production Head. All real names were stripped from the PRDs on 2026-08-30; **do not reintroduce them.** Several of those people will be in the room |
 
 **Products, SKUs and item names should be real** — they come from the item master and the BOMs, and
 Pyramid will recognise them. That is the point.
@@ -357,6 +369,40 @@ provenance codes. Carry them into the PRDs.
 - Screens designed first-hand but credible against Pyramid's conventions — per-unit series, place of supply, HSN, batch parameters
 - The demo tells **one story**, not thirteen
 - Module 7 actually deducts raw material, using a real BOM
+
+---
+
+## 10b. Next task — screen specs
+
+**All 13 PRDs are clear to start screen specs** (2026-08-30). **83 screens** across them:
+
+| PRD | Screens | | PRD | Screens |
+|---|---|---|---|---|
+| prd-01 Inventory Visibility | 5 | | prd-08 **Delivery Scheduling** | 8 |
+| prd-02 Purchase Indent | 5 | | prd-09 Sales Orders | 4 |
+| prd-03 PO Creation | 4 | | prd-10 Dispatch | 6 |
+| prd-04 LR Tracking | 10 | | prd-11 Sales Invoice | 6 |
+| prd-05 GRN | 5 | | prd-12 Fleet Management | 8 |
+| prd-06 Inventory Management | 7 | | prd-13 Fleet Cost | 6 |
+| prd-07 Production Planning | 9 | | | |
+
+Each goes in `40-solution-design/prd-NN-<name>/screen-specs/`. Format is in the `screen-specs` skill.
+
+### Read these first
+
+1. **[`40-solution-design/demo-data-policy.md`](../40-solution-design/demo-data-policy.md)** — **mandatory.** Every rate, price and name in the demo. **Nothing is coming from Pyramid** — we invent all of it, which is exactly why the discipline is written down. Includes the seed register and a done-checklist
+2. **[`40-solution-design/_index.md`](../40-solution-design/_index.md)** — coverage matrix, demo spine, what is still open
+3. **[`10-observations/obs-07`](../10-observations/obs-07-sales-driven-delivery-schedule.md)** — the 2026-08-29 answers that unblocked everything
+
+### Four things to know before you start
+
+**1 · `prd-08` has never been audited.** It was rewritten on 2026-08-29, after the audit pass. 244 lines, 8 screens, and it carries the best demo moment (step ①b). If anything gets an independent read first, make it that one.
+
+**2 · No screen specs exist.** The 15 from the old structure were **deleted**, not migrated, on 2026-08-24. This is a from-scratch job. They are recoverable — `git show e4c3dea:40-solution-design/screen-specs/<file>.md` — and the layouts still hold, but **two stale assumptions are baked in**: POs shown as *imported from UdyogERP* (Phlo now owns the whole chain, a PO is *created* in Phlo), and **`MH20DE4349` used as an owned truck** in four of them — it is a real third-party vehicle from an e-Way Bill. Do not inherit either.
+
+**3 · Two assumptions are load-bearing.** `prd-09` pricing (per-SKU with override) drives the SO line item structure, and `prd-12`'s outbound-only fleet sits behind an **ambiguous** answer, not a confirmed one. If either flips, screens get reworked. Both are labelled in the PRDs.
+
+**4 · Person names are gone from the PRDs — keep them gone.** Removed 2026-08-30 and replaced with positions: *Plant Head, Store Head, Production Head, Shift Engineer, QA Engineer, Sales Team, Fleet Team, Purchase Team*. Source attributions read **Jetbro**, not initials.
 
 ---
 
@@ -517,7 +563,11 @@ Report findings. Do not fix anything until I have seen the list.
 | **`TOP CROSS BAR (1020)` consumed nowhere** | 🟠 Survived the BOM correction — only `FG-BOM-W` changed |
 | **Duplicate lines in `FG-BOM-W`** | 🟠 `CORNER PROTECTOR ×4` rows 15/23; `SCREW WITH NYLOCK NUT 6×20 ×5` rows 19/29 |
 | **Plant cannot meet the day's plan** | 🔴 **No evidence at all.** `proc-03` Exception D. With FG capped at 1–2 days there is no buffer — highest-value unobserved exception in the project |
-| **Screen specs** | 🔴 None exist. The 15 parked specs were deleted 2026-08-24. All 13 PRDs are clear to start |
+| **Screen specs** | 🔴 **None exist** — 83 to write. The 15 parked specs were deleted 2026-08-24. All 13 PRDs are clear to start. See §10b |
+| **Demo costs and prices** | ✅ **Policy written 2026-08-30** — `40-solution-design/demo-data-policy.md`. All figures invented by us; **nothing will be requested from Pyramid** |
+| **Carrier integration** | ⚠️ **Direction set, feasibility unknown.** AWB / tracking-ID fetch with manual fallback (`prd-04 REQ-LR-301`–`306`). Which carriers expose a usable API has not been investigated. Does **not** gate screen-specs |
+| **Person names in PRDs** | ✅ **Removed 2026-08-30.** Replaced with positions throughout |
+| **`prd-08` unaudited** | ⚠️ Written after the 2026-08-27 audit pass. The only PRD with no independent review |
 
 ### Still true, and still worth re-reading
 
