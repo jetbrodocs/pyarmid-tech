@@ -1,7 +1,7 @@
 ---
 title: "Analysis Index"
 status: active
-updated: 2026-08-30
+updated: 2026-08-31
 ---
 
 # Analysis
@@ -19,6 +19,10 @@ Deep-dives, comparisons, and tech decisions. Solution design is blocked until te
 ## Tech Decisions
 
 - [Tech Stack Decision — Phlo Framework](tech-decision-phlo-stack.md) — **APPROVED.** Fork of enterpriseagentstack/phlo. Event-driven ERP: Python 3.12 + FastAPI + PostgreSQL 16 + Next.js 14. Solution design unblocked. **Updated 2026-08-29:** adds a `delivery_scheduling` module and three projections; flags that `STOCK_RESERVED` must not be applied to finished goods.
+
+## Open Questions
+
+- [Open Questions for Pyramid](open-questions-for-pyramid.md) — **one sheet for a conversation with Pyramid**, 36 questions ordered by what each answer unblocks: implementation, demo claims, go-live, process. Derived from 13 PRDs and 83 screen specs. **Holds only questions Pyramid can answer** — Jetbro's own decisions and engineering `[TODO]`s live in the audit findings. Source docs always win over this sheet.
 
 ## Reviews and Audits
 
