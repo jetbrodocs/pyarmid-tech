@@ -176,8 +176,8 @@ errors or genuinely separate lines.
    BOM or when. A BOM change alters what every future run consumes and costs. `[TODO: add
    `BOM_VERSION_CREATED` / `BOM_ACTIVATED` — the same configuration-event gap found in prd-02 to
    prd-05.]`
-2. **Who owns a BOM at Pyramid?** The workbooks name Pravin and Pawan on one dated update. No role is
-   documented.
+2. **Who owns a BOM at Pyramid?** The workbooks carry one dated update crediting two named production
+   staff, but no owning role is documented.
 3. **Does Pyramid version BOMs at all?** One dated note across four workbooks is the only evidence.
 4. **Are the `FG-BOM-W` duplicates real?** obs-06 finding 4, unanswered.
 5. **Can the existing workbooks be parsed reliably?** All four are laid out differently.

@@ -61,7 +61,7 @@ Full page, not a modal. A modal invites dismissal; this decision deserves a page
 │   │ ZYDEX line is a day late — please prioritise.                  │     │
 │   └───────────────────────────────────────────────────────────────┘     │
 │                                                                          │
-│   Issuing sends this to Girdharlalji (Unit 7 head) immediately.          │
+│   Issuing sends this to the Unit 7 Plant Head immediately.               │
 │   It cannot be unsent — a mistake is corrected by revising and           │
 │   re-issuing.                                                            │
 │                                                                          │
@@ -103,7 +103,7 @@ started work is entitled to know what changed and why.
 | Plan date | Long form, `Wednesday 19 August 2026` | `dispatch_plan.plan_date` |
 | Summary | `4 deliveries · 1,150 NOS · 3 customers` | aggregate over `dispatch_plan_line` |
 | Version | `Revision 2` in the heading, when `> 1` | `.version` |
-| Recipient | Plant head's name | `users` / plant head assignment. `[UNKNOWN: how a plant head is assigned to a plant in Phlo. Girdharlalji is named for Unit 7 in obs-05 §9; no assignment mechanism is documented]` |
+| Recipient | Plant Head, by position and plant | `users` / plant head assignment. `[UNKNOWN: how a plant head is assigned to a plant in Phlo. obs-05 §9 names an individual for Unit 7, but no assignment mechanism is documented]` |
 | Per line | Product · quantity · customer · due date | `dispatch_plan_line` joined to the schedule row and SO |
 | Overdue marker | `⚠` on the line, and a count in the warnings | derived |
 | Stock warning | Product, shortfall quantity, whether a work order exists | prd-01 `stock_position`, prd-07 |
@@ -172,8 +172,8 @@ visible and give the plant a way to say so (`REQ-SCH-008`), not to prevent it.
 1. **Is anyone notified outside Phlo?** Today the schedule travels by whatever channel Pyramid uses.
    If plant heads will not sit in Phlo all day, issuing needs to push a WhatsApp or email as well.
    `[UNKNOWN: nothing is documented about how plants would be alerted.]`
-2. **How is a plant head assigned to a plant?** Named individuals exist (Girdharlalji, Unit 7) but no
-   assignment model does.
+2. **How is a plant head assigned to a plant?** obs-05 §9 identifies a plant head for Unit 7, but no
+   assignment model exists. **Show the position, never the person** — see the demo data policy.
 3. **Should issuing be possible for a past date?** Currently blocked. If sales sometimes records a
    plan after the fact — likely during migration — this becomes a back-dating path that needs a
    deliberate design.

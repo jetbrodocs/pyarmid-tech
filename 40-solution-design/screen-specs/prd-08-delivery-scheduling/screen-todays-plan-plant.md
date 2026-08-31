@@ -187,7 +187,7 @@ anyone describing why a plan gets missed.]`
    is new, and worth naming as new when Pyramid reviews it.
 3. **What device and what connectivity?** Drives layout and the offline behaviour above.
 4. **Can a plant head retract a flag?** Assumed yes.
-5. **Should production staff below the plant head see this?** Currently plant-head only. Santoshi
-   leads production at Unit 7 (obs-05 §9) and may need it too.
+5. **Should production staff below the plant head see this?** Currently plant-head only. The
+   Production Head at each unit (obs-05 §9) may need it too.
 6. **Does the plant need the delivery address?** Not shown, on the grounds that dispatch (prd-10)
    owns the shipment. If plants stage loads by destination, it belongs here.
