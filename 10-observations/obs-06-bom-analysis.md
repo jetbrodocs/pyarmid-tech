@@ -2,10 +2,10 @@
 title: "Bill of Materials — IBC, HDPE Drum, MS Drum"
 status: draft
 created: 2026-08-21
-updated: 2026-08-21
+updated: 2026-08-30
 tags: [observation, bom, production, routing, item-master]
 sources:
-  - 00-inbox/IBC-DETAILS.xlsx
+  - 00-inbox/IBC-DETAILS.xlsx (original 2026-08-21; revised 2026-08-29)
   - 00-inbox/HDPE-DRUM-DETAILS.xlsx
   - 00-inbox/MS-DRUM.xlsx
   - 00-inbox/U9-PROCESS.xlsx
@@ -18,6 +18,13 @@ prepared for us — one carries the note *"UPDATE WITH HELP OF PRAVIN & PAWAN ON
 
 **They are the strongest structured data the project holds.** Everything below is read directly from
 the cells.
+
+> **Partly superseded 2026-08-29.** A corrected `IBC-DETAILS.xlsx` replaced the original. Only the
+> `FG-BOM-W` sheet changed: the **cage is now linked** to the finished IBC (row 12, `CAGE TYPE = MAX`,
+> qty 1), and the finished item was renamed `...CP-FLAT DN75 QD BV 2.5 INCH` → `...CP-FLAT **DN50**
+> QD BV 2.5 INCH`, with the valve-size row corrected `DN80` → `DN50`. The other three sheets are
+> byte-identical. **Read §5 finding 1 and Open Question 1 as closed.** Verified in
+> [obs-07 §7](obs-07-sales-driven-delivery-schedule.md).
 
 > **Unit 9 (`U9-PROCESS.xlsx`) is OUT OF DEMO SCOPE** (RP, 2026-08-21). Documented in §6 because it
 > is real and relevant to the business, but it must not appear in the demo.
@@ -103,8 +110,14 @@ With explicit yields and scrap.
 
 ### Level 4 — final IBC assembly (`FG-BOM-W`)
 
-`1000 LTR IBC HM-HDPE BULK CONTAINER CP-FLAT DN75 QD BV 2.5 INCH` — 25 lines, **already categorised
-by Pyramid** as **SFG** (pallet, inner container, ID plate) vs **ACCESSORIES**.
+`1000 LTR IBC HM-HDPE BULK CONTAINER CP-FLAT DN50 QD BV 2.5 INCH` — 26 lines in the corrected file,
+**already categorised by Pyramid** as **SFG** (pallet, inner container, ID plate) vs **ACCESSORIES**.
+
+> The original file named this item `DN75` and carried 25 lines with no cage. **Use the `DN50` name
+> and the 26-line sheet** for demo data and PRD references. The added line is row 12,
+> `CAGE TYPE = MAX`, qty 1 — it carries **no** `SFG` / `ACCESSORIES` classification in column B,
+> unlike most other lines. `[UNKNOWN: whether the cage should be categorised SFG. It is made
+> in-house across four BOM levels, which would suggest so.]`
 
 Notable: `STICKER RECOLLECT ×1` — the recollect label photographed at Unit 7 is a standard BOM line
 on every unit. Also `TOP CLINCHING COVER ×1`, `CLINCHING COVER ×5`, `CORNER PROTECTOR ×4`,
@@ -164,10 +177,10 @@ seals · **stretch film 0.05 KGS** · corrugated sheet 2-ply 36″×75″ ×1 (c
 
 | # | Finding | Severity |
 |---|---|---|
-| **1** | **The CAGE is absent from the final IBC BOM.** `FG-BOM-W` contains no line matching CAGE, PIPE or BAR. Four levels of cage BOM exist and are consumed by nothing | 🔴 **Blocking** — the largest steel component of an IBC is not linked to the finished product |
-| **2** | **`TOP CROSS BAR (1020)` is produced at level 2 and consumed nowhere.** Not in CAGE-BIG, CAGE-MAX or any pallet | 🟠 Dangling item |
+| **1** | ~~**The CAGE is absent from the final IBC BOM.**~~ ✅ **Resolved 2026-08-29.** The corrected workbook adds `CAGE TYPE = MAX`, qty 1 at `FG-BOM-W` row 12. The four cage levels now terminate in the finished product | ✅ **Closed** |
+| **2** | **`TOP CROSS BAR (1020)` is produced at level 2 and consumed nowhere.** Not in CAGE-BIG, CAGE-MAX or any pallet | 🟠 **Still open 2026-08-29** — the cage sheet is unchanged in the corrected file |
 | **3** | **MS body sheet specified two ways** — `0.8 × 920` in the BOM, `0.97` from a `914` coil in the conversion sheet. Different thickness *and* width | 🟠 Either two products or an error |
-| **4** | **Duplicate lines in `FG-BOM-W`** — `CORNER PROTECTOR` ×4 twice (rows 14, 22); `SCREW WITH NYLOCK NUT 6×20` ×5 twice (rows 18, 28) | 🟡 Recording 1 flagged *"the item master has duplicate entries"* |
+| **4** | **Duplicate lines in `FG-BOM-W`** — `CORNER PROTECTOR` ×4 twice; `SCREW WITH NYLOCK NUT 6×20` ×5 twice. Rows **14, 22** and **18, 28** in the original file; **15, 23** and **19, 29** in the corrected file, shifted by the inserted cage row | 🟠 **Still open 2026-08-29** — the correction did not touch them. Recording 1 flagged *"the item master has duplicate entries"* |
 | **5** | **No item codes anywhere.** Every line is free-text description. No join to the 448-SKU item master, which uses different naming | 🟠 Mapping undefined |
 | **6** | **No costs, rates, lead times, cycle times or work centres** | 🟡 Expected — these are BOMs, not routings or cost sheets |
 
@@ -197,10 +210,13 @@ registration, targets, credits — that no document in this project addresses.
 
 ## Open Questions
 
-1. 🔴 **Where does the cage attach to the finished IBC?** The link is missing from `FG-BOM-W`.
-2. **What consumes `TOP CROSS BAR (1020)`?**
+1. ~~🔴 **Where does the cage attach to the finished IBC?**~~ **Answered 2026-08-29:** as a single
+   `CAGE TYPE = MAX` line, qty 1, at `FG-BOM-W` row 12. Remaining sub-question: **should that line be
+   classified `SFG`?** It carries no classification today.
+2. **What consumes `TOP CROSS BAR (1020)`?** Still open — cage sheet unchanged.
 3. **MS body sheet — `0.8 × 920` or `0.97 × 914`?** Two products, or an error?
-4. **Are the duplicated lines in `FG-BOM-W` real, or duplicates?**
+4. **Are the duplicated lines in `FG-BOM-W` real, or duplicates?** Still open — the corrected file
+   kept both pairs.
 5. **How do BOM descriptions map to item-master codes?**
 6. **Are there BOMs for other SKUs,** or only these three configurations?
 7. **Where are costs and rates held** — Tally, or nowhere?

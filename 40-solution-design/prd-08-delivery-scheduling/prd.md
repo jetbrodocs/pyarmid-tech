@@ -2,7 +2,7 @@
 title: "PRD-08 — Delivery Scheduling"
 status: draft
 created: 2026-08-24
-updated: 2026-08-29
+updated: 2026-08-30
 demo_areas: [1b, 8]
 tags: [prd, delivery-schedule, dispatch-plan, scheduling, sales, production]
 tech_decision: 30-analysis/tech-decision-phlo-stack.md
@@ -85,25 +85,30 @@ is no buffer to absorb a scheduling error.
 
 ## Requirements
 
+> **Requirement and assumption IDs renamed 2026-08-30.** This PRD originally used `REQ-DS-*` and
+> `A-DS-*`, which collide with **prd-10 (Dispatch)** — a different module that has used those prefixes
+> since 2026-08-24. Delivery Scheduling now uses **`REQ-SCH-*`** and **`A-SCH-*`**. `REQ-DP-*` in
+> [Reporting](#reporting) is unchanged and does not collide.
+
 ### Delivery Schedule
 
 | ID | Requirement | Source | Acceptance Criteria |
 |---|---|---|---|
-| REQ-DS-001 | A sales order carries one or more delivery schedule lines: product, quantity, plant, due date | obs-07 §2 | An SO can commit different quantities to different dates |
-| REQ-DS-002 | Schedule lines are editable by sales while the SO is open and the line is unfulfilled | `[ASSUMPTION]` | Edit is blocked once the line is dispatched |
-| REQ-DS-003 | Each line tracks scheduled vs produced vs dispatched quantity | obs-07 §3 | Partial fulfilment visible at line level |
+| REQ-SCH-001 | A sales order carries one or more delivery schedule lines: product, quantity, plant, due date | obs-07 §2 | An SO can commit different quantities to different dates |
+| REQ-SCH-002 | Schedule lines are editable by sales while the SO is open and the line is unfulfilled | `[ASSUMPTION]` | Edit is blocked once the line is dispatched |
+| REQ-SCH-003 | Each line tracks scheduled vs produced vs dispatched quantity | obs-07 §3 | Partial fulfilment visible at line level |
 
 ### Daily Dispatch Plan
 
 | ID | Requirement | Source | Acceptance Criteria |
 |---|---|---|---|
-| REQ-DS-004 | Phlo **auto-drafts** a dispatch plan per plant per date from open delivery schedule lines due on or before that date | Jetbro 2026-08-29 | Draft appears without manual assembly. Grouped by plant |
-| REQ-DS-005 | Sales reviews the draft, adjusts lines, then **issues** it | Jetbro 2026-08-29 | Issuing is an explicit action. An unissued draft is not visible to the plant |
-| REQ-DS-006 | An issued plan is immediately visible to the receiving plant head | obs-07 §1 | Both Unit 6 and Unit 7 see only their own plan |
-| REQ-DS-007 | Plant head **acknowledges** the plan | Jetbro 2026-08-29 | Acknowledged state and timestamp visible to sales |
-| REQ-DS-008 | Plant head can **flag a shortfall** against a line, with a reason and a revised quantity | Jetbro 2026-08-29 | Flag is visible to sales. Does not silently alter the plan |
-| REQ-DS-009 | An issued plan can be revised and re-issued by sales; revisions are versioned | `[ASSUMPTION]` | Plant sees the current version and that it superseded an earlier one |
-| REQ-DS-010 | Plan lines carry through to work orders (prd-07) and the dispatch queue (prd-10) | obs-07 §3 | A work order names the plan line it serves |
+| REQ-SCH-004 | Phlo **auto-drafts** a dispatch plan per plant per date from open delivery schedule lines due on or before that date | Jetbro 2026-08-29 | Draft appears without manual assembly. Grouped by plant |
+| REQ-SCH-005 | Sales reviews the draft, adjusts lines, then **issues** it | Jetbro 2026-08-29 | Issuing is an explicit action. An unissued draft is not visible to the plant |
+| REQ-SCH-006 | An issued plan is immediately visible to the receiving plant head | obs-07 §1 | Both Unit 6 and Unit 7 see only their own plan |
+| REQ-SCH-007 | Plant head **acknowledges** the plan | Jetbro 2026-08-29 | Acknowledged state and timestamp visible to sales |
+| REQ-SCH-008 | Plant head can **flag a shortfall** against a line, with a reason and a revised quantity | Jetbro 2026-08-29 | Flag is visible to sales. Does not silently alter the plan |
+| REQ-SCH-009 | An issued plan can be revised and re-issued by sales; revisions are versioned | `[ASSUMPTION]` | Plant sees the current version and that it superseded an earlier one |
+| REQ-SCH-010 | Plan lines carry through to work orders (prd-07) and the dispatch queue (prd-10) | obs-07 §3 | A work order names the plan line it serves |
 
 ### Reporting
 
@@ -111,8 +116,8 @@ Carried forward from the previous version. These read the same data; none captur
 
 | ID | Requirement | Source | Acceptance Criteria |
 |---|---|---|---|
-| REQ-DP-001 | Order pipeline: open SOs by product, customer, due date, age | proc-03 §Stage 0 | Sortable by due date and age |
-| REQ-DP-002 | Demand trend: order volume by product, customer, period | proc-03 §Stage 0 | Monthly / quarterly roll-ups |
+| REQ-DP-001 | Order pipeline: open SOs by product, customer, due date, age | proc-03 §Stage 2 | Sortable by due date and age |
+| REQ-DP-002 | Demand trend: order volume by product, customer, period | proc-03 §Stage 1–2 | Monthly / quarterly roll-ups |
 | REQ-DP-003 | Fulfilment rate: scheduled vs delivered on time | proc-03 §Stage 4 | By product, by customer, by plant |
 | REQ-DP-004 | Backlog ageing: schedule lines past due date, sorted by overdue days | proc-03 §Stage 4 | Alert above a configurable threshold |
 | REQ-DP-005 | Demand vs stock: FG stock against open scheduled volume | prd-01, prd-09 | Shortfall visible per product per plant |
@@ -122,10 +127,10 @@ Carried forward from the previous version. These read the same data; none captur
 
 | ID | Assumption | Reality | Source |
 |---|---|---|---|
-| A-DS-01 | One dispatch plan per plant per date | Pyramid said schedules go to "the plants and plant heads" — per-plant is inferred | `[ASSUMPTION]` |
-| A-DS-02 | Plants acknowledge and flag, but do not amend the plan | No evidence plants negotiate the schedule | Jetbro 2026-08-29 |
-| A-DS-03 | Delivery schedule lines are set at order entry | An SO may be taken without dates and scheduled later | `[UNKNOWN]` |
-| A-DS-04 | The plan covers finished goods dispatch only, not inter-plant movement | Fleet inter-plant use is deferred — see obs-07 §8 | Jetbro 2026-08-29 |
+| A-SCH-01 | One dispatch plan per plant per date | Pyramid said schedules go to "the plants and plant heads" — per-plant is inferred | `[ASSUMPTION]` |
+| A-SCH-02 | Plants acknowledge and flag, but do not amend the plan | No evidence plants negotiate the schedule | Jetbro 2026-08-29 |
+| A-SCH-03 | Delivery schedule lines are set at order entry | An SO may be taken without dates and scheduled later | `[UNKNOWN]` |
+| A-SCH-04 | The plan covers finished goods dispatch only, not inter-plant movement | Fleet inter-plant use is deferred — see obs-07 §8 | Jetbro 2026-08-29 |
 
 ## Data Model
 
@@ -178,6 +183,11 @@ operations; that no longer holds.
   surprising. The meaningful shortfall signal is on **raw materials** (prd-06), not finished goods.
 
 ## Screens
+
+> **Specced in full:** [`screen-specs/prd-08-delivery-scheduling/`](../screen-specs/prd-08-delivery-scheduling/_index.md) — 8 screens,
+> drafted 2026-08-30. Entry points, layout, data points, CTAs, validations and conditional states per
+> screen. The table below is the summary; that folder is the detail.
+
 
 | Screen | Purpose | Primary users |
 |---|---|---|
@@ -241,4 +251,4 @@ module with real content on day one, unlike the trend dashboards.
 7. **How far ahead is the schedule issued?** Same morning for same day, or the evening before? Sets
    the production lead time the plan assumes.
 8. **What happens when a plant flags a shortfall today?** Phone call to sales, or absorbed silently?
-   Determines whether `REQ-DS-008` digitises something or introduces it.
+   Determines whether `REQ-SCH-008` digitises something or introduces it.

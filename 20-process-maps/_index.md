@@ -1,7 +1,7 @@
 ---
 title: "Process Maps Index"
 status: active
-updated: 2026-08-29
+updated: 2026-08-30
 ---
 
 # Process Maps
@@ -62,6 +62,7 @@ Every distinct process seen or described during the visits, and where it is now 
 | **Daily delivery schedule, sales → plant** | proc-03 Stage 2b |
 | **Plant cannot meet the day's plan** (route unknown) | proc-03 Exc. D |
 | Inter-plant movement rules **by GSTIN** | proc-05 Stage 4 |
+| **FG held 1–2 days, never reserved** | proc-05 Stage 5, proc-03 Stage 4a |
 | Returns and reuse of cages and pallets | proc-05 Stage 6, proc-04, proc-03 |
 | Fleet cost classes (trip vs vehicle) | proc-06 |
 | **Store team** as inbound chaser | proc-01, proc-02, proc-05 |
@@ -82,8 +83,8 @@ Every distinct process seen or described during the visits, and where it is now 
 
 - **[Sales Order to Dispatch](proc-03-sales-order-to-dispatch.md)** — *demo areas 8, 9, 10, 11, 12.* Order intake by **any channel** into the **Bombay** sales team, Sales Order with **delivery schedule lines**, the **daily dispatch plan issued to each plant** (Stage 2b), production against it, **stock committed only at loading** (Stage 4a), fleet assignment, Delivery Challan → e-Way Bill → Sales Invoice → IRN. Forecasting still absent. Exceptions: cancelled-order rework, cross-state split fulfilment, **plant cannot meet the plan**.
 - **[Production — Planning, Execution and Quality](proc-04-production.md)** — *demo area 7.* **Trigger confirmed** — runs against the daily dispatch plan; execution well documented. **No FG buffer: 1–2 days of storage.** Machine parameters, mould setup, QC gates, leak test, reject → serial deleted → granulation, customer-specific modification, serialisation.
-- **[Inventory — Visibility, Movement and Control](proc-05-inventory.md)** — *demo areas 1, 6.* **All stock is in Excel**; the ERP's stock fields sit blank. Inter-plant movement by GSTIN, returns and reuse, regrind, uncollected material.
-- **[Fleet Cost — Attribution and Tracking](proc-06-fleet-cost.md)** — *demo area 13.* **Nothing tracked today.** Class A costs attach to an invoice (fuel, road tax, driver welfare); Class B to the vehicle (repairs, wear and tear).
+- **[Inventory — Visibility, Movement and Control](proc-05-inventory.md)** — *demo areas 1, 6.* **All stock is in Excel**; the ERP's stock fields sit blank. Inter-plant movement by GSTIN, returns and reuse, regrind, uncollected material. **Stage 5 rewritten 2026-08-29:** finished goods hold **1–2 days at most**, space is the binding constraint, and FG is **never reserved** — commitment is at loading.
+- **[Fleet Cost — Attribution and Tracking](proc-06-fleet-cost.md)** — *demo area 13.* **Nothing tracked today.** Class A costs attach to an invoice (fuel, road tax, driver welfare); Class B to the vehicle (repairs, wear and tear). The attribution rule assumes **every trip serves a customer dispatch** — if the fleet also runs inter-plant, Class A costs exist with no invoice behind them (obs-07 §8).
 
 ---
 
@@ -106,3 +107,8 @@ and consumed nowhere; `FG-BOM-W` still duplicates two lines. Neither blocks the 
 **Exception D in `proc-03` has no evidence behind it.** When a plant cannot meet the day's schedule,
 nothing is known about what happens next — and with finished goods capped at 1–2 days there is no
 buffer to absorb it. This is now the highest-value unobserved exception in the project.
+
+**Whether the owned fleet runs inter-plant is deferred, not answered** (obs-07 §8). It is carried as
+an explicit demo assumption — outbound-only — in `proc-05` Stage 4 and `proc-06`. It must be re-asked
+as a direct yes/no before implementation, because it changes both the fleet cost model and what
+movements the dispatch plan covers.

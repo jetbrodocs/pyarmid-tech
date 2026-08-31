@@ -2,7 +2,7 @@
 title: "Solution Design — Index"
 status: draft
 created: 2026-08-24
-updated: 2026-08-29
+updated: 2026-08-30
 tags: [index, solution-design, prd]
 ---
 
@@ -86,7 +86,8 @@ Three modules have weak or absent evidence:
 | -------------------------------- | ------------------------------------------------------------------- | ---------------------------------------------------- |
 | **Production Planning** (prd-07) | Planning method unknown. Demo assumes against SOs                   | Core assumption drives work order creation           |
 | ~~**Demand Planning** (prd-08)~~ | ~~No process exists~~ — **retired 2026-08-29.** A process does exist: the daily delivery schedule. PRD repurposed to **Delivery Scheduling** | Reporting half still cold-starts; the scheduling half has content from day one |
-| **Sales Orders** (prd-09)        | Screen documented; process unobserved. Order intake channel unknown | Intake flow is invented and labelled as assumption   |
+| **Sales Orders** (prd-09)        | ~~Order intake channel unknown~~ answered 2026-08-29. **Still unobserved** — everything known is testimony from one call | Treat the intake flow as stated, not watched. Pricing model still invented |
+| **Delivery Scheduling** (prd-08) | The artefact it replaces has never been seen. Format, timing and revision behaviour unknown | Screens are designed against a described process, not an observed one |
 
 ## Blocking Issues
 
@@ -109,6 +110,9 @@ Audited 2026-08-27; **all screen-spec blockers cleared 2026-08-29** by a call wi
 | 🟠 `TOP CROSS BAR (1020)` consumed nowhere | prd-07 | Survived the BOM correction — only `FG-BOM-W` changed |
 | 🟠 Duplicate lines in `FG-BOM-W` | prd-07 | `CORNER PROTECTOR ×4` rows 15/23; `SCREW WITH NYLOCK NUT 6×20 ×5` rows 19/29 |
 | ⚠️ Class A/B fleet cost taxonomy and apportionment | prd-13 | Blocks implementation, not screen-specs. Needs validation with Pyramid |
+| ⚠️ Delivery schedule format unknown | prd-08 | Nobody has seen the document Phlo replaces. Determines the migration story and how far ahead a plan is issued |
+| ⚠️ No route when a plant cannot meet the day's plan | prd-08, prd-07 | `REQ-SCH-008` may be digitising something or inventing it. With 1–2 days of FG space there is no buffer — proc-03 Exception D |
+| ⚠️ Capacity data absent | prd-07, prd-08 | Machines, shifts and yield are unknown, so Phlo can draft a dispatch plan but cannot check it against what a plant can make |
 
 ## Screen-Specs Readiness
 
@@ -116,7 +120,39 @@ Audited 2026-08-27; **all screen-spec blockers cleared 2026-08-29** by a call wi
 
 | Ready | Caveat |
 | ----- | ------ |
-| prd-01, prd-02, prd-03, prd-04, prd-05, prd-06, prd-07, prd-08, prd-09, prd-10, prd-11, prd-12, prd-13 | prd-12 carries an unanswered inter-plant question, parked behind a demo assumption. prd-08 is newly rewritten and has not been audited |
+| prd-01, prd-02, prd-03, prd-04, prd-05, prd-06, prd-07, prd-08, prd-09, prd-10, prd-11, prd-12, prd-13 | prd-12 and prd-13 carry the same unanswered inter-plant question, parked behind a demo assumption (`A-FM-05`, `A-FC-06`). prd-08 is newly rewritten and has not been audited |
+
+### Screen-specs progress
+
+Started 2026-08-30, in demo-spine order. Screen specs live in **[`screen-specs/`](screen-specs/_index.md)**
+— one sub-folder per PRD, each with an `_index.md` screen list and one file per screen. See that index
+for the full picture.
+
+| PRD | Screens | Status |
+| --- | ------- | ------ |
+| [prd-09 Sales Orders](screen-specs/prd-09-sales-orders/_index.md) | 4 — SO Create, SO List, SO Detail, Customer Registry | ✅ Drafted |
+| [prd-08 Delivery Scheduling](screen-specs/prd-08-delivery-scheduling/_index.md) | 8 — Delivery Schedule, Plan Builder, Issue Confirmation, Today's Plan, Status Board, Order Pipeline, Fulfilment, Demand vs Stock | ✅ Drafted |
+| prd-01, 02, 03, 04, 05, 06, 07, 10, 11, 12, 13 | — | ⬜ Not started |
+
+**Order of work:** the demo spine, not the PRD numbers. ① prd-09 and ①b prd-08 first, because they
+are the demo's opening and the module that answers the project's core diagnosis. Next in spine order:
+② prd-01 / prd-06, then ③–④ prd-07.
+
+### Requirement ID prefixes
+
+One per module. **`REQ-DS-*` / `A-DS-*` belong to prd-10 (Dispatch).** prd-08 originally reused them
+and was renamed to **`REQ-SCH-*` / `A-SCH-*`** on 2026-08-30. prd-08's reporting requirements keep
+`REQ-DP-*` from the retired Demand Planning version.
+
+| PRD | Prefix | PRD | Prefix |
+| --- | ------ | --- | ------ |
+| prd-01 | `REQ-IV-` | prd-08 | `REQ-SCH-`, `REQ-DP-` |
+| prd-02 | `REQ-PI-` | prd-09 | `REQ-SO-` |
+| prd-03 | `REQ-PO-` | prd-10 | `REQ-DS-` |
+| prd-04 | `REQ-LR-` | prd-11 | `REQ-SI-` |
+| prd-05 | `REQ-GRN-` | prd-12 | `REQ-FM-` |
+| prd-06 | `REQ-IM-` | prd-13 | `REQ-FC-` |
+| prd-07 | `REQ-PP-` | | |
 
 ## Downstream
 

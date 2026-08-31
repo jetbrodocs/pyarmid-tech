@@ -2,7 +2,7 @@
 title: "PRD-10 — Dispatch"
 status: draft
 created: 2026-08-24
-updated: 2026-08-29
+updated: 2026-08-30
 demo_areas: [10]
 tags: [prd, dispatch, delivery-challan, eway-bill, outbound, loading]
 tech_decision: 30-analysis/tech-decision-phlo-stack.md
@@ -71,7 +71,7 @@ Source: proc-03 §Stage 4-5, obs-03 field catalog, obs-04.
 | ID         | Requirement                                                             | Source                   | Acceptance Criteria                                                                                                                          |
 | ---------- | ----------------------------------------------------------------------- | ------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------- |
 | REQ-DS-004 | Generate Delivery Challan                                               | proc-03 §Stage 6, obs-03 | 24 fields. Header: date, consignee, series, transport mode, vehicle number, place of supply. Lines: item, qty, rate, HSN, GST                |
-| REQ-DS-005 | Delivery challan for same-GSTIN inter-plant movement                    | proc-05 §Stage 4, rec-32 | Auto-select challan (not invoice) when source and destination share a GSTIN                                                                  |
+| REQ-DS-005 | Delivery challan for same-GSTIN inter-plant movement                    | proc-05 §Stage 4, rec-32 | Auto-select challan (not invoice) when source and destination share a GSTIN. **Document rule only** — the demo models no inter-plant *trip*, and the daily dispatch plan (prd-08 `A-SCH-04`) covers customer deliveries only. See obs-07 §8 |
 | REQ-DS-006 | Generate e-Way Bill                                                     | proc-03 §Stage 6, obs-03 | 33 fields, government format. Part A: supplier, recipient, HSN, value, GST. Part B: vehicle number, transport mode. Required above Rs 50,000 |
 | REQ-DS-007 | Generate outbound LR                                                    | proc-02 Flow A           | LR issued for own-fleet dispatch. Carrier = Pyramid. Truck and driver from fleet assignment                                                  |
 | REQ-DS-008 | Link dispatch to SO, fleet assignment, delivery challan, e-Way Bill, LR | HANDOVER §5              | Click dispatch to see full document set                                                                                                      |
@@ -87,6 +87,9 @@ Source: proc-03 §Stage 4-5, obs-03 field catalog, obs-04.
 
 | ID      | Assumption                                                        | Reality                                                                           | Source           |
 | ------- | ----------------------------------------------------------------- | --------------------------------------------------------------------------------- | ---------------- |
+> **ID note.** `REQ-DS-*` and `A-DS-*` here mean **Dispatch**. Delivery Scheduling (prd-08) was
+> renamed to `REQ-SCH-*` / `A-SCH-*` on 2026-08-30 to remove the clash.
+
 | A-DS-01 | Dispatch person makes the daily pick decision, not a system rule  | "He picks the sales order to ship today, or he executes a list someone else made" | proc-03 §Stage 4 |
 | A-DS-02 | One dispatch can fulfill one or more SOs (or partial SOs)         | No evidence of multi-SO dispatch consolidation                                    | `[UNKNOWN]`      |
 | A-DS-03 | e-Way Bill is generated within Phlo, not on the government portal | UdyogERP currently generates it. Phlo must match                                  | proc-03 §Stage 6 |
@@ -159,6 +162,6 @@ Steps 15-16 follow immediately: fleet assignment (prd-12) and outbound document 
 
 1. ~~⛔ **Is stock allocated at order time or at dispatch?**~~ **Answered 2026-08-29: neither.** Stock stays free until **loaded onto the truck**. The dispatch queue therefore shows intent, not a reservation — two plan lines can name the same stock until one is loaded. Propagated to prd-09 A-SO-02 and prd-01.
 2. **Can one dispatch serve multiple SOs to the same customer?** Consolidation.
-3. ~~**Does the dispatch person have autonomy, or does someone else make the list?**~~ **Answered 2026-08-29:** sales at Bombay makes the list. The plant executes it. `[UNKNOWN: how much latitude the plant has to resequence within a day — prd-08 A-DS-02 assumes none beyond flagging a shortfall.]`
+3. ~~**Does the dispatch person have autonomy, or does someone else make the list?**~~ **Answered 2026-08-29:** sales at Bombay makes the list. The plant executes it. `[UNKNOWN: how much latitude the plant has to resequence within a day — prd-08 `A-SCH-02` assumes none beyond flagging a shortfall.]`
 4. **Gate-out process.** Is there a physical gate check before the truck leaves? Weight-bridge?
 5. **e-Way Bill integration.** Does Phlo generate via API to the government portal, or is it a data export?

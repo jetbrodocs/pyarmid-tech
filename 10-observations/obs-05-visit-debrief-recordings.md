@@ -2,7 +2,7 @@
 title: "Visit Debrief — Recordings 32, 33 and 34"
 status: draft
 created: 2026-08-21
-updated: 2026-08-24
+updated: 2026-08-30
 tags: [observation, site-visit, production, fleet-cost, job-work, bom, ibc]
 sources:
   - 00-inbox/transcript-recording-32.md
@@ -137,6 +137,11 @@ reads as design intent, not observation.]`
 **The recycling plant is a separate GST entity.** Stated plainly, and consistent with the e-Way
 Bill GSTIN analysis showing multiple registrations under one PAN.
 
+> **Who carries these movements is a separate question, and it is open.** This section covers the
+> *tax document*, not the vehicle. Whether Pyramid's own ~100 trucks run the inter-plant leg was put
+> to Pyramid on 2026-08-29 and the answer was ambiguous. **The demo assumes the fleet is outbound-only
+> and models no inter-plant leg** — see [obs-07 §8](obs-07-sales-driven-delivery-schedule.md).
+
 **Concrete example (confirmed 2026-08-21):** **Units 6 (MS) and 7 (HDPE/IBC) share a GSTIN** —
 both Bharuch. Movement between them uses a **delivery challan**. Unit 9 (recycling), also Bharuch,
 holds a **separate** GSTIN — movement to/from Unit 9 always requires a sale-purchase invoice.
@@ -221,7 +226,8 @@ seals, applied after the fact.
 | **Santoshi** | *"leads production"* |
 | **Girdharlalji** | *"the head of the plant here"* (Unit 7) |
 | A senior person over multiple Bharuch plants | Named 2026-08-21 as **Narayan Ji**, head of the Bharuch cluster |
-| **A dispatch guy** | *"handles dispatch"* |
+| **Sales team** | Sits at the **Bombay office**, not at the plants. Issues the daily delivery schedule each plant produces against (obs-07 §1) |
+| **A dispatch guy** | *"handles dispatch"* — **executes** the day's plan; he does not compose it (obs-07 §1) |
 | **A store guy** | *"handles the HDPE raw material storage"* |
 
 **Material placement is informal** 🟢: *"There's no really formal way of positioning and putting

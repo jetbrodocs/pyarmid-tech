@@ -91,7 +91,8 @@ entry is the baseline and always remains available.
 | ID | Requirement | Source | Acceptance Criteria |
 |---|---|---|---|
 | REQ-LR-301 | Each carrier declares an **integration mode**: `api`, `lookup` (deep-link only), or `manual` | Jetbro 2026-08-30 | Set per carrier in the registry. Changing it does not invalidate existing LRs |
-| REQ-LR-302 | Where mode is `api`, poll the carrier for status against the tracking reference and map returned states onto Phlo's five stages | Jetbro 2026-08-30 | A fetched update emits the same stage event as a manual one. **The event stream does not distinguish** |
+| REQ-LR-302 | Where mode is `api`, poll the carrier for status against the tracking reference and map returned states onto **the three carrier-side stages only** — dispatched, in transit, arrived at facility | Jetbro 2026-08-30 | A fetched update emits the same stage event as a manual one. **The event stream does not distinguish** |
+| REQ-LR-307 | **`INBOUND_COLLECTED` and `INBOUND_ARRIVED_AT_PLANT` are never set by integration**, in any mode | Jetbro 2026-08-30 | Both are Pyramid's own actions. No carrier can report them. Manual entry is the only path, permanently |
 | REQ-LR-303 | **Every stage can always be set manually**, regardless of integration mode | Jetbro 2026-08-30 | The store team can advance any LR at any time. No screen path depends on integration being live |
 | REQ-LR-304 | Record the **source** of each stage update — `manual`, `api`, or `import` — and show it on the timeline | Jetbro 2026-08-30 | Visible per transition. Ageing arithmetic is identical either way |
 | REQ-LR-305 | A manual update **supersedes** an automatic one for the same stage | Jetbro 2026-08-30 | The store team's entry wins. Both are retained in the event stream |
@@ -101,6 +102,22 @@ entry is the baseline and always remains available.
 > alerts read only the timestamps. This keeps `REQ-LR-201`–`205` completely independent of whether any
 > carrier is ever integrated — the LR ageing pillar works on day one with pure manual entry, which is
 > what the demo shows.
+
+> ### Integration cannot reach the stages that matter
+>
+> Of the five stages, a carrier can report at most **three**: dispatched, in transit, arrived at
+> facility. The other two — **collected** and **arrived at plant** — are things *Pyramid's own people
+> do*, and no carrier has any way to know about them.
+>
+> That matters because of where the delay actually sits. This PRD's own stage table marks **dwell at
+> facility** as *"fully inside Pyramid's control and invisible today"*, and the dwell clock runs from
+> `INBOUND_ARRIVED_AT_FACILITY` to `INBOUND_COLLECTED` — **one carrier-side event and one that must
+> always be manual.** Collection-to-plant is entirely manual.
+>
+> So integration can tell Pyramid *when the clock started*. Only the store team can tell it *when the
+> clock stopped*. **The pillar's core measurement depends on manual entry no matter how many carriers
+> are integrated** — which is the strongest argument for `REQ-LR-303`, and the reason integration is
+> correctly scoped as an enhancement rather than the mechanism.
 
 ### Ageing and Alerts
 
@@ -129,9 +146,27 @@ Source: proc-02 §LR Ageing, gap-analysis §Pillar 1.
 | ID      | Assumption                                                                            | Reality                                                                    | Source      |
 | ------- | ------------------------------------------------------------------------------------- | -------------------------------------------------------------------------- | ----------- |
 | A-LR-01 | Carrier status updates are manual entry by the store team **in the demo**. Integration is designed for but not demonstrated | **Confirmed as intent 2026-08-30 (Jetbro):** integration by AWB / tracking ID is a target, with manual entry as the permanent fallback. Which carriers can actually be integrated is unknown | Jetbro 2026-08-30, proc-02 Q8 |
-| A-LR-04 | A tracking reference maps to exactly one LR | Consolidated shipments may carry several POs under one AWB | `[UNKNOWN]` |
 | A-LR-02 | Default thresholds: dispatch lag 3d, transit 3d, facility dwell 1d, receipt-to-GRN 1d | No real SLAs exist. Configurable, no defaults presented as recommendations | `[UNKNOWN]` |
 | A-LR-03 | One LR per PO line                                                                    | Multiple shipments against one PO may each generate an LR                  | `[UNKNOWN]` |
+| A-LR-04 | A tracking reference maps to exactly one LR | Consolidated shipments may carry several POs under one AWB. **This contradicts `A-LR-03` — see below** | `[UNKNOWN]` |
+
+> ### `A-LR-03` and `A-LR-04` cannot both hold
+>
+> `A-LR-03` says **one LR per PO line**. `A-LR-04` says **one tracking reference per LR**. But
+> `A-LR-04`'s own reality column concedes that a consolidated shipment may carry **several POs under
+> one AWB** — in which case one tracking reference maps to many LRs, and `A-LR-04` is false.
+>
+> The cardinality is genuinely unknown, and it is a **data-model question, not a detail**:
+>
+> | If | Then |
+> |---|---|
+> | One AWB carries one PO line | `tracking_reference` sits on `InboundLR` as it does now. Nothing changes |
+> | One AWB carries several PO lines | `tracking_reference` belongs on a **shipment** entity that groups LRs, and `REQ-LR-302` must fan one fetched status onto every LR under it |
+>
+> **Until this is answered, `REQ-LR-302` is specified against a model that may not hold.** It does not
+> block screen-specs — manual entry is unaffected either way — but it must be settled before the
+> integration path is built, because retrofitting a grouping entity after the fact means reworking
+> every stage event. Tracked as `OQ7`.
 
 ## Data Model
 
@@ -236,8 +271,9 @@ integration would make the pillar look conditional on something we have not scop
 ## Open Questions
 
 1. **Where do the 5-8 days go?** Highest-value question in the project. Split the ageing across stages.
-2. ⚠️ **Carrier integration — which carriers, and how?** **Direction set 2026-08-30 (Jetbro):** Phlo aims to fetch status from an AWB or tracking ID, with manual entry as the permanent fallback (`REQ-LR-301`–`306`). **What remains open is per-carrier feasibility** — which of Pyramid's carriers expose an API, which offer only a tracking-page lookup, and which offer nothing. Not investigated. Materially changes build cost, but **does not gate the demo or screen-specs**, since manual entry is the baseline path.
+2. ⚠️ **Carrier integration — which carriers, and how?** **Direction set 2026-08-30 (Jetbro):** Phlo aims to fetch status from an AWB or tracking ID, with manual entry as the permanent fallback (`REQ-LR-301`–`307`). **What remains open is per-carrier feasibility** — which of Pyramid's carriers expose an API, which offer only a tracking-page lookup, and which offer nothing. Not investigated. Materially changes build cost, but **does not gate the demo or screen-specs**, since manual entry is the baseline path.
 3. **Which carriers?** Standing panel or per-vendor choice? Who nominates — vendor or Pyramid? Who pays freight?
 4. **Deliver vs collect.** What determines whether the carrier delivers to plant or Pyramid collects? How often is collection the case?
 5. **Demurrage.** Do carriers charge storage after a free period? Quantifies the cost of delay.
 6. ⚠️ **Collection vehicle.** What vehicle makes the trip? If an owned truck is ever borrowed, the fleet/sales boundary is not absolute. — Same boundary as prd-12 OQ8. **Deferred by demo decision (Jetbro, 2026-08-29):** the demo assumes the fleet is outbound-only. Re-ask with prd-12 OQ8 before implementation. See obs-07 §8.
+7. ⚠️ **Does one AWB ever cover more than one PO?** `A-LR-03` and `A-LR-04` contradict each other and cannot both hold — see the note under Assumptions. A yes moves `tracking_reference` off `InboundLR` onto a shipment entity that groups LRs, and makes `REQ-LR-302` fan one fetched status across several. **Does not gate screen-specs** — manual entry is unaffected — but must be settled before the integration path is built. Ask the store team: when several POs arrive together, is there one docket or several?

@@ -2,12 +2,13 @@
 title: "Inventory — Visibility, Movement and Control"
 status: draft
 created: 2026-08-21
-updated: 2026-08-24
+updated: 2026-08-30
 tags: [process, inventory, stock, stores, reuse, inter-plant]
 demo_areas: [1, 6]
 sources:
   - 10-observations/obs-04-plant-visit-photos.md
   - 10-observations/obs-05-visit-debrief-recordings.md
+  - 10-observations/obs-07-sales-driven-delivery-schedule.md
   - 10-observations/obs-02-current-erp-system.md
   - 00-inbox/current-erp-screen-extract.md
 ---
@@ -62,7 +63,7 @@ Covers demo areas **1 (Inventory Visibility)** and **6 (Inventory Management)**.
 | **Raw material — steel** | Sheet and coil; galvanised tube (made in-house) |
 | **Bought-in components** | Butterfly valves and cam locks, imported from Qingdao XiFa, **large pallet-stacked inventory** |
 | **WIP** | Inner containers, cages, pallet bases staged between operations |
-| **Finished goods** | Blue 210 L drums, wrapped IBCs, MS barrels |
+| **Finished goods** | Blue 210 L drums, wrapped IBCs, MS barrels. **Held 1–2 days at most** — see Stage 5 |
 | **Regrind** | Granulated material re-entering as RM |
 | **Returned units** | Large floor stock of used drums; returned IBC cages and pallets |
 | **Scrap** | Steel offcuts and swarf in bulk bags — **not recoverable** |
@@ -109,20 +110,38 @@ Covers demo areas **1 (Inventory Visibility)** and **6 (Inventory Management)**.
 11. A real example: **Unit 8 (Maharashtra) → Unit 7 (Gujarat)** — 25,500 units of HM-HDPE granules at ₹130, **₹33.15 lakh taxable plus 18% IGST**, invoice `P8/26-27/02684`.
     - **Raw material is redistributed between units**, not only bought in. Inbound logistics is plant-to-plant as well as vendor-to-plant.
 
-## Stage 5 — Finished Goods
+12. `[UNKNOWN: which vehicle carries the inter-plant leg.]` Put to Pyramid on 2026-08-29; the answer
+    was ambiguous. **The demo assumes the owned fleet is outbound-only and models no inter-plant
+    leg** — see [obs-07 §8](../10-observations/obs-07-sales-driven-delivery-schedule.md). The tax
+    document above is unaffected either way.
 
-12. QC-passed, serialised units moved to the designated finished-goods store.
-13. Held until dispatch — see [proc-03-sales-order-to-dispatch.md](proc-03-sales-order-to-dispatch.md).
-14. `[UNKNOWN: how finished stock is counted or valued]`
+## Stage 5 — Finished Goods 🟢 — *rewritten 2026-08-29*
+
+13. QC-passed, serialised units moved to the designated finished-goods store.
+14. **Held one to two days at most**, then dispatched (obs-07 §5). Plants are physically small
+    relative to output and finished goods occupy a lot of space, so **storage space is the binding
+    constraint**, not a stocking policy.
+15. Production is pulled tight against the day's issued delivery schedule and cleared daily — see
+    [proc-03 Stage 2b](proc-03-sales-order-to-dispatch.md) and
+    [proc-04-production.md](proc-04-production.md).
+16. **Finished stock is never reserved while it sits here.** Commitment happens at **physical
+    loading onto the truck** — not at order entry, not at dispatch planning
+    (obs-07 §4, [proc-03 Stage 4a](proc-03-sales-order-to-dispatch.md)). Two schedule lines can name
+    the same FG until one truck is loaded.
+17. `[UNKNOWN: how finished stock is counted or valued]`
+
+> **Consequence for Phlo.** A finished-goods "available vs allocated" split would invent a state
+> Pyramid does not have. FG stock is a single free pool that turns over in a day or two. The
+> meaningful shortfall signal sits on **raw materials**, not finished goods.
 
 ## Stage 6 — Returns and Reuse 🟡
 
-15. **Customers return packaging** — mostly used IBCs, plus cages and pallets.
-16. Inspected: pallet, inner container or cage may be damaged — **unknown which until seen**.
-17. Refurbished using held spare parts — **variable BOM**, see proc-04 Exception C.
-18. Some customers **prefer** a used cage and pallet with a new inner container.
-19. Plastic that cannot be reused → **granulated → back to raw material** (proc-04 Exception A).
-20. **Recycled granules are also sold externally** (rec-32) — a stock category that leaves as revenue.
+18. **Customers return packaging** — mostly used IBCs, plus cages and pallets.
+19. Inspected: pallet, inner container or cage may be damaged — **unknown which until seen**.
+20. Refurbished using held spare parts — **variable BOM**, see proc-04 Exception C.
+21. Some customers **prefer** a used cage and pallet with a new inner container.
+22. Plastic that cannot be reused is **granulated and returned to raw material** (proc-04 Exception A).
+23. **Recycled granules are also sold externally** (rec-32) — a stock category that leaves as revenue.
 
 ---
 
@@ -177,6 +196,8 @@ critical."* A stopped machine and a delayed resin bag are different problems.
 | Serial ledger on paper | Per-unit traceability exists physically but not digitally |
 | Returned stock unmanaged | No process documented for used units on the floor |
 | Inter-plant transfers are taxable events | Each one consumes real IGST cash when across GSTINs |
+| **FG space is the binding constraint** | Finished goods cannot be held beyond 1–2 days. There is no buffer to absorb a scheduling error, so a mis-issued delivery schedule shows up as a physical space problem within a day |
+| **FG is never reserved** | No system commitment before loading. Two delivery-schedule lines can name the same stock until a truck is loaded |
 
 ## Open Questions
 
@@ -190,3 +211,6 @@ critical."* A stopped machine and a delayed resin bag are different problems.
 8. **Does a refurbished unit keep its serial?**
 9. **How often does raw material move plant-to-plant?** One invoice is not a pattern.
 10. **What triggers a re-order today,** if the field is unused? *(Auto-indent at a configurable level is a demo requirement — RP, 2026-08-21.)*
+11. **What happens when finished goods do exceed two days?** Is the plant blocked from producing, is
+    the schedule reworked, or is stock pushed to another plant? No evidence either way.
+12. **Does the owned fleet carry the inter-plant leg?** Deferred, not answered — obs-07 §8.

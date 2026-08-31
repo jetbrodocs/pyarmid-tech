@@ -111,7 +111,7 @@ No findings.
 | F-07-002 | M     | EVIDENCE     | 10 open questions unresolved — production trigger, serial reset, galvanising | Open Questions   | Mark which block screen-specs                     |
 | F-07-003 | m     | DEPTH        | No timing info (cycle times, shift duration, throughput)                     | Throughout       | Add if available                                  |
 
-**Status:** ⚠️ Blocked by F-07-001
+**Status at audit:** ⚠️ Blocked by F-07-001 · **Now:** ✅ Cleared 2026-08-29 — corrected workbook links the cage; trigger answered
 
 ---
 
@@ -134,9 +134,9 @@ No findings.
 | F-09-001 | **C** | EVIDENCE     | **Process unobserved.** Screen fields documented, workflow not            | §Summary, §As-Is | Requires observation session with sales team  |
 | F-09-002 | M     | COMPLETENESS | REQ-SO-002 says "invent a plausible intake flow" — not evidence-based     | line 59          | Observe or mark entire intake as [ASSUMPTION] |
 | F-09-003 | M     | EVIDENCE     | 7 open questions including who raises SO, pricing model, stock allocation | Open Questions   | Prioritize Q1, Q2, Q5, Q6                     |
-| F-09-004 | m     | CONSISTENCY  | A-SO-02 "stock not allocated at order" may conflict with prd-10           | A-SO-02          | Confirm, propagate to prd-10                  |
+| F-09-004 | m     | CONSISTENCY  | A-SO-02 "stock not allocated at order" may conflict with prd-10           | A-SO-02          | ✅ **Done 2026-08-29** — confirmed and propagated to prd-10 and prd-01. Commitment is at loading |
 
-**Status:** ⚠️ Blocked by F-09-001
+**Status at audit:** ⚠️ Blocked by F-09-001 · **Now:** ✅ Cleared 2026-08-29 — intake channel, order raiser and allocation timing all answered. `F-09-003` pricing model remains deferred
 
 ---
 
@@ -147,7 +147,7 @@ No findings.
 | F-10-001 | **C** | CONSISTENCY-CROSS | **Stock allocation timing unresolved.** Impacts prd-09, prd-01 | Open Questions #1 | Resolve before screen-specs |
 | F-10-002 | m     | EVIDENCE          | Multi-SO dispatch consolidation marked [UNKNOWN]               | A-DS-02           | Already captured correctly  |
 
-**Status:** ⚠️ Blocked by F-10-001
+**Status at audit:** ⚠️ Blocked by F-10-001 · **Now:** ✅ Cleared 2026-08-29 — stock is free until loaded onto the truck
 
 ---
 
@@ -187,13 +187,17 @@ No findings.
 
 ## Critical Actions Before Screen-Specs
 
-| Priority | Issue                                                        | PRDs Affected          | Owner                        |
-| -------- | ------------------------------------------------------------ | ---------------------- | ---------------------------- |
-| 1        | **Cage-to-IBC BOM link** — steel won't deduct correctly      | prd-07                 | Needs observation/validation |
-| 2        | **Sales process observation** — intake channel unknown       | prd-09                 | Schedule sales team session  |
-| 3        | **Stock allocation timing** — order vs dispatch?             | prd-09, prd-10, prd-01 | Decision with Pyramid        |
-| 4        | **Credit note scope** — include or exclude?                  | prd-11                 | Scope decision               |
-| 5        | **Inter-plant fleet boundary** — owned fleet or third-party? | prd-12, prd-10, prd-13 | Clarify with Pyramid         |
+| Priority | Issue                                                        | PRDs Affected          | Owner                        | Outcome |
+| -------- | ------------------------------------------------------------ | ---------------------- | ---------------------------- | ------- |
+| 1        | **Cage-to-IBC BOM link** — steel won't deduct correctly      | prd-07                 | Needs observation/validation | ✅ Fixed 2026-08-29 — corrected workbook |
+| 2        | **Sales process observation** — intake channel unknown       | prd-09                 | Schedule sales team session  | ✅ Answered 2026-08-29 — any channel. **Still not observed**, only described |
+| 3        | **Stock allocation timing** — order vs dispatch?             | prd-09, prd-10, prd-01 | Decision with Pyramid        | ✅ Answered 2026-08-29 — neither; free until loaded |
+| 4        | **Credit note scope** — include or exclude?                  | prd-11                 | Scope decision               | ✅ Decided 2026-08-29 — excluded from the demo |
+| 5        | **Inter-plant fleet boundary** — owned fleet or third-party? | prd-12, prd-10, prd-13 | Clarify with Pyramid         | ⚠️ **Deferred** — demo assumes outbound-only; re-ask before implementation |
+
+**A sixth item was created by the same call, not closed by it.** `prd-08` was rewritten from Demand
+Planning to **Delivery Scheduling** and has not been re-audited. It is the only PRD in the set whose
+findings below describe a document that no longer exists.
 
 ## Cross-PRD Consistency
 
@@ -207,26 +211,30 @@ No findings.
 
 ### Needs Resolution
 
-- Stock allocation timing (prd-09 assumes not-at-order, prd-10 unclear)
-- Inter-plant movement boundary (prd-12)
+- ~~Stock allocation timing (prd-09 assumes not-at-order, prd-10 unclear)~~ — **resolved 2026-08-29:**
+  neither. Stock is free until loaded onto the truck. Propagated to prd-01, prd-09, prd-10.
+- **Inter-plant movement boundary (prd-12, prd-10, prd-13)** — still open. Carried as a demo
+  assumption (outbound-only), not an answer.
+- **Pricing model (prd-09, prd-11)** — still open. Carried as an approved demo assumption.
+- **prd-08 re-audit** — the rewritten Delivery Scheduling PRD has never been audited.
 
 ## PRD Readiness Summary
 
-| PRD    | Status         | Blocker                         |
-| ------ | -------------- | ------------------------------- |
-| prd-01 | ✓ Ready        | —                               |
-| prd-02 | ✓ Ready        | —                               |
-| prd-03 | ✓ Ready        | —                               |
-| prd-04 | ✓ Ready        | —                               |
-| prd-05 | ✓ Ready        | —                               |
-| prd-06 | ✓ Ready        | —                               |
-| prd-07 | ⚠️ Blocked     | F-07-001 (BOM defect)           |
-| prd-08 | ✓ Ready        | —                               |
-| prd-09 | ⚠️ Blocked     | F-09-001 (unobserved)           |
-| prd-10 | ⚠️ Blocked     | F-10-001 (allocation timing)    |
-| prd-11 | ⚠️ Conditional | F-11-001 (credit note scope)    |
-| prd-12 | ⚠️ Blocked     | F-12-001 (inter-plant boundary) |
-| prd-13 | ✓ Ready        | —                               |
+| PRD    | Status at audit (2026-08-27) | Blocker                         | Status now (2026-08-29) |
+| ------ | -------------- | ------------------------------- | --- |
+| prd-01 | ✓ Ready        | —                               | ✓ Ready |
+| prd-02 | ✓ Ready        | —                               | ✓ Ready |
+| prd-03 | ✓ Ready        | —                               | ✓ Ready |
+| prd-04 | ✓ Ready        | —                               | ✓ Ready |
+| prd-05 | ✓ Ready        | —                               | ✓ Ready |
+| prd-06 | ✓ Ready        | —                               | ✓ Ready |
+| prd-07 | ⚠️ Blocked     | F-07-001 (BOM defect)           | ✓ Ready — BOM corrected, trigger answered |
+| prd-08 | ✓ Ready        | —                               | ⚠️ **Rewritten, not re-audited** |
+| prd-09 | ⚠️ Blocked     | F-09-001 (unobserved)           | ✓ Ready — described, not observed. Pricing deferred |
+| prd-10 | ⚠️ Blocked     | F-10-001 (allocation timing)    | ✓ Ready — commitment at loading |
+| prd-11 | ⚠️ Conditional | F-11-001 (credit note scope)    | ✓ Ready — credit/debit notes excluded from demo |
+| prd-12 | ⚠️ Blocked     | F-12-001 (inter-plant boundary) | ✓ Ready **behind an assumption** — outbound-only |
+| prd-13 | ✓ Ready        | —                               | ✓ Ready **behind the same assumption** |
 
 **Ready at audit (2026-08-27):** 8/13 · **Blocked/Conditional:** 5/13
 

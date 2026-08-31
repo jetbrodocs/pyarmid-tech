@@ -2,15 +2,19 @@
 title: "Gap Analysis — Current ERP vs Phlo Scope"
 status: draft
 created: 2026-08-17
-updated: 2026-08-24
+updated: 2026-08-30
 tags: [analysis, gap-analysis, erp, phlo]
 resolved:
   - "Q2: Phlo is full ERP replacement, not gap-filler (confirmed 2026-08-17)"
   - "Q7: Incumbent ERP is UdyogERP (confirmed 2026-08-17)"
   - "Q5: Store teams exist at all nine plants (corrected 2026-08-21 - R2 clean transcript and R33 confirm)"
   - "Q9: WITHDRAWN 2026-08-21 - the Rs 60-66 lakh figure is not to be used; no verified figure exists"
-  - "Owned fleet is outbound/sales only; inbound procurement runs on third-party carriers (corrected 2026-08-17)"
+  - "Owned fleet is outbound/sales only; inbound procurement runs on third-party carriers (corrected 2026-08-17). NOTE: whether the fleet also runs INTER-PLANT legs is a separate question, deferred 2026-08-29 - obs-07 section 8"
+  - "Production trigger: runs go against firm sales orders via a daily delivery schedule issued by Bombay sales (confirmed 2026-08-29)"
+  - "Order intake: customer orders arrive by any channel - email, WhatsApp or verbal (confirmed 2026-08-29)"
 sources:
+  - 10-observations/obs-07-sales-driven-delivery-schedule.md
+  - 20-process-maps/proc-03-sales-order-to-dispatch.md
   - 10-observations/obs-pyramid-technoplast-site-visit.md
   - 10-observations/obs-02-current-erp-system.md
   - 10-observations/obs-03-field-catalog.md
@@ -23,6 +27,14 @@ sources:
 ## Summary
 
 **UdyogERP** (the incumbent) covers two disconnected stretches: **indent through PO** and **sales order onward**. Everything between — vendor invoices, goods movement, LR tracking, GRN, receipt reconciliation — runs manually on paper, Excel, phone, WhatsApp, and email. This gap is the direct cause of two of Pyramid's three named problems — **LR ageing** and **inventory ageing**. The third, **fleet management**, sits outside the PO→sales-order gap: the owned fleet moves finished goods to customers, after the sales order. Inbound procurement runs entirely on third-party carriers (corrected 2026-08-17). Phlo's scope covers both the gap and outbound fleet operations.
+
+> **A fourth uncovered stretch was identified 2026-08-29.** Between the sales order and the
+> production run sits a **daily delivery schedule** that sales at the Bombay office issues to each
+> plant. It is an official communication, it is what the plants produce against, and it is entirely
+> off-system. Pyramid does not name it as a problem — which is precisely why every earlier version of
+> this analysis missed it. It is now owned by
+> [prd-08](../40-solution-design/prd-08-delivery-scheduling/prd.md). See
+> [obs-07](../10-observations/obs-07-sales-driven-delivery-schedule.md).
 
 ---
 
@@ -73,6 +85,9 @@ the sales order and has no UdyogERP coverage either — it is a third, separate 
 | Fleet assignment (outbound) | Head knowledge           | 4 people track 100 trucks across 9 plants       |
 | Driver/vehicle tracking (outbound) | None              | No location, no status                          |
 | Inventory in pipeline       | Not calculated           | Cash trapped — goods shipped but not received   |
+| **Delivery schedule to plants** | Off-system — format unknown, issued by Bombay sales | **The artefact the whole factory works to has no system record.** No version history, no acknowledgement, no record of what was scheduled vs produced |
+| **Plant acknowledgement / shortfall** | None | Nobody can see whether a plant received the day's plan, accepted it, or cannot meet it |
+| **Scheduled vs produced vs dispatched** | Not tracked | Fulfilment and backlog are uncomputable |
 
 ---
 
@@ -180,6 +195,8 @@ Based on gap analysis, Phlo needs these capabilities:
 | **Ageing dashboards**       | All three pillars    | LR ageing, PO ageing, inventory ageing              |
 | **Alerting**                | Reactive → proactive | Push notifications when things age                  |
 | **Tally push**              | Per pitch            | Entries flow to Tally for accounting                |
+| **Delivery schedule lines on the SO** | Delivery scheduling | Quantity, plant and due date committed on the order itself — not only a header and lines |
+| **Daily dispatch plan per plant** | Delivery scheduling | Phlo auto-drafts from open schedule lines; sales issues; the plant head acknowledges or flags a shortfall. **Added 2026-08-29** |
 
 ### Should Have (completes the picture)
 
@@ -206,7 +223,9 @@ Based on gap analysis, Phlo needs these capabilities:
 | ------------------------------------ | --------------------------------------------------------------------------------- |
 | **Path A procurement (HDPE, steel)** | Does promoter-run procurement produce POs in ERP? If no, may be out of Phlo scope |
 | **Full ERP replacement**             | Is Phlo gap-filler only, or eventual full replacement?                            |
-| **Production/BOM**                   | ERP's BOM field was empty, but **real BOMs exist in Excel** (received 2026-08-21, obs-06). All three lines have BOMs. Production planning method still unknown |
+| **Production/BOM**                   | ERP's BOM field was empty, but **real BOMs exist in Excel** (received 2026-08-21, obs-06). All three lines have BOMs. ~~Production planning method still unknown~~ — **answered 2026-08-29: runs go against firm sales orders via the daily delivery schedule.** What remains uncertain is **capacity** — machines, shifts, yield — without which Phlo can draft a plan but cannot check it |
+| **Inter-plant fleet legs**           | Does the owned fleet move goods between plants? Asked 2026-08-29, answer ambiguous. **The demo assumes outbound-only.** If wrong, it changes the fleet cost model (trips with no customer invoice) and what the dispatch plan covers |
+| **Pricing model**                    | Unknown. A demo assumption is approved — show cost and price for both raw materials and finished goods — but the real model has never been described |
 
 ---
 

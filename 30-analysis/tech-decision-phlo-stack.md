@@ -2,7 +2,7 @@
 title: "Tech Stack Decision — Phlo Framework"
 status: approved
 created: 2026-08-17
-updated: 2026-08-24
+updated: 2026-08-30
 tags: [analysis, tech-decision, phlo, architecture]
 sources:
   - github.com/enterpriseagentstack/phlo (cloned and reviewed)
@@ -73,6 +73,12 @@ Phlo framework includes these modules (auto-discovered):
 | `communications` | Notifications                               | (TBD)                                       |
 | `ai`             | AI conversations                            | AI_CONVERSATION_CREATED                     |
 
+> ⚠️ **`STOCK_RESERVED` does not apply to finished goods.** Confirmed 2026-08-29: Pyramid does not
+> reserve FG at order entry or at dispatch planning — stock stays free until it is **physically loaded
+> onto the truck**. The framework event exists and is usable for **raw materials and sub-assemblies**,
+> but any FG "available vs allocated" split would invent a state Pyramid does not have. See
+> [obs-07 §4](../10-observations/obs-07-sales-driven-delivery-schedule.md) and prd-01 `A-IV-04`.
+
 **Logistics events already exist:**
 
 - `GOODS_DISPATCHED`
@@ -98,6 +104,7 @@ Based on gap analysis, the Pyramid fork needs these new modules:
 | `grn`             | Goods receipt workflow                 | GRN_CREATED, GRN_VERIFIED, GRN_DISCREPANCY        |
 | `vendor_invoices` | Vendor bill tracking                   | VENDOR_INVOICE_RECEIVED, VENDOR_INVOICE_MATCHED   |
 | `procurement`     | PO tracking and extensions             | PO_IMPORTED, PO_DISPATCHED, PO_RECEIVED           |
+| `delivery_scheduling` | Delivery schedule lines on the SO, and the daily dispatch plan per plant. **Added 2026-08-29** | DELIVERY_SCHEDULE_LINE_CREATED, DELIVERY_SCHEDULE_LINE_AMENDED, DISPATCH_PLAN_DRAFTED, DISPATCH_PLAN_ISSUED, DISPATCH_PLAN_ACKNOWLEDGED, DISPATCH_PLAN_SHORTFALL_FLAGGED, DISPATCH_PLAN_REVISED |
 
 ### New Projections
 
@@ -107,6 +114,9 @@ Based on gap analysis, the Pyramid fork needs these new modules:
 | `po_ageing`          | PO_IMPORTED, GOODS_RECEIVED            | Days since PO, pending receipts     |
 | `inventory_pipeline` | PO_*, GOODS_DISPATCHED, GOODS_RECEIVED | What's ordered, in transit, arrived |
 | `fleet_status`       | TRUCK_ASSIGNED, TRUCK_RELEASED         | Which truck is where, doing what    |
+| `order_pipeline`     | SO_CREATED, DELIVERY_SCHEDULE_LINE_*   | Open orders, backlog, fulfilment    |
+| `plan_status`        | DISPATCH_PLAN_*                        | Which plants have acknowledged today, which have flagged a shortfall |
+| `demand_vs_stock`    | DELIVERY_SCHEDULE_LINE_*, `stock_position` | Scheduled volume against stock. **Reads thin for FG by design** — FG turns in 1–2 days; the meaningful signal is on raw materials |
 
 ### Integrations
 

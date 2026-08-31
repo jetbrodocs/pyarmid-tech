@@ -45,7 +45,7 @@ This project includes skills installed in `.claude/skills/`. Claude Code auto-di
 | `/process-mapping` | `20-process-maps/` | Building sequential flows from observations |
 | `/analysis` | `30-analysis/` | Deep-dives, comparisons, or tech-stack/implementation decisions |
 | `/solution-design` | `40-solution-design/` | Writing PRDs / requirements (after tech stack is decided) |
-| `/screen-specs` | `40-solution-design/<prd>/screen-specs/` | Per-screen UX detail derived from a PRD |
+| `/screen-specs` | `40-solution-design/screen-specs/<prd>/` | Per-screen UX detail derived from a PRD |
 | `/scope` | `scope/` | Writing the independent stakeholder sign-off document |
 | `/documentation-reviewer` | — (method) | Reviewing/auditing docs; findings fold back into source docs |
 | `jetbro-brand` | — (all styled output) | Always active — applies to all styled/visual output (HTML, PDF, slides, reports) |
@@ -64,7 +64,7 @@ This project includes skills installed in `.claude/skills/`. Claude Code auto-di
 | `10-observations/` | Observed reality + Q&A exchanges | Belongs: what was observed or what people told you. NOT: analysis, conclusions, flows. |
 | `20-process-maps/` | Sequential process flows, user journeys, data flow | Belongs: a sequence/flow built from observations. NOT: raw captures, design, analysis. |
 | `30-analysis/` | Deep-dives only — research, comparisons, **tech-stack/implementation decisions** (optional) | Belongs: a genuine deep-dive or a tech decision. NOT: routine notes, observations, process steps. |
-| `40-solution-design/` | PRDs, requirements, data model, architecture. One folder per PRD: `prd-NN-<name>/` with `prd.md` + `screen-specs/` | 🔒 **Guard: do NOT start until the tech stack/implementation approach is decided (in `30-analysis/`).** |
+| `40-solution-design/` | PRDs, requirements, data model, architecture. One folder per PRD: `prd-NN-<name>/prd.md`. Screen specs sit **separately** in `40-solution-design/screen-specs/<prd-NN-name>/` — one sub-folder per PRD, mirroring its name | 🔒 **Guard: do NOT start until the tech stack/implementation approach is decided (in `30-analysis/`).** |
 | `60-change-logs/` | Records of changes made to the system over time | Belongs: a record of a change to the system. NOT: review/gap-analysis findings (those fold into source docs). |
 | `scope/` | Independent stakeholder sign-off doc(s) — exports to branded PDF | 🔒 **Must be self-contained — references nothing else in the project.** |
 
