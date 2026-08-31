@@ -251,6 +251,11 @@ information arrived.
 
 ## Screens
 
+> **Specced in full:** [`screen-specs/prd-04-lr-tracking/`](../screen-specs/prd-04-lr-tracking/_index.md)
+> — 10 screens, drafted 2026-08-31. Entry points, layout, data points, CTAs, validations and
+> conditional states per screen. The table below is the summary; that folder is the detail.
+
+
 | Screen                  | Purpose                                                                                  | Primary users             |
 | ----------------------- | ---------------------------------------------------------------------------------------- | ------------------------- |
 | **Inbound LR Create**   | Record carrier LR: carrier, LR number, **tracking reference (AWB/docket)**, PO, dispatch date, expected arrival | Store team                |

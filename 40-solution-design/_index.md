@@ -131,9 +131,9 @@ with an `_index.md` screen list and one file per screen. See that index for the 
 | --- | ------- | ------ |
 | [prd-01 Inventory Visibility](screen-specs/prd-01-inventory-visibility/_index.md) | 5 — Stock Dashboard, Stock Detail, Pipeline View, Inventory Ageing, Stock Search | ✅ Drafted |
 | [prd-02 Purchase Indent](screen-specs/prd-02-purchase-indent/_index.md) | 5 — Indent Create, Indent List, Indent Detail, Indent Approval, Re-order Config | ✅ Drafted |
-| prd-03 PO Creation | — | ⬜ Next |
-| prd-04 LR Tracking | — | ⬜ |
-| prd-05 GRN | — | ⬜ |
+| [prd-03 PO Creation](screen-specs/prd-03-po-creation/_index.md) | 4 — PO Create, PO List, PO Detail, Vendor Registry | ✅ Drafted |
+| [prd-04 LR Tracking](screen-specs/prd-04-lr-tracking/_index.md) | 10 — LR Create, List, Detail, Stage Update, Ageing Dashboard, Collection Tracker, Alert Feed, Threshold Config, Carrier Registry, Integration Health | ✅ Drafted |
+| prd-05 GRN | — | ⬜ Next |
 | prd-06 Inventory Management | — | ⬜ |
 | prd-07 Production Planning | — | ⬜ |
 | [prd-08 Delivery Scheduling](screen-specs/prd-08-delivery-scheduling/_index.md) | 8 — Delivery Schedule, Plan Builder, Issue Confirmation, Today's Plan, Status Board, Order Pipeline, Fulfilment, Demand vs Stock | ✅ Drafted |
@@ -143,11 +143,11 @@ with an `_index.md` screen list and one file per screen. See that index for the 
 | prd-12 Fleet Management | — | ⬜ |
 | prd-13 Fleet Cost | — | ⬜ |
 
-**22 of ~100 screens drafted, across 4 of 13 PRDs.**
+**36 of ~100 screens drafted, across 6 of 13 PRDs.**
 
 **Order of work: PRD numeric order, starting at prd-01** (RP, 2026-08-30). prd-08 and prd-09 were
 drafted first on demo-spine reasoning, before that order was set — the demo spine above is a
-presentation sequence, not a working one. **prd-03 is next.**
+presentation sequence, not a working one. **prd-05 is next.**
 
 ### Requirement ID prefixes
 

@@ -2,7 +2,7 @@
 title: "PRD-03 — Purchase Order Creation"
 status: draft
 created: 2026-08-24
-updated: 2026-08-24
+updated: 2026-08-31
 demo_areas: [3]
 tags: [prd, procurement, po, purchase-order, vendor]
 tech_decision: 30-analysis/tech-decision-phlo-stack.md
@@ -102,6 +102,14 @@ Source: proc-01 §Path B step 5, obs-02, gap-analysis.
 - **Partial receipt:** PO stays open until all lines are fully received or manually closed.
 
 ## Screens
+
+> **Specced in full:** [`screen-specs/prd-03-po-creation/`](../screen-specs/prd-03-po-creation/_index.md)
+> — 4 screens, drafted 2026-08-31. Entry points, layout, data points, CTAs, validations and
+> conditional states per screen.
+>
+> ⚠️ Designed from proc-01, this data model and the Account Master field catalog — **no purchase-side
+> ERP screen has ever been seen**, so there is no PO field reference to check them against.
+
 
 | Screen | Purpose | Primary users |
 |---|---|---|
