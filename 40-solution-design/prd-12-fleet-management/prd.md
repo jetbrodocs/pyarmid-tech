@@ -174,8 +174,8 @@ Quick beat — the value is not in the assignment form, it is in the **fleet das
 
 ## Open Questions
 
-1. **Truck assignment today.** Is there any system (even Excel), or pure head knowledge?
-2. **Own vs contractor decision.** What criteria — availability only, or cost, route, urgency?
+1. ~~**Truck assignment today.** Is there any system (even Excel), or pure head knowledge?~~ **Answered 2026-08-31: *"instinct and whatever is available."*** No system, no rule. **There is no existing logic for Phlo to replicate** — any assignment aid is a new capability and should be presented as one, not as a digitisation. See obs-08 §2.
+2. 🟡 **Own vs contractor decision.** **Partly answered 2026-08-31: when an owned vehicle is not available.** Explicitly flagged as possibly incomplete — route, urgency, cost or vehicle type may also trigger it. See obs-08 §6.
 3. **POD return process.** Physical signed LR, WhatsApp photo, or courier?
 4. **Driver scheduling.** Is there a roster, or do drivers work continuously?
 5. **Vehicle maintenance.** How are 100 trucks maintained? Any downtime tracking?

@@ -74,7 +74,7 @@ Source: proc-06 throughout. Evidence: 🟢 cost model from recordings / 🔴 no 
 | REQ-FC-007 | Record repairs and maintenance per vehicle          | proc-06 Class B       | Date, description, cost, vendor. Linked to vehicle                              |
 | REQ-FC-008 | Record mechanical issues and wear costs per vehicle | proc-06 Class B       | Cost type, amount, date                                                         |
 | REQ-FC-009 | Vehicle cost history                                | proc-06 §Known Issues | All Class B costs for a vehicle over time. Supports repair-vs-replace decisions |
-| REQ-FC-010 | `[ASSUMPTION]` Apportion Class B costs across trips | proc-06 design rule   | Basis: `[UNKNOWN — distance, trips, or time]`. Configurable                     |
+| REQ-FC-010 | Apportion Class B costs **across trips** | Jetbro decision 2026-08-31 | Basis is **trip count**, not distance or time. Each trip in the period takes an equal share of that vehicle's Class B cost. Configurable, but trips is the default and the demo basis |
 
 ### Fleet Economics
 
@@ -96,9 +96,10 @@ Source: proc-06 throughout. Evidence: 🟢 cost model from recordings / 🔴 no 
 | ID      | Assumption                                                 | Reality                                                                                                  | Source      |
 | ------- | ---------------------------------------------------------- | -------------------------------------------------------------------------------------------------------- | ----------- |
 | A-FC-01 | Cost taxonomy (Class A/B) is the correct model             | Recording 32 reads as design intent, not observed practice. "Is the cost taxonomy observed or proposed?" | proc-06 Q1  |
-| A-FC-02 | Class B costs are apportioned by number of trips           | No basis specified. Could be distance or time                                                            | proc-06 Q3  |
+| ~~A-FC-02~~ | ~~Class B costs are apportioned by number of trips~~ — **CONFIRMED 2026-08-31, no longer an assumption.** Apportionment is by **trip count** | Decided by Jetbro. Does not depend on distance capture, which stays `[UNKNOWN]` | Jetbro 2026-08-31 |
 | A-FC-03 | Fuel is bought by the driver on cash/card during the trip  | Fuel procurement method unknown                                                                          | proc-06 Q4  |
-| A-FC-04 | Distance is captured per trip                              | No evidence of odometer tracking or route distance                                                       | `[UNKNOWN]` |
+| A-FC-04 | Distance is captured per trip                              | **Answered 2026-08-31: it is NOT recorded** in any system of record — it exists only inside a **tracking app** and flows nowhere else. 🔵 Which app, and whether it can be read, is a live follow-up | obs-08 §1 |
+| A-FC-05 | **Driver advances: advance → spend → submit bills → return balance** | 🟠 **A Jetbro proposal, explicitly not observed.** Pyramid's actual practice is unknown, including whether advances are cash, card or company account | obs-08 §5 |
 | A-FC-05 | Demo uses own trucks only — contractor cost model deferred | Contractors have a single freight charge, not fuel + driver + wear                                       | HANDOVER §3 |
 | A-FC-06 | **Every trip serves a customer dispatch**, so every Class A cost has an invoice to attribute to | **Not answered.** Whether the owned fleet also runs **inter-plant** legs was put to Pyramid on 2026-08-29 and the reply was ambiguous. **The demo assumes outbound-only.** If the fleet does run inter-plant, those trips carry Class A costs with **no customer invoice behind them**, and `REQ-FC-005` needs a second attribution target — the receiving plant, or an internal cost centre | obs-07 §8 |
 
@@ -134,6 +135,10 @@ Source: proc-06 throughout. Evidence: 🟢 cost model from recordings / 🔴 no 
 
 > **Specced in full:** [`screen-specs/prd-13-fleet-cost/`](../screen-specs/prd-13-fleet-cost/_index.md)
 > — 6 screens, drafted 2026-08-31.
+>
+> ✅ **Resolved 2026-08-31 — Class B apportions across trips.** The contradiction below is now moot for
+> apportionment: trip count needs no distance. Cost-per-km remains a nice-to-have if distance is ever
+> captured. Original note kept for context:
 >
 > ⚠️ **One field would unblock two requirements.** `REQ-FC-013` (cost per km) assumes distance is
 > captured; `A-FC-04` marks distance capture `[UNKNOWN]`. They contradict each other. **The e-Way Bill
@@ -177,8 +182,8 @@ Show: record a fuel entry and a toll for the trip. The cost-to-serve for this or
 > **Audit 2026-08-27.** This module's whole structure rests on Q1 and Q3. Neither blocks screen-specs, but both must be settled before implementation — the Class A/B split is design intent, not observed practice. See `30-analysis/prd-audit-findings.md`.
 
 1. ⚠️ **Is the cost taxonomy (Class A/B) observed practice, or our own design proposal?** Recording 32 reads as intent. Validate with Pyramid. — **Validate before implementation:** the entire cost model and both dashboards derive from this split.
-2. **How are drivers advanced money?** Cash, card, company account? How reconciled?
-3. ⚠️ **What basis apportions Class B costs?** Distance, trips, or time? — **Validate before implementation.** REQ-FC-013 assumes distance is captured, but A-FC-04 marks distance capture `[UNKNOWN]`. If distance is not captured, the apportionment basis has to be trips or time and REQ-FC-013 changes.
+2. 🟠 **How are drivers advanced money?** Cash, card, company account? How reconciled? — **Still unknown.** A model was proposed on 2026-08-31 (advance → spend → submit bills → **return balance**) and the Driver Advance screen implements it, but it is **a proposal, not observed practice**. See obs-08 §5.
+3. ~~⚠️ **What basis apportions Class B costs?**~~ **Answered 2026-08-31 (Jetbro): across trips.** Equal share per trip in the period. **This decouples the cost model from distance capture** — `A-FC-04` can stay `[UNKNOWN]` without blocking anything. `REQ-FC-013` (cost per km) becomes optional: it works if distance is ever captured, and its absence no longer weakens the apportionment.
 4. **Is fuel bought on card, cash, or fleet account?**
 5. **Who would own fleet cost entry in Phlo?** Fleet team, drivers, or accounts?
 6. **Is freight recovered at cost, marked up, or absorbed?** Determines whether cost-to-serve is a margin or a subsidy analysis.

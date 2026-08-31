@@ -24,6 +24,17 @@ The invoice is raised after dispatch (prd-10). It recovers screen printing charg
 
 **Tally is NOT demonstrated in the demo.** XML export buttons only (HANDOVER §3).
 
+> ### Push vs export — settled 2026-08-31 (Jetbro)
+>
+> **We pitch push.** Phlo writes entries into Tally directly; that is the intended product behaviour
+> and what the pitch says. **XML export is the fallback**, used only where push turns out not to be
+> workable against Pyramid's Tally setup.
+>
+> The demo still shows export buttons only — push is not built. **Say this plainly in the room:** the
+> intent is push, the demo shows the export path. Do not let the gap between the pitch and the screen
+> be discovered rather than stated. Feasibility depends on Pyramid's Tally version and chart of
+> accounts, both still unknown (sheet Q12).
+
 ## As-Is State
 
 | What exists                                         | What does not                                 |

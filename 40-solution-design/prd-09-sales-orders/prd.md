@@ -187,6 +187,7 @@ The SO is not the exciting moment — it is the **starting gun**. Keep it brisk.
 2. ~~⛔ **Is stock allocated at order time or at dispatch?**~~ **Answered 2026-08-29: neither.** Stock stays free until it is **loaded onto the truck**. Propagated to prd-10 and prd-01.
 3. **How is the delivery due date set?** Customer-driven, or Pyramid decides?
 4. **Is there a credit check?** Account Master has credit limit fields.
+4b. ~~**Who finds the replacement buyer when an order is cancelled?**~~ **Answered 2026-08-31: the procurement team** — notably **not sales**. `[UNKNOWN: how they find the buyer, on what timescale, and at what price relative to the original.]` See obs-08 §4.
 4b. ⚠️ **Who decides a cancelled order's stock can be reworked, and for whom?** proc-03 Exception A gives a live example — Grasim cancelling at large quantity — and records the commercial pressure: stock must leave *"because otherwise everything would come to a standstill."* But **nothing describes who finds the replacement buyer, or how quickly.** With finished goods turning in 1–2 days there is no time to work it out slowly.
 5. ~~⛔ **Who raises the SO?**~~ **Answered 2026-08-29:** the **sales team at the Bombay office.** Plants receive schedules; they do not raise orders.
 6. ⚠️ **Pricing model.** Per-SKU fixed price, or group SKU with weight/size surcharge? **Not answered — deferred by demo decision (Jetbro, 2026-08-29):** assume per-SKU with override, and carry cost on RM and FG. Still open for the real build.

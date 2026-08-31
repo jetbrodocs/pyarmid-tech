@@ -98,6 +98,20 @@ Execution is well documented. Pyramid's own work instructions (`PTL/WI/PD/04`, `
 > must be settled before RM deduction is trusted for stock or costing.
 > `[TODO: put obs-06 §5 findings 3 and 7 to Pyramid.]`
 
+> ### 🔵 Demo resolutions — the BOM contradicts itself in four places
+>
+> All four are settled for the demo in
+> [`demo-data-policy.md`](../demo-data-policy.md) §4b, with reasoning. **They do not close the
+> questions to Pyramid** — the workbook still carries the defects.
+>
+> | | Demo uses |
+> |---|---|
+> | IBC cage | **`CAGE TYPE = BIG`**, not MAX. BIG is internally consistent; MAX books the 1018 bar 140 g light *and* carries an unresolved 20-vs-40-bar question. Cage type is a variant selector, so this is a scope choice, not a data edit |
+> | `CORNER PROTECTOR` | **×4** — de-duplicated. Identical descriptions on rows 15 and 23, and an IBC has four corners |
+> | `SCREW WITH NYLOCK NUT 6×20` | **×10** — **both rows kept.** The descriptions differ (`(BOLT)` vs `6 X 20MM`); they may be two positions. Collapsing them because the numbers match would be an assumption, not a finding |
+> | MS body / lid | **12.4 kg / 6.152 kg**, from the conversion sheet — the only source that closes to a weight. BOM explosion needs kilograms, and the BOM sheet gives dimensions with no mass |
+> | MS steel vs finished | 18.55 kg in, 16 kg out — show the **13.7% trim allowance** explicitly rather than an unexplained gap |
+
 > 🟠 **Two obs-06 findings remain open** — only `FG-BOM-W` changed; the other three sheets are byte-identical. `TOP CROSS BAR (1020)` is still produced and consumed nowhere, and `FG-BOM-W` still duplicates `CORNER PROTECTOR ×4` (rows 15, 23) and `SCREW WITH NYLOCK NUT 6×20 ×5` (rows 19, 29). Neither blocks the demo.
 
 ## As-Is State

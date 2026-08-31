@@ -139,7 +139,7 @@ Source: proc-01 §Path B steps 1-5, obs-02 field catalog. **No purchase-side ERP
 
 ## Open Questions
 
-1. **Approval levels and thresholds.** Who approves above what value? Deferred for demo — single-level assumed.
+1. 🟠 **Approval levels and thresholds.** Who approves above what value? Deferred for demo — single-level assumed. **Jetbro's assumption 2026-08-31:** approval is *"a bit of both [need and value], no real method"* — **explicitly an assumption, not confirmed by Pyramid.** **Act on it anyway: show a value column on the approval screen.** It is useful whether approval is a need decision or a spend decision, and its absence is only safe under one reading. See obs-08 §3.
 2. **Can a plant team edit an indent after submission?** Draft → re-edit flow. **Screen-spec decision
    2026-08-31:** no. A rejected indent is **copied**, never reopened, so the approved record always
    matches what was approved. Confirm with Pyramid.

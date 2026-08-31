@@ -276,7 +276,9 @@ module with real content on day one, unlike the trend dashboards.
    visible"*, and **no notification channel is defined anywhere in this project** — the tech decision's
    `communications` module is `(TBD)`. Plant heads are not desk-bound. Same gap as prd-04
    `REQ-LR-203`; tracked as `F-X-004` in
-   [`prd-audit-findings.md`](../../30-analysis/prd-audit-findings.md).
+   [`prd-audit-findings.md`](../../30-analysis/prd-audit-findings.md). **Channel decided in principle
+   2026-08-31 (Jetbro): an out-of-app push via SMS, email or WhatsApp — which of the three is not yet
+   chosen.** Pyramid's preference decides it.
 10. **Phlo cannot check a plan it drafts.** Capacity, shifts, yield and changeover are unmapped
    (as-is §3.6), so the builder can say *"you have promised more than you hold"* but never *"this plant
    cannot make it by tomorrow"*. With 1–2 days of FG space there is no buffer to absorb the difference.

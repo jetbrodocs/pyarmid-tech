@@ -2,7 +2,7 @@
 title: "Demo Data Policy"
 status: active
 created: 2026-08-30
-updated: 2026-08-30
+updated: 2026-08-31
 tags: [demo, data, policy, seed-data, pricing]
 audience: Anyone writing screen specs or building the demo
 sources:
@@ -31,7 +31,7 @@ us in six months.
 
 ---
 
-## 1. The three tiers
+## 1. The four tiers
 
 Everything in the demo falls into exactly one of these. Know which tier you are in before you type a
 value.
@@ -39,8 +39,18 @@ value.
 | Tier | What it covers | Rule |
 |---|---|---|
 | 🟢 **Real** | BOM quantities, product and SKU names, serial format, plant numbers, GST structure, the five LR stages | **Use exactly as documented.** Pyramid will recognise these — that is the point |
+| 🔵 **Real but ambiguous** | Places where Pyramid's own documents contradict each other | **Resolve it, record the reasoning, register it in §4b.** Never resolve silently |
 | 🟡 **Invented, structural** | Customers, vendors, carriers, truck registrations, order numbers, dates | **Invent freely**, following §3 |
 | 🔴 **Invented, numeric** | Every rate, cost, price and monetary total | **Invent only via the seed register (§4).** Never inline in a screen spec |
+
+> ### Why 🔵 exists
+>
+> Tier 🟢 says *use exactly as documented*. Four places in the BOM workbooks **cannot** obey that,
+> because the document contradicts itself — two thicknesses for the same sheet, two weights for the
+> same bar. We are not inventing a number there; we are **choosing between two of Pyramid's own**.
+>
+> That choice must be auditable. In six months, when someone asks why the demo said 12.4 kg, §4b is
+> the answer.
 
 **The boundary that matters most is inside a single screen.** A production run screen shows a *real*
 BOM quantity (21.35 kg of resin) against an *invented* rate (₹95/kg). Keep that line clear in your
@@ -58,6 +68,10 @@ head — see §5.
 | **Plants** | `obs-07`, HANDOVER §3 | Unit 6 (MS barrels) and Unit 7 (HDPE drums + IBC), both Bharuch, **same GSTIN** |
 | **Inter-plant document** | `proc-05` Stage 4 | Same GSTIN → **delivery challan**, not an invoice |
 | **LR stages** | `prd-04` | Dispatched · In Transit · At Carrier Facility · Collected · Received |
+
+> ⚠️ **Four places in these workbooks contradict themselves.** Do not resolve one on the fly —
+> **§4b holds the resolutions.** The demo uses `CAGE TYPE = BIG`, `CORNER PROTECTOR ×4`,
+> `SCREW WITH NYLOCK NUT 6×20 ×10`, MS body 12.4 kg and MS lid 6.152 kg.
 
 > ⚠️ **The IBC finished item was renamed on 2026-08-29** — `DN75` → **`DN50`**, with the valve-size row
 > corrected `DN80` → `DN50`. Use the new name. The old one appears in documents written before that
@@ -171,6 +185,60 @@ should ever be presented as Pyramid's cost.
 
 ---
 
+## 4b. Ambiguity register — 🔵 resolved by us
+
+Four places where the BOM workbooks contradict themselves. Each is **resolved for the demo**, with the
+reasoning recorded. **None of these closes the corresponding question to Pyramid** — their workbook
+still carries the defect, and questions 3, 4 and 6 on
+[`open-questions-for-pyramid.md`](../30-analysis/open-questions-for-pyramid.md) stay open.
+
+### A1 · IBC cage — demo the **BIG** variant
+
+| | |
+|---|---|
+| **The conflict** | `CAGE-MAX` books `CUT VERTICAL BAR 1018` ×20 at **9,120 g** (456 g each — the *1002* bar's weight). Level 2 defines 1018 as **463 g**. `CAGE-BIG` books the same part at 9,260 g, correctly. **140 g short per MAX cage.** Separately, `CAGE-MAX` consumes **both** 1018 ×20 **and** 1002 ×20 = 40 vertical bars, against BIG's 20 |
+| **Resolution** | **The demo uses `CAGE TYPE = BIG`.** |
+| **Why** | `FG-BOM-W` row 12 (`CAGE TYPE \| MAX`) is a **variant selector**, sitting beside `Pallet Type \| CP-FLAT` and `Type of Valve \| BTF 3 INCH` — not a fixed component. Choosing BIG selects between two cages **Pyramid themselves documented**. It is a scope choice, not a data edit. CAGE-BIG is internally consistent; MAX carries both a wrong weight and an unresolved 20-vs-40-bar question |
+| **Not done** | We did **not** correct MAX's 9,120 g to 9,260 g. That would fix the weight and leave the bar-count question live |
+
+### A2 · `CORNER PROTECTOR` — de-duplicate to ×4
+
+| | |
+|---|---|
+| **The conflict** | `FG-BOM-W` rows 15 and 23 both read `CORNER PROTECTOR`, ×4 each. Loading as-is deducts **8** |
+| **Resolution** | **Deduct 4.** |
+| **Why** | The two rows carry **identical descriptions**, and an IBC has **four corners**. Text match plus a physical check |
+
+### A3 · `SCREW WITH NYLOCK NUT 6×20` — keep both, ×10
+
+| | |
+|---|---|
+| **The conflict** | Rows 19 and 29, ×5 each. Looks like the same duplicate pattern as A2 |
+| **Resolution** | **Keep both lines. Deduct 10.** |
+| **Why** | **The descriptions differ** — row 19 is `SCREW WITH NYLOCK NUT 6 X 20 (BOLT)`, row 29 is `SCREW WITH NYLOCK NUT 6 X 20MM`. They may be two positions taking the same fastener. Ten screws on an IBC is not implausible |
+| **The point** | A2 and A3 look like one problem and are not. Collapsing A3 because the numbers match would be **reading an assumption as a fact** — the habit that produced the VP, the five product lines, and the inbound fleet. A2 has identical text *and* a physical check; A3 has neither |
+
+### A4 · MS sheet — follow the source that carries a weight
+
+| | |
+|---|---|
+| **The conflict** | Body: BOM sheet `0.8 × 920`; conversion sheet `0.97` from `CRCA COIL 0.97 × 914` → **12.4 kg**. Lid: BOM sheet `0.97 × 1315`; conversion sheet `0.9 * 1320 * 655` from `CRCA COIL 0.9 * 1315` → **6.152 kg**. Thickness differs in both, and the lid width reads 1320 in one place and 1315 in the other |
+| **Resolution** | **Body `0.97 × 914` → 12.4 kg. Lid `0.9 × 1315` → 6.152 kg.** |
+| **Why** | The conversion sheet is the **only source that closes to a weight**, and BOM explosion needs kilograms. The BOM sheet gives dimensions with no mass attached — it cannot produce the figure the screen has to show |
+
+### A5 · MS steel input vs finished weight — state the scrap
+
+| | |
+|---|---|
+| **The conflict** | Body 12.4 kg + lid 6.152 kg = **18.55 kg of coil** for `CRCA 210 LTR CLOSE MOUTH BARREL **16 KGS**`. A 2.55 kg gap |
+| **Resolution** | **Not a defect.** Treat as a **13.7% trim and blanking allowance**, stated explicitly |
+| **Why** | Plausible for steel forming, and BOM explosion will deduct 18.55 kg regardless. The demo should show **input 18.55 → output 16.0 → scrap 2.55** rather than an unexplained number |
+
+> **All five are demo resolutions, not findings.** If Pyramid later says the lid really is 0.97, or that
+> MAX is the correct cage, we change the seed data — not the workbook, and not this register's history.
+
+---
+
 ## 5. Worked example — where the boundary sits
 
 One IBC inner container, showing exactly which half is real:
@@ -213,3 +281,5 @@ the kind of number that gets quoted.
 - [ ] The screen carries the illustrative-figures marker wherever money renders
 - [ ] No screen asserts a headline magnitude — only a mechanism
 - [ ] Finished-goods quantities look thin, consistent with 1–2 day turnover
+- [ ] Any BOM contradiction encountered is resolved **via §4b**, not silently in the spec
+- [ ] The IBC configuration uses **`CAGE TYPE = BIG`**, not MAX (§4b A1)
