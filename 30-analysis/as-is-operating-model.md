@@ -2,7 +2,7 @@
 title: "As-Is Operating Model — Pyramid Technoplast"
 status: draft
 created: 2026-08-17
-updated: 2026-08-30
+updated: 2026-08-31
 tags: [analysis, as-is, operating-model, pre-visit]
 purpose: Pre-visit baseline. Built to be argued with, corrected, and confirmed on site.
 sources:
@@ -16,7 +16,7 @@ sources:
   - https://pyramidtechnoplast.com — product catalogue, fetched 2026-08-18
   - 10-observations/obs-04-plant-visit-photos.md — 34 photographs, 2026-08-20
   - 10-observations/obs-05-visit-debrief-recordings.md — recordings 32, 33, 34 debrief
-  - 10-observations/obs-06-bom-analysis.md — BOM workbooks for all three lines
+  - 10-observations/obs-06-bom-analysis.md — BOM workbooks, one configuration per line
   - 10-observations/obs-07-sales-driven-delivery-schedule.md — call with Pyramid, 2026-08-29
 ---
 
@@ -583,7 +583,7 @@ generic "Path B procurement" throughout.
 | Shift patterns, headcount on floor | — | 🔴 | — |
 | Production planning method | **Runs go against firm sales orders**, delivered as the daily delivery schedule sales issues from Bombay. Plant heads manage production and the FG held for dispatch. What is produced is dispatched the same day | 🟢 | R3 |
 | Whether a plant can refuse or renegotiate the day's plan | — no evidence. There is no known route for *"we cannot make this today"* | 🔴 | — |
-| BOM usage | BOM ID field exists but was **empty in the ERP**. However, **real BOMs exist outside the ERP** in Excel workbooks — received 2026-08-21, analysed in obs-06. All three lines have BOMs. 🔴 The cage is missing from the finished IBC BOM | 🟢 | SYS, obs-06 |
+| BOM usage | BOM ID field exists but was **empty in the ERP**. **Real BOMs exist outside it** in Excel — one configuration per line, not per SKU. ~~The cage is missing from the finished IBC BOM~~ **fixed 2026-08-29**. 🔴 **Of the 448 plastic-line SKUs, exactly one has a BOM**, and BOM descriptions **cannot be joined to the item master** — inches versus millimetres. Verified cell-by-cell 2026-08-31 | 🟢 | SYS, obs-06 |
 | Work orders | A **Work Order button exists** on Labour Job Issue IV — so work orders are a real object | 🟢 | SYS |
 | Scrap and yield rates | — | 🔴 | — |
 | Changeover between colours / weights | — | 🔴 | — |
@@ -991,7 +991,7 @@ How well we actually know each area. This is the honest answer to "do we have an
 |---|---|---|
 | Product catalogue — Plastic Barrels | ████████░░ 80% | 448-SKU master, fully analysed |
 | Product catalogue — MS Barrels | ███░░░░░░░ 30% | 7 products, gauges and coatings from the website. No SKU structure |
-| Product catalogue — IBC | █████░░░░░ 50% | 4 pallet variants from website. **Full BOM received 2026-08-21** (obs-06): 4-level assembly, component sourcing confirmed. No SKU structure |
+| Product catalogue — IBC | █████░░░░░ 50% | 6 pallet types and 2 cage types from the BOM (obs-06): 4-level assembly, component sourcing confirmed. **One FG configuration only, and no SKU structure at all** |
 | GST / compliance | ████████░░ 80% | 12 ERP screens |
 | ERP sales-side transactions | ███████░░░ 70% | Screenshots |
 | Procurement Path B | ██████░░░░ 60% | R1, well described |

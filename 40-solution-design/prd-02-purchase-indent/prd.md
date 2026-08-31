@@ -89,6 +89,20 @@ Source: proc-01 §Path B steps 1-5, obs-02 field catalog. **No purchase-side ERP
 | INDENT_APPROVED       | Purchase team approves           | indent_id, approved_by                                                    |
 | INDENT_REJECTED       | Purchase team rejects            | indent_id, rejected_by, reason                                            |
 | INDENT_CONVERTED      | Indent converted to PO           | indent_id, po_id                                                          |
+| INDENT_WITHDRAWN      | **Raising plant retracts its own request** | indent_id, withdrawn_by, reason                                  |
+| REORDER_LEVEL_SET     | Re-order level or auto-indent flag changed for an item at a plant | item_id, plant_id, level, auto_indent_enabled, changed_by |
+| REORDER_LEVEL_CLEARED | Re-order level removed           | item_id, plant_id, cleared_by                                             |
+
+> **Three events added 2026-08-31**, from the screen-spec pass.
+>
+> **`INDENT_WITHDRAWN`** — a plant must be able to retract a request it no longer needs, or HO approves
+> things nobody wants. The screens originally reused `INDENT_REJECTED`, which made the audit trail read
+> as though **HO declined it**. That is a different fact and it should not be recorded as the same one.
+>
+> **`REORDER_LEVEL_SET` / `_CLEARED`** — re-order levels are configuration that **spends money
+> automatically** (`REQ-PI-002` raises indents with no human involved). Who set a threshold, when, and
+> to what belongs in the event store. This is the same gap found in prd-03, prd-04 and prd-05 — see
+> [`30-analysis/prd-audit-findings.md`](../../30-analysis/prd-audit-findings.md) §Configuration events.
 
 ## Business Rules
 
@@ -126,6 +140,10 @@ Source: proc-01 §Path B steps 1-5, obs-02 field catalog. **No purchase-side ERP
 ## Open Questions
 
 1. **Approval levels and thresholds.** Who approves above what value? Deferred for demo — single-level assumed.
-2. **Can a plant team edit an indent after submission?** Draft → re-edit flow.
+2. **Can a plant team edit an indent after submission?** Draft → re-edit flow. **Screen-spec decision
+   2026-08-31:** no. A rejected indent is **copied**, never reopened, so the approved record always
+   matches what was approved. Confirm with Pyramid.
 3. **Does Path A ever produce an indent?** Promoters decide directly, but is there ever a paper indent for resin or steel? `[UNKNOWN]`
-4. **Purchase-side ERP screens.** The indent screen in UdyogERP has never been seen. We have no field reference.
+4. **Purchase-side ERP screens.** The indent screen in UdyogERP has never been seen. We have no field reference. **This is the largest unknown in the module** — every field in the screen specs is derived from proc-01 and this data model, not from anything anyone has looked at.
+5. **Does HO approve on need, or on value?** The screen specs assume **need** — no prices appear on the approval queue, since vendor evaluation happens afterwards in prd-03. If Pyramid approves on spend, the approval screen is missing its most important column. Turns on OQ1.
+6. **Does Pyramid part-approve an indent?** `REQ-PI-003` approves a whole indent. If HO routinely wants four of six lines, the data model needs **line-level status**.

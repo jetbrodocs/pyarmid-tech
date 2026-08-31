@@ -31,18 +31,19 @@ Five screens. Derived from [`prd-05/prd.md`](../../prd-05-grn/prd.md) §Screens.
 - It is the **only way stock rises** from procurement. `GOODS_RECEIVED` fires on verification, not on
   creation — so an unverified GRN means material physically present and invisible in prd-01.
 
-## ⚠️ Goal 5 depends on an entity that does not exist
+## Goal 5 — the third leg now has an owner
 
 prd-05 Goal 5 is a **three-way match — PO ↔ GRN ↔ vendor invoice**, *"the reconciliation that is
 manual today."*
 
-There is **no vendor invoice anywhere in this solution design.** No PRD owns it, no entity exists in
-any data model, and prd-03's [PO Detail](../prd-03-po-creation/screen-po-detail.md) already carries the
-same finding. gap-analysis lists *"vendor invoice tracking"* as a **Must Have**.
+✅ **Resolved 2026-08-31 (`F-X-002`): prd-03 owns the vendor invoice**, out of demo scope —
+`REQ-PO-201`–`206` and the `VendorInvoice` entity.
 
-**Two of the three legs exist. The third has never been designed.** These screens deliver PO ↔ GRN
-matching in full and mark the invoice leg as unavailable rather than pretending at it.
-`[TODO: this is a real hole in the solution design, not a screen-level gap. It needs an owning PRD.]`
+**Two of the three legs are live here. The third is designed but not built**, so these screens deliver
+PO ↔ GRN matching in full and mark the invoice leg *not tracked in the demo*.
+
+The match runs against **`received_qty`**, which only this module knows — a vendor invoicing 40 T
+against 39.2 T received is the case it exists to catch.
 
 ## Rules that apply to every screen in this module
 

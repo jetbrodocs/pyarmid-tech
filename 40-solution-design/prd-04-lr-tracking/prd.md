@@ -143,6 +143,25 @@ entry is the baseline and always remains available.
 | REQ-LR-201 | Age each stage independently                    | HANDOVER §5 step ⑨, gap-analysis | Dwell-at-facility age is reportable separately from total LR age                                                                 |
 | REQ-LR-202 | Configurable thresholds per stage per plant     | Jetbro 2026-08-21                    | Admin can set: dispatch lag warning at X days, facility dwell at Y days, etc.                                                    |
 | REQ-LR-203 | **Alert to store team when threshold breached** | HANDOVER §5 step ⑨b — MUST-HAVE  | Alert fires to the store team at the destination plant. Shows which stage is breaching. **Land the alert on screen in the demo** |
+
+> ## Notification channel — decided 2026-08-31 (`F-X-004`)
+>
+> **In-app only. No channel abstraction is built now**; revisit at production, targeting WhatsApp.
+>
+> Pyramid's own coordination runs on **WhatsApp and phone** (obs-07 §1), and store teams and plant
+> heads are **not desk-bound**. So this requirement is **demo-complete and deployment-incomplete**: the
+> alert lands on screen, which is what the demo needs, and reaches nobody who is not already looking at
+> Phlo.
+>
+> **State this to Pyramid as a known production gap** rather than letting a store team discover it by
+> missing a consignment.
+
+> ## This module owns every inbound-chain alert — decided 2026-08-31 (`F-X-005`)
+>
+> Including **receipt-to-GRN**, which prd-05 measures but does not alert on. One alert surface, one
+> threshold config, one place to tune. prd-05's Pending GRN Dashboard is a work queue, not an alert
+> source.
+
 | REQ-LR-204 | LR ageing dashboard                             | site-visit pillar 1              | List open inbound LRs sorted by age; drill down to stage detail; filter by plant                                                 |
 | REQ-LR-205 | Collection tracker view                         | proc-02 Exception B              | Material sitting at carrier facilities awaiting collection, by plant, sorted by dwell time                                       |
 
@@ -191,9 +210,16 @@ Source: proc-02 §LR Ageing, gap-analysis §Pillar 1.
 
 | Entity             | Key Attributes                                                                                                                                                                                                              | Notes                            |
 | ------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------- |
-| **InboundLR**      | id, lr_number, po_id, carrier_id, carrier_lr_number, **tracking_reference**, status, dispatched_at, expected_arrival_at, arrived_at_facility_at, facility_location, collected_at, collected_by_user_id, arrived_at_plant_at, plant_id, document_url | Core tracking entity. `tracking_reference` is the carrier's AWB / docket / consignment ID |
+| **InboundLR**      | id, lr_number, po_id, carrier_id, carrier_lr_number, **tracking_reference**, **consignment_qty**, status, dispatched_at, expected_arrival_at, arrived_at_facility_at, facility_location, collected_at, collected_by_user_id, arrived_at_plant_at, plant_id, document_url | Core tracking entity. `tracking_reference` is the carrier's AWB / docket / consignment ID |
 | **Carrier**        | id, name, type (courier/trucking), contact_phone, contact_email, tracking_url_template, **integration_mode** (`api`/`lookup`/`manual`), **api_credential_ref**, **last_checked_at**, **last_success_at**, is_active | Third-party carrier registry. `api_credential_ref` is a **pointer**, never a secret — see below |
 | **StageUpdate**    | id, lr_id, stage, occurred_at, **source** (`manual`/`api`/`import`), recorded_by_user_id, raw_carrier_status                                                                                                               | One row per transition. `raw_carrier_status` retains the carrier's own wording before mapping |
+| **CarrierFacility** | id, carrier_id, name, city, is_active | **Added 2026-08-31.** Facility names were free text, and `REQ-LR-205`'s collection tracker groups by facility — free text drifts, and a drifting group key silently splits one facility into three |
+| **StageMapping**   | id, carrier_id, raw_status_pattern, mapped_stage | **Added 2026-08-31.** `REQ-LR-302` requires mapping carrier states onto Phlo's stages but nothing said **where that mapping lives or who owns it**. Admin-editable, visible on Integration Health |
+
+> **`consignment_qty` added 2026-08-31.** §Business Rules states that one PO may have several LRs for
+> partial shipments, *"each tracking independently"* — but `InboundLR` carried no quantity, so a
+> partial consignment could only display its parent PO's full lines, which is wrong. `[UNKNOWN: whether
+> a carrier's docket states a quantity at all, or only a package count. Ask alongside proc-02 OQ3.]`
 | **LRAlert**        | id, lr_id, stage, threshold_breached, alerted_at, acknowledged_at, acknowledged_by_user_id                                                                                                                                  | Alert record                     |
 | **StageThreshold** | id, stage, plant_id, warning_days, critical_days                                                                                                                                                                            | Configurable per stage per plant |
 
@@ -208,6 +234,20 @@ Source: proc-02 §LR Ageing, gap-analysis §Pillar 1.
 | INBOUND_ARRIVED_AT_PLANT    | Material reaches plant              | lr_id, plant_id, arrived_at                                                     |
 | LR_ALERT_FIRED              | Stage threshold breached            | lr_id, stage, threshold, current_age, plant_id                                  |
 | LR_ALERT_ACKNOWLEDGED       | Store team acknowledges alert       | lr_id, alert_id, acknowledged_by                                                |
+| INBOUND_LR_CANCELLED        | **LR recorded in error, or the consignment never existed** | lr_id, reason, cancelled_by |
+| CARRIER_CREATED             | Carrier added to the registry       | carrier_id, name, type, integration_mode |
+| CARRIER_UPDATED             | Carrier details, mode or stage mapping changed | carrier_id, changed_fields |
+| CARRIER_DEACTIVATED         | Carrier soft-deleted                | carrier_id, deactivated_by |
+| STAGE_THRESHOLD_SET         | **Warning or critical threshold changed for a stage at a plant** | stage, plant_id, warning_days, critical_days, changed_by |
+
+> **Five event types added 2026-08-31**, from the screen-spec pass.
+>
+> **`INBOUND_LR_CANCELLED`** — a docket recorded in error had no exit. Blocked once a GRN exists.
+>
+> **`CARRIER_*` and `STAGE_THRESHOLD_SET`** — thresholds decide **when a person gets alerted**, and
+> carrier configuration decides whether stages arrive automatically. Both change system behaviour and
+> neither was recorded. Same gap as prd-02, prd-03 and prd-05 — see
+> [`30-analysis/prd-audit-findings.md`](../../30-analysis/prd-audit-findings.md) §Configuration events.
 | CARRIER_STATUS_FETCHED      | Poll returns a status for a tracking reference | lr_id, carrier_id, tracking_reference, raw_status, mapped_stage, fetched_at |
 
 **All five stage events carry `source`.** An `api`-sourced transition and a `manual` one are the same
@@ -325,3 +365,6 @@ integration would make the pillar look conditional on something we have not scop
 5. **Demurrage.** Do carriers charge storage after a free period? Quantifies the cost of delay.
 6. ⚠️ **Collection vehicle.** What vehicle makes the trip? If an owned truck is ever borrowed, the fleet/sales boundary is not absolute. — Same boundary as prd-12 OQ8. **Deferred by demo decision (Jetbro, 2026-08-29):** the demo assumes the fleet is outbound-only. Re-ask with prd-12 OQ8 before implementation. See obs-07 §8.
 7. ⚠️ **Does one AWB ever cover more than one PO?** `A-LR-03` and `A-LR-04` contradict each other and cannot both hold — see the note under Assumptions. A yes moves `tracking_reference` off `InboundLR` onto a shipment entity that groups LRs, and makes `REQ-LR-302` fan one fetched status across several. **Does not gate screen-specs** — manual entry is unaffected — but must be settled before the integration path is built. Ask the store team: when several POs arrive together, is there one docket or several?
+8. ⚠️ **How does an alert actually reach a store person?** `REQ-LR-203` is a **must-have** — *"alert fires to the store team at the destination plant"* — but **no notification channel exists anywhere in this project.** The tech decision lists a `communications` module with event types `(TBD)`. Store teams are not desk-bound, and an in-app-only alert reaches nobody who is not already looking. **Demo-facing**: landing the alert on screen works in a room and leaves a deployment gap. See [`30-analysis/prd-audit-findings.md`](../../30-analysis/prd-audit-findings.md) §Notification channel.
+9. **Should an acknowledged-but-unfixed alert re-fire?** §Business Rules says one alert per breach, never re-fired. A consignment acknowledged and then forgotten for a week is **exactly the failure this module exists to catch**, and nothing would raise it again.
+10. **Do facility names recur enough to be a list?** Now modelled as `CarrierFacility` rather than free text. Confirm with the store teams.

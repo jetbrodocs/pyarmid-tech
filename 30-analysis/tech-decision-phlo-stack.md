@@ -70,8 +70,34 @@ Phlo framework includes these modules (auto-discovered):
 | `auth`           | Login, tokens, API keys                     | USER_LOGGED_IN, API_KEY_CREATED             |
 | `storage`        | File uploads (MinIO/S3)                     | FILE_ATTACHED                               |
 | `settings`       | Company configuration                       | COMPANY_SETTINGS_UPDATED                    |
-| `communications` | Notifications                               | (TBD)                                       |
+| `communications` | Notifications                               | **Deferred 2026-08-31 — in-app only.** See below |
 | `ai`             | AI conversations                            | AI_CONVERSATION_CREATED                     |
+
+> ### `communications` is deferred, deliberately (`F-X-004`)
+>
+> **Decision 2026-08-31: in-app notifications only. No channel abstraction is built now.** Revisit at
+> production, targeting **WhatsApp** — which is how Pyramid actually coordinates today (obs-07 §1).
+>
+> Two **MUST-HAVE** requirements depend on this and are therefore **demo-complete and
+> deployment-incomplete**: prd-04 `REQ-LR-203` (alert the store team) and prd-08 `REQ-SCH-006` (issued
+> plan visible to the plant head). Both work on screen; neither reaches a person who is not already
+> looking at Phlo, and neither audience is desk-bound.
+>
+> **Architectural consequence:** because no abstraction is built now, every alert path currently writes
+> to a projection and is read by a screen. Adding a channel later means introducing a **dispatcher that
+> reads alert events and fans out** — it does not mean rewriting the alert logic, since alerts are
+> already events. That is why deferring is cheap here and would not be in a system where notifications
+> were called inline.
+
+> ### One party master (`F-X-003`)
+>
+> **Decision 2026-08-31:** customers, vendors, carriers and job workers are **one `Party` entity with a
+> `roles[]` array**, not separate registries. This follows the incumbent — UdyogERP has one Account
+> Master split by `Main Group` (obs-03 §2) — and it is what Pyramid needs, since **Unit 8 sells granules
+> to Unit 7** and the recycling plant sells into the other units.
+>
+> Defined in [prd-03](../40-solution-design/prd-03-po-creation/prd.md) §Data Model. prd-04's `Carrier`
+> keeps its own record for integration config and references a `Party`.
 
 > ⚠️ **`STOCK_RESERVED` does not apply to finished goods.** Confirmed 2026-08-29: Pyramid does not
 > reserve FG at order entry or at dispatch planning — stock stays free until it is **physically loaded
@@ -104,6 +130,8 @@ Based on gap analysis, the Pyramid fork needs these new modules:
 | `grn`             | Goods receipt workflow                 | GRN_CREATED, GRN_VERIFIED, GRN_DISCREPANCY        |
 | `vendor_invoices` | Vendor bill tracking                   | VENDOR_INVOICE_RECEIVED, VENDOR_INVOICE_MATCHED   |
 | `procurement`     | PO tracking and extensions             | PO_IMPORTED, PO_DISPATCHED, PO_RECEIVED           |
+| `parties` | One party master — customers, vendors, carriers, job workers, by role. **Added 2026-08-31** | PARTY_CREATED, PARTY_UPDATED, PARTY_DEACTIVATED |
+| `vendor_invoices` (extends `procurement`) | Vendor invoice capture and the three-way match. **Out of demo scope** | VENDOR_INVOICE_RECEIVED, VENDOR_INVOICE_MATCHED, VENDOR_INVOICE_DISPUTED, VENDOR_INVOICE_APPROVED |
 | `delivery_scheduling` | Delivery schedule lines on the SO, and the daily dispatch plan per plant. **Added 2026-08-29** | DELIVERY_SCHEDULE_LINE_CREATED, DELIVERY_SCHEDULE_LINE_AMENDED, DISPATCH_PLAN_DRAFTED, DISPATCH_PLAN_ISSUED, DISPATCH_PLAN_ACKNOWLEDGED, DISPATCH_PLAN_SHORTFALL_FLAGGED, DISPATCH_PLAN_REVISED |
 
 ### New Projections

@@ -14,6 +14,11 @@ requirements: [REQ-GRN-009]
 
 **Material physically at a plant with no GRN raised**, oldest first.
 
+> **A work queue, not an alert source.** Decided 2026-08-31 (`F-X-005`): prd-04's
+> [Alert Feed](../prd-04-lr-tracking/screen-alert-feed.md) owns every inbound-chain alert, including
+> receipt-to-GRN. This screen measures pendency (`REQ-GRN-009`) and shows what is outstanding. It
+> raises nothing — two systems nagging about one consignment is how alert fatigue starts.
+
 > **GRN pendency is a named problem.** prd-05 As-Is lists it; gap-analysis traces *"receipts not
 > confirmed promptly"* straight to inventory ageing. Every consignment on this list is stock Pyramid
 > owns, has paid for, is standing next to — **and cannot see.**
@@ -153,9 +158,9 @@ Read-only queue. Filters only.
    OQ5 and the last leg of prd-04's 5–8 days.
 2. **Why does a GRN get delayed** — waiting on a count, on QC, on someone's time? The screen measures
    the delay without explaining it, and the reason decides the fix.
-3. **Should a pending GRN alert the store team?** prd-04's alert feed already covers the receipt-to-GRN
-   stage, so the two overlap. `[TODO: decide whether this dashboard is the alert or prd-04's feed is —
-   two things nagging about the same consignment is how alert fatigue starts.]`
+3. ~~**Should a pending GRN alert the store team?**~~ **Decided 2026-08-31 (`F-X-005`): prd-04's Alert
+   Feed owns it.** This dashboard is a **work queue** — it measures and displays pendency, and raises
+   nothing. One alert surface, one threshold config.
 4. **Should a draft GRN expire?** Currently listed indefinitely.
 5. **Is anyone accountable for GRN timeliness today?** proc-02 records that **nobody owns inbound
    tracking** — the same gap, one stage later.

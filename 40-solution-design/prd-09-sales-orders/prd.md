@@ -2,7 +2,7 @@
 title: "PRD-09 — Sales Orders"
 status: draft
 created: 2026-08-24
-updated: 2026-08-30
+updated: 2026-08-31
 demo_areas: [9]
 tags: [prd, sales-order, customer, allocation, gst]
 tech_decision: 30-analysis/tech-decision-phlo-stack.md
@@ -108,13 +108,27 @@ Source: proc-03 §Stage 1-2, obs-02, obs-03, obs-07 §1-§4. Evidence: 🟢 scre
 | -------------- | -------------------------------------------------------------------------------------------------------------------------------------- | --------------- |
 | **SalesOrder** | id, so_number, customer_id, consignee_id, place_of_supply, status, created_at, due_date, total_amount, gst_amount, created_by_user_id  | Order header    |
 | **SOLineItem** | id, so_id, product_id, quantity, rate, uom, hsn_code, gst_rate, modification_notes, dispatched_qty                                     | Per-item        |
-| **Customer**   | id, name, gstin, billing_address, shipping_address, contact_name, contact_phone, contact_email, credit_limit, payment_terms, is_active | Customer master |
+| **Party** (customer role) | id, name, mailing_name, gstin, pan, state_code, country, **roles[]**, addresses[], contacts[], credit_limit, credit_days, payment_terms, currency, is_active | **One party master, decided 2026-08-31 (`F-X-003`).** The same entity as prd-03's vendor view — see below |
+
+> ## `Customer` is a role, not an entity — decided 2026-08-31
+>
+> Customers and vendors are **one `Party` record with roles**, defined in
+> [prd-03](../prd-03-po-creation/prd.md) §Data Model. This screen and its registry show the
+> **customer-role view** — credit terms, ship-to addresses, place of supply.
+>
+> UdyogERP already works this way: **one Account Master**, split by `Main Group` into `SUNDRY DEBTORS`
+> and creditors (obs-03 §2). And Pyramid needs it — **Unit 8 sold 25,500 units of granules to Unit 7**,
+> and the recycling plant sells into the other units, so a Pyramid unit is a customer and a vendor at
+> once. Two registries would hold that party twice with no link between them.
+>
+> `customer_id` and `consignee_id` on `SalesOrder` are `party_id` references. Nothing else in this PRD
+> changes.
 
 ### Event Types
 
 | Event                   | Trigger                      | Payload                                    |
 | ----------------------- | ---------------------------- | ------------------------------------------ |
-| SO_CREATED              | Sales team enters order      | so_id, customer_id, line_items[], due_date |
+| SO_CREATED              | Sales team enters order      | so_id, party_id, line_items[], due_date |
 | SO_CONFIRMED            | Order confirmed              | so_id, confirmed_at                        |
 | SO_IN_PRODUCTION        | Work order raised against SO | so_id, work_order_id                       |
 | SO_READY_FOR_DISPATCH   | FG available for all lines   | so_id                                      |

@@ -2,7 +2,7 @@
 title: "PRD Audit Findings"
 status: draft
 created: 2026-08-27
-updated: 2026-08-30
+updated: 2026-08-31
 tags: [analysis, audit, prd, documentation-review]
 ---
 
@@ -115,6 +115,26 @@ No findings.
 
 ---
 
+### PRD-08: Delivery Scheduling — re-audited 2026-08-31
+
+The module was rewritten from Demand Planning after the 2026-08-27 audit, so its original findings
+(retained below) describe a document that no longer exists. Audited against the current version.
+
+| ID | Sev | Category | Finding | Location | Fix |
+|---|---|---|---|---|---|
+| F-08-101 | **C** | COMPLETENESS | **No withdraw or cancel path for an issued plan.** Events cover drafted, issued, acknowledged, shortfall-flagged and revised — but a plan issued to the wrong plant, or for a day that is cancelled, can only be *revised to empty*. That reads as "make nothing today", not "disregard this" | §Event Types | Add `DISPATCH_PLAN_WITHDRAWN` |
+| F-08-102 | **C** | CONSISTENCY-CROSS | **`REQ-SCH-006` depends on a notification channel that does not exist.** An issued plan must be *"immediately visible to the receiving plant head"* — same gap as prd-04 `REQ-LR-203` | `REQ-SCH-006` | Tracked as `F-X-004` |
+| F-08-103 | M | COMPLETENESS | **No configuration events.** The auto-draft rule (`REQ-SCH-004`) pulls lines *"due on or before"* the plan date, and the issue cut-off time is assumed. Neither is configurable, and neither is an event | §Event Types | Tracked as `F-X-001` |
+| F-08-104 | M | EVIDENCE | **`REQ-SCH-008` may be introducing behaviour, not digitising it.** proc-03 Exception D records that **no evidence exists** for what happens when a plant cannot meet the day's plan. The shortfall flag is a designed route, not an observed one | `REQ-SCH-008`, OQ8 | Mark as introduced; confirm with Pyramid |
+| F-08-105 | M | DEPTH | **Phlo cannot check a plan it drafts.** Capacity, shifts, yield and changeover are unmapped (as-is §3.6), so the builder can warn *"you have promised more than you hold"* but never *"this plant cannot make it by tomorrow"* — with **1–2 days of FG space** and no buffer | §Business Rules | State the limit in the PRD |
+| F-08-106 | m | CONSISTENCY | `REQ-DP-*` reporting IDs are inherited from the retired Demand Planning version and sit alongside `REQ-SCH-*` in one module | §Requirements | Cosmetic; renaming would break the screen specs |
+| F-08-107 | m | EVIDENCE | Everything in §As-Is is **testimony from one call** (obs-07), never observed. The PRD says so; worth keeping visible | §As-Is | Already marked |
+
+**Status:** ✓ Ready — screen specs are written (8 screens). `F-08-101` is the only finding needing a
+PRD edit that is not already tracked as a cross-cutting item.
+
+---
+
 ### PRD-08: Demand Planning — ⚠️ RETIRED, see update above
 
 | ID       | Sev | Category     | Finding                                                    | Location          | Fix                                    |
@@ -199,6 +219,143 @@ No findings.
 Planning to **Delivery Scheduling** and has not been re-audited. It is the only PRD in the set whose
 findings below describe a document that no longer exists.
 
+## Second pass — findings from writing screen specs (2026-08-31)
+
+Writing 41 screen specs across prd-01 to prd-05 surfaced **30 `[TODO]`s**. They are not 30 problems.
+Most were concrete gaps folded straight back into their source PRD — missing events, missing entity
+fields — and are listed as done below. **Five are structural**, span several modules, and need a
+decision rather than an edit.
+
+> **Why this pass happened before prd-06.** Six PRDs remain, roughly 55 screens. Each of the five
+> findings below would have replicated into every one of them. Fixing a pattern across five modules is
+> an afternoon; fixing it across thirteen after the fact is a migration.
+
+### Folded back into source PRDs — done
+
+| PRD | What was added | Why |
+|---|---|---|
+| prd-02 | `INDENT_WITHDRAWN`, `REORDER_LEVEL_SET`, `REORDER_LEVEL_CLEARED` | Withdrawal was reusing `INDENT_REJECTED`, misrecording **who declined** |
+| prd-03 | `Vendor.currency` + `.country`; `PO_CLOSED_SHORT`, `VENDOR_*` | The master could not represent an **import vendor** — the largest spend in the business |
+| prd-04 | `InboundLR.consignment_qty`; `CarrierFacility`, `StageMapping`; `INBOUND_LR_CANCELLED`, `CARRIER_*`, `STAGE_THRESHOLD_SET` | Partial shipments had no quantity; the carrier-status mapping had **no home**; facility names were free text under a grouping key |
+| prd-05 | `GRN_DISCREPANCY_RESOLVED`, `GRN_TOLERANCE_SET` | A discrepancy could be raised and never closed |
+| prd-06 | `[TODO]` for a **go-live returns stock-take** | Returns age correctly from `RETURN_RECEIVED`; the **floor stock already there** at go-live has no arrival date. An earlier version of this row claimed the event was missing — it exists |
+
+### F-X-001 — Configuration events are missing across four modules 🔴
+
+`REQ-PI-002` raises purchase indents automatically. `REQ-LR-203` decides when a person is alerted.
+`REQ-GRN-003` decides which receipts a human must review. `VendorItem.last_rate` pre-fills every
+future PO.
+
+**All four are configuration that spends money or summons people, and none of them was an event.**
+Domain routers are GET-only and every mutation goes through `/events/emit` — so configuration held
+outside the event store is state nobody can attribute or replay.
+
+Events have been added to prd-02, prd-03, prd-04 and prd-05. **The pattern still needs stating once**:
+*any setting that changes system behaviour is an event, not a row.* prd-06 to prd-13 have config
+screens too.
+
+> ## ✅ All four structural findings were decided on 2026-08-31 (Chaitya)
+>
+> | Finding | Decision |
+> |---|---|
+> | `F-X-002` vendor invoice | **Extend prd-03.** `VendorInvoice` entity and the three-way match live there, **out of demo scope** |
+> | `F-X-003` party master | **One `Party` entity with roles.** Replaces separate `Customer` and `Vendor` |
+> | `F-X-004` notification channel | **In-app only for now**, with no channel abstraction built. Revisit at production, targeting WhatsApp |
+> | `F-X-005` alert ownership | **prd-04 owns all inbound-chain alerts.** prd-05's dashboard is a work queue, not an alert source |
+>
+> Each finding below records how its decision was applied.
+
+### F-X-002 — No PRD owns the vendor invoice ✅ **decided: extend prd-03**
+
+prd-05 Goal 5 is the **three-way match: PO ↔ GRN ↔ vendor invoice**. gap-analysis lists **vendor
+invoice tracking** as a **Must Have** and names it as a direct cause of the procurement gap.
+
+**No PRD owns it. No `VendorInvoice` entity exists in any data model.** Two legs of the match are
+specced in full; the third has never been designed. Found independently from prd-03 `REQ-PO-007` and
+from prd-05, which is what makes it structural rather than an oversight in one document.
+
+**Decision 2026-08-31: extend prd-03, out of demo scope.**
+
+The PO already anchors the invoice through `REQ-PO-007`, exactly as it anchors LRs and GRNs. Keeping it
+inside prd-03 holds the product at **13 modules** — the demo spine and HANDOVER's structure — and no
+demo step covers invoices in any case.
+
+**Applied:** prd-03 gains a `VendorInvoice` entity, `VENDOR_INVOICE_*` events, three-way-match
+requirements, and an explicit out-of-demo-scope marker. prd-05 Goal 5 is now deliverable as a design,
+and points at prd-03 for the third leg.
+
+`[UNKNOWN: Pyramid's actual invoice-approval and payment process. gap-analysis records vendor invoices
+as arriving off-system on paper and email; nothing describes who approves one or how it reaches Tally.]`
+
+### F-X-003 — One party master, or two registries? ✅ **decided: one `Party` with roles**
+
+`Customer` (prd-09) and `Vendor` (prd-03) duplicate GSTIN, addresses, contacts and terms. UdyogERP has
+**one Account Master**, separated by `Main Group` — `SUNDRY DEBTORS` versus creditors (obs-03 §2).
+
+Not academic at Pyramid: **Unit 8 sold 25,500 units of granules to Unit 7** on a sale-purchase invoice,
+and the recycling plant sells into the other units. **A Pyramid unit is a customer and a vendor at
+once.** Carriers (prd-04) and job workers are a third and fourth party type with unclear overlap.
+
+**Decision 2026-08-31: one `Party` entity with roles.**
+
+Roles: `customer` · `vendor` · `carrier` · `job_worker`. A party may hold several at once, which is what
+Pyramid actually needs — Unit 8 is a vendor to Unit 7 and a customer of the recycling plant in the same
+week.
+
+This follows the incumbent rather than departing from it: UdyogERP already has **one Account Master**
+split by `Main Group`. Screens stay role-scoped — the customer view shows credit terms, the vendor view
+shows lead time — but there is **one record, one GSTIN, one address book**.
+
+**Applied:** prd-03 `Vendor` and prd-09 `Customer` are both re-expressed as `Party` with a role. prd-04's
+`Carrier` keeps its own entity for integration config but references a `Party`. Screen specs for both
+registries carry the change.
+
+### F-X-004 — No notification channel exists ✅ **decided: in-app now, WhatsApp at production**
+
+prd-04 `REQ-LR-203` is marked **MUST-HAVE**: *"Alert fires to the store team at the destination
+plant."* prd-08 `REQ-SCH-006` requires an issued dispatch plan to be *"immediately visible to the
+receiving plant head."*
+
+**Nothing in this project defines how either message travels.** The tech decision lists a
+`communications` module whose event types are `(TBD)`.
+
+Store teams and plant heads are **not desk-bound** — in-app-only reaches nobody who is not already
+looking. Pyramid's own coordination runs on **WhatsApp and phone** (obs-07 §1).
+
+**Decision 2026-08-31: in-app only for now. No channel abstraction is built.** Revisit at production,
+targeting WhatsApp.
+
+This is a deliberate deferral, not an oversight, and it has a consequence worth stating plainly:
+
+> **Two MUST-HAVE requirements are demo-complete and deployment-incomplete.** prd-04 `REQ-LR-203` and
+> prd-08 `REQ-SCH-006` both work on screen and reach nobody who is not already looking at Phlo. That is
+> **correct for the demo** — the alert lands in the room, which is what the demo needs — and it must be
+> **stated to Pyramid as a known production gap** rather than discovered by a store team who missed a
+> consignment.
+
+**Applied:** prd-04 and prd-08 record the decision against their must-haves; the tech decision marks
+`communications` as deferred with WhatsApp as the target.
+
+### F-X-005 — Two modules alert on the same consignment ✅ **decided: prd-04 owns it**
+
+prd-04's **Alert Feed** covers the receipt-to-GRN stage. prd-05's **Pending GRN Dashboard** lists the
+same material for the same reason. One consignment, two systems nagging.
+
+**Decision 2026-08-31: prd-04 owns every inbound-chain alert, including receipt-to-GRN.**
+
+prd-04 already holds the infrastructure — the `LRAlert` entity, per-stage per-plant thresholds,
+acknowledgement, and the one-alert-per-breach rule. Adding a second alert source in prd-05 would mean
+two threshold configs and two places to tune the same nagging.
+
+**prd-05's Pending GRN Dashboard becomes a work queue, not an alert source.** It still measures and
+displays pendency — that is `REQ-GRN-009` and it stays — but it raises nothing. The alert for that
+stage comes from prd-04's feed.
+
+**Applied:** prd-05 `REQ-GRN-009` is scoped to measurement; the Pending GRN Dashboard spec drops its
+alerting language; prd-04's alert feed is named as the single inbound alert surface.
+
+---
+
 ## Cross-PRD Consistency
 
 ### Validated
@@ -216,7 +373,13 @@ findings below describe a document that no longer exists.
 - **Inter-plant movement boundary (prd-12, prd-10, prd-13)** — still open. Carried as a demo
   assumption (outbound-only), not an answer.
 - **Pricing model (prd-09, prd-11)** — still open. Carried as an approved demo assumption.
-- **prd-08 re-audit** — the rewritten Delivery Scheduling PRD has never been audited.
+- ~~**prd-08 re-audit**~~ — **done 2026-08-31, see below.**
+- **Configuration-event pattern** (`F-X-001`) — stated once, applies to prd-06 through prd-13.
+- ~~Vendor invoice ownership (`F-X-002`)~~ — **decided 2026-08-31:** extend prd-03, out of demo scope.
+- ~~Party master (`F-X-003`)~~ — **decided 2026-08-31:** one `Party` entity with roles.
+- ~~Notification channel (`F-X-004`)~~ — **decided 2026-08-31:** in-app only now; WhatsApp at production.
+  **Carries a known deployment gap on two must-haves.**
+- ~~Alert ownership (`F-X-005`)~~ — **decided 2026-08-31:** prd-04 owns all inbound alerts.
 
 ## PRD Readiness Summary
 

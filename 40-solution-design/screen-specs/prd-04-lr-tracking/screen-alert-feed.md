@@ -14,6 +14,10 @@ requirements: [REQ-LR-203, REQ-LR-202, REQ-LR-201]
 
 Active threshold breaches: which LR, which stage, which plant, how long overdue.
 
+> **This is the single alert surface for the whole inbound chain**, decided 2026-08-31 (`F-X-005`) —
+> including **receipt-to-GRN**, which prd-05 measures but does not alert on. One feed, one threshold
+> config, one place to tune.
+
 > **prd-04 says it in the requirement itself: *"Land the alert on screen in the demo."*** This is the
 > moment the store teams in the room recognise their own job. Today nothing tells anyone — material
 > ages and someone eventually remembers.
@@ -168,9 +172,11 @@ the failure this module exists to catch. Worth deciding with Pyramid.]`
 
 ## Open Questions
 
-1. **How does an alert reach someone not looking at Phlo?** In-app only is assumed. Nothing in this
-   project documents a notification channel, and store teams are not desk-bound. `[TODO: prd-04
-   `REQ-LR-203` says "alert fires to the store team" without saying how it travels.]`
+1. ~~**How does an alert reach someone not looking at Phlo?**~~ **Decided 2026-08-31 (`F-X-004`):
+   in-app only for now**, revisiting at production with WhatsApp as the target. This is
+   **demo-complete and deployment-incomplete** — the alert lands on screen, and reaches nobody who is
+   not already looking. Store teams are not desk-bound, so it must be stated to Pyramid as a known
+   production gap.
 2. **Should an acknowledged-but-unfixed alert re-fire?** Currently no. Arguably the most consequential
    open question on this screen.
 3. **Are the default thresholds anywhere near right?** 3d / 3d / 1d / 1d are guesses. A 1-day dwell

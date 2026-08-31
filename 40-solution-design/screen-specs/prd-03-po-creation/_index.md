@@ -64,17 +64,22 @@ incumbent object.** UdyogERP has a single **Account Master** where `Main Group` 
 `SUNDRY DEBTORS` from creditors — customers and vendors are the same record type with a different
 classification.
 
-Phlo currently models them as separate entities (`Customer` in prd-09, `Vendor` in prd-03) with
-near-identical fields — GSTIN, addresses, contacts, terms. That duplication is invisible until
-someone is **both**, which at Pyramid is not hypothetical: Unit 8 sells granules to Unit 7 on a
-sale-purchase invoice, and the recycling plant sells into the other units. `[TODO: decide whether
-Phlo has one party master with roles, or two registries. Doing it after both are built means a
-migration.]`
+✅ **Decided 2026-08-31 (`F-X-003`): one `Party` entity with a `roles[]` array** — `customer`,
+`vendor`, `carrier`, `job_worker`. A party may hold several at once, which is what Pyramid needs:
+Unit 8 sells granules to Unit 7 on a sale-purchase invoice, and the recycling plant sells into the
+other units.
+
+Both registries stay as **role-scoped views** of the same record. The duplicate-GSTIN warning becomes
+a **role prompt** — *"already exists as a customer, add the vendor role?"* — rather than a duplicate.
 
 ## Open Questions
 
 1. **Does Path A produce POs at all?** prd-03 OQ1. If promoters buy without raising one, `REQ-PO-002`
    is capturing a document that does not exist, and Phlo needs a different flow.
+1b. ✅ **Vendor invoices are now owned by prd-03** (`REQ-PO-201`–`206`, `VendorInvoice` entity),
+   **out of demo scope** — decided 2026-08-31 (`F-X-002`). The three-way match runs against the GRN's
+   **received** quantity, not the ordered one. No screen spec exists for it yet; it is designed, not
+   demonstrated.
 2. **Who may see Path A POs?** Undecided anywhere in the project. They are the largest numbers in the
    pipeline and are described as sensitive.
 3. **How formal is vendor evaluation?** proc-01 mentions quotes and technical documentation; nothing

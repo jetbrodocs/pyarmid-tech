@@ -2,7 +2,7 @@
 title: "Bill of Materials — IBC, HDPE Drum, MS Drum"
 status: draft
 created: 2026-08-21
-updated: 2026-08-30
+updated: 2026-08-31
 tags: [observation, bom, production, routing, item-master]
 sources:
   - 00-inbox/IBC-DETAILS.xlsx (original 2026-08-21; revised 2026-08-29)
@@ -179,10 +179,11 @@ seals · **stretch film 0.05 KGS** · corrugated sheet 2-ply 36″×75″ ×1 (c
 |---|---|---|
 | **1** | ~~**The CAGE is absent from the final IBC BOM.**~~ ✅ **Resolved 2026-08-29.** The corrected workbook adds `CAGE TYPE = MAX`, qty 1 at `FG-BOM-W` row 12. The four cage levels now terminate in the finished product | ✅ **Closed** |
 | **2** | **`TOP CROSS BAR (1020)` is produced at level 2 and consumed nowhere.** Not in CAGE-BIG, CAGE-MAX or any pallet | 🟠 **Still open 2026-08-29** — the cage sheet is unchanged in the corrected file |
-| **3** | **MS body sheet specified two ways** — `0.8 × 920` in the BOM, `0.97` from a `914` coil in the conversion sheet. Different thickness *and* width | 🟠 Either two products or an error |
+| **3** | **MS sheets specified two ways — in *both* the body and the lid.** Read directly from the cells 2026-08-31: <br>• **Body** — `MS DRUM` sheet says `0.8 × 920`; `BODY SHEET` sheet says `0.97`, from `CRCA COIL 0.97 × 914` (12.4 kg). <br>• **Lid** — `MS DRUM` sheet says `0.97 × 1315`; `BODY SHEET` sheet says `Lid Sheet 0.9 × 1320 × 655 mm`, from `CRCA COIL 0.9 × 1315` (6.152 kg). | 🟠 **Two independent contradictions in one product**, not one. An earlier version of this row caught only the body sheet. Steel deduction is wrong on whichever sheet is wrong |
 | **4** | **Duplicate lines in `FG-BOM-W`** — `CORNER PROTECTOR` ×4 twice; `SCREW WITH NYLOCK NUT 6×20` ×5 twice. Rows **14, 22** and **18, 28** in the original file; **15, 23** and **19, 29** in the corrected file, shifted by the inserted cage row | 🟠 **Still open 2026-08-29** — the correction did not touch them. Recording 1 flagged *"the item master has duplicate entries"* |
-| **5** | **No item codes anywhere.** Every line is free-text description. No join to the 448-SKU item master, which uses different naming | 🟠 Mapping undefined |
+| **5** | **No item codes anywhere, and the free text does not match the item master either.** Tested directly against `T3_SKU` (448 rows) on 2026-08-31 — it fails in **three distinct ways**: <br>• **Different measurement conventions** — BOM `CAPSEAL 2 INCH WITH PVC` vs master `MS CAP SEAL PRINTED 50 MM…` (44 rows). Same item, **inches in the BOMs and mm in the master** <br>• **Naming divergence** — BOM `50 MM BUNGS REGULAR 1028 SPECIAL WHITE`; the master has 9 `BUNGS` rows, none matching <br>• **Absent entirely** — BOM `70 MM DUST CAP BLUE` returns **0 rows**, though it is an accessory on a plastic drum and should be there | 🔴 **Upgraded from 🟠.** Not merely undefined — **a fuzzy text match would fail systematically**, because the two datasets describe the same parts in different units. This blocks BOM explosion against the catalogue |
 | **6** | **No costs, rates, lead times, cycle times or work centres** | 🟡 Expected — these are BOMs, not routings or cost sheets |
+| **7** | **`CAGE-MAX` carries the wrong weight for `CUT VERTICAL BAR 1018`.** Found 2026-08-31 by reading the cells. The 1018 bar's net weight is **463 g** (level-2 row 8), and the 1002 bar's is **456 g** (row 7). In `CAGE-BIG`, 1018 × 20 = **9,260 g** ✓. In `CAGE-MAX`, the same item at the same quantity is entered as **9,120 g** — which is 456 × 20, the *1002 bar's* weight | 🟠 **CAGE-MAX understates its steel by 140 g per cage.** A copy-down error, not a spec difference — both cages use the identical component |
 
 ---
 
@@ -214,12 +215,43 @@ registration, targets, credits — that no document in this project addresses.
    `CAGE TYPE = MAX` line, qty 1, at `FG-BOM-W` row 12. Remaining sub-question: **should that line be
    classified `SFG`?** It carries no classification today.
 2. **What consumes `TOP CROSS BAR (1020)`?** Still open — cage sheet unchanged.
-3. **MS body sheet — `0.8 × 920` or `0.97 × 914`?** Two products, or an error?
+3. **MS sheets — which thickness is right, for the body *and* the lid?** Body: `0.8 × 920` or `0.97 × 914`. Lid: `0.97 × 1315` or `0.9 × 1315`. **Two separate contradictions**, and steel deduction is wrong on whichever is wrong. See finding 3.
 4. **Are the duplicated lines in `FG-BOM-W` real, or duplicates?** Still open — the corrected file
    kept both pairs.
 5. **How do BOM descriptions map to item-master codes?**
-6. **Are there BOMs for other SKUs,** or only these three configurations?
+6. ⚠️ **Are there BOMs for other SKUs,** or only these three configurations? **Sharpened 2026-08-31:**
+   the item master holds **448 plastic-line SKUs** (obs-01) and exactly **one** of them is covered by a
+   workbook here. The IBC and MS BOMs describe products with **no documented SKU structure at all**.
+   Combined with finding 5 — no item codes anywhere in these workbooks — **BOM explosion cannot run for
+   the catalogue as it stands.** This is an implementation blocker, not a demo one. See prd-07 §BOM
+   coverage.
 7. **Where are costs and rates held** — Tally, or nowhere?
 8. **Where are cycle times and work centres held?** Nothing in these files supports scheduling.
 9. **Is the 6.405 kg regrind figure a standard, or does it vary** with regrind availability?
 10. **What is the EPR obligation,** and does it drive Unit 9's volume? *(Out of demo scope.)*
+11. **Is `CAGE-MAX`'s 1018-bar weight a typo, or a different bar?** Finding 7. Both cages list the same
+    component at the same quantity with different weights; the CAGE-MAX figure equals the 1002 bar's.
+12. **How should BOM descriptions map to item codes** when the BOMs measure in inches and the item
+    master in millimetres? Finding 5. This is the blocker for BOM explosion, and it needs Pyramid to
+    supply a mapping — it cannot be inferred.
+
+---
+
+> ## Verification note — 2026-08-31
+>
+> All **11 sheets across the four workbooks** were read cell-by-cell on 2026-08-31, rather than relying
+> on this document's earlier summary:
+>
+> | Workbook | Sheets |
+> |---|---|
+> | `HDPE-DRUM-DETAILS.xlsx` | `GRANULES TO HDPE DRUM`, `ASSEMBLY` |
+> | `MS-DRUM.xlsx` | `MS-DRUM-FLOW`, `MS DRUM`, `BODY SHEET` |
+> | `IBC-DETAILS.xlsx` | `GRANULES TO IC`, `PIPE to CAGE--BOM`, `Pallet Assembly`, `FG-BOM-W` |
+> | `U9-PROCESS.xlsx` | `U-9-RECYCLE GRANULES PROCESS` |
+>
+> **What held:** every existing finding, the recipes in §1, the four cage levels, the six pallet types,
+> and the coverage claim — **one finished-goods configuration per product line**, with the IBC's six
+> pallets and two cages as sub-assemblies beneath one FG.
+>
+> **What was added:** findings 7 above, the lid-sheet half of finding 3, and the three failure modes in
+> finding 5.

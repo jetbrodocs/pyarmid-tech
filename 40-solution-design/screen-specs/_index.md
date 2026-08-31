@@ -38,8 +38,8 @@ working sequence — prd-08 and prd-09 were drafted first, before that order was
 | [prd-03 PO Creation](prd-03-po-creation/_index.md) | 4 | ✅ Drafted 2026-08-31 |
 | [prd-04 LR Tracking](prd-04-lr-tracking/_index.md) | 10 | ✅ Drafted 2026-08-31 |
 | [prd-05 GRN](prd-05-grn/_index.md) | 5 | ✅ Drafted 2026-08-31 |
-| prd-06 Inventory Management | — | ⬜ Next |
-| prd-07 Production Planning | — | ⬜ |
+| [prd-06 Inventory Management](prd-06-inventory-management/_index.md) | 7 | ✅ Drafted 2026-08-31 |
+| prd-07 Production Planning | — | ⬜ Next |
 | [prd-08 Delivery Scheduling](prd-08-delivery-scheduling/_index.md) | 8 | ✅ Drafted 2026-08-30 |
 | [prd-09 Sales Orders](prd-09-sales-orders/_index.md) | 4 | ✅ Drafted 2026-08-30 |
 | prd-10 Dispatch | — | ⬜ |
@@ -47,7 +47,7 @@ working sequence — prd-08 and prd-09 were drafted first, before that order was
 | prd-12 Fleet Management | — | ⬜ |
 | prd-13 Fleet Cost | — | ⬜ |
 
-**41 of ~100 screens drafted, across 7 of 13 PRDs.**
+**48 of ~100 screens drafted, across 8 of 13 PRDs.**
 
 ## What every screen file carries
 

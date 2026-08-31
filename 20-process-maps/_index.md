@@ -1,7 +1,7 @@
 ---
 title: "Process Maps Index"
 status: active
-updated: 2026-08-30
+updated: 2026-08-31
 ---
 
 # Process Maps
@@ -91,7 +91,8 @@ Every distinct process seen or described during the visits, and where it is now 
 ## Known gap on the critical path
 
 ~~`proc-04` cannot show raw-material consumption without the BOMs.~~ **BOMs received 2026-08-21** —
-see [obs-06](../10-observations/obs-06-bom-analysis.md). Real BOMs exist for all three lines.
+see [obs-06](../10-observations/obs-06-bom-analysis.md). Real BOMs exist for **one configuration of
+each line** — not for each SKU.
 `proc-04` Stage 1b now carries the charge data and structural requirements.
 
 ~~**Remaining gap:** the cage is not linked to the finished IBC in `FG-BOM-W`.~~ **Resolved
@@ -99,8 +100,21 @@ see [obs-06](../10-observations/obs-06-bom-analysis.md). Real BOMs exist for all
 the item `DN75` → **`DN50`**. Verified against the file; see
 [obs-07 §7](../10-observations/obs-07-sales-driven-delivery-schedule.md).
 
-🟠 **Minor BOM issues survive** — only `FG-BOM-W` changed. `TOP CROSS BAR (1020)` is still produced
-and consumed nowhere; `FG-BOM-W` still duplicates two lines. Neither blocks the demo.
+🔴 **But three BOM problems block a build, found 2026-08-31 by reading all 11 sheets cell-by-cell:**
+
+1. **`CAGE-MAX` understates its steel by 140 g per cage** — it carries the 1002 bar's weight against the
+   1018 bar, while `CAGE-BIG` has it right.
+2. **The MS drum contradicts itself on body *and* lid thickness** — two independent contradictions, and
+   nobody has said which figure is authoritative.
+3. **BOM descriptions cannot be joined to the item master** — inches in the BOMs, millimetres in the
+   master, and some items absent from it entirely. **Of the 448 plastic-line SKUs, exactly one has a
+   BOM.**
+
+**None blocks the demo** — the IBC path runs on `CAGE-BIG`, whose arithmetic is correct. All three block
+trusting RM deduction for stock or costing. See obs-06 §5 findings 3, 5 and 7, and `proc-04` Stage 1b.
+
+🟠 **Minor issues also survive** — `TOP CROSS BAR (1020)` is produced and consumed nowhere; `FG-BOM-W`
+duplicates two lines.
 
 ## Open on the critical path
 

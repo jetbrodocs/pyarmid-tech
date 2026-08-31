@@ -123,7 +123,7 @@ reached; **no projected dates**, since nothing in the evidence supports predicti
 | Indents | number, plant, raised date | prd-02 |
 | LRs | carrier, LR number, **tracking reference**, stage, days | prd-04 |
 | GRNs | number, date, quantity, variance | prd-05 |
-| Vendor invoices | number, date, value, matched status | `[TODO: prd-03 lists vendor invoices in `REQ-PO-007` but no PRD owns them. gap-analysis names "vendor invoice tracking" as a Must Have. There is no `VendorInvoice` entity in any data model — this group has nothing to render]` |
+| Vendor invoices | number, date, value, **match status** | prd-03 `REQ-PO-201`–`206`. **Owned as of 2026-08-31, out of demo scope** — the group renders "not tracked in the demo" until the invoice module is built |
 | Stock lots | lots created by the receipts | prd-01 |
 
 ---
@@ -188,8 +188,8 @@ amendment event would be needed rather than a lock, and proc-01 evidences neithe
 
 ## Open Questions
 
-1. **Who owns vendor invoices?** `REQ-PO-007` links them, gap-analysis makes them a Must Have, and
-   **no PRD or entity exists.** A real gap in the solution design, not just this screen.
+1. ~~**Who owns vendor invoices?**~~ **Decided 2026-08-31 (`F-X-002`): prd-03 owns them**, out of demo
+   scope (`REQ-PO-201`–`206`). This group stays "not tracked in the demo" until that module is built.
 2. **Can a sent PO be amended?** Currently locked. No evidence either way.
 3. **What closes a PO short, and who may?** Status exists without an event.
 4. **Does anyone chase a vendor who has not acknowledged?** Decides whether the sent-unacknowledged

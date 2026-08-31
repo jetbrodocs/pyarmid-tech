@@ -2,7 +2,7 @@
 title: "PRD-08 — Delivery Scheduling"
 status: draft
 created: 2026-08-24
-updated: 2026-08-30
+updated: 2026-08-31
 demo_areas: [1b, 8]
 tags: [prd, delivery-schedule, dispatch-plan, scheduling, sales, production]
 tech_decision: 30-analysis/tech-decision-phlo-stack.md
@@ -105,6 +105,18 @@ is no buffer to absorb a scheduling error.
 | REQ-SCH-004 | Phlo **auto-drafts** a dispatch plan per plant per date from open delivery schedule lines due on or before that date | Jetbro 2026-08-29 | Draft appears without manual assembly. Grouped by plant |
 | REQ-SCH-005 | Sales reviews the draft, adjusts lines, then **issues** it | Jetbro 2026-08-29 | Issuing is an explicit action. An unissued draft is not visible to the plant |
 | REQ-SCH-006 | An issued plan is immediately visible to the receiving plant head | obs-07 §1 | Both Unit 6 and Unit 7 see only their own plan |
+
+> ## Notification channel — decided 2026-08-31 (`F-X-004`)
+>
+> **In-app only. No channel abstraction is built now**; revisit at production, targeting WhatsApp.
+>
+> Pyramid's own coordination runs on **WhatsApp and phone** (obs-07 §1), and plant heads are **not desk-bound**. So this requirement is **demo-complete and deployment-incomplete**: the
+> alert lands on screen, which is what the demo needs, and reaches nobody who is not already looking at
+> Phlo.
+>
+> **State this to Pyramid as a known production gap** rather than letting a plant head discover it by
+> missing a day's plan.
+
 | REQ-SCH-007 | Plant head **acknowledges** the plan | Jetbro 2026-08-29 | Acknowledged state and timestamp visible to sales |
 | REQ-SCH-008 | Plant head can **flag a shortfall** against a line, with a reason and a revised quantity | Jetbro 2026-08-29 | Flag is visible to sales. Does not silently alter the plan |
 | REQ-SCH-009 | An issued plan can be revised and re-issued by sales; revisions are versioned | `[ASSUMPTION]` | Plant sees the current version and that it superseded an earlier one |
@@ -156,6 +168,12 @@ operations; that no longer holds.
 | `DISPATCH_PLAN_ACKNOWLEDGED` | Plant head confirms receipt |
 | `DISPATCH_PLAN_SHORTFALL_FLAGGED` | Plant head cannot meet a line |
 | `DISPATCH_PLAN_REVISED` | Sales re-issues a superseding version |
+| `DISPATCH_PLAN_WITHDRAWN` | **Sales retracts an issued plan entirely** | plan_id, reason, withdrawn_by |
+
+> **`DISPATCH_PLAN_WITHDRAWN` added 2026-08-31** (re-audit `F-08-101`). A plan issued to the wrong
+> plant, or for a day that is subsequently cancelled, could previously only be **revised to empty** —
+> which a plant head reads as *"make nothing today"*, not *"disregard this"*. Those are different
+> instructions, and with finished goods turning in 1–2 days the difference costs a shift.
 
 ### Projections
 
@@ -251,4 +269,15 @@ module with real content on day one, unlike the trend dashboards.
 7. **How far ahead is the schedule issued?** Same morning for same day, or the evening before? Sets
    the production lead time the plan assumes.
 8. **What happens when a plant flags a shortfall today?** Phone call to sales, or absorbed silently?
-   Determines whether `REQ-SCH-008` digitises something or introduces it.
+   Determines whether `REQ-SCH-008` digitises something or introduces it. **Re-audit 2026-08-31
+   (`F-08-104`): treat it as introduced until Pyramid says otherwise** — proc-03 Exception D records
+   that no evidence exists either way.
+9. ⚠️ **How does an issued plan reach a plant head?** `REQ-SCH-006` requires it to be *"immediately
+   visible"*, and **no notification channel is defined anywhere in this project** — the tech decision's
+   `communications` module is `(TBD)`. Plant heads are not desk-bound. Same gap as prd-04
+   `REQ-LR-203`; tracked as `F-X-004` in
+   [`prd-audit-findings.md`](../../30-analysis/prd-audit-findings.md).
+10. **Phlo cannot check a plan it drafts.** Capacity, shifts, yield and changeover are unmapped
+   (as-is §3.6), so the builder can say *"you have promised more than you hold"* but never *"this plant
+   cannot make it by tomorrow"*. With 1–2 days of FG space there is no buffer to absorb the difference.
+   `F-08-105`.

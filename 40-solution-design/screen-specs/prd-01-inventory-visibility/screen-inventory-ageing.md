@@ -106,14 +106,16 @@ anything**, so every value ships as a configurable default marked as a guess.
 | Finished goods | `PRODUCTION_COMPLETED` | proc-04 §Stage 7 |
 | Regrind | `PRODUCTION_COMPLETED` of the granulation run | proc-04 Exception A |
 | WIP | `[UNKNOWN]` — no event marks WIP entering a staging area | proc-05 |
-| **Returned units** | `[UNKNOWN]` — **no receipt event exists for a customer return** | proc-05 §Stage 6 |
+| **Returned units** | `RETURN_RECEIVED` — **for units received after go-live only** | prd-06 §Event Types, proc-05 §Stage 6 |
 
-> **Returned units are the honest hole in this screen.** proc-05 records a large floor stock of used
-> drums, cages and pallets awaiting refurbishment — real trapped value, and one of the three places
-> capital actually sits. But **no process captures when a return arrives**, so Phlo cannot age it.
-> Returns render with an approximate age and an `ⓘ` explaining why, rather than being dropped from a
-> report about trapped capital. `[TODO: prd-06 needs a returns-receipt event before this column is
-> real.]`
+> **Returned units age correctly from go-live, and not before.** prd-06's `RETURN_RECEIVED` dates every
+> return that comes in through Phlo. What it cannot date is the **floor stock already sitting there** on
+> day one — proc-05 §Stage 6 records a large quantity of used drums, cages and pallets awaiting
+> refurbishment, real trapped value, with no arrival date that can be reconstructed.
+>
+> Those units render with an `ⓘ` and an explicit opening-balance note rather than being dropped from a
+> report about trapped capital. **The fix is a dated returns stock-take at go-live** (prd-06
+> `REQ-IM-002`), whose date becomes the ageing baseline — not a new event.
 
 ---
 
@@ -154,7 +156,7 @@ anything**, so every value ships as a configurable default marked as a guess.
 | **Empty — day one** | "No ageing data yet. Stock ages from the day it is received or produced in Phlo." **Say it plainly** — this screen is empty for months and its emptiness is not a defect |
 | **Empty — nothing beyond threshold** | "No stock is held beyond its threshold." with the thresholds listed inline, so the user can judge whether that is good news or a threshold set too high |
 | **Finished goods flagged** | Grey note on the FG group: "Finished goods turn over in 1–2 days. Anything flagged here is unusual and worth checking." — the one category where a flag is a genuine exception |
-| **Returned units** | `ⓘ` on every age cell: "Approximate — no receipt date is captured for returns." |
+| **Returned units, pre-go-live** | `ⓘ`: "Aged from the go-live stock-take, not from arrival." Units received since go-live age normally |
 | **WIP present** | Same treatment. No event marks WIP entering staging |
 | **180d+ present** | Red bucket and a summary line naming the value. No modal — it is a standing condition, not an incident |
 | **No cost on file** | Value `—`, and the summary says "Value excludes 12 lots with no cost", so the headline figure is never quietly understated |
@@ -168,8 +170,9 @@ anything**, so every value ships as a configurable default marked as a guess.
 
 1. **What threshold is right, per category?** Nothing exists to copy. The defaults ship as declared
    guesses.
-2. **When does a returned unit start ageing?** Needs a returns-receipt event in prd-06. Until then a
-   real component of trapped capital is only approximated.
+2. **Will go-live include a returns stock-take?** Returns received after go-live age accurately from
+   prd-06's `RETURN_RECEIVED`. The floor stock already there has no arrival date and needs a dated
+   opening balance — without one, a real component of trapped capital reads as approximate for months.
 3. **How is regrind valued and aged?** It is a **planned input at 26–30% of a charge** (obs-06 §1), not
    waste — so its ageing behaviour is closer to raw material than to scrap.
 4. **Is scrap worth ageing at all?** Steel offcuts and swarf are recorded as **not recoverable**

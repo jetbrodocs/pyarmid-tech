@@ -108,12 +108,15 @@ what the system holds.
 | Leg | State |
 |---|---|
 | **PO ↔ GRN** | Computed: matched, short, over, or flagged. Per line |
-| **GRN ↔ vendor invoice** | **Not tracked.** No vendor invoice entity exists in any PRD |
+| **GRN ↔ vendor invoice** | **Not tracked in the demo.** Owned by prd-03 `REQ-PO-201`–`206` as of 2026-08-31, out of demo scope |
 
-> **The three-way match is prd-05's Goal 5 and it cannot be delivered.** Two legs are here; the third
-> has no owner anywhere in the solution design, while gap-analysis lists vendor invoice tracking as a
-> **Must Have**. This panel says *not tracked* rather than rendering an empty box.
-> `[TODO: needs an owning PRD — see [`_index.md`](_index.md).]`
+> **Goal 5 resolved 2026-08-31 (`F-X-002`).** The invoice leg is owned by
+> [prd-03](../../prd-03-po-creation/prd.md) (`REQ-PO-201`–`206`), **out of demo scope**. Two legs are
+> live here; the third is designed but not built, so this panel reads *not tracked in the demo* rather
+> than rendering an empty box.
+>
+> **The match runs against `received_qty`, not the ordered quantity** — a vendor invoicing 40 T against
+> 39.2 T received is exactly the case it exists to catch, and only this module knows the 39.2.
 
 ---
 
@@ -173,7 +176,7 @@ discrepancy at receipt, not discovery afterwards.]`
 
 ## Open Questions
 
-1. **Who owns vendor invoices?** Blocks Goal 5. Found independently in prd-03 — the same hole.
+1. ~~**Who owns vendor invoices?**~~ **Decided 2026-08-31 (`F-X-002`): prd-03**, out of demo scope.
 2. **How is a discrepancy resolved,** and does that need its own event? None exists.
 3. **What happens when a GRN is found wrong after verification?** Currently a new GRN or a stock
    adjustment; no evidence of Pyramid's practice.

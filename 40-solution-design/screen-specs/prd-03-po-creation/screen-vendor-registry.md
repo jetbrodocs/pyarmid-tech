@@ -14,6 +14,18 @@ requirements: [REQ-PO-010, REQ-PO-003]
 
 Vendor master — GSTIN, contacts, terms, and **what each vendor supplies at what rate and lead time**.
 
+> ## This is a role view, not a separate registry
+>
+> Decided 2026-08-31 (`F-X-003`): customers, vendors, carriers and job workers are **one `Party` record
+> with a `roles[]` array**, defined in [prd-03](../../prd-03-po-creation/prd.md) §Data Model. This screen
+> shows the **vendor-role fields** — supplied items, lead time, payment terms. prd-09's
+> [Customer Registry](../prd-09-sales-orders/screen-customer-registry.md) shows the customer-role fields
+> on the same record.
+>
+> **Consequence for this screen:** the duplicate-GSTIN warning in §5 becomes a **role prompt** instead —
+> *"ZYDEX INDUSTRIES already exists as a customer. Add the vendor role to that record?"* — which is the
+> correct handling of Unit 8 selling granules to Unit 7.
+
 Built from the incumbent's **Account Master** (45 fields,
 [obs-03 §2](../../../10-observations/obs-03-field-catalog.md)), which is the same object that serves
 customers. See the note below — it is the one design question this screen cannot settle on its own.
@@ -189,12 +201,8 @@ duplicate-party problem described below, and it costs one query.
 
 ## Open Questions
 
-1. **One party master, or two registries?** This screen and prd-09's
-   [Customer Registry](../prd-09-sales-orders/screen-customer-registry.md) duplicate GSTIN, addresses,
-   contacts and terms. The incumbent has **one** Account Master separated by `Main Group`. It stops
-   being academic at Pyramid: **Unit 8 sells granules to Unit 7**, and the recycling plant sells into
-   the other units — so a Pyramid unit is a customer and a vendor at once. Deciding after both are
-   built means a migration.
+1. ~~**One party master, or two registries?**~~ **Decided 2026-08-31 (`F-X-003`): one `Party` entity
+   with roles.** This screen is the **vendor-role view** of it — see the banner above.
 2. **Are carriers vendors?** proc-02 says the *vendor* books the carrier, so Pyramid may not pay them
    directly — but prd-04 has its own Carrier registry with an integration mode. Two registries, unclear
    overlap.

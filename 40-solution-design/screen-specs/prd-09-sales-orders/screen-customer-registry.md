@@ -12,9 +12,19 @@ requirements: [REQ-SO-011]
 
 **Module:** PRD-09 Sales Orders.
 
-Customer master. Replaces the incumbent's **Account Master** (45 fields, catalogued in
-[`obs-03` §2](../../../10-observations/obs-03-field-catalog.md)) for the customer side only. Vendors
-belong to prd-03.
+Customer master — the **customer-role view** of one `Party` record.
+
+> **Decided 2026-08-31 (`F-X-003`): one party master with roles.** Customers, vendors, carriers and job
+> workers are the same entity, defined in [prd-03](../../prd-03-po-creation/prd.md) §Data Model. This
+> screen shows customer-role fields — credit terms, ship-to addresses, place of supply; prd-03's
+> [Vendor Registry](../prd-03-po-creation/screen-vendor-registry.md) shows vendor-role fields on the
+> same record.
+>
+> This follows the incumbent rather than departing from it: **Account Master is already one object**,
+> split by `Main Group` into `SUNDRY DEBTORS` and creditors (obs-03 §2).
+
+Based on the incumbent's **Account Master** (45 fields, catalogued in
+[`obs-03` §2](../../../10-observations/obs-03-field-catalog.md)), showing its customer-role fields.
 
 **This spec deliberately carries fewer fields than the incumbent.** Account Master holds 45; roughly a
 third were blank on the sampled record and several are accounting constructs that belong in Tally, not
@@ -164,7 +174,7 @@ regardless.
 | Name | Required, unique (case-insensitive) | "A customer with this name already exists." |
 | GSTIN | 15 characters, format `NNAAAAANNNNAXAX`, **checksum verified** | "That GSTIN is not valid." |
 | GSTIN | Required when Registration status is **Registered** | "A registered customer needs a GSTIN." |
-| GSTIN | Warn on duplicate across customers, do not block | "This GSTIN is already on ZYDEX INDUSTRIES. Two records for one GSTIN is usually a mistake." |
+| GSTIN | **Duplicate across parties becomes a role prompt** | "JSW STEEL already exists as a vendor. Add the customer role to that record?" — the correct handling of Unit 8 selling granules to Unit 7 |
 | State code | Must equal GSTIN characters 1–2 | "State code does not match the GSTIN." |
 | PAN | 10 characters, `AAAAANNNNA` | "That PAN is not valid." |
 | PAN | Warn when it does not match GSTIN characters 3–12 | "PAN does not match the GSTIN." |
@@ -210,6 +220,8 @@ e-Invoice at IRN generation (prd-11), several steps and possibly several days la
    informational.
 5. **Who owns customer master data** — sales, or accounts? Determines whether this screen is editable
    by the same people who raise orders.
-6. **Are export customers modelled here?** A ~40-country recollect programme exists (obs-04). Exports
+6. ~~**One party master, or two registries?**~~ **Decided 2026-08-31 (`F-X-003`): one `Party` with
+   roles.** Applied above.
+7. **Are export customers modelled here?** A ~40-country recollect programme exists (obs-04). Exports
    imply LUT/bond, currency and RODTEP fields that this spec does not carry. `[TODO: confirm whether
    export sales are in demo scope.]`
