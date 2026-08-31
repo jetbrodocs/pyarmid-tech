@@ -696,7 +696,11 @@ replacement.
 |---|---|---|---|
 | Own fleet | ~100 trucks, ~100 payroll drivers | 🟢 | R1 |
 | Scope of own fleet | **Outbound sales dispatch only** | 🟡 | RP |
-| Contractor fleet | Used when own fleet is occupied, or where third-party haulage is more feasible | 🟢 | R1 |
+| Contractor fleet | Used when own fleet is occupied, or where third-party haulage is more feasible. **Criterion confirmed 2026-08-31: availability** — other triggers may exist and are not known | 🟢 / 🟡 | R1, obs-08 §6 |
+| **How a truck is assigned** | **"Instinct and whatever is available."** No method, no rule, no system. Four people, ~100 trucks, nine plants | 🟢 | obs-08 §2 |
+| **A vehicle tracking app** 🔵 | **One exists.** It holds trip distance and **feeds nothing else** — *"just lives somewhere in the tracking app, does not get recorded anywhere else"* | 🟢 | obs-08 §1 |
+| Trip distance in any system of record | **None.** It exists only inside that app | 🟢 | obs-08 §1 |
+| Which app, whose account, what coverage | — | 🔴 | — |
 | **A real outbound movement** | e-Way Bill: U-VIII Khanivali → Spectrum Packaging, Bhiwandi. 200 × CRCA 210 L drums, ₹3.33 L taxable, **31 km**. Transporter **"Anand Freight Carriers"**, vehicle MH20DE4349 | 🟢 | SYS |
 | Named contract transporters | At least one — Anand Freight Carriers | 🟢 | SYS |
 | Fleet team | 4 people, all 9 sites, all 100 trucks | 🟢 | R2 |
@@ -833,6 +837,23 @@ what happened but surfaces nothing on its own. Management discovers problems onl
 Sales Invoice · Sales Invoice blank template · Delivery Challan · e-Way Bill · Account Master ·
 Sales Order · Labour Job Issue III · Labour Job Issue IV · Supply Master · Supply Master Additional
 Info · Additional Info Purchase/Asset · Auto Batch No. Parameters
+
+### 🔵 A vehicle tracking app — discovered 2026-08-31
+
+**No document in this project mentioned it until now.** Confirmed on 2026-08-31 (obs-08 §1): a tracking
+app exists, it holds **trip distance**, and that distance **flows nowhere else** — not into the ERP, not
+into Excel, not onto paper.
+
+It is the **first indication that any vehicle telemetry exists at Pyramid at all**, and it changes the
+systems picture: the fleet is not entirely un-instrumented, it is instrumented into a silo.
+
+`[UNKNOWN: which app, whose account, whether it covers all ~100 trucks or a subset, whether it retains
+history, and whether it exposes an export or an API.]`
+
+**Why it matters.** It is the only known source of trip distance. If it can be read, it makes
+`prd-13 REQ-FC-013` (cost per km) real and could feed outbound trip tracking in `prd-12` — turning two
+invented fields into observed ones. It does **not** affect Class B apportionment, which was settled on
+**trip count** on 2026-08-31 precisely so the cost model would not depend on distance.
 
 ### Undocumented and material 🔴
 
@@ -1128,3 +1149,6 @@ New questions this synthesis surfaced that were not in the register. All belong 
     FG space there is no buffer. Highest-value unobserved exception in the project.
 15. **Does the owned fleet run inter-plant legs?** Deferred, not answered. Changes the fleet cost model
     and what movements the dispatch plan covers.
+16. 🔵 **What is the vehicle tracking app, and can it be read?** Discovered 2026-08-31 — see Part 4. The
+    only known source of trip distance, and invisible to this project until now. **The highest-value
+    systems follow-up currently open.**

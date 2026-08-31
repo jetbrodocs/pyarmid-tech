@@ -77,14 +77,19 @@ So the dashboard shows **cost per trip**, which is computable today, and reserve
 distance exists. A cost-per-km column populated from guessed distances would be worse than no column.
 
 `[TODO: the e-Way Bill already carries an approximate distance (obs-03 §8 field 6). Capturing it on the
-trip makes `REQ-FC-013` real and gives Class B a defensible apportionment basis — **one field, two
-unblocked requirements.**]`
+trip would make `REQ-FC-013` real. **Apportionment no longer needs it** — the basis was settled on
+**trip count** on 2026-08-31. 🔵 Distance is recorded nowhere except **a tracking app** discovered the
+same day (obs-08 §1), which is now the only known source.]`
 
 ### Class B is shown separately, never apportioned here
 
-`REQ-FC-010` marks the apportionment basis `[UNKNOWN — distance, trips, or time]`. Until it is decided,
-the dashboard totals Class A and Class B side by side and **never divides Class B into a per-trip
-figure**, because doing so would bake a guess into the headline.
+**Decided 2026-08-31: Class B is shared equally across a vehicle's trips in the period.** `A-FC-02` is
+promoted from assumption to decision.
+
+The dashboard still **shows Class A and Class B separately in the headline**, because they mean
+different things — Class A scales with work done, Class B with the truck's condition. The apportioned
+per-trip figure appears in the by-vehicle table and on
+[Cost-to-Serve](screen-cost-to-serve.md), where it is compared against something.
 
 ---
 
@@ -156,7 +161,7 @@ Read-only.
 | **Empty — day one** | "No fleet costs recorded yet." with an explanation that costs accrue as trips and vehicle work are entered. **Expected for weeks, and the module's biggest adoption risk** |
 | **Low coverage** | Amber banner naming the fraction: "Figures cover 62 of 98 trucks." Totals still shown, always caveated |
 | **Very low coverage** | Below a threshold, **totals suppressed entirely** — only per-vehicle rows shown. A fleet total from 8 trucks is not a fleet total |
-| **Class B unapportioned** | Persistent note: "Vehicle costs are not divided per trip. The basis is undecided." |
+| **Class B apportioned** | Per-vehicle rows show the apportioned share alongside Class A, labelled. A vehicle with **no trips in the period** cannot take a share — its Class B sits unallocated, and the dashboard says so rather than dividing by zero |
 | **Periodic costs in period** | Separated: "Insurance and permits ₹1.3 L — annual, not usage-driven." |
 | **Vehicle flagged for repairs** | ⚠ on the row with the pattern |
 | **Outlier vehicle** | Highest cost-per-trip shown factually with its trip count. **A truck doing 8 trips has a high cost per trip arithmetically** — the count is shown so the reader sees why |
@@ -171,8 +176,8 @@ Read-only.
 
 1. **Should distance be captured on the trip?** One field unblocks cost per km and Class B
    apportionment. **The highest-value single addition in this module.**
-2. **What apportions Class B?** OQ3. Until answered, the dashboard cannot produce a fully loaded cost
-   per delivery.
+2. ~~What apportions Class B?~~ **Closed 2026-08-31: trips.** 🔵 **Open instead: can the tracking app be
+   read?** It is the only source of distance, and the only route to cost per km.
 3. **What is good?** No benchmark exists for cost per trip, per km, or per tonne. The dashboard reports
    and does not judge, deliberately.
 4. **Will costs actually get entered?** The whole module depends on a data-entry habit Pyramid does not

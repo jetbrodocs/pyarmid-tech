@@ -71,7 +71,17 @@ Costs that belong to the asset over time.
 ### The design rule
 
 - **Class A** costs post against the **dispatch / invoice**, giving true cost-to-serve per order.
-- **Class B** costs post against the **vehicle**, and are apportioned — `[UNKNOWN: by what basis — distance, trips, time?]`
+- **Class B** costs post against the **vehicle**, and are apportioned **across its trips** — an equal
+  share per trip in the period. **Decided 2026-08-31 (Jetbro).**
+
+> **Why trips, and why it matters.** Distance is the intuitive basis and **Pyramid does not record it**
+> — confirmed 2026-08-31: trip distance *"just lives somewhere in the tracking app, does not get
+> recorded anywhere else"* (obs-08 §1). Choosing trip count **decouples the cost model from distance
+> entirely**, so the unknown stays unknown without blocking anything.
+>
+> It is a rougher measure — a 400 km run and a 30 km run carry the same share of a tyre. If distance
+> later becomes readable from that tracking app, the basis can be revisited; nothing else has to
+> change.
 
 > **Which trips exist to be costed is a scope decision, not a settled fact.** The model above assumes
 > every trip serves a customer dispatch, so every Class A cost has an invoice to attach to. If the
@@ -152,9 +162,14 @@ usage-apportionable.
 
 1. **Is the cost taxonomy observed or proposed?** Rec-32 reads as Aryan's design intent, not an account of current practice. *(10.41)*
 2. **How are drivers advanced money** for fuel, food and lodging, and how is it reconciled?
-3. **What basis apportions Class B costs** — distance, trips, or time?
+3. ~~**What basis apportions Class B costs** — distance, trips, or time?~~ **Decided 2026-08-31:
+   across trips.** Equal share per trip in the period.
 3b. **Does the owned fleet run inter-plant legs?** If it does, those trips have Class A costs and no
    customer invoice. Deferred, not answered — obs-07 §8.
+3c. 🔵 **What is the tracking app, and can it be read?** Confirmed to exist 2026-08-31 (obs-08 §1) — the
+   **first sign of any vehicle telemetry at Pyramid**. It holds trip distance and passes it nowhere. If
+   it can be exported, cost-per-km becomes real. `[UNKNOWN: which app, whose account, whether it covers
+   all ~100 trucks, whether it retains history.]`
 4. **Is fuel bought on card, cash, or account?**
 5. **Who would own fleet cost in Phlo** — the fleet team of four, or accounts?
 6. **Is freight recovered from customers** at cost, marked up, or absorbed? The invoice has a line-level Freight Charges field.

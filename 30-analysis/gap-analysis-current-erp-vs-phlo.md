@@ -83,7 +83,7 @@ the sales order and has no UdyogERP coverage either — it is a third, separate 
 | GRN workflow                | Off-system               | Receipts not confirmed promptly                 |
 | Receipt reconciliation      | Manual                   | `[UNKNOWN: who owns it]`                        |
 | Fleet assignment (outbound) | Head knowledge           | 4 people track 100 trucks across 9 plants       |
-| Driver/vehicle tracking (outbound) | None              | No location, no status                          |
+| Driver/vehicle tracking (outbound) | 🔵 **A tracking app exists** — found 2026-08-31 | It holds **trip distance** and feeds nothing else. Not *no tracking* — **tracking into a silo.** The only known source of distance. `[UNKNOWN: which app, coverage, whether it can be read]` |
 | Inventory in pipeline       | Not calculated           | Cash trapped — goods shipped but not received   |
 | **Delivery schedule to plants** | Off-system — format unknown, issued by Bombay sales | **The artefact the whole factory works to has no system record.** No version history, no acknowledgement, no record of what was scheduled vs produced |
 | **Plant acknowledgement / shortfall** | None | Nobody can see whether a plant received the day's plan, accepted it, or cannot meet it |
@@ -193,7 +193,8 @@ Based on gap analysis, Phlo needs these capabilities:
 | **Transit visibility**      | Both pillars         | Outbound: own driver checkpoint updates. Inbound: carrier status, which Pyramid does not control. **Direction set 2026-08-30:** capture a tracking reference per LR and fetch status where the carrier allows, with manual entry as the permanent fallback (prd-04 `REQ-LR-301`–`309`). `[UNKNOWN: which carriers can actually be integrated — never investigated]` |
 | **Inventory pipeline view** | Inventory ageing     | See what's ordered, dispatched, in transit, arrived |
 | **Ageing dashboards**       | All three pillars    | LR ageing, PO ageing, inventory ageing              |
-| **Alerting**                | Reactive → proactive | Push notifications when things age                  |
+| **Alerting**                | Reactive → proactive | **In-app for the demo; out-of-app push at production.** Channel undecided — SMS, email or WhatsApp, and **Pyramid's preference decides it** (2026-08-31). Store teams and plant heads are not desk-bound, so in-app alone reaches nobody who is not already looking |
+| **Fleet cost attribution**  | Fleet management     | Class A costs attach to the trip and its invoice; **Class B is apportioned across trips** — decided 2026-08-31, which **decouples the cost model from distance**, since Pyramid records distance nowhere |
 | **Tally push**              | Per pitch            | Entries flow to Tally for accounting                |
 | **Delivery schedule lines on the SO** | Delivery scheduling | Quantity, plant and due date committed on the order itself — not only a header and lines |
 | **Daily dispatch plan per plant** | Delivery scheduling | Phlo auto-drafts from open schedule lines; sales issues; the plant head acknowledges or flags a shortfall. **Added 2026-08-29** |

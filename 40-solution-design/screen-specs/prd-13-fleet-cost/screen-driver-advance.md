@@ -15,11 +15,22 @@ requirements: [REQ-FC-014, REQ-FC-015]
 Money given to a driver before a trip, what they spent, and what came back.
 
 > **This is the one screen in the module about cash, not costing.** A driver leaves with money for
-> fuel, tolls, food and lodging; they return with receipts and change. prd-13 §Known Issues marks
-> driver payments `[UNKNOWN]` — *"drivers are on payroll, so wages sit in HR/payroll, but trip advances
-> are unmapped."*
+> fuel, tolls, food and lodging; they return with receipts and change.
 >
 > **Wages are not here. Advances are.**
+
+> ## ⚠️ This screen implements a proposed process, not an observed one
+>
+> Asked on 2026-08-31 how drivers are advanced money today: *"I have no idea how this is happening right
+> now, but I'm assuming they are given in advance to make expenses from and then they are supposed to
+> submit the invoices and bills… as well as the balance amount."*
+>
+> **Explicitly an assumption, from Jetbro, not Pyramid** (obs-08 §5). The five-step flow — advance →
+> spend → submit bills → return balance → reconcile — is a **design proposal**.
+>
+> It is a reasonable one, and it is what this screen implements. But **present it to Pyramid as a
+> proposal to confirm**, not as their process written down. prd-13 §Known Issues still marks driver
+> payments `[UNKNOWN]`.
 
 ---
 
@@ -164,8 +175,9 @@ and the two look identical until someone asks.
 
 ## Open Questions
 
-1. **How are drivers advanced money today?** OQ2 — cash, card, or company account, and how reconciled.
-   The whole screen assumes a practice nobody has described.
+1. **How are drivers advanced money today?** 🟠 **Still unknown.** A model was proposed on 2026-08-31
+   *explicitly as an assumption* (obs-08 §5) and this screen implements it. Cash, card or company
+   account, and how it is reconciled, all remain open. **The highest-risk assumption in this module.**
 2. **Who settles — fleet or accounts?** prd-13 §Roles names both.
 3. **Are receipts required?** No policy documented. The screen shows their absence and blocks nothing.
 4. **What is a normal advance?** No figure exists, so the large-advance threshold is invented.

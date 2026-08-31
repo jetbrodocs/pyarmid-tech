@@ -17,6 +17,11 @@ Give a dispatch a truck and a driver.
 > **This is the head-knowledge moment.** Four people decide which of ~100 trucks goes where, across
 > nine plants, with nothing written down. The assignment itself is one click; **the value is that the
 > decision becomes a record** — which truck, which driver, who decided, when.
+>
+> **Confirmed 2026-08-31:** the method is *"instinct and whatever is available"* (obs-08 §2). **There is
+> no logic to replicate.** Everything this screen offers beyond recording the choice — availability,
+> last-trip date, capacity against load — is a **new capability**, and must be presented that way rather
+> than as a digitisation of how the fleet team works.
 
 ---
 
@@ -166,9 +171,13 @@ legal exposure, it is checkable from data Phlo already holds, and nobody current
 
 ## Open Questions
 
-1. **What actually drives the choice of truck?** Proximity, capacity, driver rota, whose turn it is —
-   all undocumented. This is the head knowledge Phlo is replacing, and nobody has written it down.
-2. **Where does distance come from?** The e-Way Bill requires it, and no source is specified.
+1. ~~What actually drives the choice of truck?~~ **Answered 2026-08-31: *"instinct and whatever is
+   available."*** No method, no rule. **Nothing to replicate** — so the sorting and hints on this screen
+   are Jetbro's proposal, not Pyramid's practice, and are worth testing with the fleet team rather than
+   assuming they help.
+2. 🔵 **Where does distance come from?** The e-Way Bill requires it. **Answered in part 2026-08-31:** a
+   **tracking app** holds trip distance and feeds nothing else (obs-08 §1) — the only known source, and
+   invisible to this project until now. `[UNKNOWN: which app, and whether Phlo can read it.]`
 3. **Are trucks loaded by weight or volume?** Almost certainly volume for drums, and no volumetric data
    exists.
 4. **Does Pyramid pair drivers to specific trucks?** `REQ-FM-003` tracks it; nothing says whether it is

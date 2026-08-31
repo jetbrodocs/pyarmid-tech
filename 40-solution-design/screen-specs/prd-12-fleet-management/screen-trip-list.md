@@ -134,7 +134,7 @@ because of missing paperwork — which is a worse operational outcome than an in
 |---|---|
 | **Loading** | Skeleton rows |
 | **Empty — day one** | "No trips yet. Trips are created when a truck is assigned to a dispatch." |
-| **In transit** | Neutral. `[UNKNOWN: no position tracking exists — proc-02 Q11 asks whether drivers have smartphones]` |
+| **In transit** | Neutral — Phlo shows no position. 🔵 **A vehicle tracking app does exist** (obs-08 §1) and holds trip distance, but it **feeds nothing else** and Phlo cannot read it. `[UNKNOWN: which app, coverage, and whether it exposes an export or API — the highest-value fleet follow-up]` |
 | **Delivered, POD outstanding** | Amber days count. Past a threshold, red |
 | **POD outstanding over threshold** | Red, in the summary too. `[UNKNOWN: what a normal POD turnaround is]` |
 | **Completed without POD** | Grey note on the row: "completed, no POD". The record stays honest |
@@ -153,6 +153,10 @@ because of missing paperwork — which is a worse operational outcome than an in
 2. **Is the return leg tracked?** `Returning` exists as a status with no evidence behind it.
 3. **Do drivers have smartphones?** proc-02 Q11. Decides whether any status after departure can be
    captured live, or whether everything is entered retrospectively at the plant.
-4. **What distance is normal?** One 31 km movement is the only data point, across nine plants in two
-   states. Without a baseline, "in transit 6 days" cannot be judged.
+3b. 🔵 **Can Phlo read the tracking app?** One exists and holds trip distance (obs-08 §1). If it is
+   readable it could populate departure, arrival and distance without anyone typing — turning three
+   manual fields into observed ones.
+4. **What distance is normal?** One 31 km movement is the only data point in any project document —
+   but 🔵 **the tracking app holds real distances** and passes them nowhere (obs-08 §1). That is where a
+   baseline would come from.
 5. **Who chases a missing POD?** Nobody today. The column creates the question.

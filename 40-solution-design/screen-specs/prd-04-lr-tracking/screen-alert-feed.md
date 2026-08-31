@@ -172,11 +172,11 @@ the failure this module exists to catch. Worth deciding with Pyramid.]`
 
 ## Open Questions
 
-1. ~~**How does an alert reach someone not looking at Phlo?**~~ **Decided 2026-08-31 (`F-X-004`):
-   in-app only for now**, revisiting at production with WhatsApp as the target. This is
-   **demo-complete and deployment-incomplete** — the alert lands on screen, and reaches nobody who is
-   not already looking. Store teams are not desk-bound, so it must be stated to Pyramid as a known
-   production gap.
+1. ~~**How does an alert reach someone not looking at Phlo?**~~ **In-app for the demo; an out-of-app
+   push at production** (`F-X-004`, narrowed 2026-08-31). **The channel is not chosen — SMS, email or
+   WhatsApp — and Pyramid's preference decides it** (sheet Q19). This stays **demo-complete and
+   deployment-incomplete**: the alert lands on screen and reaches nobody who is not already looking, and
+   store teams are not desk-bound. **State it as a known production gap.**
 2. **Should an acknowledged-but-unfixed alert re-fire?** Currently no. Arguably the most consequential
    open question on this screen.
 3. **Are the default thresholds anywhere near right?** 3d / 3d / 1d / 1d are guesses. A 1-day dwell

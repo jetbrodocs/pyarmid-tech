@@ -62,16 +62,17 @@ misleading number in the product.
 
 ### Class B is deliberately absent
 
-This screen shows **Class A only** — the trip costs that attach to a dispatch and an invoice. Class B
-is vehicle-level and apportioned, and **the apportionment basis is unresolved** (prd-13 OQ3,
-`REQ-FC-010` marks it `[UNKNOWN]`).
+This screen shows **Class A only** — the trip costs that attach to a dispatch and an invoice.
 
-Adding an apportioned vehicle cost per delivery would make every figure here depend on a guess. The
-[Fleet Cost Dashboard](screen-fleet-cost-dashboard.md) carries both; this screen carries the one that
-is defensible per order.
+**The apportionment basis was decided on 2026-08-31: Class B is shared equally across a vehicle's trips
+in the period.** So a fully-loaded cost per delivery is now computable, and belongs here as a
+**toggle** — Class A alone by default, Class A + apportioned Class B on demand.
 
-`[TODO: once the basis is decided, a "fully loaded cost" toggle belongs here — Class A plus apportioned
-Class B. Not before.]`
+Default to Class A because it is the **directly attributable** figure: it is what this delivery
+actually consumed. The apportioned share is an allocation, and mixing the two silently would make a
+delivery look more expensive without saying why.
+
+`[TODO: add the fully-loaded toggle. It was blocked on the basis being undecided; it no longer is.]`
 
 ---
 
@@ -155,7 +156,7 @@ Read-only.
 | **No freight charged** | Row reads `₹0 recovered` with "no freight charged" beneath — **not a loss until OQ6 is answered.** If freight is in the product rate, recovering ₹0 separately is correct |
 | **Consistently negative for a customer** | Grouped view flags it factually: "8 of 8 deliveries to SPECTRUM cost more than recovered." **No judgement attached** |
 | **No distance** | Cost-per-km column blank with a note that distance is not captured (`A-FC-04`) |
-| **Class B excluded** | Persistent note: "Vehicle costs are not included. The apportionment basis is undecided." |
+| **Class A only (default)** | Note: "Vehicle costs are not included. Switch to fully-loaded to add each vehicle's apportioned share." |
 | **Inter-plant trip present** | Excluded, with a note — such a trip has no customer invoice to compare against (`A-FC-06`) |
 | **Restricted — management** | Full |
 | **Restricted — fleet team** | Full — they enter the costs |
@@ -167,10 +168,9 @@ Read-only.
 ## Open Questions
 
 1. **Is freight charged at cost, marked up, or absorbed?** OQ6. Decides what every row means.
-2. **When can Class B be included?** Once OQ3 settles the apportionment basis.
+2. ~~When can Class B be included?~~ **Now** — the basis was settled on 2026-08-31 (trips). The toggle is a `[TODO]`, not a blocker.
 3. **Should sales see this?** Cost-to-serve by customer is exactly what a pricing conversation needs and
    exactly what is commercially sensitive.
 4. **What proportion of trips will actually get costed?** The screen is only as good as the entry
    discipline, and nothing exists today to build on.
-5. **Is distance worth capturing?** The e-Way Bill already needs it. It would make cost per km real and
-   give Class B a defensible apportionment basis in one step.
+5. 🔵 **Can the tracking app be read?** Distance is recorded nowhere else (obs-08 §1). Apportionment no longer needs it — but cost per km still does, and the e-Way Bill needs a distance figure anyway.

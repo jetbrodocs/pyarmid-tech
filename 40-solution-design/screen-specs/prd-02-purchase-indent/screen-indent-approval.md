@@ -111,13 +111,29 @@ Pending count · over-threshold count · oldest age. Each filters.
 | Re-order level | When set, else "no re-order level set" | `ReorderLevel` | Most items have none (`A-PI-03`) |
 | **Trigger figures** | Auto-raised only: stock and level *at trigger* | `INDENT_AUTO_GENERATED` payload | Frozen, not live |
 | Reason | As entered by the plant | `.reason` | The thing being approved on |
+| **Estimated value** | `₹` per line and per indent, marked *est.* | `VendorItem.last_rate` × quantity | Blank on a first purchase — **no invented figure** |
 | **Already on order** | Quantity, stage, days in stage | prd-01 `inventory_pipeline` | See above |
 
-**No price, no vendor, no value — anywhere on this screen.** Vendor evaluation happens after approval,
-in [prd-03](../../prd-03-po-creation/prd.md). HO approves *the need*, then sources it.
-`[UNKNOWN: whether Pyramid's real approval is a value judgement rather than a need judgement. If it is,
-this screen is missing its most important column — and that turns on prd-02 OQ1, the deferred
-thresholds.]`
+### Estimated value — added 2026-08-31
+
+**Show an estimated value per line and per indent.** Asked on 2026-08-31 whether HO approves on need or
+on value, the answer was *"sometimes a bit of both, but there's no real method or mathematics to it"* —
+**given explicitly as an assumption, from Jetbro, not confirmed by Pyramid** (obs-08 §3).
+
+Under either reading the column helps, and under neither does it hurt:
+
+| If approval is… | The column is… |
+|---|---|
+| A **need** judgement | Context. The reason still carries the decision |
+| A **value** judgement | **The most important column on the screen** |
+
+So it goes in now rather than waiting. **Estimated**, from `VendorItem.last_rate` where a prior
+purchase exists, and labelled as an estimate — never as a quoted price, because **no vendor has been
+selected yet.** Vendor evaluation still happens after approval, in
+[prd-03](../../prd-03-po-creation/prd.md).
+
+`[UNKNOWN: whether any value threshold exists, and whether approval authority varies by amount —
+prd-02 OQ1, still deferred.]`
 
 ---
 
@@ -173,8 +189,10 @@ part-approves in practice. If they do, this is wrong and the data model needs li
 
 ## Open Questions
 
-1. **Is approval a need judgement or a value judgement?** This screen assumes need — no prices appear.
-   If HO approves on spend, the design is wrong in its central column. Turns on prd-02 OQ1.
+1. **Is approval a need judgement or a value judgement?** 🟠 **Jetbro's assumption 2026-08-31: *"a bit
+   of both, no real method."*** Not confirmed by Pyramid. An estimated-value column was added because it
+   is safe under either answer — but **whether a threshold or an authority level exists is still
+   unknown** (prd-02 OQ1).
 2. **Approval levels and thresholds.** Deferred for the demo. Who approves above what value, and when
    do promoters or management get involved — proc-01's *"in some cases"* is entirely unmodelled.
 3. **Does Pyramid part-approve an indent?** Assumed no. If yes, the data model needs line-level status.

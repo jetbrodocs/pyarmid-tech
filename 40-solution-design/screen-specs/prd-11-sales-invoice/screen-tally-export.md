@@ -20,9 +20,12 @@ Generate a Tally-compatible XML file for a batch of invoices and download it.
 > user imports it. There is **no live integration to demonstrate**, and showing one would promise
 > something that has not been built or scoped.
 >
-> The pitch says Phlo "pushes entries to Tally". The honest current position is **export, and the
-> mechanism Tally actually receives is unknown** — prd-11 OQ1 asks whether Tally receives entries
-> automatically or by re-keying, and nobody has answered.
+> **Decided 2026-08-31: Phlo pitches push. XML export is the fallback** where push is not workable.
+>
+> **The demo still shows export**, and that gap should be stated in the room rather than discovered.
+> Two things gate whether push is achievable and both are open: **Tally's version** and **Pyramid's
+> chart of accounts** — sheet Q11 and Q12. prd-11 OQ1 also still asks whether Tally receives entries
+> automatically today or someone re-keys them.
 
 ---
 
@@ -172,6 +175,6 @@ guard.
    built without it.
 3. **Which Tally version?** XML schema differs between versions. Nothing records it.
 4. **Which ledgers take Courier, Screen and Freight?** Separate heads, unknown.
-5. **Should Phlo ever push live?** The pitch says "pushes entries to Tally". The demo shows export.
-   **The gap between those two sentences should be closed deliberately, in front of Pyramid, rather
-   than left for them to notice.**
+5. ~~Should Phlo ever push live?~~ **Decided 2026-08-31: push is the intent, export is the fallback.**
+   The demo shows export, so **state the gap in the room** rather than let it be noticed. Feasibility
+   depends on Tally's version and chart of accounts, both still open.

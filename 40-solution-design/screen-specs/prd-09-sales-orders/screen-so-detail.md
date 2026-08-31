@@ -200,5 +200,8 @@ amendment event rather than a lock.]`
    physically altering the goods — valve, cage or pallet change. The commercial rework (a new SO) and
    the physical rework (a prd-07 work order, then `UNIT_MODIFIED` per serial) are **two different
    acts**, and this screen offered only the first. `REQ-SO-015` and **Rework the goods ▸** close it.
-   **Still open:** who finds the replacement buyer, and how fast — prd-09 OQ4b.
+   **Partly answered 2026-08-31:** the **procurement team** finds the replacement buyer — notably
+   **not sales** (obs-08 §4). So the rework actions on this screen are used by procurement, not by the
+   team that raised the order. `[UNKNOWN: how they find the buyer, how fast, and at what price against
+   the original.]`
 5. **How fresh is the trail?** Depends on projection cadence — prd-08 Open Question 5.

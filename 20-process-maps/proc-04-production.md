@@ -110,8 +110,17 @@ maintained by Pyramid, not held in UdyogERP. Full analysis in
 
 ⚠️ **The MS figures depend on which sheet you read.** The `MS DRUM` sheet specifies body `0.8 × 920`
 and lid `0.97 × 1315`; the `BODY SHEET` sheet gives body `0.97` from a `914` coil (12.4 kg) and lid
-`0.9 × 1315` (6.152 kg). **Two independent contradictions**, and the weights above come from the second
-sheet. Nobody has said which is authoritative — obs-06 §5 finding 3.
+`0.9 × 1320 × 655` from a `0.9 × 1315` coil (6.152 kg). **Three contradictions** — body thickness *and*
+width, lid thickness, and **the lid width against its own coil width inside one cell**. The weights
+above come from the conversion sheet, **the only source that closes to a weight** — see
+[demo-data-policy §4b A4](../40-solution-design/demo-data-policy.md). Nobody has said which is
+authoritative — obs-06 §5 finding 3.
+
+**And the steel does not reconcile.** Body 12.4 kg + lid 6.152 kg = **18.55 kg of coil** for a barrel
+named `CRCA 210 LTR CLOSE MOUTH BARREL **16 KGS**` — a **2.55 kg (13.7%) gap**. Plausible as blanking
+and trim scrap, but **stated nowhere**. BOM explosion deducts 18.55 kg regardless, so a run should show
+**input 18.55 → output 16.0 → scrap 2.55** rather than an unexplained number — obs-06 §5, and
+demo-data-policy §4b A5.
 
 **Regrind is a planned BOM input with its own stock balance**, not a by-product. For the IBC the loop
 closes on itself — 6.15 kg of flash per unit against 6.405 kg of regrind going back in.
@@ -141,8 +150,8 @@ closes on itself — 6.15 kg of flash per unit against 6.405 kg of regrind going
 >
 > | # | Problem | Effect on a run |
 > |---|---|---|
-> | 1 | **`CAGE-MAX` carries the wrong weight.** `CUT VERTICAL BAR 1018` nets 463 g. `CAGE-BIG` lists 20 at 9,260 g ✓; `CAGE-MAX` lists the same part at the same quantity as **9,120 g** — the *1002* bar's weight | An IBC on a MAX cage **deducts 140 g too little steel, every unit** |
-> | 2 | **MS sheets contradict themselves** — body and lid both specified two ways | MS steel deduction is wrong on whichever figure is wrong |
+> | 1 | **`CAGE-MAX` books the wrong bar — and possibly twice the bars.** Level 2 labels `1002 "FOR MAX"` (456 g) and `1018 "FOR BIG"` (463 g). `CAGE-BIG` lists 1018 ×20 at 9,260 g ✓; **`CAGE-MAX` lists 1018 ×20 at 9,120 g** — 456 each, the 1002 weight. And **MAX consumes both 1018 ×20 *and* 1002 ×20 — 40 bars against BIG's 20** | **140 g short per cage**, *and* an unresolved bar count. Either MAX takes double the bars, or the 1018 line was left behind when MAX was copied from BIG. **Ask as an either/or** |
+> | 2 | **MS sheets contradict themselves three ways** — body thickness and width, lid thickness, and **the lid width inside one cell**: described `1320` mm wide, cut from a `1315` mm coil | MS steel deduction is wrong on whichever figure is wrong. A 1320 mm sheet cannot come from a 1315 mm coil |
 > | 3 | **BOM descriptions cannot be joined to the item master.** Inches in the BOMs, millimetres in the master (`CAPSEAL 2 INCH` vs `CAP SEAL … 50 MM`); some items absent entirely (`70 MM DUST CAP BLUE` → 0 rows) | **BOM explosion cannot resolve components to stock items** — a fuzzy match fails systematically |
 >
 > The demo path is safe: the IBC can run on `CAGE-BIG`, whose arithmetic is correct. See obs-06 §5

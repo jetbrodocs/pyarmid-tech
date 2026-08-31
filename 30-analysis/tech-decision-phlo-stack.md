@@ -70,13 +70,16 @@ Phlo framework includes these modules (auto-discovered):
 | `auth`           | Login, tokens, API keys                     | USER_LOGGED_IN, API_KEY_CREATED             |
 | `storage`        | File uploads (MinIO/S3)                     | FILE_ATTACHED                               |
 | `settings`       | Company configuration                       | COMPANY_SETTINGS_UPDATED                    |
-| `communications` | Notifications                               | **Deferred 2026-08-31 — in-app only.** See below |
+| `communications` | Notifications                               | **In-app for the demo; out-of-app push at production.** Channel undecided — see below |
 | `ai`             | AI conversations                            | AI_CONVERSATION_CREATED                     |
 
-> ### `communications` is deferred, deliberately (`F-X-004`)
+> ### `communications` — in-app now, out-of-app push at production (`F-X-004`)
 >
-> **Decision 2026-08-31: in-app notifications only. No channel abstraction is built now.** Revisit at
-> production, targeting **WhatsApp** — which is how Pyramid actually coordinates today (obs-07 §1).
+> **Decision 2026-08-31: in-app notifications for the demo. No channel abstraction is built now.**
+>
+> **Narrowed the same day:** production **will** use an out-of-app push. **The channel is not chosen** —
+> SMS, email or WhatsApp — and **Pyramid's preference decides it.** WhatsApp is the natural candidate
+> because it is how Pyramid coordinates today (obs-07 §1), but that is an inference, not their answer.
 >
 > Two **MUST-HAVE** requirements depend on this and are therefore **demo-complete and
 > deployment-incomplete**: prd-04 `REQ-LR-203` (alert the store team) and prd-08 `REQ-SCH-006` (issued
@@ -151,9 +154,22 @@ Based on gap analysis, the Pyramid fork needs these new modules:
 | System      | Direction  | Method                                  |
 | ----------- | ---------- | --------------------------------------- |
 | Current ERP | Read       | Import POs (CSV/API TBD)                |
-| Tally       | Write      | Push accounting entries (API TBD)       |
+| Tally       | Write      | **Push is the intent; XML export is the fallback.** Decided 2026-08-31 — see below |
 | e-Way Bill  | Read/Write | May need API for dispatch documentation |
 | **Carriers (per carrier)** | **Read** | **Poll for consignment status against a tracking reference. Added 2026-08-31** — see below |
+
+### Tally — push intended, export demonstrated
+
+**Decision 2026-08-31:** Phlo **pitches push**. XML export is the fallback where push is not workable.
+
+**The demo shows export**, and that gap should be stated in the room rather than discovered. Two things
+gate whether push is achievable at all, and both are open: **Tally's version** (the XML schema and SDK
+differ between them) and **Pyramid's chart of accounts** — Tally imports against named ledgers, and
+Phlo's `InvoiceAccountEntry.account_name` is free text with no mapping. Sheet Q11 and Q12.
+
+`[UNKNOWN: whether Tally receives entries automatically today or someone re-keys them. If re-keying is
+the current practice, export alone is already an improvement; if an integration exists, Phlo must match
+it.]`
 
 ### Carrier status — the one integration that is optional by design
 

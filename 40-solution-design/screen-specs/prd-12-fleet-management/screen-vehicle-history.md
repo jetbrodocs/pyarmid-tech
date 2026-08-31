@@ -48,7 +48,7 @@ Every trip one truck has made — and the first view of what a single vehicle ac
 │         ₹6,120 · POD ⚠ 4d          │ ── COSTS (prd-13) ────────────────   │
 │  …                                  │  Class A (trips)   ₹58,400          │
 │                                     │  Class B (vehicle) ₹12,200          │
-│                                     │  ⓘ apportionment basis unresolved   │
+│                                     │  ⓘ Class B shared across 38 trips   │
 └────────────────────────────────────┴──────────────────────────────────────┘
 ```
 
@@ -73,8 +73,9 @@ basis `[UNKNOWN — distance, trips, or time]`. **Distance is the natural basis 
 it reliably** — prd-13 `A-FC-04` marks distance capture unknown, and the only distance in the whole
 project is a single 31 km e-Way Bill entry.
 
-So the screen shows the two totals separately and states that the basis is undecided, rather than
-computing a per-trip vehicle cost on a guess.
+**Decided 2026-08-31: Class B is shared equally across the vehicle's trips in the period.** The screen
+still shows the two totals **separately**, because they answer different questions — but the per-trip
+share is now computable and shown beside them, rather than withheld.
 
 ---
 
@@ -161,7 +162,7 @@ unresolved**.
 1. **Should trip distance be captured?** The e-Way Bill already needs it. Capturing it makes cost per km
    and Class B apportionment by distance possible — currently neither works.
 2. **What is acceptable utilisation?** No target exists. The screen reports and does not judge.
-3. **How should Class B costs be apportioned?** prd-13 OQ3, unresolved. Shown separately until it is.
+3. ~~How should Class B costs be apportioned?~~ **Closed 2026-08-31: equally across the vehicle's trips in the period.** Totals stay separate; the per-trip share is shown alongside.
 4. **Does the same driver usually take the same truck?** The data answers it; nobody has asked.
 5. **Should maintenance history live here?** Currently only status changes. A truck's service record is
    Class B cost history plus dates, and prd-13 OQ8 asks where insurance and fitness certificates belong.

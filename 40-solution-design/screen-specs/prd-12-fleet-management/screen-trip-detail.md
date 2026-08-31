@@ -93,7 +93,10 @@ Fuel · tolls and road tax · driver welfare · punctures and breakdowns · **Cl
 
 **Class B costs are absent by design.** prd-13 splits costs: Class A attaches to the trip and the
 invoice; **Class B attaches to the vehicle** and is apportioned. Showing vehicle costs on a trip would
-break that split, and the apportionment basis is itself unresolved (prd-13 OQ3).
+break that split. **Class B is apportioned across a vehicle's trips** (decided 2026-08-31), so a share
+of it does belong to this trip — but it is an **allocation, not a cost this trip incurred**, and mixing
+the two here would misstate what the trip actually consumed. The apportioned view lives on
+[Cost-to-Serve](../prd-13-fleet-cost/screen-cost-to-serve.md).
 
 ### POD
 

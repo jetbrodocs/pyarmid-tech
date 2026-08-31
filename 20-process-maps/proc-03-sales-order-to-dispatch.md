@@ -186,7 +186,10 @@ From rec-32. A live scenario, not hypothetical.
 
 A1. Customer cancels a standing order — the example given is **Grasim**, at large quantity.
 A2. Stock must leave the facility *"because otherwise everything would come to a standstill."*
-A3. Pyramid **reassigns the order to a different party**.
+A3. Pyramid **reassigns the order to a different party**. **The procurement team finds the replacement
+buyer — not sales** (confirmed 2026-08-31, obs-08 §4). Notable: the team that buys also places
+cancelled stock. `[UNKNOWN: how they find the buyer, how fast, and at what price against the
+original.]`
 A4. Finished goods are **physically modified** to the new party's specification — *"valve change… cage change or pallet change."*
 A5. *"There's a separate production process that happens which alters the final finished good."*
 A6. Dispatch proceeds against the new buyer.

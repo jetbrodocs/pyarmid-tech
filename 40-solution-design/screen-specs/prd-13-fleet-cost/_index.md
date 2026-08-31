@@ -46,12 +46,14 @@ saying before the demo, not after.
 
 ## Three unknowns that limit what these screens can compute
 
-1. **The apportionment basis is undecided.** `REQ-FC-010` marks it `[UNKNOWN — distance, trips, or
-   time]` and `A-FC-02` assumes trips. **Distance is the natural basis and Phlo does not capture it** —
-   `A-FC-04` marks distance capture unknown, and the only distance anywhere in this project is a single
-   **31 km** e-Way Bill entry.
-2. **`REQ-FC-013` (cost per km) assumes distance is captured.** It is not. The requirement and the
-   assumption contradict each other, and the audit flags both.
+1. ~~The apportionment basis is undecided.~~ **DECIDED 2026-08-31: across trips** — an equal share per
+   trip in the period. `A-FC-02` is promoted from assumption to decision, and this **decouples the cost
+   model from distance entirely.** It is rougher — a 400 km run and a 30 km run take the same share of
+   a tyre — and it is buildable today, which distance is not.
+2. **`REQ-FC-013` (cost per km) still cannot be computed.** Distance is recorded **nowhere** — confirmed
+   2026-08-31: it *"just lives somewhere in the tracking app, does not get recorded anywhere else"*
+   (obs-08 §1). 🔵 **That app is new information** and is the only known source. If it can be read,
+   `REQ-FC-013` becomes real; apportionment does not need it either way.
 3. **Freight recovery policy is unknown.** prd-13 OQ6: is freight charged at cost, marked up, or
    absorbed? **Cost-to-serve is a margin analysis if marked up and a subsidy analysis if absorbed** —
    the same screen, two entirely different conversations.
@@ -74,7 +76,7 @@ saying before the demo, not after.
 ## Open Questions
 
 1. **Is the Class A/B taxonomy real?** prd-13 OQ1. The whole module depends on it.
-2. **What apportions Class B?** OQ3. Distance, trips or time — and distance is not captured.
+2. ~~What apportions Class B?~~ **Closed 2026-08-31: trips.** 🔵 **Open instead: which tracking app holds the distance, and can Phlo read it?** It is the only route to cost-per-km.
 3. **How are drivers advanced money today?** OQ2. Cash, card, company account, and how reconciled.
 4. **Is freight recovered at cost, marked up, or absorbed?** OQ6. Decides what cost-to-serve means.
 5. **Where do insurance, permits and fitness certificates belong?** OQ8. Class B but not

@@ -49,7 +49,7 @@ Record what a **truck** cost, independent of any trip: repairs, servicing, tyres
 │  Receipt     📎                                                            │
 │                                                                            │
 │  ⓘ Class B costs are apportioned across this truck's trips.               │
-│    The basis is not yet decided — see below.                              │
+│    Shared equally across its trips in the period (decided 31/08).         │
 └───────────────────────────────────────────────────────────────────────────┘
 ```
 
@@ -57,7 +57,7 @@ Record what a **truck** cost, independent of any trip: repairs, servicing, tyres
 - **Category**, including the compliance items prd-13 OQ8 asks about.
 - **Amount, description, vendor.**
 - **Off-road period** — which is what makes a repair cost more than its invoice.
-- **Apportionment note**, honest about being unresolved.
+- **Apportionment note** — equal share across the vehicle's trips in the period.
 
 ### The off-road period is the hidden cost
 

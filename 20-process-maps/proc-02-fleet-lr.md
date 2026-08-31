@@ -86,7 +86,7 @@ outbound with a different fix.
 | Input              | Flow | Source                  | Notes                                              |
 | ------------------ | ---- | ----------------------- | -------------------------------------------------- |
 | Dispatch request   | A    | Sales / plant           | Finished goods ready to move                       |
-| Truck availability | A    | Fleet team knowledge    | `[UNKNOWN: is there a system, or head knowledge?]` |
+| Truck availability | A    | Fleet team knowledge    | **Head knowledge — confirmed 2026-08-31.** *"Instinct and whatever is available"* (obs-08 §2). No system, no rule |
 | Route/destination  | A    | Sales order             | Customer address                                   |
 | PO                 | B    | Purchase team / ERP     | What was ordered, from whom                        |
 | Carrier LR / docket| B    | Third-party carrier     | Consignment reference used to track and to prove receipt |
@@ -319,7 +319,8 @@ number to get from Pyramid — it determines where the system should intervene f
 
 | Step                          | Flow | System/Tool                 | Notes                                 |
 | ----------------------------- | ---- | --------------------------- | ------------------------------------- |
-| Truck assignment              | A    | Head knowledge / fleet team | No system — 4 people know who's where |
+| Truck assignment              | A    | Head knowledge / fleet team | No system — 4 people know who's where. **Method confirmed 2026-08-31: *"instinct and whatever is available"*** (obs-08 §2) |
+| **Vehicle tracking**          | A    | **A tracking app** 🔵        | **New 2026-08-31.** Holds trip distance; **feeds nothing else** (obs-08 §1). First sign of any vehicle telemetry at Pyramid |
 | Outbound LR issue             | A    | Paper                       | Physical document                     |
 | Inbound LR issue              | B    | Carrier's own system        | Pyramid receives a paper copy         |
 | Inbound consignment tracking  | B    | `[UNKNOWN: carrier portal, helpline, or phone calls — and whether any tracking reference is written down]` | Owned by purchase/plant team. Phlo intends to capture one per LR — prd-04 `REQ-LR-004` |
@@ -366,7 +367,12 @@ number to get from Pyramid — it determines where the system should intervene f
 
 **Outbound (Flow A):**
 
-10. **Truck assignment:** Is there any system (even Excel), or pure head knowledge?
+10. ~~**Truck assignment:** Is there any system (even Excel), or pure head knowledge?~~ **Answered
+    2026-08-31: pure head knowledge** — *"instinct and whatever is available"* (obs-08 §2). **There is
+    no logic to replicate**, so any assignment aid Phlo offers is a new capability, not a digitisation.
+10b. 🔵 **Which tracking app, and can Phlo read it?** Confirmed to exist 2026-08-31; holds trip distance
+    and passes it nowhere (obs-08 §1). The highest-value follow-up in this map — it is the only known
+    source of distance, and it was invisible to this project until now.
 
 11. **Own vs contractor decision:** What criteria — availability only, or also cost, route, urgency?
 
