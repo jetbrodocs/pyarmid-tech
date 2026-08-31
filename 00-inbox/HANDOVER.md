@@ -2,7 +2,7 @@
 title: "Handover — Pyramid Demo, PRD Authoring"
 status: superseded-in-part
 created: 2026-08-21
-updated: 2026-08-30
+updated: 2026-08-31
 audience: The colleague writing the PRDs
 ---
 
@@ -27,7 +27,18 @@ audience: The colleague writing the PRDs
 > | Stock allocation timing unknown | **Confirmed:** stock is free until loaded onto the truck |
 > | Carrier integration an open question | **Direction set:** AWB / tracking-ID fetch, manual entry as permanent fallback (`prd-04 REQ-LR-301`–`306`) |
 > | Real people's names used in PRDs | **All removed 2026-08-30**, replaced with positions |
-> | Demo numbers undefined | **[`40-solution-design/demo-data-policy.md`](../40-solution-design/demo-data-policy.md)** — read it before writing a screen spec |
+> | Demo numbers undefined | **[`40-solution-design/demo-data-policy.md`](../40-solution-design/demo-data-policy.md)** — mandatory. ⚠️ Landed *after* the 83 screen specs were written; see §8 |
+> | No screen specs | **All 83 written**, all 13 PRDs, at `40-solution-design/screen-specs/<prd-NN-name>/` |
+>
+> **Added 2026-08-31:**
+>
+> | Since 2026-08-29 | Now |
+> |---|---|
+> | *"No screen specs exist"* (§8, §12) | **17 exist**, across prd-01, prd-08 and prd-09. See §8 — and **do not follow the old recovery instruction** |
+> | Screen specs nested per PRD | Moved to **`40-solution-design/screen-specs/<prd-NN-name>/`** — one shared folder, sub-folder per PRD |
+> | prd-08 used `REQ-DS-*` / `A-DS-*` | Renamed **`REQ-SCH-*` / `A-SCH-*`** — the old prefixes collide with prd-10 (Dispatch), which keeps them |
+> | prd-04 had no carrier tracking | **Tracking reference, deep-link, and per-carrier integration modes** — `REQ-LR-004/005`, `REQ-LR-301..307` |
+> | Person names in PRDs | **Removed.** Positions instead; names remain in `10-observations/` and `20-process-maps/` as the evidence trail — and in **this file**, which needs them |
 >
 > The current state of play lives in **[`40-solution-design/_index.md`](../40-solution-design/_index.md)**
 > and **[`10-observations/obs-07`](../10-observations/obs-07-sales-driven-delivery-schedule.md)**.
@@ -144,7 +155,7 @@ travels on a **delivery challan, not an invoice** — the simple path, and the c
 | 1 | Inventory Visibility | `proc-05` | 🟡 |
 | 2 | Purchase Indent | `proc-01` | 🟡 |
 | 3 | PO Creation | `proc-01` | 🟡 |
-| 4 | LR Tracking | `proc-02` | 🟢 |
+| 4 | LR Tracking | `proc-02` | 🟢 |  <!-- carrier tracking added 2026-08-30 -->
 | 5 | GRN Creation | `proc-01` | 🟡 |
 | 6 | Inventory Management | `proc-05` | 🟡 |
 | 7 | Production Planning *(affecting RM inventory)* | `proc-04` | 🟢 trigger confirmed / 🟢 execution |
@@ -160,6 +171,17 @@ demand planning (there is none), production planning (unknown), fleet cost (noth
 **Updated 2026-08-29:** two of the three are closed. Production planning is answered, and a real
 delivery-scheduling process exists (forecasting still does not). **`proc-06` fleet cost remains a
 model, not an observed sequence.**
+
+**Module 4 gained carrier tracking on 2026-08-30.** An LR can now carry a **tracking reference** (AWB
+/ docket / consignment ID) and deep-link to the carrier's own page, and each carrier declares an
+integration mode — `api`, `lookup` or `manual` (`REQ-LR-301`–`307`). Two things to hold onto:
+
+- **Do not demo or promise integration.** Every stage in the demo is manual entry. Which carriers can
+  actually be integrated has never been investigated.
+- **Integration cannot reach the stages that matter.** *Collected* and *arrived at plant* are
+  Pyramid's own actions — no carrier can report them. Since dwell-at-facility is measured from a
+  carrier event to a manual one, **the pillar's core number depends on manual entry no matter what**.
+  That is a strength of the design, not a gap.
 
 Full matrix: `20-process-maps/_index.md`.
 
@@ -324,24 +346,73 @@ Pyramid will recognise them. That is the point.
 | `10-observations/` | **7 observations** — what was seen or said |
 | `20-process-maps/` | 6 process maps — all 13 modules |
 | `30-analysis/` | As-is operating model, gap analysis, tech decision |
-| `40-solution-design/` | **13 module PRDs**, one folder each, plus `_index.md`. The build brief, open-questions register, prd-01 and the parked screen specs were all deleted 2026-08-24 |
+| `40-solution-design/` | **13 module PRDs**, one folder each (`prd-NN-<name>/prd.md`), plus `_index.md` — **and `screen-specs/`**, a shared folder holding one sub-folder per PRD. The build brief, open-questions register, prd-01 and the *old* parked screen specs were all deleted 2026-08-24 |
 
 **The photographs are re-readable.** The ERP screenshots were never preserved and left us with a
 transcription nobody can verify — don't repeat that. Use [Google Drive](https://drive.google.com/drive/folders/1gx7V5k8k9796nm53BsHBn-ZJLJfcive3?usp=sharing) for plant visit photos.
 
-### Existing screen specs
+### Screen specs
 
-> **Superseded 2026-08-24.** The 15 parked specs at `40-solution-design/screen-specs/` were **deleted**
-> in the restructure, not migrated. What replaced them is a **Screens table inside each PRD** — screen
-> name, purpose and primary users, with no layout, data points, CTAs, validations or conditional
-> states.
+> ## ⚠️ Rewritten 2026-08-31 — the previous version of this section is now actively dangerous
 >
-> **No screen specs currently exist in this project.** The originals are recoverable:
-> `git show e4c3dea:40-solution-design/screen-specs/<file>.md`.
+> It said *"no screen specs currently exist in this project"* and gave a command to recover 15 deleted
+> ones from `git show e4c3dea:40-solution-design/screen-specs/<file>.md`.
 >
-> ⚠️ If you do recover them: the PO and LR specs assume POs are **imported from UdyogERP**. Phlo now
-> owns the whole chain — a PO is *created* in Phlo. Layouts and validations hold; that assumption does
-> not. Four of them also use `MH20DE4349` as an "owned truck" — it is a real third-party vehicle.
+> **Both halves are now wrong, and the path collides.** Screen specs *do* exist, and they live at
+> **exactly that path** — which now means a live folder, not a deleted one. Following the old
+> instruction would drop 15 obsolete 2026-08-24 specs on top of current work.
+>
+> **Do not run that recovery command.** The old specs are still in git if anyone ever needs them, but
+> nothing in the current project depends on them.
+
+**Screen specs live in `40-solution-design/screen-specs/`** — one shared folder, with a sub-folder per
+PRD named exactly after that PRD's folder. Each has an `_index.md` screen list and one file per screen.
+
+```
+40-solution-design/
+├── prd-NN-<name>/prd.md
+└── screen-specs/
+    ├── _index.md                 progress across all PRDs
+    └── prd-NN-<name>/
+        ├── _index.md             screen list for that PRD
+        └── screen-<a>.md
+```
+
+**Complete — 83 screens across all 13 PRDs (2026-08-31).**
+
+| PRD | Screens | | PRD | Screens |
+|---|---|---|---|---|
+| prd-01 Inventory Visibility | 5 | | prd-08 Delivery Scheduling | 8 |
+| prd-02 Purchase Indent | 5 | | prd-09 Sales Orders | 4 |
+| prd-03 PO Creation | 4 | | prd-10 Dispatch | 6 |
+| prd-04 LR Tracking | 10 | | prd-11 Sales Invoice | 6 |
+| prd-05 GRN | 5 | | prd-12 Fleet Management | 8 |
+| prd-06 Inventory Management | 7 | | prd-13 Fleet Cost | 6 |
+| prd-07 Production Planning | 9 | | | |
+
+> ### ⚠️ The specs were written before the demo data policy existed
+>
+> [`40-solution-design/demo-data-policy.md`](../40-solution-design/demo-data-policy.md) was written on
+> 2026-08-30 but sat unpushed until 2026-08-31, so **none of the 83 specs was written against it.**
+>
+> The policy's first rule is that **no rate, price or monetary figure may be typed inline** — every one
+> must reference the seed register in its §4, so there is a single place to change them. Specs that
+> name figures directly will need a pass to replace them with register references.
+>
+> **Read the policy before touching a spec**, and run its §7 checklist over anything already written.
+
+Each spec carries seven sections: entry points · UX layout · data points (label, format, source) ·
+CTAs (with the event each emits) · validations · conditional states. Anything unknown is marked
+`[UNKNOWN]`, `[ASSUMPTION]` or `[TODO]` — **no UI detail is invented to fill a gap.**
+
+Read [`40-solution-design/screen-specs/_index.md`](../40-solution-design/screen-specs/_index.md)
+before writing a new one. It carries five project-wide rules every screen must obey — chief among
+them that **stock is never shown as reserved or allocated**, because Pyramid commits stock at physical
+loading and an available-vs-allocated split would invent a state they do not have.
+
+⚠️ **If you ever do open the deleted 2026-08-24 specs:** their PO and LR specs assume POs are
+**imported from UdyogERP**. Phlo now owns the whole chain — a PO is *created* in Phlo. Four of them
+also use `MH20DE4349` as an "owned truck"; it is a real third-party vehicle.
 
 **All 13 PRDs are clear to start screen-specs as of 2026-08-29.** See
 [`40-solution-design/_index.md`](../40-solution-design/_index.md) §Screen-Specs Readiness.
@@ -369,40 +440,6 @@ provenance codes. Carry them into the PRDs.
 - Screens designed first-hand but credible against Pyramid's conventions — per-unit series, place of supply, HSN, batch parameters
 - The demo tells **one story**, not thirteen
 - Module 7 actually deducts raw material, using a real BOM
-
----
-
-## 10b. Next task — screen specs
-
-**All 13 PRDs are clear to start screen specs** (2026-08-30). **83 screens** across them:
-
-| PRD | Screens | | PRD | Screens |
-|---|---|---|---|---|
-| prd-01 Inventory Visibility | 5 | | prd-08 **Delivery Scheduling** | 8 |
-| prd-02 Purchase Indent | 5 | | prd-09 Sales Orders | 4 |
-| prd-03 PO Creation | 4 | | prd-10 Dispatch | 6 |
-| prd-04 LR Tracking | 10 | | prd-11 Sales Invoice | 6 |
-| prd-05 GRN | 5 | | prd-12 Fleet Management | 8 |
-| prd-06 Inventory Management | 7 | | prd-13 Fleet Cost | 6 |
-| prd-07 Production Planning | 9 | | | |
-
-Each goes in `40-solution-design/prd-NN-<name>/screen-specs/`. Format is in the `screen-specs` skill.
-
-### Read these first
-
-1. **[`40-solution-design/demo-data-policy.md`](../40-solution-design/demo-data-policy.md)** — **mandatory.** Every rate, price and name in the demo. **Nothing is coming from Pyramid** — we invent all of it, which is exactly why the discipline is written down. Includes the seed register and a done-checklist
-2. **[`40-solution-design/_index.md`](../40-solution-design/_index.md)** — coverage matrix, demo spine, what is still open
-3. **[`10-observations/obs-07`](../10-observations/obs-07-sales-driven-delivery-schedule.md)** — the 2026-08-29 answers that unblocked everything
-
-### Four things to know before you start
-
-**1 · `prd-08` has never been audited.** It was rewritten on 2026-08-29, after the audit pass. 244 lines, 8 screens, and it carries the best demo moment (step ①b). If anything gets an independent read first, make it that one.
-
-**2 · No screen specs exist.** The 15 from the old structure were **deleted**, not migrated, on 2026-08-24. This is a from-scratch job. They are recoverable — `git show e4c3dea:40-solution-design/screen-specs/<file>.md` — and the layouts still hold, but **two stale assumptions are baked in**: POs shown as *imported from UdyogERP* (Phlo now owns the whole chain, a PO is *created* in Phlo), and **`MH20DE4349` used as an owned truck** in four of them — it is a real third-party vehicle from an e-Way Bill. Do not inherit either.
-
-**3 · Two assumptions are load-bearing.** `prd-09` pricing (per-SKU with override) drives the SO line item structure, and `prd-12`'s outbound-only fleet sits behind an **ambiguous** answer, not a confirmed one. If either flips, screens get reworked. Both are labelled in the PRDs.
-
-**4 · Person names are gone from the PRDs — keep them gone.** Removed 2026-08-30 and replaced with positions: *Plant Head, Store Head, Production Head, Shift Engineer, QA Engineer, Sales Team, Fleet Team, Purchase Team*. Source attributions read **Jetbro**, not initials.
 
 ---
 
@@ -546,7 +583,7 @@ Report findings. Do not fix anything until I have seen the list.
 
 ---
 
-## 12. Open items — updated 2026-08-29
+## 12. Open items — updated 2026-08-31
 
 | Item | Status |
 |---|---|
@@ -563,11 +600,12 @@ Report findings. Do not fix anything until I have seen the list.
 | **`TOP CROSS BAR (1020)` consumed nowhere** | 🟠 Survived the BOM correction — only `FG-BOM-W` changed |
 | **Duplicate lines in `FG-BOM-W`** | 🟠 `CORNER PROTECTOR ×4` rows 15/23; `SCREW WITH NYLOCK NUT 6×20 ×5` rows 19/29 |
 | **Plant cannot meet the day's plan** | 🔴 **No evidence at all.** `proc-03` Exception D. With FG capped at 1–2 days there is no buffer — highest-value unobserved exception in the project |
-| **Screen specs** | 🔴 **None exist** — 83 to write. The 15 parked specs were deleted 2026-08-24. All 13 PRDs are clear to start. See §10b |
-| **Demo costs and prices** | ✅ **Policy written 2026-08-30** — `40-solution-design/demo-data-policy.md`. All figures invented by us; **nothing will be requested from Pyramid** |
-| **Carrier integration** | ⚠️ **Direction set, feasibility unknown.** AWB / tracking-ID fetch with manual fallback (`prd-04 REQ-LR-301`–`306`). Which carriers expose a usable API has not been investigated. Does **not** gate screen-specs |
-| **Person names in PRDs** | ✅ **Removed 2026-08-30.** Replaced with positions throughout |
-| **`prd-08` unaudited** | ⚠️ Written after the 2026-08-27 audit pass. The only PRD with no independent review |
+| **Screen specs** | ✅ **All 83 written, all 13 PRDs** (2026-08-31). Live at `40-solution-design/screen-specs/<prd-NN-name>/`. See §8 |
+| **Demo costs and prices** | ✅ **Policy written 2026-08-30** — [`40-solution-design/demo-data-policy.md`](../40-solution-design/demo-data-policy.md). All figures invented by us; **nothing will be requested from Pyramid.** ⚠️ **The screen specs were written before this policy landed** — see §8 |
+| **Carrier integration feasibility** | ⚠️ **Direction set 2026-08-30, feasibility never investigated.** Which of Pyramid's carriers expose an API, which offer only a tracking page, which offer nothing. Materially changes build cost. **Does not gate the demo** — manual entry is the baseline, and the two stages that carry the delay can never be automated anyway |
+| **One AWB, one PO — or several?** | ⚠️ **`A-LR-03` and `A-LR-04` contradict each other.** If a consolidated shipment carries several POs under one docket, `tracking_reference` belongs on a shipment entity grouping LRs, not on the LR itself. Ask the store team directly: *when several POs arrive together, is there one docket or several?* Settle before building the integration path — retrofitting it means reworking every stage event |
+| **Person names in PRDs** | ✅ **Removed 2026-08-30.** Replaced with positions throughout. Keep them out of screen specs too |
+| **prd-08 never re-audited** | 🟠 It was rewritten from Demand Planning to Delivery Scheduling *after* the 2026-08-27 audit. The only PRD whose audit findings describe a document that no longer exists |
 
 ### Still true, and still worth re-reading
 
@@ -575,3 +613,10 @@ Report findings. Do not fix anything until I have seen the list.
 the most important parts of this document. All three propagated errors came from writing a *reading*
 of ambiguous material as a *fact* — the fleet inter-plant question above is a live example of exactly
 that risk, and is why it stays marked deferred rather than answered.
+
+**A fourth near-miss, worth recording, 2026-08-31.** §8 of *this file* told a reader that no screen
+specs existed and handed them a command to recover 15 deleted ones — from a path that had since become
+a live folder holding 17 current specs. Nobody had misread any evidence. **The document simply went
+stale while the project moved**, and a stale instruction is as dangerous as a wrong inference. This is
+what the frontmatter `updated:` date is for, and why the rule at the top of this file — *where this
+file and `40-solution-design/_index.md` disagree, they win* — is load-bearing rather than polite.

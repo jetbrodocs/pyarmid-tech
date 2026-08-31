@@ -2,7 +2,7 @@
 title: "PRD-06 — Inventory Management"
 status: draft
 created: 2026-08-24
-updated: 2026-08-29
+updated: 2026-08-31
 demo_areas: [6]
 tags: [prd, inventory, stock, transfers, returns, adjustments, inter-plant]
 tech_decision: 30-analysis/tech-decision-phlo-stack.md
@@ -145,6 +145,11 @@ Source: proc-05 throughout, obs-02 field catalog.
 
 ## Screens
 
+> **Specced in full:** [`screen-specs/prd-06-inventory-management/`](../screen-specs/prd-06-inventory-management/_index.md)
+> — 7 screens, drafted 2026-08-31. Entry points, layout, data points, CTAs, validations and conditional
+> states per screen.
+
+
 | Screen                          | Purpose                                                                           | Primary users          |
 | ------------------------------- | --------------------------------------------------------------------------------- | ---------------------- |
 | **Stock Adjustment**            | Record manual correction with reason                                              | Store team             |
@@ -189,3 +194,26 @@ Optional: inter-plant transfer between Unit 6 and Unit 7 with auto-generated del
 5. **How often does RM move plant-to-plant?** The U8-to-U7 invoice is one data point, not a pattern.
 6. **Is there an approval step for inter-plant transfers?** Or does the store team initiate and dispatch unilaterally?
 7. **Does a refurbished unit keep its serial number?** Affects traceability chain. — Asked in three places: prd-01 OQ4 and prd-07 OQ7. Answer once, update all three.
+
+---
+
+> ## Corrected 2026-08-31 — returns ageing
+>
+> An earlier note here claimed **no event captures a customer return arriving at a plant.** That was
+> wrong: `RETURN_RECEIVED` exists in §Event Types and `ReturnReceipt.received_at` in §Entities. Returns
+> received **through Phlo** can be aged like any other stock.
+>
+> **The real limitation is narrower, and it is a day-one one.** proc-05 §Stage 6 records a large
+> existing floor stock of used IBCs, cages and pallets — **real trapped capital**, and one of the three
+> places the as-is model says value actually sits still. None of those units has a recorded arrival
+> date, because none came in through Phlo. So:
+>
+> - Returns received **after go-live**: aged accurately from `RETURN_RECEIVED`.
+> - Returns already **on the floor at go-live**: no arrival date exists, and none can be reconstructed.
+>
+> prd-01's [Inventory Ageing](../screen-specs/prd-01-inventory-visibility/screen-inventory-ageing.md)
+> therefore needs an **opening-balance treatment** for returns — a dated stock-take at go-live, whose
+> date becomes the ageing baseline — not a new event. `REQ-IM-002` already provides the mechanism.
+>
+> `[TODO: decide whether go-live includes a returns stock-take. Without one, the returned-units slice of
+> the trapped-capital report is unusable for months.]`

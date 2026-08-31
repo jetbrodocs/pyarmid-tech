@@ -2,7 +2,7 @@
 title: "As-Is Operating Model — Pyramid Technoplast"
 status: draft
 created: 2026-08-17
-updated: 2026-08-24
+updated: 2026-08-31
 tags: [analysis, as-is, operating-model, pre-visit]
 purpose: Pre-visit baseline. Built to be argued with, corrected, and confirmed on site.
 sources:
@@ -16,7 +16,8 @@ sources:
   - https://pyramidtechnoplast.com — product catalogue, fetched 2026-08-18
   - 10-observations/obs-04-plant-visit-photos.md — 34 photographs, 2026-08-20
   - 10-observations/obs-05-visit-debrief-recordings.md — recordings 32, 33, 34 debrief
-  - 10-observations/obs-06-bom-analysis.md — BOM workbooks for all three lines
+  - 10-observations/obs-06-bom-analysis.md — BOM workbooks, one configuration per line
+  - 10-observations/obs-07-sales-driven-delivery-schedule.md — call with Pyramid, 2026-08-29
 ---
 
 # As-Is Operating Model — Pyramid Technoplast
@@ -71,6 +72,7 @@ a screenshot.
 | Code | Source | Verifiable by a third party? |
 |---|---|---|
 | **R1 / R2** | Voice recordings 1 (2026-08-06) and 2 (2026-08-07) | Yes — audio and transcript in `00-inbox/` |
+| **R3** | Call with the Pyramid team, 2026-08-29 | **Partly.** The controlling passage is transcribed verbatim in [obs-07](../10-observations/obs-07-sales-driven-delivery-schedule.md); the audio is not in the repo |
 | **SYS** | Field extract transcribed from ERP screens, plus the item master Excel | **Partly.** The xlsx is here; the **screenshots are not**. Only Chaitya's transcription of them survives — see the note below |
 | **PUB** | Public filings (BSE/NSE listed company) | Yes |
 | **WEB** | Company website, pyramidtechnoplast.com — fetched 2026-08-18 | Yes, but it is marketing copy: treat as directional, not operational |
@@ -313,10 +315,13 @@ The end-to-end flow, with system coverage marked. `▓` = captured in the incumb
 
 ```
                     ┌──────────────── DEMAND ────────────────┐
-                    │  Customer PO  →  Sales Order ▓         │
-                    └───────────────────┬────────────────────┘
-                                        │ drives forward requirement
-                                        ▼
+                    │  Customer order — email / WhatsApp /    │
+                    │  verbal ░  →  Sales Order ▓ carrying    │
+                    │  DELIVERY SCHEDULE LINES ░              │
+                    └──────┬──────────────────────────┬───────┘
+                           │ drives forward           │ daily delivery schedule
+                           │ requirement              │ issued Bombay → plants ░
+                           ▼                          │
    ┌───────────────── PROCUREMENT ──────────────────────────────────────┐
    │                                                                     │
    │  PATH A ░  HDPE resin + steel                                       │
@@ -337,10 +342,12 @@ The end-to-end flow, with system coverage marked. `▓` = captured in the incumb
    └────────────────────────────┬────────────────────────────────────────┘
                                 ▼
    ┌───────────────── STORES & PRODUCTION ░ ─────────────────────────────┐
+   │  ◀── produces against the DAILY DISPATCH PLAN, not a forecast ░      │
    │  Raw material store → PRODUCTION (blow moulding / steel forming)     │
    │  ↔ JOB WORK ▓ (Labour Job Issue III & IV, work orders)               │
    │  → QC / UN certification? → finished goods store                     │
    │  ↕ RECYCLING PLANT (scrap and regrind — role entirely unmapped)      │
+   │  FG held 1–2 DAYS AT MOST — plant space is the binding constraint ░   │
    └────────────────────────────┬────────────────────────────────────────┘
                                 │  ◀── ERP coverage RESUMES here
                                 ▼
@@ -366,6 +373,14 @@ the project has historically collapsed them into one:
 | **Procurement gap** (PO → GRN) | Between the ERP's two covered stretches | Purchase / plant teams | Yes — LR ageing, inventory ageing |
 | **Production** | Inside the "covered" stretch, but invisible | Plant teams | No — never mentioned |
 | **Outbound fleet ops** | *After* the sales order | Fleet team | Yes — fleet management |
+| **Delivery scheduling** (SO → plant) | Between the sales order and production | Bombay sales team | No — described only when asked, 2026-08-29 |
+
+> **A fourth uncovered area was added 2026-08-29.** The daily delivery schedule sales issues to each
+> plant is the operational heartbeat of the business and sits entirely off-system. It was invisible
+> to this model until Pyramid described it on a call. It is not a *gap* in the sense the other three
+> are — nobody at Pyramid calls it a problem — but it is unrecorded, unversioned, and the thing
+> production actually runs against. See [obs-07](../10-observations/obs-07-sales-driven-delivery-schedule.md)
+> and [proc-03 Stage 2b](../20-process-maps/proc-03-sales-order-to-dispatch.md).
 
 Fleet management is not in the PO-to-sales-order gap at all. It sits downstream of it. That is why
 it read as an odd third pillar in earlier documents, and why treating "the gap" as synonymous with
@@ -382,18 +397,35 @@ it read as an odd third pillar in earlier documents, and why treating "the gap" 
 | Customer POs received | Yes — they drive Path A forward-requirement planning | 🟢 | R2 |
 | Sales Order raised in ERP | Yes. GST computed at order time, not deferred to invoice | 🟢 | SYS |
 | Sales Order structure | Fewer tabs than the invoice: Supply Details + Tax & Charges only | 🟢 | SYS |
+| **Sales Order carries delivery schedule lines** | Yes — *"there are delivery schedules inside the sales orders itself as well."* An SO commits to dates, not only quantities | 🟢 | R3 |
 | Sales team | Exists; Rohan met them on the visit | 🟢 | R1 |
+| **Where sales sits** | **The Bombay office** — not at the plants | 🟢 | R3 |
 | Sales team size, structure, territories | — | 🔴 | — |
-| How customer POs arrive (email, portal, phone) | — | 🔴 | — |
-| Order-to-dispatch lead time | — | 🔴 | — |
-| Pricing model — Group SKU with weight surcharge, or per-SKU | — | 🔴 | — |
+| **How customer orders arrive** | **Any channel — email, WhatsApp, or verbal.** The customer's own document is not the controlling artefact | 🟢 | R3 |
+| **What sales issues to the plants** | A **daily delivery schedule per plant**, described by Pyramid as an official communication. The plant produces against it | 🟢 | R3 |
+| **Format of that schedule today** | — system output, spreadsheet, email or message. Pyramid did not name it | 🔴 | — |
+| **How far ahead it is issued** | — same morning for same day, or the evening before | 🔴 | — |
+| Order-to-dispatch lead time | Effectively **same day** for what is produced against the plan | 🟢 | R3 |
+| Pricing model — Group SKU with weight surcharge, or per-SKU | — . Deferred by demo decision: assume a model and show cost and price for both RM and FG | 🔴 | RP |
 | Credit control | Account Master holds credit fields | 🟢 (exists) / 🔴 (process) | SYS |
-| Make-to-stock vs make-to-order split | Branded cap seals imply both streams run | 🟠 | JB |
+| Make-to-stock vs make-to-order split | **Production runs against firm sales orders**, expressed through the delivery schedule. Not forecast-driven, not run-to-keep-machines-busy | 🟢 | R3 |
+| Whether that holds for **all three lines** | — the call did not distinguish by line. Commodity lines may also be made to stock | 🔴 | — |
+| Sales forecast, S&OP, demand history | **None.** Confirmed still absent after the 2026-08-29 call | 🟢 | R2, R3 |
+| Customer forecasts or blanket POs | — | 🔴 | — |
 
-**Sales is a near-blank in this project.** The visit met the sales team, but nothing they said was
-recorded. Everything above beyond the ERP screen evidence is missing. Given the sales order is the
-point where the ERP trail resumes, and given Phlo is now scoped as a full ERP replacement rather
-than a gap-filler, this blank is larger than it looks.
+**Sales is no longer a near-blank — but it is described, not observed.** Until 2026-08-29 this
+section held ERP screen evidence and nothing else, and the model concluded there was no process
+between a customer order and a production run. **That conclusion was wrong.** There is a daily,
+recurring, official artefact: the delivery schedule sales issues from Bombay to each plant.
+
+Two things follow. First, **the narrow claim survives** — Pyramid does not forecast, and nothing in
+§3.1 contradicts that. Second, everything marked 🟢 R3 above was **stated on a call, not watched**.
+Nobody from Jetbro has seen a delivery schedule, seen it issued, or seen a plant receive one. The
+format is unknown, which means what Phlo is replacing is unknown.
+
+See [obs-07](../10-observations/obs-07-sales-driven-delivery-schedule.md),
+[proc-03 Stage 2b](../20-process-maps/proc-03-sales-order-to-dispatch.md) and
+[prd-08](../40-solution-design/prd-08-delivery-scheduling/prd.md).
 
 ### 3.2 Procurement — Path A (core raw materials)
 
@@ -549,8 +581,9 @@ generic "Path B procurement" throughout.
 | Manufacturing processes | Blow moulding for Plastic Barrels assumed; steel forming, welding and coating for MS Barrels (welded and gooseneck variants confirmed); assembly for IBC | 🟠 / 🟢 (WEB) | JB, WEB |
 | Machines, lines, capacity per plant | — | 🔴 | — |
 | Shift patterns, headcount on floor | — | 🔴 | — |
-| Production planning method | — | 🔴 | — |
-| BOM usage | BOM ID field exists but was **empty in the ERP**. However, **real BOMs exist outside the ERP** in Excel workbooks — received 2026-08-21, analysed in obs-06. All three lines have BOMs. 🔴 The cage is missing from the finished IBC BOM | 🟢 | SYS, obs-06 |
+| Production planning method | **Runs go against firm sales orders**, delivered as the daily delivery schedule sales issues from Bombay. Plant heads manage production and the FG held for dispatch. What is produced is dispatched the same day | 🟢 | R3 |
+| Whether a plant can refuse or renegotiate the day's plan | — no evidence. There is no known route for *"we cannot make this today"* | 🔴 | — |
+| BOM usage | BOM ID field exists but was **empty in the ERP**. **Real BOMs exist outside it** in Excel — one configuration per line, not per SKU. ~~The cage is missing from the finished IBC BOM~~ **fixed 2026-08-29**. 🔴 **Of the 448 plastic-line SKUs, exactly one has a BOM**, and BOM descriptions **cannot be joined to the item master** — inches versus millimetres. Verified cell-by-cell 2026-08-31 | 🟢 | SYS, obs-06 |
 | Work orders | A **Work Order button exists** on Labour Job Issue IV — so work orders are a real object | 🟢 | SYS |
 | Scrap and yield rates | — | 🔴 | — |
 | Changeover between colours / weights | — | 🔴 | — |
@@ -564,11 +597,16 @@ item master is a wall-thickness grade tier** rather than shipping weight — the
 8.0 through 10.5 KG are thickness grades that this control measures. It is the first thread
 connecting the SKU structure to an actual factory process.
 
-**This is still the largest blank in the model, and it is the core of a manufacturing business.** Neither
-recording discusses production at all — the visit's agenda was fleet, and it pivoted to the
-procurement gap. For a project now scoped as a **full ERP replacement**, having zero documented
-knowledge of how the factory actually makes things is a serious exposure. An ERP that cannot handle
-production planning, BOM explosion, work orders, and yield is not an ERP replacement.
+**Two of the blanks above closed after this was written.** The BOM workbooks arrived 2026-08-21
+(obs-06) and the **production trigger** was confirmed on 2026-08-29 (obs-07): runs go against firm
+sales orders via the daily schedule. Machine parameters, mould setup, QC gates and the leak-test spec
+came from the Unit VII photographs (obs-04).
+
+**What remains blank is capacity and yield.** Machines and lines per plant, shift patterns, floor
+headcount, scrap and yield rates, and changeover between colours and weights are all still unknown.
+That matters more now, not less: a schedule-driven plant with **1–2 days of finished-goods space**
+has no buffer, so a plan Phlo drafts without capacity data is a plan it cannot check. The unobserved
+exception — what happens when a plant cannot meet the day's plan — sits directly on this gap.
 
 ### 3.7 Job Work and Subcontracting 🟢 (exists) / 🔴 (process)
 
@@ -915,6 +953,17 @@ Promoter "said it very vocally" that cash is trapped 🟢. **WITHDRAWN 2026-08-2
 model: no pipeline visibility, GRN lag, over-stocking, no ageing reports, and — newly — material
 sitting uncollected at carrier facilities.
 
+**Narrowed 2026-08-29 🟢 (R3).** Finished goods are **not** where the cash sits. Plants are physically
+small relative to output, FG is held **one to two days at most**, and what is produced against the
+day's schedule is dispatched the same day. Ageing inventory is therefore **raw material, bought-in
+components, and returned units** — not drums waiting for a customer.
+
+That sharpens the pillar rather than shrinking it. The stock that ages is the stock Path A buys on
+promoter judgement, the valves and cam locks imported from China in pallet-stacked quantity, and the
+floor of returned drums awaiting refurbishment. Any Phlo ageing report pointed at finished goods will
+show nothing. `[UNKNOWN: the split of trapped value across RM, components and returns. No figure
+exists for any of them.]`
+
 ### Rohan's own diagnosis 🟢 (R1)
 
 Distinct from Pyramid's list, and arguably the sharper framing:
@@ -926,6 +975,12 @@ Multiple locations, multiple people, multiple unsynced channels — paper, Excel
 WhatsApp, phone. The three pillars are symptoms Pyramid feels and will fund; fragmentation is the
 disease.
 
+**The 2026-08-29 call named the sharpest instance of it.** Customer orders arrive by email, WhatsApp
+or verbally; sales in Bombay turns them into a delivery schedule; nine plants produce against it —
+and none of that chain is in a system. The one artefact the whole factory works to has no recorded
+version. That is the diagnosis restated in a single document, which is why
+[prd-08](../40-solution-design/prd-08-delivery-scheduling/prd.md) makes it the demo's answer to it.
+
 ---
 
 ## Part 8 — Evidence Coverage Map
@@ -936,7 +991,7 @@ How well we actually know each area. This is the honest answer to "do we have an
 |---|---|---|
 | Product catalogue — Plastic Barrels | ████████░░ 80% | 448-SKU master, fully analysed |
 | Product catalogue — MS Barrels | ███░░░░░░░ 30% | 7 products, gauges and coatings from the website. No SKU structure |
-| Product catalogue — IBC | █████░░░░░ 50% | 4 pallet variants from website. **Full BOM received 2026-08-21** (obs-06): 4-level assembly, component sourcing confirmed. No SKU structure |
+| Product catalogue — IBC | █████░░░░░ 50% | 6 pallet types and 2 cage types from the BOM (obs-06): 4-level assembly, component sourcing confirmed. **One FG configuration only, and no SKU structure at all** |
 | GST / compliance | ████████░░ 80% | 12 ERP screens |
 | ERP sales-side transactions | ███████░░░ 70% | Screenshots |
 | Procurement Path B | ██████░░░░ 60% | R1, well described |
@@ -947,13 +1002,14 @@ How well we actually know each area. This is the honest answer to "do we have an
 | Inter-unit transfers | ███░░░░░░░ 30% | Inferred from one invoice |
 | Outbound fleet ops | ██░░░░░░░░ 20% | Existence known, process inferred |
 | Finance / Tally | ██░░░░░░░░ 20% | One sentence |
-| Sales operations | ██░░░░░░░░ 20% | Team met, nothing recorded |
+| Sales operations | █████░░░░░ 45% | **Improved 2026-08-29.** Order intake channel, team location (Bombay), the delivery-schedule artefact and the production trigger all confirmed on a call. Team size, territories, pricing model and lead-time detail still blank |
+| **Delivery scheduling** | ████░░░░░░ 40% | **New 2026-08-29.** The process is described by Pyramid and mapped (proc-03 Stage 2b). **Nobody has seen the artefact** — its format, timing and revision behaviour are unknown |
 | Stores / inventory ops | ████░░░░░░ 40% | Store teams confirmed (9), coordination split known, all-Excel confirmed, inter-plant GSTIN rules documented |
 | ERP purchase-side | █░░░░░░░░░ 10% | Never seen |
 | Job work | ██░░░░░░░░ 20% | Full field structure for both forms; still zero process. **Screen-printing hypothesis eliminated — it is in-house** |
-| **Production** | ██████░░░░ 55% | **Transformed 2026-08-20.** Process parameters, mould handling, leak-test spec, reject handling, three defect standards, equipment — all from photographed work instructions |
+| **Production** | ███████░░░ 65% | **Transformed 2026-08-20**, extended 2026-08-29. Process parameters, mould handling, leak-test spec, reject handling, three defect standards, equipment — all from photographed work instructions. **Trigger now confirmed**: runs go against the daily schedule. Capacity, shifts, yield and changeover still blank |
 | Quality system | ███████░░░ 70% | Controlled ISO-style work instruction set, photographed |
-| IBC bill of materials | ███████░░░ 70% | Cage/tube/pallet in-house; valves and cam locks imported from China |
+| IBC bill of materials | ████████░░ 80% | Cage/tube/pallet in-house; valves and cam locks imported from China. **Cage linked to the finished IBC in the corrected workbook, 2026-08-29.** Two minor data-quality issues survive |
 | **Exports** | ██░░░░░░░░ 20% | **New 2026-08-20.** ~40-country recollect programme confirmed; volumes and process unmapped |
 | In-plant granulation | ██████░░░░ 60% | `PTL/WI/PD/04` photographed in full |
 | **Recycling plant (Unit 9)** | ██░░░░░░░░ 20% | Visited 2026-08-20. Separate GSTIN, Bharuch, produces recycled granules (sold + reused). In-plant granulation at U7 is separate. Process detail still 🔴 |
@@ -999,7 +1055,9 @@ Ordered by value, not by sequence. The top four change what gets built.
 ### Tier 3 — Answers that change sizing and rollout
 
 10. **Transaction volumes.** Invoices, POs, GRNs, LRs per month per unit. Test the ~2,684 inference.
-11. **Sales operations** — how customer POs arrive, lead times, pricing model.
+11. **Sales operations** — ~~how customer POs arrive~~ **answered 2026-08-29: any channel.** Still
+    open: team size and territories, the pricing model, and **the delivery schedule itself** — ask to
+    see one, and ask what tool produces it. → Q11
 12. **Tally integration** — version, and whether the ERP pushes or staff re-key.
 13. **Fleet operations detail** — assignment, maintenance, driver rostering, smartphones.
 14. **Which nine locations,** and which unit number is which.
@@ -1033,6 +1091,8 @@ Where this model's load-bearing claims actually come from.
 | ~~Plant teams receive goods; no separate store team~~ **RETRACTED 2026-08-21 — store teams exist at all nine plants** | **CS** → R2 clean, R33 | Was single-sourced and wrong. The clean re-transcript settled it |
 | **Path A POs exist in UdyogERP** | **CS** | **Yes** |
 | Phlo is a full ERP replacement, not a gap-filler | CS | **Yes** — and it drives the entire scope |
+| **Sales issues a daily delivery schedule from Bombay; production runs against firm SOs; FG turns in 1–2 days; stock is free until loaded** | **R3** | **Partly** — one call, but the controlling passage is transcribed verbatim in obs-07. **Stated, never observed** |
+| **The owned fleet is outbound-only** | **RP (demo decision)** | **Yes — and it is an assumption, not an answer.** Pyramid's reply on 2026-08-29 was ambiguous; the question must be re-asked |
 
 **Five of the project's most load-bearing facts are single-sourced from unrecorded conversations.**
 Four of them were marked "RESOLVED" in the open-questions register on 2026-08-17 and are currently
@@ -1055,7 +1115,16 @@ New questions this synthesis surfaced that were not in the register. All belong 
 6. **Machinery spares vs raw materials.** Named as separate pains in R1; treated as one flow throughout the project.
 7. **Transaction volume.** No figure exists. The ~2,684-invoice inference needs testing.
 8. **Has an auditor flagged the gap?** A listed company with an off-record procurement stretch — a control finding would be a stronger commercial lever than efficiency.
-9. **Make-to-order vs make-to-stock.** 42 branded cap seals imply both; nobody has described the split.
+9. ~~**Make-to-order vs make-to-stock.**~~ **Largely answered 2026-08-29:** production runs against
+   **firm sales orders**. Remaining: whether that holds identically for **all three lines**, or whether
+   commodity lines are also made to stock. The call did not distinguish.
 10. **What does "sensitive" mean for Path A?** Confidential pricing, relationships, hedging, or board-level spend — each implies different Phlo visibility rules.
-11. **Sales operations.** Order intake, lead times, pricing model all blank.
+11. **Sales operations.** ~~Order intake~~ answered (any channel). **Lead times and pricing model
+    still blank** — the pricing model is carried as an approved demo assumption, not a known fact.
 12. **Batch tracking.** Infrastructure exists but was unconfigured on the sampled item. Live for drums?
+13. **What does a delivery schedule look like today?** Format, tool, timing and how a revision is
+    communicated. Phlo is replacing an artefact nobody at Jetbro has seen.
+14. **What happens when a plant cannot meet the day's plan?** No route is known, and with 1–2 days of
+    FG space there is no buffer. Highest-value unobserved exception in the project.
+15. **Does the owned fleet run inter-plant legs?** Deferred, not answered. Changes the fleet cost model
+    and what movements the dispatch plan covers.

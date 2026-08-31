@@ -2,7 +2,7 @@
 title: "Procurement — Indent to Receipt"
 status: draft
 created: 2026-08-16
-updated: 2026-08-24
+updated: 2026-08-30
 tags: [process, procurement, indent, po, grn]
 demo_areas: [2, 3, 5]
 sources:
@@ -267,7 +267,12 @@ C4. `[UNKNOWN: formal escalation path]`
 
 5. **Approval flow:** Who approves indents, what criteria, what authority levels?
 
-6. **GRN triggers sales order?** What links receipt confirmation to sales order generation — or are they independent?
+6. ~~**GRN triggers sales order?**~~ **Answered 2026-08-29: independent.** Sales orders originate from
+   customer orders reaching the Bombay sales team by any channel, and production runs against those
+   firm orders via the daily delivery schedule — not against a goods receipt. Receipt makes material
+   *available*; it does not create demand. See [obs-07 §1–§3](../10-observations/obs-07-sales-driven-delivery-schedule.md)
+   and [proc-03 Stage 2b](proc-03-sales-order-to-dispatch.md). `[UNKNOWN: whether a shortfall of
+   received raw material is fed back to sales before the schedule is issued.]`
 
 7. **Exception handling:** What happens on quantity mismatch, quality rejection, or missing shipment?
 

@@ -2,7 +2,7 @@
 title: "PRD-01 — Inventory Visibility"
 status: draft
 created: 2026-08-24
-updated: 2026-08-29
+updated: 2026-08-30
 demo_areas: [1]
 tags: [prd, inventory, visibility, dashboard, multi-plant]
 tech_decision: 30-analysis/tech-decision-phlo-stack.md
@@ -102,6 +102,11 @@ This module is a **read projection** — it consumes events emitted by other mod
 | ProductionRun    | prd-07 (Production Planning) |
 
 ## Screens
+
+> **Specced in full:** [`screen-specs/prd-01-inventory-visibility/`](../screen-specs/prd-01-inventory-visibility/_index.md)
+> — 5 screens, drafted 2026-08-30. Entry points, layout, data points, CTAs, validations and
+> conditional states per screen. The table below is the summary; that folder is the detail.
+
 
 | Screen               | Purpose                                                                      | Primary users             |
 | -------------------- | ---------------------------------------------------------------------------- | ------------------------- |

@@ -2,7 +2,7 @@
 title: "Fleet Cost — Attribution and Tracking"
 status: draft
 created: 2026-08-21
-updated: 2026-08-24
+updated: 2026-08-30
 tags: [process, fleet, cost, driver, vehicle]
 demo_areas: [13]
 sources:
@@ -72,6 +72,13 @@ Costs that belong to the asset over time.
 
 - **Class A** costs post against the **dispatch / invoice**, giving true cost-to-serve per order.
 - **Class B** costs post against the **vehicle**, and are apportioned — `[UNKNOWN: by what basis — distance, trips, time?]`
+
+> **Which trips exist to be costed is a scope decision, not a settled fact.** The model above assumes
+> every trip serves a customer dispatch, so every Class A cost has an invoice to attach to. If the
+> owned fleet also runs **inter-plant** legs, those trips carry Class A costs with **no customer
+> invoice** behind them, and the attribution rule needs a second target. Pyramid's answer on
+> 2026-08-29 was ambiguous. **The demo assumes outbound-only** — see
+> [obs-07 §8](../10-observations/obs-07-sales-driven-delivery-schedule.md).
 
 ---
 
@@ -146,6 +153,8 @@ usage-apportionable.
 1. **Is the cost taxonomy observed or proposed?** Rec-32 reads as Aryan's design intent, not an account of current practice. *(10.41)*
 2. **How are drivers advanced money** for fuel, food and lodging, and how is it reconciled?
 3. **What basis apportions Class B costs** — distance, trips, or time?
+3b. **Does the owned fleet run inter-plant legs?** If it does, those trips have Class A costs and no
+   customer invoice. Deferred, not answered — obs-07 §8.
 4. **Is fuel bought on card, cash, or account?**
 5. **Who would own fleet cost in Phlo** — the fleet team of four, or accounts?
 6. **Is freight recovered from customers** at cost, marked up, or absorbed? The invoice has a line-level Freight Charges field.

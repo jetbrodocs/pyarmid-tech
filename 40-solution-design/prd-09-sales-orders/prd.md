@@ -2,7 +2,7 @@
 title: "PRD-09 — Sales Orders"
 status: draft
 created: 2026-08-24
-updated: 2026-08-29
+updated: 2026-08-31
 demo_areas: [9]
 tags: [prd, sales-order, customer, allocation, gst]
 tech_decision: 30-analysis/tech-decision-phlo-stack.md
@@ -18,7 +18,9 @@ sources:
 
 ## Summary
 
-The Sales Order exists in UdyogERP today — 23 fields, documented field-by-field. **The process around it is almost entirely unobserved.** Who raises it, how quickly, from what input, whether stock is allocated at order time — all unknown. The sales team was met on the 2026-08-06 visit but **nothing they said was recorded**.
+The Sales Order exists in UdyogERP today — 23 fields, documented field-by-field. **The process around it is described but still unobserved.** On 2026-08-29 Pyramid answered who raises it (the Bombay sales team), from what input (customer orders by any channel), and when stock is committed (at physical loading, not at order). Nobody from Jetbro has watched any of it happen, and the sales team met on the 2026-08-06 visit was **never recorded**. Treat this section as testimony, not observation.
+
+**The SO is not just a header and lines — it carries delivery schedule lines**, committing quantity to a plant and a date. Those lines are owned by [prd-08](../prd-08-delivery-scheduling/prd.md).
 
 The demo starts here. Step 1 in the spine: customer order entered, lines, quantities, due date. The SO drives everything downstream — inventory check, production plan, BOM explosion, procurement, dispatch, invoice.
 
@@ -26,12 +28,15 @@ The demo starts here. Step 1 in the spine: customer order entered, lines, quanti
 
 | What exists                                                   | What does not                                             |
 | ------------------------------------------------------------- | --------------------------------------------------------- |
-| Sales Order screen in UdyogERP: 23 fields (6 header, 17 line) | Any observed process for order intake                     |
-| GST computed at order time                                    | Knowledge of stock allocation at order time               |
-| Sales team exists, was met                                    | Any record of what they said or do                        |
-| Consignee + Buyer split (bill-to / ship-to)                   | Credit check process (fields exist, no process evidenced) |
+| Sales Order screen in UdyogERP: 23 fields (6 header, 17 line) | Any **observed** order intake — the process is described, never watched |
+| GST computed at order time                                    | The pricing model (deferred behind a demo assumption)     |
+| **Order intake by any channel** — email, WhatsApp, verbal (2026-08-29) | How a delivery due date is negotiated                     |
+| **Sales team sits at the Bombay office** and raises the SO (2026-08-29) | Any record of the 2026-08-06 sales-team conversation      |
+| **Delivery schedule lines live inside the SO** (2026-08-29)   | The format of the schedule sales issues today             |
+| **Stock is free until loaded onto the truck** (2026-08-29)    | Credit check process (fields exist, no process evidenced) |
+| Consignee + Buyer split (bill-to / ship-to)                   | Whether customers ever send forecasts or blanket POs      |
 
-Source: proc-03 §Stage 1-2, obs-02, obs-03. Evidence: 🟢 screen / 🔴 process.
+Source: proc-03 §Stage 1-2, obs-02, obs-03, obs-07 §1-§4. Evidence: 🟢 screen / 🟢 process **as stated on a call** — not observed.
 
 ## Goals
 
@@ -83,8 +88,9 @@ Source: proc-03 §Stage 1-2, obs-02, obs-03. Evidence: 🟢 screen / 🔴 proces
 
 | ID         | Requirement                                               | Source              | Acceptance Criteria                                                          |
 | ---------- | --------------------------------------------------------- | ------------------- | ---------------------------------------------------------------------------- |
-| REQ-SO-013 | SO cancellation with reason                               | proc-03 Exception A | SO_CANCELLED event; stock de-allocated if allocated                          |
-| REQ-SO-014 | Rework path: reassign cancelled SO's FG to a new customer | proc-03 Exception A | New SO created from cancelled SO's inventory. Physical modifications tracked |
+| REQ-SO-013 | SO cancellation with reason                               | proc-03 Exception A | SO_CANCELLED event. **No stock to de-allocate** — FG is never reserved (`A-SO-02`). Open delivery schedule lines and any undispatched plan lines are withdrawn instead |
+| REQ-SO-014 | Rework path: reassign a cancelled SO's FG to a new customer | proc-03 Exception A | New SO references the original. **Modification is not tracked here** — it is a production activity: see `REQ-SO-015` |
+| REQ-SO-015 | **Rework raises a work order** against the reassigned units | proc-03 Exception A A5 | The new SO's rework produces a prd-07 work order for the physical change. Each affected serial carries a `UNIT_MODIFIED` record (prd-07 `REQ-PP-020`). **Added 2026-08-31** |
 
 ### Assumptions
 
@@ -103,13 +109,28 @@ Source: proc-03 §Stage 1-2, obs-02, obs-03. Evidence: 🟢 screen / 🔴 proces
 | -------------- | -------------------------------------------------------------------------------------------------------------------------------------- | --------------- |
 | **SalesOrder** | id, so_number, customer_id, consignee_id, place_of_supply, status, created_at, due_date, total_amount, gst_amount, created_by_user_id  | Order header    |
 | **SOLineItem** | id, so_id, product_id, quantity, rate, uom, hsn_code, gst_rate, modification_notes, dispatched_qty                                     | Per-item        |
-| **Customer**   | id, name, gstin, billing_address, shipping_address, contact_name, contact_phone, contact_email, credit_limit, payment_terms, is_active | Customer master |
+| **Party** (customer role) | id, name, mailing_name, gstin, pan, state_code, country, **roles[]**, addresses[], contacts[], credit_limit, credit_days, payment_terms, currency, is_active | **One party master, decided 2026-08-31 (`F-X-003`).** The same entity as prd-03's vendor view — see below |
+
+> ## `Customer` is a role, not an entity — decided 2026-08-31
+>
+> Customers and vendors are **one `Party` record with roles**, defined in
+> [prd-03](../prd-03-po-creation/prd.md) §Data Model. This screen and its registry show the
+> **customer-role view** — credit terms, ship-to addresses, place of supply.
+>
+> UdyogERP already works this way: **one Account Master**, split by `Main Group` into `SUNDRY DEBTORS`
+> and creditors (obs-03 §2). And Pyramid needs it — **Unit 8 sold 25,500 units of granules to Unit 7**,
+> and the recycling plant sells into the other units, so a Pyramid unit is a customer and a vendor at
+> once. Two registries would hold that party twice with no link between them.
+>
+> `customer_id` and `consignee_id` on `SalesOrder` are **`party_id` references with the `customer` role**.
+> They keep their names because they carry distinct meaning — bill-to and ship-to. Nothing else in this PRD
+> changes.
 
 ### Event Types
 
 | Event                   | Trigger                      | Payload                                    |
 | ----------------------- | ---------------------------- | ------------------------------------------ |
-| SO_CREATED              | Sales team enters order      | so_id, customer_id, line_items[], due_date |
+| SO_CREATED              | Sales team enters order      | so_id, party_id, line_items[], due_date |
 | SO_CONFIRMED            | Order confirmed              | so_id, confirmed_at                        |
 | SO_IN_PRODUCTION        | Work order raised against SO | so_id, work_order_id                       |
 | SO_READY_FOR_DISPATCH   | FG available for all lines   | so_id                                      |
@@ -121,11 +142,19 @@ Source: proc-03 §Stage 1-2, obs-02, obs-03. Evidence: 🟢 screen / 🔴 proces
 
 - **SO numbering.** `[ASSUMPTION: auto-generated, plant-prefixed series — matching Pyramid's convention]`.
 - **GST at order time.** Place of supply determines tax type (CGST+SGST for intra-state, IGST for inter-state). Computed when SO is created, carried forward to invoice.
-- **SO drives production.** A confirmed SO with insufficient FG stock triggers work order creation (prd-07). `[ASSUMPTION: production runs against SOs]`.
-- **Cancellation rework.** When an SO is cancelled, FG already produced can be reassigned to a new customer. Physical modifications (valve, cage, screen print) may be required. New SO references the original.
+- **SO drives production.** A confirmed SO's delivery schedule lines reach the plant as a daily dispatch plan (prd-08), and work orders are raised against that plan (prd-07). **Confirmed 2026-08-29** — production runs against firm sales orders, not a forecast. `[UNKNOWN: whether this holds identically for all three product lines.]`
+- **Cancellation rework is a production activity, not a sales one.** When an SO is cancelled, FG already produced can be reassigned to a new customer — but proc-03 Exception A is explicit that the goods are **physically altered** to the new party's specification (*"valve change… cage change or pallet change"*) through *"a separate production process."*
+  - The new SO references the original (`REQ-SO-014`).
+  - The physical change is a **prd-07 work order**, and each unit's change is recorded per serial as `UNIT_MODIFIED` (`REQ-SO-015`, prd-07 `REQ-PP-020`).
+  - **Finished goods are mutable.** proc-03 states it plainly, and any model treating a finished unit as immutable will not represent Pyramid.
 - **Partial dispatch.** One SO can be fulfilled over multiple dispatches. Each dispatch updates dispatched_qty on the SO lines.
 
 ## Screens
+
+> **Specced in full:** [`screen-specs/prd-09-sales-orders/`](../screen-specs/prd-09-sales-orders/_index.md) — 4 screens,
+> drafted 2026-08-30. Entry points, layout, data points, CTAs, validations and conditional states per
+> screen. The table below is the summary; that folder is the detail.
+
 
 | Screen                | Purpose                                                                         | Primary users          |
 | --------------------- | ------------------------------------------------------------------------------- | ---------------------- |
@@ -148,7 +177,7 @@ The SO is not the exciting moment — it is the **starting gun**. Keep it brisk.
 | **Feeds** prd-07 (Production Planning)  | Confirmed SO with FG shortfall triggers work order |
 | **Feeds** prd-10 (Dispatch)             | SO selected for dispatch                           |
 | **Feeds** prd-11 (Sales Invoice)        | Invoice raised against dispatched SO lines         |
-| **Feeds** prd-01 (Inventory Visibility) | FG allocated or dispatched reduces available stock |
+| **Feeds** prd-01 (Inventory Visibility) | Dispatched FG reduces available stock. **Nothing is deducted before loading** — there is no allocated state (`A-SO-02`, prd-01 `A-IV-04`) |
 
 ## Open Questions
 
@@ -158,6 +187,7 @@ The SO is not the exciting moment — it is the **starting gun**. Keep it brisk.
 2. ~~⛔ **Is stock allocated at order time or at dispatch?**~~ **Answered 2026-08-29: neither.** Stock stays free until it is **loaded onto the truck**. Propagated to prd-10 and prd-01.
 3. **How is the delivery due date set?** Customer-driven, or Pyramid decides?
 4. **Is there a credit check?** Account Master has credit limit fields.
+4b. ⚠️ **Who decides a cancelled order's stock can be reworked, and for whom?** proc-03 Exception A gives a live example — Grasim cancelling at large quantity — and records the commercial pressure: stock must leave *"because otherwise everything would come to a standstill."* But **nothing describes who finds the replacement buyer, or how quickly.** With finished goods turning in 1–2 days there is no time to work it out slowly.
 5. ~~⛔ **Who raises the SO?**~~ **Answered 2026-08-29:** the **sales team at the Bombay office.** Plants receive schedules; they do not raise orders.
 6. ⚠️ **Pricing model.** Per-SKU fixed price, or group SKU with weight/size surcharge? **Not answered — deferred by demo decision (Jetbro, 2026-08-29):** assume per-SKU with override, and carry cost on RM and FG. Still open for the real build.
 7. ~~**Make-to-stock vs make-to-order by product line?**~~ **Answered 2026-08-29: made to order**, against firm sales orders. `[UNKNOWN: whether this holds identically for all three lines — the call did not distinguish.]`

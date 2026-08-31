@@ -2,7 +2,7 @@
 title: "PRD-13 — Fleet Tracking and Fleet Cost"
 status: draft
 created: 2026-08-24
-updated: 2026-08-27
+updated: 2026-08-31
 demo_areas: [13]
 tags: [prd, fleet, cost, vehicle, driver, fuel, maintenance, cost-to-serve]
 tech_decision: 30-analysis/tech-decision-phlo-stack.md
@@ -100,6 +100,7 @@ Source: proc-06 throughout. Evidence: 🟢 cost model from recordings / 🔴 no 
 | A-FC-03 | Fuel is bought by the driver on cash/card during the trip  | Fuel procurement method unknown                                                                          | proc-06 Q4  |
 | A-FC-04 | Distance is captured per trip                              | No evidence of odometer tracking or route distance                                                       | `[UNKNOWN]` |
 | A-FC-05 | Demo uses own trucks only — contractor cost model deferred | Contractors have a single freight charge, not fuel + driver + wear                                       | HANDOVER §3 |
+| A-FC-06 | **Every trip serves a customer dispatch**, so every Class A cost has an invoice to attribute to | **Not answered.** Whether the owned fleet also runs **inter-plant** legs was put to Pyramid on 2026-08-29 and the reply was ambiguous. **The demo assumes outbound-only.** If the fleet does run inter-plant, those trips carry Class A costs with **no customer invoice behind them**, and `REQ-FC-005` needs a second attribution target — the receiving plant, or an internal cost centre | obs-07 §8 |
 
 ## Data Model
 
@@ -123,13 +124,28 @@ Source: proc-06 throughout. Evidence: 🟢 cost model from recordings / 🔴 no 
 
 ## Business Rules
 
-- **Class A attribution.** Every Class A cost links to exactly one trip, which links to exactly one dispatch, which links to one or more invoices. Cost-to-serve flows through this chain.
+- **Class A attribution.** Every Class A cost links to exactly one trip, which links to exactly one dispatch, which links to one or more invoices. Cost-to-serve flows through this chain. **This holds only while every trip is a customer delivery** (`A-FC-06`). An inter-plant leg would break the chain at the invoice.
 - **Class B attribution.** Vehicle costs link to the vehicle, not a trip. Apportioned to trips for per-order economics. `[ASSUMPTION: apportioned by trip count in a period]`.
 - **Cost-to-serve.** = Sum(Class A for trip) + Apportioned(Class B for vehicle). Compare against Freight Charges recovered on the sales invoice. Positive gap = profitable delivery; negative = delivery at a loss.
 - **No contractor costs in demo.** Contractor model is simpler (single freight charge) but excluded from demo scope.
 - **Driver advance.** Before departure, driver receives an advance. After return, submits expenses. Settlement = advance - actual spent. Excess returned; shortfall reimbursed.
 
 ## Screens
+
+> **Specced in full:** [`screen-specs/prd-13-fleet-cost/`](../screen-specs/prd-13-fleet-cost/_index.md)
+> — 6 screens, drafted 2026-08-31.
+>
+> ⚠️ **One field would unblock two requirements.** `REQ-FC-013` (cost per km) assumes distance is
+> captured; `A-FC-04` marks distance capture `[UNKNOWN]`. They contradict each other. **The e-Way Bill
+> already requires an approximate distance** (obs-03 §8 field 6) — capturing it on the trip makes
+> `REQ-FC-013` real *and* gives `REQ-FC-010`'s Class B apportionment a defensible basis. The screens
+> show **cost per trip** until then, and never divide Class B per trip.
+>
+> ⚠️ **Three data-model gaps found while speccing:** `VehicleCost` has **no vendor reference** (a garage
+> is a `Party` with the vendor role — free text prevents per-vendor totals), **no off-road dates**
+> (downtime is a real cost and prd-12's maintenance status is unmeasurable without it), and **no
+> periodic flag** (insurance apportioned like a puncture repair is wrong — OQ8).
+
 
 | Screen                          | Purpose                                                                        | Primary users          |
 | ------------------------------- | ------------------------------------------------------------------------------ | ---------------------- |
@@ -168,3 +184,8 @@ Show: record a fuel entry and a toll for the trip. The cost-to-serve for this or
 6. **Is freight recovered at cost, marked up, or absorbed?** Determines whether cost-to-serve is a margin or a subsidy analysis.
 7. **What is current fleet utilisation?** No figure exists. Phlo will measure it for the first time.
 8. **Insurance, permits, fitness certificates.** Class B but not usage-apportionable. How handled?
+9. ⚠️ **Does the owned fleet run inter-plant legs?** Asked 2026-08-29; the reply was ambiguous and the
+   question is **deferred, not answered** (obs-07 §8). Carried as `A-FC-06` — the demo assumes
+   outbound-only. **Re-ask as a direct yes/no before implementation:** a yes adds a class of trip with
+   real Class A costs and no customer invoice, which changes `REQ-FC-005`, `REQ-FC-006` and the
+   cost-to-serve dashboard. Also affects prd-10 and prd-12.

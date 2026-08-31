@@ -2,7 +2,7 @@
 title: "PRD-11 — Sales Invoice Creation"
 status: draft
 created: 2026-08-24
-updated: 2026-08-29
+updated: 2026-08-31
 demo_areas: [11]
 tags:
   [prd, sales-invoice, gst, tcs, einvoice, irn, tally, freight, screen-charges]
@@ -146,6 +146,21 @@ Source: obs-03 §4 (field catalog), proc-03 §Stage 6.
 - **Tally export, not push.** For the demo, Phlo generates a Tally-compatible XML file. The user downloads and imports into Tally. No live API integration demonstrated.
 
 ## Screens
+
+> **Specced in full:** [`screen-specs/prd-11-sales-invoice/`](../screen-specs/prd-11-sales-invoice/_index.md)
+> — 6 screens, drafted 2026-08-31.
+>
+> ⚠️ **Three compliance gaps found in the data model while speccing:**
+> 1. **`ack_no` and `signed_qr` are missing from `SalesInvoice`.** The e-Invoice portal returns both
+>    with the IRN, and **the signed QR must be printed on the invoice** for it to be valid. Storing only
+>    `irn` produces a non-compliant printed document.
+> 2. **No `EINVOICE_CANCELLED` event.** The portal allows cancellation within **24 hours**; after that a
+>    credit note is the only route — and credit notes are out of demo scope. A wrong invoice found on
+>    day two has no path at all.
+> 3. **No Tally ledger mapping.** `InvoiceAccountEntry.account_name` is free text; Tally imports against
+>    named ledgers. A mismatch fails the import or silently creates duplicate ledgers. This is the most
+>    likely cause of a failed export and nothing in the model supports it.
+
 
 | Screen             | Purpose                                                                                      | Primary users        |
 | ------------------ | -------------------------------------------------------------------------------------------- | -------------------- |

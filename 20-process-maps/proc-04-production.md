@@ -2,7 +2,7 @@
 title: "Production — Planning, Execution and Quality"
 status: draft
 created: 2026-08-21
-updated: 2026-08-29
+updated: 2026-08-31
 tags: [process, production, bom, quality, serialisation, job-work]
 demo_areas: [7]
 sources:
@@ -88,8 +88,16 @@ scheduling model has to allow production to be shifted.
 
 ## Stage 1b — BOM Explosion and RM Consumption 🟢 (obs-06, 2026-08-21)
 
-**Real BOMs now exist for all three lines.** They are Excel workbooks maintained by Pyramid, not
-held in UdyogERP. Full analysis in [obs-06-bom-analysis.md](../10-observations/obs-06-bom-analysis.md).
+**Real BOMs exist — for one configuration of each line, not for each SKU.** They are Excel workbooks
+maintained by Pyramid, not held in UdyogERP. Full analysis in
+[obs-06-bom-analysis.md](../10-observations/obs-06-bom-analysis.md).
+
+> **Coverage, stated precisely 2026-08-31** after reading all 11 sheets cell-by-cell. One finished-goods
+> configuration per line: `235 LTR N/M 8.5 KGS` (HDPE), `CRCA 210 LTR CLOSE MOUTH BARREL 16 KGS` (MS),
+> and `1000 LTR IBC … CP-FLAT DN50` — the last with six pallet types and two cage types beneath it.
+> **Of the 448 plastic-line SKUs, exactly one is covered.** MS Barrels and IBC have no SKU structure
+> documented anywhere in this project, so their BOMs describe products absent from any item master we
+> hold.
 
 ### What a run consumes
 
@@ -97,8 +105,13 @@ held in UdyogERP. Full analysis in [obs-06-bom-analysis.md](../10-observations/o
 |---|---|---|---|
 | **IBC inner container** `IC 1000 LTRS 2 INCH NAT (15kgs)` | 21.35 kg + 1% UV stabiliser | **6.405 kg (30%)** | 15.2 kg (±0.2) |
 | **HDPE drum** `235 LTR N/M 8.5 KGS` | 8.625 kg incl. 0.045 master batch | **2.205 kg (26%)** | 8.45 kg |
-| **MS drum body sheet** | CRCA coil | — | 12.4 kg |
-| **MS drum lid sheet** | CRCA coil | — | 6.152 kg |
+| **MS drum body sheet** | CRCA coil ⚠️ | — | 12.4 kg |
+| **MS drum lid sheet** | CRCA coil ⚠️ | — | 6.152 kg |
+
+⚠️ **The MS figures depend on which sheet you read.** The `MS DRUM` sheet specifies body `0.8 × 920`
+and lid `0.97 × 1315`; the `BODY SHEET` sheet gives body `0.97` from a `914` coil (12.4 kg) and lid
+`0.9 × 1315` (6.152 kg). **Two independent contradictions**, and the weights above come from the second
+sheet. Nobody has said which is authoritative — obs-06 §5 finding 3.
 
 **Regrind is a planned BOM input with its own stock balance**, not a by-product. For the IBC the loop
 closes on itself — 6.15 kg of flash per unit against 6.405 kg of regrind going back in.
@@ -115,12 +128,29 @@ closes on itself — 6.15 kg of flash per unit against 6.405 kg of regrind going
 | **Mixed UoM** | NOS, KGS, and consumables (stretch film at 0.05 kg) |
 | **SFG vs ACCESSORIES** | Pyramid's own categorisation — adopt it |
 
-> ### 🔴 Known gap in the supplied BOM
+> ### ✅ Cage-to-IBC link — resolved 2026-08-29
 >
-> **The cage is not linked to the finished IBC.** `FG-BOM-W` contains no line matching CAGE, PIPE or
-> BAR — four levels of cage BOM exist and are consumed by nothing. The largest steel component of an
-> IBC has no path to the finished product. **This must be resolved or bridged before a run can
-> correctly deduct steel.** See obs-06 §5.
+> ~~The cage is not linked to the finished IBC.~~ A corrected `IBC-DETAILS.xlsx` adds `CAGE TYPE = MAX`
+> qty 1 at `FG-BOM-W` row 12. An IBC run now deducts steel. See
+> [obs-07 §7](../10-observations/obs-07-sales-driven-delivery-schedule.md).
+
+> ### 🔴 What still blocks correct RM deduction — verified 2026-08-31
+>
+> Reading the workbooks cell-by-cell found three problems that outlive the cage fix. **None blocks the
+> demo; all block a build.**
+>
+> | # | Problem | Effect on a run |
+> |---|---|---|
+> | 1 | **`CAGE-MAX` carries the wrong weight.** `CUT VERTICAL BAR 1018` nets 463 g. `CAGE-BIG` lists 20 at 9,260 g ✓; `CAGE-MAX` lists the same part at the same quantity as **9,120 g** — the *1002* bar's weight | An IBC on a MAX cage **deducts 140 g too little steel, every unit** |
+> | 2 | **MS sheets contradict themselves** — body and lid both specified two ways | MS steel deduction is wrong on whichever figure is wrong |
+> | 3 | **BOM descriptions cannot be joined to the item master.** Inches in the BOMs, millimetres in the master (`CAPSEAL 2 INCH` vs `CAP SEAL … 50 MM`); some items absent entirely (`70 MM DUST CAP BLUE` → 0 rows) | **BOM explosion cannot resolve components to stock items** — a fuzzy match fails systematically |
+>
+> The demo path is safe: the IBC can run on `CAGE-BIG`, whose arithmetic is correct. See obs-06 §5
+> findings 3, 5 and 7, and [prd-07](../40-solution-design/prd-07-production-planning/prd.md) §BOM
+> coverage.
+
+> 🟠 **Also still open:** `TOP CROSS BAR (1020)` is produced at cage level 2 and consumed by neither
+> cage, and `FG-BOM-W` duplicates `CORNER PROTECTOR ×4` and `SCREW WITH NYLOCK NUT 6×20 ×5`.
 
 ## Stage 2 — Machine and Mould Setup 🟢
 

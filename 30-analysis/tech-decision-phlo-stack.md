@@ -2,7 +2,7 @@
 title: "Tech Stack Decision — Phlo Framework"
 status: approved
 created: 2026-08-17
-updated: 2026-08-24
+updated: 2026-08-31
 tags: [analysis, tech-decision, phlo, architecture]
 sources:
   - github.com/enterpriseagentstack/phlo (cloned and reviewed)
@@ -70,8 +70,40 @@ Phlo framework includes these modules (auto-discovered):
 | `auth`           | Login, tokens, API keys                     | USER_LOGGED_IN, API_KEY_CREATED             |
 | `storage`        | File uploads (MinIO/S3)                     | FILE_ATTACHED                               |
 | `settings`       | Company configuration                       | COMPANY_SETTINGS_UPDATED                    |
-| `communications` | Notifications                               | (TBD)                                       |
+| `communications` | Notifications                               | **Deferred 2026-08-31 — in-app only.** See below |
 | `ai`             | AI conversations                            | AI_CONVERSATION_CREATED                     |
+
+> ### `communications` is deferred, deliberately (`F-X-004`)
+>
+> **Decision 2026-08-31: in-app notifications only. No channel abstraction is built now.** Revisit at
+> production, targeting **WhatsApp** — which is how Pyramid actually coordinates today (obs-07 §1).
+>
+> Two **MUST-HAVE** requirements depend on this and are therefore **demo-complete and
+> deployment-incomplete**: prd-04 `REQ-LR-203` (alert the store team) and prd-08 `REQ-SCH-006` (issued
+> plan visible to the plant head). Both work on screen; neither reaches a person who is not already
+> looking at Phlo, and neither audience is desk-bound.
+>
+> **Architectural consequence:** because no abstraction is built now, every alert path currently writes
+> to a projection and is read by a screen. Adding a channel later means introducing a **dispatcher that
+> reads alert events and fans out** — it does not mean rewriting the alert logic, since alerts are
+> already events. That is why deferring is cheap here and would not be in a system where notifications
+> were called inline.
+
+> ### One party master (`F-X-003`)
+>
+> **Decision 2026-08-31:** customers, vendors, carriers and job workers are **one `Party` entity with a
+> `roles[]` array**, not separate registries. This follows the incumbent — UdyogERP has one Account
+> Master split by `Main Group` (obs-03 §2) — and it is what Pyramid needs, since **Unit 8 sells granules
+> to Unit 7** and the recycling plant sells into the other units.
+>
+> Defined in [prd-03](../40-solution-design/prd-03-po-creation/prd.md) §Data Model. prd-04's `Carrier`
+> keeps its own record for integration config and references a `Party`.
+
+> ⚠️ **`STOCK_RESERVED` does not apply to finished goods.** Confirmed 2026-08-29: Pyramid does not
+> reserve FG at order entry or at dispatch planning — stock stays free until it is **physically loaded
+> onto the truck**. The framework event exists and is usable for **raw materials and sub-assemblies**,
+> but any FG "available vs allocated" split would invent a state Pyramid does not have. See
+> [obs-07 §4](../10-observations/obs-07-sales-driven-delivery-schedule.md) and prd-01 `A-IV-04`.
 
 **Logistics events already exist:**
 
@@ -98,6 +130,9 @@ Based on gap analysis, the Pyramid fork needs these new modules:
 | `grn`             | Goods receipt workflow                 | GRN_CREATED, GRN_VERIFIED, GRN_DISCREPANCY        |
 | `vendor_invoices` | Vendor bill tracking                   | VENDOR_INVOICE_RECEIVED, VENDOR_INVOICE_MATCHED   |
 | `procurement`     | PO tracking and extensions             | PO_IMPORTED, PO_DISPATCHED, PO_RECEIVED           |
+| `parties` | One party master — customers, vendors, carriers, job workers, by role. **Added 2026-08-31** | PARTY_CREATED, PARTY_UPDATED, PARTY_DEACTIVATED |
+| `vendor_invoices` (extends `procurement`) | Vendor invoice capture and the three-way match. **Out of demo scope** | VENDOR_INVOICE_RECEIVED, VENDOR_INVOICE_MATCHED, VENDOR_INVOICE_DISPUTED, VENDOR_INVOICE_APPROVED |
+| `delivery_scheduling` | Delivery schedule lines on the SO, and the daily dispatch plan per plant. **Added 2026-08-29** | DELIVERY_SCHEDULE_LINE_CREATED, DELIVERY_SCHEDULE_LINE_AMENDED, DISPATCH_PLAN_DRAFTED, DISPATCH_PLAN_ISSUED, DISPATCH_PLAN_ACKNOWLEDGED, DISPATCH_PLAN_SHORTFALL_FLAGGED, DISPATCH_PLAN_REVISED |
 
 ### New Projections
 
@@ -107,6 +142,9 @@ Based on gap analysis, the Pyramid fork needs these new modules:
 | `po_ageing`          | PO_IMPORTED, GOODS_RECEIVED            | Days since PO, pending receipts     |
 | `inventory_pipeline` | PO_*, GOODS_DISPATCHED, GOODS_RECEIVED | What's ordered, in transit, arrived |
 | `fleet_status`       | TRUCK_ASSIGNED, TRUCK_RELEASED         | Which truck is where, doing what    |
+| `order_pipeline`     | SO_CREATED, DELIVERY_SCHEDULE_LINE_*   | Open orders, backlog, fulfilment    |
+| `plan_status`        | DISPATCH_PLAN_*                        | Which plants have acknowledged today, which have flagged a shortfall |
+| `demand_vs_stock`    | DELIVERY_SCHEDULE_LINE_*, `stock_position` | Scheduled volume against stock. **Reads thin for FG by design** — FG turns in 1–2 days; the meaningful signal is on raw materials |
 
 ### Integrations
 
@@ -115,6 +153,41 @@ Based on gap analysis, the Pyramid fork needs these new modules:
 | Current ERP | Read       | Import POs (CSV/API TBD)                |
 | Tally       | Write      | Push accounting entries (API TBD)       |
 | e-Way Bill  | Read/Write | May need API for dispatch documentation |
+| **Carriers (per carrier)** | **Read** | **Poll for consignment status against a tracking reference. Added 2026-08-31** — see below |
+
+### Carrier status — the one integration that is optional by design
+
+Added 2026-08-31, from prd-04 `REQ-LR-301`–`309`. This row differs from the three above in kind, and
+the difference should not be flattened.
+
+**The other three are singular and assumed.** There is one Tally, one e-Way Bill portal, one incumbent
+ERP. Carriers are **plural, heterogeneous, and unsurveyed** — a national courier may expose an API
+where a regional trucking company exposes nothing, and **which of Pyramid's carriers fall where has
+never been investigated** (gap-analysis Q12).
+
+| Aspect | Decision |
+|---|---|
+| Mode | Declared **per carrier**: `api` · `lookup` (deep-link only) · `manual` |
+| Direction | Read only. Phlo never writes to a carrier |
+| Auth | `Carrier.api_credential_ref` — **a pointer into the secret store, never a secret on the entity** |
+| Failure | Degrades to manual. The LR shows *last checked*, and marks itself not currently tracked once stale |
+| Coupling | **None.** Ageing, thresholds and alerts read timestamps only, never `source` |
+
+**Two consequences for the architecture:**
+
+1. **No projection may depend on carrier data.** A fetched update emits the same stage event as a
+   manual one with a different `source` value, so `lr_ageing` and `inventory_pipeline` are identical
+   whether integration exists or not. A carrier being unreachable is a normal state, not degradation.
+2. **Credentials must never enter the event store.** Events are append-only and replayed to rebuild
+   projections — a secret written into a `CARRIER_UPDATED` payload would be **permanent and
+   unrotatable**. This is a property of event sourcing, not a policy choice, and it applies to every
+   future integration this project adds, not only carriers.
+
+> **Build-cost note.** This is the only integration in the table whose cost cannot be estimated,
+> because it scales with a carrier count and capability mix nobody has surveyed. It is scoped so the
+> estimate can stay unknown: **manual entry is the baseline path**, and the two stages carrying most
+> of the LR ageing delay — *collected* and *arrived at plant* — are Pyramid's own actions that no
+> carrier can ever report. Integration improves this module; it does not enable it.
 
 ---
 

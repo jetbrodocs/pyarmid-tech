@@ -1,7 +1,7 @@
 ---
 title: "Process Maps Index"
 status: active
-updated: 2026-08-29
+updated: 2026-08-31
 ---
 
 # Process Maps
@@ -62,6 +62,7 @@ Every distinct process seen or described during the visits, and where it is now 
 | **Daily delivery schedule, sales → plant** | proc-03 Stage 2b |
 | **Plant cannot meet the day's plan** (route unknown) | proc-03 Exc. D |
 | Inter-plant movement rules **by GSTIN** | proc-05 Stage 4 |
+| **FG held 1–2 days, never reserved** | proc-05 Stage 5, proc-03 Stage 4a |
 | Returns and reuse of cages and pallets | proc-05 Stage 6, proc-04, proc-03 |
 | Fleet cost classes (trip vs vehicle) | proc-06 |
 | **Store team** as inbound chaser | proc-01, proc-02, proc-05 |
@@ -82,15 +83,16 @@ Every distinct process seen or described during the visits, and where it is now 
 
 - **[Sales Order to Dispatch](proc-03-sales-order-to-dispatch.md)** — *demo areas 8, 9, 10, 11, 12.* Order intake by **any channel** into the **Bombay** sales team, Sales Order with **delivery schedule lines**, the **daily dispatch plan issued to each plant** (Stage 2b), production against it, **stock committed only at loading** (Stage 4a), fleet assignment, Delivery Challan → e-Way Bill → Sales Invoice → IRN. Forecasting still absent. Exceptions: cancelled-order rework, cross-state split fulfilment, **plant cannot meet the plan**.
 - **[Production — Planning, Execution and Quality](proc-04-production.md)** — *demo area 7.* **Trigger confirmed** — runs against the daily dispatch plan; execution well documented. **No FG buffer: 1–2 days of storage.** Machine parameters, mould setup, QC gates, leak test, reject → serial deleted → granulation, customer-specific modification, serialisation.
-- **[Inventory — Visibility, Movement and Control](proc-05-inventory.md)** — *demo areas 1, 6.* **All stock is in Excel**; the ERP's stock fields sit blank. Inter-plant movement by GSTIN, returns and reuse, regrind, uncollected material.
-- **[Fleet Cost — Attribution and Tracking](proc-06-fleet-cost.md)** — *demo area 13.* **Nothing tracked today.** Class A costs attach to an invoice (fuel, road tax, driver welfare); Class B to the vehicle (repairs, wear and tear).
+- **[Inventory — Visibility, Movement and Control](proc-05-inventory.md)** — *demo areas 1, 6.* **All stock is in Excel**; the ERP's stock fields sit blank. Inter-plant movement by GSTIN, returns and reuse, regrind, uncollected material. **Stage 5 rewritten 2026-08-29:** finished goods hold **1–2 days at most**, space is the binding constraint, and FG is **never reserved** — commitment is at loading.
+- **[Fleet Cost — Attribution and Tracking](proc-06-fleet-cost.md)** — *demo area 13.* **Nothing tracked today.** Class A costs attach to an invoice (fuel, road tax, driver welfare); Class B to the vehicle (repairs, wear and tear). The attribution rule assumes **every trip serves a customer dispatch** — if the fleet also runs inter-plant, Class A costs exist with no invoice behind them (obs-07 §8).
 
 ---
 
 ## Known gap on the critical path
 
 ~~`proc-04` cannot show raw-material consumption without the BOMs.~~ **BOMs received 2026-08-21** —
-see [obs-06](../10-observations/obs-06-bom-analysis.md). Real BOMs exist for all three lines.
+see [obs-06](../10-observations/obs-06-bom-analysis.md). Real BOMs exist for **one configuration of
+each line** — not for each SKU.
 `proc-04` Stage 1b now carries the charge data and structural requirements.
 
 ~~**Remaining gap:** the cage is not linked to the finished IBC in `FG-BOM-W`.~~ **Resolved
@@ -98,11 +100,29 @@ see [obs-06](../10-observations/obs-06-bom-analysis.md). Real BOMs exist for all
 the item `DN75` → **`DN50`**. Verified against the file; see
 [obs-07 §7](../10-observations/obs-07-sales-driven-delivery-schedule.md).
 
-🟠 **Minor BOM issues survive** — only `FG-BOM-W` changed. `TOP CROSS BAR (1020)` is still produced
-and consumed nowhere; `FG-BOM-W` still duplicates two lines. Neither blocks the demo.
+🔴 **But three BOM problems block a build, found 2026-08-31 by reading all 11 sheets cell-by-cell:**
+
+1. **`CAGE-MAX` understates its steel by 140 g per cage** — it carries the 1002 bar's weight against the
+   1018 bar, while `CAGE-BIG` has it right.
+2. **The MS drum contradicts itself on body *and* lid thickness** — two independent contradictions, and
+   nobody has said which figure is authoritative.
+3. **BOM descriptions cannot be joined to the item master** — inches in the BOMs, millimetres in the
+   master, and some items absent from it entirely. **Of the 448 plastic-line SKUs, exactly one has a
+   BOM.**
+
+**None blocks the demo** — the IBC path runs on `CAGE-BIG`, whose arithmetic is correct. All three block
+trusting RM deduction for stock or costing. See obs-06 §5 findings 3, 5 and 7, and `proc-04` Stage 1b.
+
+🟠 **Minor issues also survive** — `TOP CROSS BAR (1020)` is produced and consumed nowhere; `FG-BOM-W`
+duplicates two lines.
 
 ## Open on the critical path
 
 **Exception D in `proc-03` has no evidence behind it.** When a plant cannot meet the day's schedule,
 nothing is known about what happens next — and with finished goods capped at 1–2 days there is no
 buffer to absorb it. This is now the highest-value unobserved exception in the project.
+
+**Whether the owned fleet runs inter-plant is deferred, not answered** (obs-07 §8). It is carried as
+an explicit demo assumption — outbound-only — in `proc-05` Stage 4 and `proc-06`. It must be re-asked
+as a direct yes/no before implementation, because it changes both the fleet cost model and what
+movements the dispatch plan covers.

@@ -2,7 +2,7 @@
 title: "PRD-05 — GRN Creation"
 status: draft
 created: 2026-08-24
-updated: 2026-08-27
+updated: 2026-08-31
 demo_areas: [5]
 tags: [prd, grn, goods-receipt, verification, quality]
 tech_decision: 30-analysis/tech-decision-phlo-stack.md
@@ -40,7 +40,7 @@ Source: proc-01 §The Gap step 12, proc-05 §Stage 1.
 2. **Variance handling.** Capture received vs expected quantity with configurable tolerance.
 3. **Stock update on verification.** GRN verification triggers GOODS_RECEIVED event — stock rises.
 4. **GRN ageing.** Material at plant but GRN not raised — visible and alertable.
-5. **Three-way match.** PO ↔ GRN ↔ vendor invoice — the reconciliation that is manual today.
+5. **Three-way match.** PO ↔ GRN ↔ vendor invoice — the reconciliation that is manual today. **Deliverable as of 2026-08-31 (`F-X-002`): the invoice leg is owned by [prd-03](../prd-03-po-creation/prd.md) `REQ-PO-201`–`206`, out of demo scope.** This module supplies the received quantity the match runs against (`REQ-GRN-002`) — a vendor invoicing 40 T against 39.2 T received is the case the match exists to catch.
 
 ## Roles Involved
 
@@ -63,6 +63,21 @@ Source: proc-01 §The Gap step 12, proc-05 §Stage 1.
 | REQ-GRN-007 | QC status per line: Accepted, Rejected, Pending QC               | Phlo framework events                               | QC_ACCEPTED / QC_REJECTED events emitted per line                                                         |
 | REQ-GRN-008 | GRN verification triggers stock update                           | Phlo architecture                                   | GOODS_RECEIVED event increases stock at the receiving plant                                               |
 | REQ-GRN-009 | GRN ageing — time from material arrival at plant to GRN creation | proc-02 §LR Ageing                                  | Visible on dashboard; alertable                                                                           |
+
+> ### Alerting is owned by prd-04 — decided 2026-08-31 (`F-X-005`)
+>
+> `REQ-GRN-009` **measures** receipt-to-GRN pendency and shows it on the Pending GRN Dashboard. It
+> **raises no alert.** prd-04's Alert Feed owns every alert in the inbound chain, including this stage —
+> it already holds the `LRAlert` entity, per-stage per-plant thresholds, acknowledgement, and the
+> one-alert-per-breach rule.
+>
+> Two alert sources for one consignment would mean two threshold configs and two places to tune the
+> same nagging. **An alert feed people learn to ignore defeats prd-04 `REQ-LR-203`**, the demo's
+> must-have.
+>
+> The Pending GRN Dashboard is a **work queue**: what is outstanding, oldest first, with the fix on the
+> row.
+
 | REQ-GRN-010 | Batch/lot assignment on receipt                                  | obs-02 (Auto Batch No. Parameters exist but unused) | Assign batch number to received material. Configurable format                                             |
 
 ### Assumptions
@@ -93,6 +108,19 @@ Source: proc-01 §The Gap step 12, proc-05 §Stage 1.
 | GOODS_RECEIVED    | Stock update triggered by verified GRN             | grn_id, plant_id, item_id, quantity, batch_number     |
 | QC_ACCEPTED       | Line passes QC                                     | grn_id, item_id                                       |
 | QC_REJECTED       | Line fails QC                                      | grn_id, item_id, reason                               |
+| GRN_DISCREPANCY_RESOLVED | **A flagged variance is closed out with an outcome** | grn_id, item_id, resolution, note, resolved_by |
+| GRN_TOLERANCE_SET | **Variance tolerance changed for a plant, or globally** | plant_id (nullable), tolerance_pct, changed_by |
+
+> **Two events added 2026-08-31**, from the screen-spec pass.
+>
+> **`GRN_DISCREPANCY_RESOLVED`** — `GRN_DISCREPANCY` recorded that a variance was flagged, and nothing
+> recorded what happened next. A discrepancy that is raised and never closed is indistinguishable from
+> one nobody looked at. `[UNKNOWN: what the valid resolutions are — accepted, vendor claim raised, PO
+> adjusted, written off. OQ2 asks Pyramid; the enum should not be invented before they answer.]`
+>
+> **`GRN_TOLERANCE_SET`** — tolerance decides which receipts get flagged for human review. Same
+> configuration-event gap as prd-02, prd-03 and prd-04 — see
+> [`30-analysis/prd-audit-findings.md`](../../30-analysis/prd-audit-findings.md) §Configuration events.
 
 ## Business Rules
 
@@ -103,6 +131,15 @@ Source: proc-01 §The Gap step 12, proc-05 §Stage 1.
 - **GRN closes the inbound LR.** When GRN is verified, the linked inbound LR status transitions to Received/Closed.
 
 ## Screens
+
+> **Specced in full:** [`screen-specs/prd-05-grn/`](../screen-specs/prd-05-grn/_index.md) — 5 screens,
+> drafted 2026-08-31. Entry points, layout, data points, CTAs, validations and conditional states per
+> screen.
+>
+> ✅ **Goal 5 resolved 2026-08-31 (`F-X-002`).** PO ↔ GRN is specced in full here; the **vendor invoice
+> leg is owned by [prd-03](../prd-03-po-creation/prd.md)** (`REQ-PO-201`–`206`, `VendorInvoice`
+> entity), **out of demo scope**. The GRN screens show that leg as *not tracked in the demo*.
+
 
 | Screen                    | Purpose                                                              | Primary users             |
 | ------------------------- | -------------------------------------------------------------------- | ------------------------- |
@@ -128,3 +165,9 @@ Source: proc-01 §The Gap step 12, proc-05 §Stage 1.
 3. **Quality inspection at receipt.** Is there a formal QC step before material enters stock, or is it accept-on-sight?
 4. **Return-to-vendor process.** What happens to rejected material? No evidence of a returns flow.
 5. **Receipt-to-GRN time.** How long does material sit at the plant before someone raises the GRN? This is the last leg of LR ageing.
+6. ~~**Who owns the vendor invoice?**~~ **Decided 2026-08-31 (`F-X-002`): prd-03 owns it**, out of demo scope. This module supplies the received quantity the match runs against.
+7. **Should tolerance be absolute as well as percentage?** `REQ-GRN-003` and the tolerance formula are percentage-based, but ±2% of a 40 T coil is 800 kg while ±2% of 4 seal kits is rounding. A percentage may be the wrong instrument for small-count items.
+8. **Is under-delivery treated differently from over-delivery?** The formula is symmetric on absolute variance. Commercially they are not the same event.
+9. ~~**Two things alert on the same consignment.**~~ **Decided 2026-08-31 (`F-X-005`): prd-04 owns every inbound alert.** This module measures pendency and presents a work queue; it raises nothing.
+10. **Should a draft GRN expire or escalate?** A forgotten draft is materially identical to no GRN — stock invisible, LR open — and nothing currently chases it.
+11. **What happens when a verified GRN is later found wrong?** OQ2 covers discrepancy at receipt, not discovery afterwards. Currently a new GRN or a prd-06 stock adjustment; no evidence of Pyramid's practice.

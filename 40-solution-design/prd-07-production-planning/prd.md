@@ -2,7 +2,7 @@
 title: "PRD-07 — Production Planning"
 status: draft
 created: 2026-08-24
-updated: 2026-08-29
+updated: 2026-08-31
 demo_areas: [7]
 tags: [prd, production, bom, work-order, serialisation, qc, regrind, routing]
 tech_decision: 30-analysis/tech-decision-phlo-stack.md
@@ -24,7 +24,7 @@ sources:
 
 Finished goods are held **one to two days at most** — plant space is the binding constraint — so what is produced against today's plan is dispatched the same day. There is no finished-goods buffer to absorb a scheduling error.
 
-Execution is well documented. Pyramid's own work instructions (`PTL/WI/PD/04`, `PTL/WI/PD/05`) give process parameters, QC gates, and reject handling. Real BOMs exist for all three product lines in Excel workbooks. Serialisation already happens — `PTL-VII-L1-26-H-3493`. Phlo captures what exists and adds what does not: BOM explosion, RM consumption, serial ledger, QC records.
+Execution is well documented. Pyramid's own work instructions (`PTL/WI/PD/04`, `PTL/WI/PD/05`) give process parameters, QC gates, and reject handling. Real BOMs exist in Excel for **one configuration of each product line** — not for each SKU; see the coverage note below. Serialisation already happens — `PTL-VII-L1-26-H-3493`. Phlo captures what exists and adds what does not: BOM explosion, RM consumption, serial ledger, QC records.
 
 **A completed production run MUST deduct raw material via the BOM.** This is a demo requirement (Jetbro, 2026-08-21).
 
@@ -34,6 +34,70 @@ Execution is well documented. Pyramid's own work instructions (`PTL/WI/PD/04`, `
 >
 > **The finished item was also renamed** — `...CP-FLAT DN75 QD BV 2.5 INCH` → `...CP-FLAT **DN50** QD BV 2.5 INCH`, with the valve-size row corrected from `DN80` to `DN50`. Demo data must use the new name.
 >
+> ### ⚠️ BOM coverage — the larger constraint, stated 2026-08-31
+>
+> The cage defect is fixed. **Coverage is not**, and it is the bigger of the two problems.
+>
+> Three BOM workbooks exist, and they sit in two different worlds:
+>
+> | Workbook | Covers | In the 448-SKU item master? |
+> |---|---|---|
+> | `HDPE-DRUM-DETAILS.xlsx` | One HDPE drum configuration | **Yes** — one of 213 drum SKUs |
+> | `IBC-DETAILS.xlsx` | 1000 L IBC, CP-FLAT DN50 | **No** — IBC has no documented SKU structure |
+> | `MS-DRUM.xlsx` | One MS drum configuration | **No** — MS Barrels have no documented SKU structure |
+>
+> The **448 is the Plastic Barrels vertical only** ([obs-01](../../10-observations/obs-01-item-master-structure.md)) —
+> 213 drum, 85 can, 150 accessory. MS Barrels and IBC are two of the three product lines and neither has
+> a SKU structure documented anywhere in this project.
+>
+> **Of the 448 plastic SKUs, exactly one has a BOM.** Stripping the 150 accessories — many bought rather
+> than made — the meaningful denominator is **298 drum and can SKUs**, of which one is covered.
+>
+> **And the two datasets cannot currently be joined.** The workbooks were read cell-by-cell on
+> 2026-08-31 and their free text tested against the 448-row `T3_SKU` master. It fails **three ways**
+> (obs-06 finding 5):
+>
+> | Failure | Example |
+> |---|---|
+> | **Different measurement conventions** | BOM `CAPSEAL 2 INCH WITH PVC` vs master `MS CAP SEAL PRINTED 50 MM…` (44 rows) — **inches in the BOMs, millimetres in the master** |
+> | **Naming divergence** | BOM `50 MM BUNGS REGULAR 1028 SPECIAL WHITE`; 9 `BUNGS` rows in the master, none matching |
+> | **Absent entirely** | BOM `70 MM DUST CAP BLUE` → **0 rows**, though it is an accessory on a plastic drum |
+>
+> The first is decisive: **a fuzzy text match would fail systematically**, because the two datasets
+> describe the same physical parts in different units. This is not a tidying job.
+>
+> obs-01 also records that the 448-SKU model is itself a **proposed restructure** — codes "newly
+> generated, remappable" — not the live system.
+>
+> **What this means for `REQ-PP-005` and `REQ-PP-013`.** BOM explosion and RM deduction work correctly
+> for a product that has a BOM. For everything else they cannot run at all, and that is nearly the whole
+> catalogue. The demo is safe — it runs on the configurations that have real BOMs — but **BOM coverage
+> and a description-to-item-code mapping are implementation blockers**, not demo ones.
+>
+> `[TODO: two things are needed before a build. First, an answer to obs-06 OQ6 — do BOMs exist for other
+> SKUs, or only these three configurations? Second, a mapping from BOM free-text descriptions to item
+> codes, which no document in this project currently supports.]`
+
+> ### ⚠️ The BOM source data carries arithmetic errors — verified 2026-08-31
+>
+> `REQ-PP-010` and `REQ-PP-013` deduct material from these numbers, so the numbers have to be right.
+> Reading the cells directly found two defects a summary reading had missed:
+>
+> **1. `CAGE-MAX` understates its steel by 140 g per cage.** `CUT VERTICAL BAR 1018` has a net weight of
+> **463 g**. `CAGE-BIG` lists 20 of them at **9,260 g** ✓. `CAGE-MAX` lists the same component at the
+> same quantity as **9,120 g** — which is 456 × 20, the **1002 bar's** weight. Both cages use the
+> identical part, so this is a copy-down error, not a specification difference. An IBC built on a MAX
+> cage deducts too little steel on every unit.
+>
+> **2. The MS drum contradicts itself on *both* sheet thicknesses**, not one. Body: `0.8 × 920` in the
+> `MS DRUM` sheet against `0.97` from a `914` coil in `BODY SHEET`. Lid: `0.97 × 1315` against
+> `0.9 × 1315`. Steel deduction for MS Barrels is wrong on whichever figure is wrong, and **nobody has
+> said which is authoritative**.
+>
+> Neither blocks the demo — the IBC path can run on CAGE-BIG, whose arithmetic is correct — but both
+> must be settled before RM deduction is trusted for stock or costing.
+> `[TODO: put obs-06 §5 findings 3 and 7 to Pyramid.]`
+
 > 🟠 **Two obs-06 findings remain open** — only `FG-BOM-W` changed; the other three sheets are byte-identical. `TOP CROSS BAR (1020)` is still produced and consumed nowhere, and `FG-BOM-W` still duplicates `CORNER PROTECTOR ×4` (rows 15, 23) and `SCREW WITH NYLOCK NUT 6×20 ×5` (rows 19, 29). Neither blocks the demo.
 
 ## As-Is State
@@ -42,7 +106,9 @@ Execution is well documented. Pyramid's own work instructions (`PTL/WI/PD/04`, `
 | -------------------------------------------------------------------- | ------------------------------------------------------ |
 | A daily **dispatch plan** from sales that the plant produces against               | Digital production records                             |
 | Work instructions with process parameters, QC gates, reject handling | Digital production records                             |
-| Real BOMs in Excel for all three lines                               | BOMs in the ERP (BOM ID field empty on sampled item)   |
+| Real BOMs in Excel for **one configuration per line** — not per SKU | BOMs in the ERP (BOM ID field empty on sampled item)   |
+| A 448-SKU item master for the **plastic line only**                 | Any SKU structure for MS Barrels or IBC                |
+|                                                                     | **Any join between BOM descriptions and item codes**   |
 | Work Order button exists in UdyogERP (Labour Job Issue IV)           | Evidence of BOM explosion or RM consumption in the ERP |
 | Serial numbers marked on every unit                                  | Digital serial ledger                                  |
 | QC records on paper/Excel                                            | Digital QC capture                                     |
@@ -92,7 +158,7 @@ Source: proc-04 throughout, obs-06, obs-04.
 | REQ-PP-007 | Deduct RM on gross, not net                 | obs-06 §1                                   | IBC inner: deduct 21.35 kg (gross), not 15.2 kg (net). Difference = flash = regrind              |
 | REQ-PP-008 | Regrind as planned BOM input                | obs-06 §1                                   | Regrind is a line on the BOM (26-30% of charge), drawn from regrind stock                        |
 | REQ-PP-009 | Routing separate from BOM                   | obs-06 §4 (MS drum)                         | MS drums have a 5-step route where painting is a step with material consumption, not a component |
-| REQ-PP-010 | Yield and scrap at every BOM level          | obs-06 §2                                   | Bar-waste 35-50g, cut-piece scrap 3-50g, gross vs net at each conversion                         |
+| REQ-PP-010 | Yield and scrap at every BOM level          | obs-06 §2                                   | Bar-waste 35-50g, cut-piece scrap 3-50g, gross vs net at each conversion                         |  ⚠️ **The source data has arithmetic errors — see the note above `REQ-PP-004`**
 | REQ-PP-011 | Mixed UoM support                           | obs-06                                      | NOS, KGS, and consumables (stretch film 0.05 kg). BOM lines carry their own UoM                  |
 | REQ-PP-012 | SFG vs ACCESSORIES categorisation           | obs-06 §4 (FG-BOM-W)                        | Pyramid's own categorisation adopted in BOM structure                                            |
 | REQ-PP-013 | Production completion deducts RM from stock | HANDOVER §3, proc-04                        | PRODUCTION_COMPLETED event triggers RM_CONSUMED events per BOM line                              |
@@ -177,6 +243,17 @@ Source: proc-04 throughout, obs-06, obs-04.
 - **Multi-level explosion.** BOM explosion traverses all levels to reach leaf-level RM. For IBC cage: coil (L1) is pipe-formed (L2), cut (L3), assembled into cage (L4), then assembled into final IBC (L5 if counting the FG assembly). Scrap at each level.
 
 ## Screens
+
+> **Specced in full:** [`screen-specs/prd-07-production-planning/`](../screen-specs/prd-07-production-planning/_index.md)
+> — 9 screens, drafted 2026-08-31.
+>
+> ⚠️ **`REQ-PP-016` describes an operation the architecture forbids.** It says a rejected unit's serial
+> is *deleted*. **An event store cannot delete** — it is append-only and replayed. `UNIT_REJECTED`
+> **withdraws** the serial instead: it never reaches finished goods, never enters stock, cannot be
+> dispatched. The observable outcome matches Pyramid's practice exactly, and Phlo additionally retains
+> why the unit failed — which is what `REQ-PP-018` (defect recording for data analysis) requires. A true
+> delete would destroy the defect history this PRD asks for. `[TODO: reword to "withdrawn".]`
+
 
 | Screen                    | Purpose                                                                          | Primary users               |
 | ------------------------- | -------------------------------------------------------------------------------- | --------------------------- |
