@@ -2,7 +2,7 @@
 title: "PRD-05 — GRN Creation"
 status: draft
 created: 2026-08-24
-updated: 2026-08-27
+updated: 2026-08-31
 demo_areas: [5]
 tags: [prd, grn, goods-receipt, verification, quality]
 tech_decision: 30-analysis/tech-decision-phlo-stack.md
@@ -103,6 +103,16 @@ Source: proc-01 §The Gap step 12, proc-05 §Stage 1.
 - **GRN closes the inbound LR.** When GRN is verified, the linked inbound LR status transitions to Received/Closed.
 
 ## Screens
+
+> **Specced in full:** [`screen-specs/prd-05-grn/`](../screen-specs/prd-05-grn/_index.md) — 5 screens,
+> drafted 2026-08-31. Entry points, layout, data points, CTAs, validations and conditional states per
+> screen.
+>
+> ⚠️ **Goal 5 (three-way match) cannot be delivered as written.** PO ↔ GRN is specced in full; the
+> **vendor invoice leg has no owning PRD and no entity** anywhere in this solution design, though
+> gap-analysis lists vendor invoice tracking as a Must Have. Same finding independently reached in
+> prd-03. The screens mark that leg *not tracked* rather than implying it exists.
+
 
 | Screen                    | Purpose                                                              | Primary users             |
 | ------------------------- | -------------------------------------------------------------------- | ------------------------- |
