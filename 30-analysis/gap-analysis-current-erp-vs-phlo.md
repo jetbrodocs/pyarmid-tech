@@ -2,7 +2,7 @@
 title: "Gap Analysis — Current ERP vs Phlo Scope"
 status: draft
 created: 2026-08-17
-updated: 2026-08-30
+updated: 2026-08-31
 tags: [analysis, gap-analysis, erp, phlo]
 resolved:
   - "Q2: Phlo is full ERP replacement, not gap-filler (confirmed 2026-08-17)"
@@ -190,7 +190,7 @@ Based on gap analysis, Phlo needs these capabilities:
 | **Outbound LR + POD**       | Fleet management     | Own-fleet dispatch to customer; signed LR returns as POD |
 | **Fleet assignment**        | Fleet management (outbound only) | Truck availability, assignment, scheduling for **sales dispatch**. Never used for procurement |
 | **Driver/vehicle registry** | Fleet management (outbound only) | Know who has what truck                  |
-| **Transit visibility**      | Both pillars         | Outbound: own driver checkpoint updates. Inbound: carrier status, which Pyramid does not control — `[UNKNOWN: can carriers be integrated, or is this manual entry?]` |
+| **Transit visibility**      | Both pillars         | Outbound: own driver checkpoint updates. Inbound: carrier status, which Pyramid does not control. **Direction set 2026-08-30:** capture a tracking reference per LR and fetch status where the carrier allows, with manual entry as the permanent fallback (prd-04 `REQ-LR-301`–`309`). `[UNKNOWN: which carriers can actually be integrated — never investigated]` |
 | **Inventory pipeline view** | Inventory ageing     | See what's ordered, dispatched, in transit, arrived |
 | **Ageing dashboards**       | All three pillars    | LR ageing, PO ageing, inventory ageing              |
 | **Alerting**                | Reactive → proactive | Push notifications when things age                  |
@@ -310,7 +310,11 @@ Phlo must integrate with:
 
 11. 🔴 **Where do the 5–8 days go?** Split the inbound LR ageing figure across: vendor dispatch delay, carrier transit, dwell at the carrier facility awaiting collection, and plant-arrival-to-GRN. **This is the highest-value question in the project** — it decides what Phlo builds first.
 
-12. **Carrier integration:** Can Blue Dart or the trucking companies be integrated (API, tracking-number lookup, scheduled file)? Or is inbound status pure manual entry? This is a material build-cost question that nothing in the tech decision accounts for.
+12. ⚠️ **Carrier integration — partly answered 2026-08-30.** ~~Or is inbound status pure manual entry?~~ **Direction set:** each carrier declares an integration mode — `api`, `lookup` (deep-link only) or `manual` — and manual entry is the permanent baseline (prd-04 `REQ-LR-301`–`309`). The **tech decision now carries a carrier row** in its Integrations table.
+
+    **What remains open is per-carrier feasibility:** which of Pyramid's carriers expose an API, which offer only a tracking page, which offer nothing. Never investigated. Materially changes build cost.
+
+    **It does not gate the demo, and the reason is structural rather than a scheduling convenience.** Of the five inbound stages, a carrier can report at most three — *dispatched*, *in transit*, *arrived at facility*. **Collected** and **arrived at plant** are Pyramid's own actions and no carrier can ever report them. Since dwell-at-facility is measured from a carrier event to a manual one, and dwell is where this analysis expects most of the 5–8 days to sit (Q11), **the pillar's core measurement depends on manual entry however many carriers are integrated.**
 
 13. **Carrier set:** Standing panel of carriers, or per-vendor choice? Who nominates — vendor or Pyramid? Who pays freight?
 

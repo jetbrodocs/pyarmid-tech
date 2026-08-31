@@ -2,7 +2,7 @@
 title: "PRD-02 — Purchase Indent"
 status: draft
 created: 2026-08-24
-updated: 2026-08-27
+updated: 2026-08-31
 demo_areas: [2]
 tags: [prd, procurement, indent, approval]
 tech_decision: 30-analysis/tech-decision-phlo-stack.md
@@ -98,6 +98,14 @@ Source: proc-01 §Path B steps 1-5, obs-02 field catalog. **No purchase-side ERP
 - **Conversion:** An approved indent can be converted to one PO (prd-03). One PO may aggregate multiple approved indents.
 
 ## Screens
+
+> **Specced in full:** [`screen-specs/prd-02-purchase-indent/`](../screen-specs/prd-02-purchase-indent/_index.md)
+> — 5 screens, drafted 2026-08-31. Entry points, layout, data points, CTAs, validations and
+> conditional states per screen. The table below is the summary; that folder is the detail.
+>
+> ⚠️ Those specs are designed from **proc-01 and this data model only** — no purchase-side ERP screen
+> has ever been seen, so there is no field reference to check them against.
+
 
 | Screen              | Purpose                                                      | Primary users             |
 | ------------------- | ------------------------------------------------------------ | ------------------------- |

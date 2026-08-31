@@ -2,7 +2,7 @@
 title: "Fleet Management and LR Tracking"
 status: draft
 created: 2026-08-16
-updated: 2026-08-30
+updated: 2026-08-31
 tags: [process, fleet, lr, transport, grn, inbound-logistics]
 demo_areas: [4, 12]
 sources:
@@ -322,7 +322,7 @@ number to get from Pyramid — it determines where the system should intervene f
 | Truck assignment              | A    | Head knowledge / fleet team | No system — 4 people know who's where |
 | Outbound LR issue             | A    | Paper                       | Physical document                     |
 | Inbound LR issue              | B    | Carrier's own system        | Pyramid receives a paper copy         |
-| Inbound consignment tracking  | B    | `[UNKNOWN: carrier portal, helpline, or phone calls]` | Owned by purchase/plant team |
+| Inbound consignment tracking  | B    | `[UNKNOWN: carrier portal, helpline, or phone calls — and whether any tracking reference is written down]` | Owned by purchase/plant team. Phlo intends to capture one per LR — prd-04 `REQ-LR-004` |
 | Transit tracking              | Both | None on Pyramid's side      | Visibility gap                        |
 | Collection from facility      | B    | None                        | Ad-hoc; no record that a trip happened |
 | Communication                 | Both | Phone, WhatsApp, email      | Not synced                            |
@@ -346,11 +346,11 @@ number to get from Pyramid — it determines where the system should intervene f
 
 **Inbound (Flow B) — new or reframed by the 2026-08-17 correction:**
 
-1. **Which carriers?** Is there a standing set (Blue Dart and a few truckers), or per-vendor choice?
+1. **Which carriers?** Is there a standing set (Blue Dart and a few truckers), or per-vendor choice? — **Now also a build-cost question.** prd-04 declares an integration mode per carrier (`REQ-LR-301`), so the carrier set determines how much integration work exists at all.
 
 2. **Who nominates the carrier** — the vendor or Pyramid? Who pays freight?
 
-3. **What identifier does the carrier's LR carry** — LR number, docket number, consignment note? Phlo needs to store and search on whatever the teams actually quote to each other.
+3. ⚠️ **What identifier does the carrier's LR carry** — LR number, docket number, consignment note? Phlo needs to store and search on whatever the teams actually quote to each other. — **prd-04 `REQ-LR-004` now commits to storing one**, so this has moved from a nice-to-know to a field that must be named correctly. Ask alongside: **when several POs arrive together, is there one docket or several?** That decides whether the reference sits on the LR or on a shipment grouping several (prd-04 `OQ7`).
 
 4. **Deliver vs collect — what decides it?** Carrier service level, material type, distance, cost?
 
@@ -360,7 +360,7 @@ number to get from Pyramid — it determines where the system should intervene f
 
 7. **Does the carrier charge storage/demurrage** after a free period? If so, uncollected material has a direct, quantifiable cost — useful for the commercial case.
 
-8. **How is an inbound consignment tracked today** — carrier portal, helpline, or phoning the vendor?
+8. ⚠️ **How is an inbound consignment tracked today** — carrier portal, helpline, or phoning the vendor? — **Determines whether Phlo's tracking reference digitises an existing habit or introduces one.** If follow-up runs purely on the vendor relationship, nobody may be recording a docket number at all today, and `REQ-LR-004` is a new behaviour rather than a captured one.
 
 9. **Who owns inbound tracking** when purchase and plant both have a claim? This determines the RBAC model for inbound LRs.
 

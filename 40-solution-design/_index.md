@@ -124,19 +124,30 @@ Audited 2026-08-27; **all screen-spec blockers cleared 2026-08-29** by a call wi
 
 ### Screen-specs progress
 
-Started 2026-08-30, in demo-spine order. Screen specs live in **[`screen-specs/`](screen-specs/_index.md)**
-— one sub-folder per PRD, each with an `_index.md` screen list and one file per screen. See that index
-for the full picture.
+Screen specs live in **[`screen-specs/`](screen-specs/_index.md)** — one sub-folder per PRD, each
+with an `_index.md` screen list and one file per screen. See that index for the full picture.
 
 | PRD | Screens | Status |
 | --- | ------- | ------ |
-| [prd-09 Sales Orders](screen-specs/prd-09-sales-orders/_index.md) | 4 — SO Create, SO List, SO Detail, Customer Registry | ✅ Drafted |
+| [prd-01 Inventory Visibility](screen-specs/prd-01-inventory-visibility/_index.md) | 5 — Stock Dashboard, Stock Detail, Pipeline View, Inventory Ageing, Stock Search | ✅ Drafted |
+| [prd-02 Purchase Indent](screen-specs/prd-02-purchase-indent/_index.md) | 5 — Indent Create, Indent List, Indent Detail, Indent Approval, Re-order Config | ✅ Drafted |
+| prd-03 PO Creation | — | ⬜ Next |
+| prd-04 LR Tracking | — | ⬜ |
+| prd-05 GRN | — | ⬜ |
+| prd-06 Inventory Management | — | ⬜ |
+| prd-07 Production Planning | — | ⬜ |
 | [prd-08 Delivery Scheduling](screen-specs/prd-08-delivery-scheduling/_index.md) | 8 — Delivery Schedule, Plan Builder, Issue Confirmation, Today's Plan, Status Board, Order Pipeline, Fulfilment, Demand vs Stock | ✅ Drafted |
-| prd-01, 02, 03, 04, 05, 06, 07, 10, 11, 12, 13 | — | ⬜ Not started |
+| [prd-09 Sales Orders](screen-specs/prd-09-sales-orders/_index.md) | 4 — SO Create, SO List, SO Detail, Customer Registry | ✅ Drafted |
+| prd-10 Dispatch | — | ⬜ |
+| prd-11 Sales Invoice | — | ⬜ |
+| prd-12 Fleet Management | — | ⬜ |
+| prd-13 Fleet Cost | — | ⬜ |
 
-**Order of work:** the demo spine, not the PRD numbers. ① prd-09 and ①b prd-08 first, because they
-are the demo's opening and the module that answers the project's core diagnosis. Next in spine order:
-② prd-01 / prd-06, then ③–④ prd-07.
+**22 of ~100 screens drafted, across 4 of 13 PRDs.**
+
+**Order of work: PRD numeric order, starting at prd-01** (RP, 2026-08-30). prd-08 and prd-09 were
+drafted first on demo-spine reasoning, before that order was set — the demo spine above is a
+presentation sequence, not a working one. **prd-03 is next.**
 
 ### Requirement ID prefixes
 
