@@ -135,19 +135,19 @@ with an `_index.md` screen list and one file per screen. See that index for the 
 | [prd-04 LR Tracking](screen-specs/prd-04-lr-tracking/_index.md) | 10 — LR Create, List, Detail, Stage Update, Ageing Dashboard, Collection Tracker, Alert Feed, Threshold Config, Carrier Registry, Integration Health | ✅ Drafted |
 | [prd-05 GRN](screen-specs/prd-05-grn/_index.md) | 5 — GRN Create, GRN Detail, GRN List, Pending GRN Dashboard, Tolerance Config | ✅ Drafted |
 | [prd-06 Inventory Management](screen-specs/prd-06-inventory-management/_index.md) | 7 — Stock Adjustment, Stock-Take, Transfer Create, Transfer List, Transfer Detail, Return Receipt, RM Issue | ✅ Drafted |
-| prd-07 Production Planning | — | ⬜ Next |
+| [prd-07 Production Planning](screen-specs/prd-07-production-planning/_index.md) | 9 — WO Create, WO List, WO Detail, BOM Editor, Routing Editor, Production Run, Serial Ledger, Customer Modification, Regrind Tracker | ✅ Drafted |
 | [prd-08 Delivery Scheduling](screen-specs/prd-08-delivery-scheduling/_index.md) | 8 — Delivery Schedule, Plan Builder, Issue Confirmation, Today's Plan, Status Board, Order Pipeline, Fulfilment, Demand vs Stock | ✅ Drafted |
 | [prd-09 Sales Orders](screen-specs/prd-09-sales-orders/_index.md) | 4 — SO Create, SO List, SO Detail, Customer Registry | ✅ Drafted |
-| prd-10 Dispatch | — | ⬜ |
-| prd-11 Sales Invoice | — | ⬜ |
-| prd-12 Fleet Management | — | ⬜ |
-| prd-13 Fleet Cost | — | ⬜ |
+| [prd-10 Dispatch](screen-specs/prd-10-dispatch/_index.md) | 6 — Dispatch Queue, Create, Detail, List, Delivery Challan, e-Way Bill | ✅ Drafted |
+| [prd-11 Sales Invoice](screen-specs/prd-11-sales-invoice/_index.md) | 6 — Invoice Create, Detail, List, e-Invoice, Tally Export, TCS Dashboard | ✅ Drafted |
+| [prd-12 Fleet Management](screen-specs/prd-12-fleet-management/_index.md) | 8 — Fleet Dashboard, Assignment, Trip List, Trip Detail, Vehicle Registry, Driver Registry, Vehicle History, Driver History | ✅ Drafted |
+| [prd-13 Fleet Cost](screen-specs/prd-13-fleet-cost/_index.md) | 6 — Trip Cost Entry, Vehicle Cost Entry, Cost-to-Serve, Vehicle Cost History, Fleet Cost Dashboard, Driver Advance | ✅ Drafted |
 
-**48 of ~100 screens drafted, across 8 of 13 PRDs.**
+****83 screens drafted — all 13 PRDs complete.****
 
 **Order of work: PRD numeric order, starting at prd-01** (RP, 2026-08-30). prd-08 and prd-09 were
 drafted first on demo-spine reasoning, before that order was set — the demo spine above is a
-presentation sequence, not a working one. **prd-07 is next.**
+presentation sequence, not a working one. **All 13 PRDs have screen specs.**
 
 ### Requirement ID prefixes
 

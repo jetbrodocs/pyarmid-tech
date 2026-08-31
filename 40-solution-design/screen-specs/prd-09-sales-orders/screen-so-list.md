@@ -2,7 +2,7 @@
 title: "Screen — SO List"
 status: draft
 created: 2026-08-30
-updated: 2026-08-30
+updated: 2026-08-31
 tags: [screen-spec, prd-09, sales-order, list, ageing]
 prd: ../../prd-09-sales-orders/prd.md
 requirements: [REQ-SO-007, REQ-SO-008, REQ-SO-010]
@@ -74,7 +74,7 @@ plant-head role. Nine plants operate separately; a plant head opening a group-wi
 |---|---|---|---|
 | SO No. | Monospace, e.g. `P7/26-27/00412` | `SalesOrder.so_number` | `[ASSUMPTION: plant-prefixed series]` |
 | Order Date | `DD/MM`, full date on hover | `SalesOrder.created_at` | |
-| Customer | Buyer's mailing name | `Customer.name` via `customer_id` | Consignee shown on hover when it differs |
+| Customer | Buyer's mailing name | `Party.name` via `customer_id` (a `party_id`) | Consignee shown on hover when it differs |
 | Plant | Unit code, e.g. `U7` | `SalesOrder.series` / `locations` | |
 | Total Qty | Integer + UoM | sum of `SOLineItem.quantity` | |
 | Value | ₹ lakh, 2 dp | `SalesOrder.total_amount` | Net of GST. GST amount on hover |

@@ -147,6 +147,27 @@ PRD edit that is not already tracked as a cross-cutting item.
 
 ---
 
+### PRD-09: Sales Orders — re-audited 2026-08-31
+
+prd-09 and prd-08 were specced first, on demo-spine order, **before the consolidation pass**. prd-08 was
+re-audited on 2026-08-31; this is prd-09's.
+
+| ID | Sev | Category | Finding | Location | Fix |
+|---|---|---|---|---|---|
+| F-09-201 | **C** | COMPLETENESS-CROSS | **The rework path was disconnected.** proc-03 Exception A A5 says a reassigned order's goods go through *"a separate production process"* — valve, cage or pallet change. `REQ-SO-014` said only "physical modifications tracked", naming no owner. prd-07 owns modification per serial and even handles the cancelled-order case, but **prd-09 never linked to it and no work order was raised** | `REQ-SO-014`, SO Detail | ✅ **Fixed** — `REQ-SO-015` added; **Rework the goods ▸** on SO Detail raises a prd-07 work order |
+| F-09-202 | M | CONSISTENCY | Screen specs still sourced fields from a `Customer` entity after the `Party` decision (`F-X-003`) | SO Create, SO List, SO Detail | ✅ **Fixed** — all now read `Party` with the `customer` role |
+| F-09-203 | m | CONSISTENCY | `SalesOrder.customer_id` / `.consignee_id` read as references to a retired entity | §Data Model | ✅ **Fixed** — noted as `party_id` references that keep their names because bill-to and ship-to carry distinct meaning |
+| F-09-204 | M | EVIDENCE | **Nobody knows who finds the replacement buyer**, or how fast. proc-03 Exception A gives a live example (Grasim, large quantity) and the commercial pressure — stock must leave *"because otherwise everything would come to a standstill"* — but no process. With FG turning in 1–2 days there is no time to work it out slowly | OQ4b | Open — raised as prd-09 OQ4b |
+
+**Status:** ✓ Ready. `F-09-201` was the only structural defect and it is closed.
+
+> **Why this mattered.** Both halves of the rework existed — a new SO in prd-09, per-serial modification
+> in prd-07 — and **neither document referenced the other.** Each looked complete alone. It is the same
+> shape as the vendor-invoice gap (`F-X-002`): a requirement satisfied in one module and assumed by
+> another, with nothing joining them.
+
+---
+
 ### PRD-09: Sales Orders
 
 | ID       | Sev   | Category     | Finding                                                                   | Location         | Fix                                           |

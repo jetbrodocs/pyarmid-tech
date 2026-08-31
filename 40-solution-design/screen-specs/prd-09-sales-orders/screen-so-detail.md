@@ -2,7 +2,7 @@
 title: "Screen — SO Detail"
 status: draft
 created: 2026-08-30
-updated: 2026-08-30
+updated: 2026-08-31
 tags: [screen-spec, prd-09, sales-order, detail, trail]
 prd: ../../prd-09-sales-orders/prd.md
 requirements: [REQ-SO-007, REQ-SO-009, REQ-SO-010, REQ-SO-012, REQ-SO-013, REQ-SO-014]
@@ -82,8 +82,8 @@ happened to it.
 |---|---|---|
 | SO No. | Monospace | `SalesOrder.so_number` |
 | Status | Pill, seven values | `SalesOrder.status` |
-| Customer | Buyer mailing name, links to registry | `Customer.name` |
-| Consignee | Shown only when it differs from buyer | `Customer` via `consignee_id` |
+| Customer | Buyer mailing name, links to registry | `Party.name`, `customer` role |
+| Consignee | Shown only when it differs from buyer | `Party` via `consignee_id` (a `party_id`) |
 | Plant | Unit code | `SalesOrder.series` |
 | Raised on / by | Date · user name | `created_at`, `created_by_user_id` |
 | **Intake channel** | Chip: Email · WhatsApp · Verbal · Customer PO | `SalesOrder.intake_channel` |
@@ -144,6 +144,7 @@ this aggregate.
 | **⋯ → Edit order** | Available at **Draft only**. Reopens [SO Create](screen-so-create.md) in edit mode | `SO_CREATED` (new version) |
 | **⋯ → Duplicate** | SO Create pre-filled | none |
 | **⋯ → Rework to new order** | **Cancelled orders only.** Copies lines into a new SO, references the original (`REQ-SO-014`) | none until the new SO is saved |
+| **⋯ → Rework the goods ▸** | Cancelled orders with produced units. Raises a **prd-07 work order** for the physical change and opens [Customer Modification](../prd-07-production-planning/screen-customer-modification.md) with those serials | prd-07 `WORK_ORDER_CREATED`, then `UNIT_MODIFIED` per serial (`REQ-SO-015`) |
 | **⋯ → Print / PDF** | Order confirmation document | none |
 | **Edit schedule** (in the schedule section) | Inline edit of open schedule rows. Blocked once a row is dispatched | prd-08 `DELIVERY_SCHEDULE_LINE_AMENDED` |
 | Linked record row click | Deep link into the owning module | none |
@@ -178,7 +179,9 @@ amendment event rather than a lock.]`
 | **Partially dispatched** | Per-line progress bars; the schedule section splits dispatched rows from open ones |
 | **Shortfall flagged** | Amber banner at the top: "Unit 7 flagged a shortfall on 18 Aug: *mould changeover, 200 short*." Links to the prd-08 plan. **Does not change the order** — a flag is not an edit (prd-08 business rules) |
 | **Overdue** | Red due date in the schedule section, and a header chip "8 days overdue" |
-| **Cancelled** | Whole page dimmed with a grey banner: reason, who, when. If reworked, a link to the successor SO |
+| **Cancelled, no units produced** | Page dimmed, grey banner: reason, who, when. **Rework to new order** offered |
+| **Cancelled, units already produced** | Amber, not grey — **the expensive case.** Banner names the exposure: "18 units made against this order. Reassign them, or they sit as stock." Two actions, because there are two acts: **Rework to new order** (commercial) and **Rework the goods ▸** (physical). proc-03 Exception A records the pressure in Pyramid's words — stock must leave *"because otherwise everything would come to a standstill"* |
+| **Reworked, goods modified** | Per-serial modification history inline: which units changed, to whose specification, under which work order |
 | **Reworked-from** | Grey banner on the successor: "Reworked from SO-P7/26-27/00412." |
 | **Restricted — plant head** | Sees the order, its schedule and its work orders. **Rates, values and GST are hidden**, and the invoice group is hidden. `[ASSUMPTION: plants do not need customer pricing. Not confirmed — but showing every plant head every customer's rate is a decision that should be taken deliberately, not by default.]` |
 | **Error loading a linked module** | That group alone shows "Could not load dispatches. Retry." The rest of the page still renders |
@@ -192,7 +195,10 @@ amendment event rather than a lock.]`
 2. **Should plant heads see rates?** Assumed no. Needs a decision, not a default.
 3. **What does a plant head do with a shortfall flag after raising it?** The banner surfaces it;
    proc-03 Exception D says nobody knows what happens next in real life.
-4. **Does a cancelled order's produced stock need tracking on this screen?** proc-03 Exception A says
-   FG from a cancelled order gets reworked for another customer. The rework link exists; the physical
-   stock trail does not.
+4. ~~**Does a cancelled order's produced stock need tracking on this screen?**~~ **Fixed 2026-08-31.**
+   proc-03 Exception A A5 is explicit that reassignment involves *"a separate production process"*
+   physically altering the goods — valve, cage or pallet change. The commercial rework (a new SO) and
+   the physical rework (a prd-07 work order, then `UNIT_MODIFIED` per serial) are **two different
+   acts**, and this screen offered only the first. `REQ-SO-015` and **Rework the goods ▸** close it.
+   **Still open:** who finds the replacement buyer, and how fast — prd-09 OQ4b.
 5. **How fresh is the trail?** Depends on projection cadence — prd-08 Open Question 5.

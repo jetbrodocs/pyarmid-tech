@@ -2,7 +2,7 @@
 title: "Screen — SO Create"
 status: draft
 created: 2026-08-30
-updated: 2026-08-30
+updated: 2026-08-31
 tags: [screen-spec, prd-09, sales-order, create]
 prd: ../../prd-09-sales-orders/prd.md
 requirements: [REQ-SO-001, REQ-SO-002, REQ-SO-003, REQ-SO-004, REQ-SO-005, REQ-SO-006, REQ-SO-011, REQ-SO-012]
@@ -88,8 +88,8 @@ Free-text plus three structured fields for the modifications Pyramid actually pe
 | Transaction No. | Read-only, greyed | auto on save | obs-03 field 6. `[ASSUMPTION: plant-prefixed series]` |
 | **Intake Channel** | Radio: Email · WhatsApp · Verbal · Customer PO | user input | **New field.** `REQ-SO-002`, obs-07 §1. Not in the incumbent |
 | **Customer Ref.** | Text, optional | user input | Their PO number where one exists. Optional by design — most orders have none |
-| Buyer (bill-to) | Lookup on Customer | `Customer.name`, `.gstin` | obs-03 field 4 |
-| Consignee (ship-to) | Lookup on Customer, with **Same as buyer** toggle | `Customer` | obs-03 field 2. May differ (`REQ-SO-003`) |
+| Buyer (bill-to) | Lookup on Party, `customer` role | `Party.name`, `.gstin` | obs-03 field 4 |
+| Consignee (ship-to) | Lookup on Party, with **Same as buyer** toggle | `Party` | obs-03 field 2. May differ (`REQ-SO-003`) |
 | Buyer GSTIN | Read-only chip under Buyer | `Customer.gstin` | 15 characters |
 | Place of Supply | Dropdown of states, **defaults from consignee state** | `Customer.state`, `state_code` | obs-03 field 5. Editable — the default is a convenience, not a rule |
 | **GST mode** | Read-only badge: `IGST` or `CGST + SGST` | derived | Place of supply vs the issuing plant's state. `REQ-SO-004` |

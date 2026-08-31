@@ -89,7 +89,8 @@ Source: proc-03 §Stage 1-2, obs-02, obs-03, obs-07 §1-§4. Evidence: 🟢 scre
 | ID         | Requirement                                               | Source              | Acceptance Criteria                                                          |
 | ---------- | --------------------------------------------------------- | ------------------- | ---------------------------------------------------------------------------- |
 | REQ-SO-013 | SO cancellation with reason                               | proc-03 Exception A | SO_CANCELLED event. **No stock to de-allocate** — FG is never reserved (`A-SO-02`). Open delivery schedule lines and any undispatched plan lines are withdrawn instead |
-| REQ-SO-014 | Rework path: reassign cancelled SO's FG to a new customer | proc-03 Exception A | New SO created from cancelled SO's inventory. Physical modifications tracked |
+| REQ-SO-014 | Rework path: reassign a cancelled SO's FG to a new customer | proc-03 Exception A | New SO references the original. **Modification is not tracked here** — it is a production activity: see `REQ-SO-015` |
+| REQ-SO-015 | **Rework raises a work order** against the reassigned units | proc-03 Exception A A5 | The new SO's rework produces a prd-07 work order for the physical change. Each affected serial carries a `UNIT_MODIFIED` record (prd-07 `REQ-PP-020`). **Added 2026-08-31** |
 
 ### Assumptions
 
@@ -121,7 +122,8 @@ Source: proc-03 §Stage 1-2, obs-02, obs-03, obs-07 §1-§4. Evidence: 🟢 scre
 > and the recycling plant sells into the other units, so a Pyramid unit is a customer and a vendor at
 > once. Two registries would hold that party twice with no link between them.
 >
-> `customer_id` and `consignee_id` on `SalesOrder` are `party_id` references. Nothing else in this PRD
+> `customer_id` and `consignee_id` on `SalesOrder` are **`party_id` references with the `customer` role**.
+> They keep their names because they carry distinct meaning — bill-to and ship-to. Nothing else in this PRD
 > changes.
 
 ### Event Types
@@ -141,7 +143,10 @@ Source: proc-03 §Stage 1-2, obs-02, obs-03, obs-07 §1-§4. Evidence: 🟢 scre
 - **SO numbering.** `[ASSUMPTION: auto-generated, plant-prefixed series — matching Pyramid's convention]`.
 - **GST at order time.** Place of supply determines tax type (CGST+SGST for intra-state, IGST for inter-state). Computed when SO is created, carried forward to invoice.
 - **SO drives production.** A confirmed SO's delivery schedule lines reach the plant as a daily dispatch plan (prd-08), and work orders are raised against that plan (prd-07). **Confirmed 2026-08-29** — production runs against firm sales orders, not a forecast. `[UNKNOWN: whether this holds identically for all three product lines.]`
-- **Cancellation rework.** When an SO is cancelled, FG already produced can be reassigned to a new customer. Physical modifications (valve, cage, screen print) may be required. New SO references the original.
+- **Cancellation rework is a production activity, not a sales one.** When an SO is cancelled, FG already produced can be reassigned to a new customer — but proc-03 Exception A is explicit that the goods are **physically altered** to the new party's specification (*"valve change… cage change or pallet change"*) through *"a separate production process."*
+  - The new SO references the original (`REQ-SO-014`).
+  - The physical change is a **prd-07 work order**, and each unit's change is recorded per serial as `UNIT_MODIFIED` (`REQ-SO-015`, prd-07 `REQ-PP-020`).
+  - **Finished goods are mutable.** proc-03 states it plainly, and any model treating a finished unit as immutable will not represent Pyramid.
 - **Partial dispatch.** One SO can be fulfilled over multiple dispatches. Each dispatch updates dispatched_qty on the SO lines.
 
 ## Screens
@@ -182,6 +187,7 @@ The SO is not the exciting moment — it is the **starting gun**. Keep it brisk.
 2. ~~⛔ **Is stock allocated at order time or at dispatch?**~~ **Answered 2026-08-29: neither.** Stock stays free until it is **loaded onto the truck**. Propagated to prd-10 and prd-01.
 3. **How is the delivery due date set?** Customer-driven, or Pyramid decides?
 4. **Is there a credit check?** Account Master has credit limit fields.
+4b. ⚠️ **Who decides a cancelled order's stock can be reworked, and for whom?** proc-03 Exception A gives a live example — Grasim cancelling at large quantity — and records the commercial pressure: stock must leave *"because otherwise everything would come to a standstill."* But **nothing describes who finds the replacement buyer, or how quickly.** With finished goods turning in 1–2 days there is no time to work it out slowly.
 5. ~~⛔ **Who raises the SO?**~~ **Answered 2026-08-29:** the **sales team at the Bombay office.** Plants receive schedules; they do not raise orders.
 6. ⚠️ **Pricing model.** Per-SKU fixed price, or group SKU with weight/size surcharge? **Not answered — deferred by demo decision (Jetbro, 2026-08-29):** assume per-SKU with override, and carry cost on RM and FG. Still open for the real build.
 7. ~~**Make-to-stock vs make-to-order by product line?**~~ **Answered 2026-08-29: made to order**, against firm sales orders. `[UNKNOWN: whether this holds identically for all three lines — the call did not distinguish.]`

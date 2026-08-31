@@ -244,6 +244,17 @@ Source: proc-04 throughout, obs-06, obs-04.
 
 ## Screens
 
+> **Specced in full:** [`screen-specs/prd-07-production-planning/`](../screen-specs/prd-07-production-planning/_index.md)
+> — 9 screens, drafted 2026-08-31.
+>
+> ⚠️ **`REQ-PP-016` describes an operation the architecture forbids.** It says a rejected unit's serial
+> is *deleted*. **An event store cannot delete** — it is append-only and replayed. `UNIT_REJECTED`
+> **withdraws** the serial instead: it never reaches finished goods, never enters stock, cannot be
+> dispatched. The observable outcome matches Pyramid's practice exactly, and Phlo additionally retains
+> why the unit failed — which is what `REQ-PP-018` (defect recording for data analysis) requires. A true
+> delete would destroy the defect history this PRD asks for. `[TODO: reword to "withdrawn".]`
+
+
 | Screen                    | Purpose                                                                          | Primary users               |
 | ------------------------- | -------------------------------------------------------------------------------- | --------------------------- |
 | **Work Order Create**     | Raise work order: product, quantity, plant, line, linked SO                      | Plant team                  |

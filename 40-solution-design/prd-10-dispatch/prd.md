@@ -2,7 +2,7 @@
 title: "PRD-10 — Dispatch"
 status: draft
 created: 2026-08-24
-updated: 2026-08-30
+updated: 2026-08-31
 demo_areas: [10]
 tags: [prd, dispatch, delivery-challan, eway-bill, outbound, loading]
 tech_decision: 30-analysis/tech-decision-phlo-stack.md
@@ -85,11 +85,11 @@ Source: proc-03 §Stage 4-5, obs-03 field catalog, obs-04.
 
 ### Assumptions
 
-| ID      | Assumption                                                        | Reality                                                                           | Source           |
-| ------- | ----------------------------------------------------------------- | --------------------------------------------------------------------------------- | ---------------- |
 > **ID note.** `REQ-DS-*` and `A-DS-*` here mean **Dispatch**. Delivery Scheduling (prd-08) was
 > renamed to `REQ-SCH-*` / `A-SCH-*` on 2026-08-30 to remove the clash.
 
+| ID      | Assumption                                                        | Reality                                                                           | Source           |
+| ------- | ----------------------------------------------------------------- | --------------------------------------------------------------------------------- | ---------------- |
 | A-DS-01 | Dispatch person makes the daily pick decision, not a system rule  | "He picks the sales order to ship today, or he executes a list someone else made" | proc-03 §Stage 4 |
 | A-DS-02 | One dispatch can fulfill one or more SOs (or partial SOs)         | No evidence of multi-SO dispatch consolidation                                    | `[UNKNOWN]`      |
 | A-DS-03 | e-Way Bill is generated within Phlo, not on the government portal | UdyogERP currently generates it. Phlo must match                                  | proc-03 §Stage 6 |
@@ -128,6 +128,16 @@ Source: proc-03 §Stage 4-5, obs-03 field catalog, obs-04.
 - **Partial dispatch.** A dispatch may cover some lines of an SO. SO status updates to Partially Dispatched. Remaining lines stay in the queue.
 
 ## Screens
+
+> **Specced in full:** [`screen-specs/prd-10-dispatch/`](../screen-specs/prd-10-dispatch/_index.md)
+> — 6 screens, drafted 2026-08-31.
+>
+> ⚠️ **Three government e-Way Bill facilities are not modelled.** Part B update (vehicle changed
+> mid-journey), validity extension, and cancellation are all real operations with time limits, and
+> **none has an event in this PRD.** A breakdown across nine plants and ~100 trucks is not an edge
+> case. `[TODO: add `EWAY_BILL_PART_B_UPDATED`, `EWAY_BILL_CANCELLED`, and consider
+> `EWAY_BILL_EXTENDED`.]`
+
 
 | Screen               | Purpose                                                               | Primary users               |
 | -------------------- | --------------------------------------------------------------------- | --------------------------- |

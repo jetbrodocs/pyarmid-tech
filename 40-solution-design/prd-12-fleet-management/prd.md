@@ -2,7 +2,7 @@
 title: "PRD-12 — Fleet Management"
 status: draft
 created: 2026-08-24
-updated: 2026-08-29
+updated: 2026-08-31
 demo_areas: [12]
 tags: [prd, fleet, trucks, drivers, dispatch, outbound, assignment]
 tech_decision: 30-analysis/tech-decision-phlo-stack.md
@@ -132,6 +132,19 @@ Source: proc-02 Flow A, site visit.
 - **One assignment per dispatch.** Each dispatch gets one truck-driver pair. `[ASSUMPTION: no multi-truck dispatches]`.
 
 ## Screens
+
+> **Specced in full:** [`screen-specs/prd-12-fleet-management/`](../screen-specs/prd-12-fleet-management/_index.md)
+> — 8 screens, drafted 2026-08-31.
+>
+> ⚠️ **Two gaps found while speccing:**
+> 1. **Vehicles and drivers have almost no events.** Only `VEHICLE_STATUS_CHANGED` exists. Creating,
+>    editing or deactivating a vehicle has no event, and **drivers have none at all** — not create, not
+>    update, not status. Same configuration-event pattern as prd-02 to prd-05 and prd-07.
+> 2. **No access rule for driver personal data.** ~100 payroll employees' names, licence numbers and
+>    phone numbers sit in a module whose only named role is "fleet team". `Vehicle` also carries **no
+>    compliance dates** — the driver has `license_expiry`, the truck has no insurance, fitness or permit
+>    equivalent, though prd-13 OQ8 asks where they belong.
+
 
 | Screen               | Purpose                                                               | Primary users          |
 | -------------------- | --------------------------------------------------------------------- | ---------------------- |
