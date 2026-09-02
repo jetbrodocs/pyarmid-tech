@@ -2,7 +2,7 @@
 title: "Solution Design — Index"
 status: draft
 created: 2026-08-24
-updated: 2026-08-30
+updated: 2026-09-02
 tags: [index, solution-design, prd]
 ---
 
@@ -11,6 +11,11 @@ tags: [index, solution-design, prd]
 13 PRDs, one per module. All trace to process maps, observations, and the gap analysis. Tech stack: event-sourced (Python 3.12 + FastAPI + PostgreSQL 16 + Next.js 14), approved in `30-analysis/tech-decision-phlo-stack.md`.
 
 ## Before You Build
+
+**[`demo/_index.md`](demo/_index.md)** — the **client demo cut**: which 12 modules are shown, which 22
+screens are built, and what is deliberately left out. Added 2026-09-02. It is a scope cut across the 13
+PRDs below, not a fourteenth module — **one PRD per demo module** in `demo/prd-NN-*/prd.md`, with
+screens in [`demo/screen-specs/`](demo/screen-specs/_index.md).
 
 **[`demo-data-policy.md`](demo-data-policy.md)** — mandatory read before writing any screen spec.
 Every rate, price, name and date in the demo. **All figures are invented by us; nothing is being
