@@ -2,7 +2,7 @@
 title: "Screen Specs Index"
 status: active
 created: 2026-08-30
-updated: 2026-08-31
+updated: 2026-09-03
 tags: [screen-specs, index]
 ---
 
@@ -36,7 +36,7 @@ PRD**, named after the PRD folder it derives from, each with its own `_index.md`
 ```
 
 A screen-specs sub-folder may only exist where the matching `prd-NN-<name>/prd.md` exists. Screens
-describe the screens *of a PRD*; there is nothing to describe without one.
+describe the screens _of a PRD_; there is nothing to describe without one.
 
 ## Progress
 
@@ -44,21 +44,22 @@ Worked in **PRD numeric order**, starting at prd-01 (RP/Chaitya, 2026-08-30). Th
 [`40-solution-design/_index.md`](../_index.md#demo-spine-mapping) is a presentation sequence, not a
 working sequence — prd-08 and prd-09 were drafted first, before that order was set.
 
-| PRD | Screens | Status |
-|---|---|---|
-| [prd-01 Inventory Visibility](prd-01-inventory-visibility/_index.md) | 5 | ✅ Drafted 2026-08-30 |
-| [prd-02 Purchase Indent](prd-02-purchase-indent/_index.md) | 5 | ✅ Drafted 2026-08-31 |
-| [prd-03 PO Creation](prd-03-po-creation/_index.md) | 4 | ✅ Drafted 2026-08-31 |
-| [prd-04 LR Tracking](prd-04-lr-tracking/_index.md) | 10 | ✅ Drafted 2026-08-31 |
-| [prd-05 GRN](prd-05-grn/_index.md) | 5 | ✅ Drafted 2026-08-31 |
-| [prd-06 Inventory Management](prd-06-inventory-management/_index.md) | 7 | ✅ Drafted 2026-08-31 |
-| [prd-07 Production Planning](prd-07-production-planning/_index.md) | 9 | ✅ Drafted 2026-08-31 |
-| [prd-08 Delivery Scheduling](prd-08-delivery-scheduling/_index.md) | 8 | ✅ Drafted 2026-08-30 |
-| [prd-09 Sales Orders](prd-09-sales-orders/_index.md) | 4 | ✅ Drafted 2026-08-30 |
-| [prd-10 Dispatch](prd-10-dispatch/_index.md) | 6 | ✅ Drafted 2026-08-31 |
-| [prd-11 Sales Invoice](prd-11-sales-invoice/_index.md) | 6 | ✅ Drafted 2026-08-31 |
-| [prd-12 Fleet Management](prd-12-fleet-management/_index.md) | 8 | ✅ Drafted 2026-08-31 |
-| [prd-13 Fleet Cost](prd-13-fleet-cost/_index.md) | 6 | ✅ Drafted 2026-08-31 |
+| PRD                                                                  | Screens | Status                |
+| -------------------------------------------------------------------- | ------- | --------------------- |
+| [prd-01 Inventory Visibility](prd-01-inventory-visibility/_index.md) | 5       | ✅ Drafted 2026-08-30 |
+| [prd-02 Purchase Indent](prd-02-purchase-indent/_index.md)           | 5       | ✅ Drafted 2026-08-31 |
+| [prd-03 PO Creation](prd-03-po-creation/_index.md)                   | 4       | ✅ Drafted 2026-08-31 |
+| [prd-04 LR Tracking](prd-04-lr-tracking/_index.md)                   | 10      | ✅ Drafted 2026-08-31 |
+| [prd-05 GRN](prd-05-grn/_index.md)                                   | 5       | ✅ Drafted 2026-08-31 |
+| [prd-06 Inventory Management](prd-06-inventory-management/_index.md) | 7       | ✅ Drafted 2026-08-31 |
+| [prd-07 Production Planning](prd-07-production-planning/_index.md)   | 9       | ✅ Drafted 2026-08-31 |
+| [prd-08 Delivery Scheduling](prd-08-delivery-scheduling/_index.md)   | 8       | ✅ Drafted 2026-08-30 |
+| [prd-09 Sales Orders](prd-09-sales-orders/_index.md)                 | 4       | ✅ Drafted 2026-08-30 |
+| [prd-10 Dispatch](prd-10-dispatch/_index.md)                         | 6       | ✅ Drafted 2026-08-31 |
+| [prd-11 Sales Invoice](prd-11-sales-invoice/_index.md)               | 6       | ✅ Drafted 2026-08-31 |
+| [prd-12 Fleet Management](prd-12-fleet-management/_index.md)         | 8       | ✅ Drafted 2026-08-31 |
+| [prd-13 Fleet Cost](prd-13-fleet-cost/_index.md)                     | 6       | ✅ Drafted 2026-08-31 |
+| [prd-13 Fleet Cost](prd-13-fleet-cost/_index.md)                     | 6       | ✅ Drafted 2026-08-31 |
 
 ****83 screens drafted — all 13 PRDs complete.****
 

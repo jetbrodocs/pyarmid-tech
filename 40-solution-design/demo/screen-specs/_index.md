@@ -2,51 +2,51 @@
 title: "Demo — Screen List"
 status: draft
 created: 2026-09-02
-updated: 2026-09-02
+updated: 2026-09-03
 tags: [screen-specs, index, demo]
 prd: ../_index.md
 ---
 
 # Demo — Screen List
 
-22 screens, in demo order. Derived from [`../prd.md`](../_index.md) §Screens.
+22 screens, in demo order. Derived from [`../_index.md`](../_index.md) §Screens.
 
 ## Act 1 — Procure to Stock
 
-| Beat | Screen | Purpose | Spec |
-| ---- | ------ | ------- | ---- |
-| ① | **Vendor Registry** | Who Pyramid buys from and what they supply | [screen-vendor-registry.md](prd-07-vendor-management/screen-vendor-registry.md) |
-| ② | **BOM Master** | All BOMs, one per product category | [screen-bom-master.md](prd-06-bom-management/screen-bom-master.md) |
-| ③ | **BOM Detail** | One BOM exploded — levels, quantities, regrind, scrap | [screen-bom-detail.md](prd-06-bom-management/screen-bom-detail.md) |
-| ④ ⑫ | **Stock by Location** | RM, spares and FG by location and category | [screen-stock-by-location.md](prd-05-inventory-management/screen-stock-by-location.md) |
-| ⑤ | **Indent Create** | Store team raises a shortfall | [screen-indent-create.md](prd-01-purchase-indent/screen-indent-create.md) |
-| ⑥ | **Indent Approval** | HO approves or rejects | [screen-indent-approval.md](prd-01-purchase-indent/screen-indent-approval.md) |
-| ⑦ | **PO Create** | Approved indent becomes a purchase order | [screen-po-create.md](prd-02-purchase-order/screen-po-create.md) |
-| ⑧ | **PO List** | Open POs with ageing and receipt status | [screen-po-list.md](prd-02-purchase-order/screen-po-list.md) |
-| ⑨ | **LR Tracker** | Inbound LRs across the five stages | [screen-lr-tracker.md](prd-03-lr-tracking/screen-lr-tracker.md) |
-| ⑩ | **LR Detail** | One LR's timeline; stage update | [screen-lr-detail.md](prd-03-lr-tracking/screen-lr-detail.md) |
-| ⑪ | **GRN Create** | Receipt against PO and LR; variance | [screen-grn-create.md](prd-04-grn/screen-grn-create.md) |
-| ⑬ | **Stock Adjustment** | Manual correction with a reason code | [screen-stock-adjustment.md](prd-05-inventory-management/screen-stock-adjustment.md) |
+| Beat | Screen                | Purpose                                               | Spec                                                                                   |
+| ---- | --------------------- | ----------------------------------------------------- | -------------------------------------------------------------------------------------- |
+| ①    | **Vendor Registry**   | Who Pyramid buys from and what they supply            | [screen-vendor-registry.md](prd-07-vendor-management/screen-vendor-registry.md)        |
+| ②    | **BOM Master**        | All BOMs, one per product category                    | [screen-bom-master.md](prd-06-bom-management/screen-bom-master.md)                     |
+| ③    | **BOM Detail**        | One BOM exploded — levels, quantities, regrind, scrap | [screen-bom-detail.md](prd-06-bom-management/screen-bom-detail.md)                     |
+| ④ ⑫  | **Stock by Location** | RM, spares and FG by location and category            | [screen-stock-by-location.md](prd-05-inventory-management/screen-stock-by-location.md) |
+| ⑤    | **Indent Create**     | Store team raises a shortfall                         | [screen-indent-create.md](prd-01-purchase-indent/screen-indent-create.md)              |
+| ⑥    | **Indent Approval**   | HO approves or rejects                                | [screen-indent-approval.md](prd-01-purchase-indent/screen-indent-approval.md)          |
+| ⑦    | **PO Create**         | Approved indent becomes a purchase order              | [screen-po-create.md](prd-02-purchase-order/screen-po-create.md)                       |
+| ⑧    | **PO List**           | Open POs with ageing and receipt status               | [screen-po-list.md](prd-02-purchase-order/screen-po-list.md)                           |
+| ⑨    | **LR Tracker**        | Inbound LRs across the five stages                    | [screen-lr-tracker.md](prd-03-lr-tracking/screen-lr-tracker.md)                        |
+| ⑩    | **LR Detail**         | One LR's timeline; stage update                       | [screen-lr-detail.md](prd-03-lr-tracking/screen-lr-detail.md)                          |
+| ⑪    | **GRN Create**        | Receipt against PO and LR; variance                   | [screen-grn-create.md](prd-04-grn/screen-grn-create.md)                                |
+| ⑬    | **Stock Adjustment**  | Manual correction with a reason code                  | [screen-stock-adjustment.md](prd-05-inventory-management/screen-stock-adjustment.md)   |
 
 ## Act 2 — Order to Delivery
 
-| Beat | Screen | Purpose | Spec |
-| ---- | ------ | ------- | ---- |
-| ⑭ | **SO Create** | Key an order received by any channel | [screen-so-create.md](prd-08-sales-order/screen-so-create.md) |
-| ⑮ | **SO List** | Order pipeline with ageing | [screen-so-list.md](prd-08-sales-order/screen-so-list.md) |
-| ⑯ | **DDP Builder** | Draft, adjust and issue the daily dispatch plan | [screen-ddp-builder.md](prd-09-ddp/screen-ddp-builder.md) |
-| ⑰ | **Today's Plan** | Plant view: acknowledge, flag shortfall | [screen-todays-plan.md](prd-09-ddp/screen-todays-plan.md) |
-| ⑱ | **Work Order Create** | Raise against a plan line; explode the BOM | [screen-work-order-create.md](prd-10-production-planning/screen-work-order-create.md) |
-| ⑲ | **Production Run** | Record output, generate serials, deduct RM | [screen-production-run.md](prd-10-production-planning/screen-production-run.md) |
-| ⑳ | **Dispatch Queue** | What is ready to go today | [screen-dispatch-queue.md](prd-11-dispatch/screen-dispatch-queue.md) |
-| ㉑ | **Dispatch Create** | Confirm load; challan and e-Way Bill | [screen-dispatch-create.md](prd-11-dispatch/screen-dispatch-create.md) |
-| ㉒ | **Trip Assignment** | Truck and driver against a dispatch | [screen-trip-assignment.md](prd-12-trip-management/screen-trip-assignment.md) |
-| ㉓ | **Trip Board** | Fleet status, live | [screen-trip-board.md](prd-12-trip-management/screen-trip-board.md) |
+| Beat | Screen                | Purpose                                         | Spec                                                                                  |
+| ---- | --------------------- | ----------------------------------------------- | ------------------------------------------------------------------------------------- |
+| ⑭    | **SO Create**         | Key an order received by any channel            | [screen-so-create.md](prd-08-sales-order/screen-so-create.md)                         |
+| ⑮    | **SO List**           | Order pipeline with ageing                      | [screen-so-list.md](prd-08-sales-order/screen-so-list.md)                             |
+| ⑯    | **DDP Builder**       | Draft, adjust and issue the daily dispatch plan | [screen-ddp-builder.md](prd-09-ddp/screen-ddp-builder.md)                             |
+| ⑰    | **Today's Plan**      | Plant view: acknowledge, flag shortfall         | [screen-todays-plan.md](prd-09-ddp/screen-todays-plan.md)                             |
+| ⑱    | **Work Order Create** | Raise against a plan line; explode the BOM      | [screen-work-order-create.md](prd-10-production-planning/screen-work-order-create.md) |
+| ⑲    | **Production Run**    | Record output, generate serials, deduct RM      | [screen-production-run.md](prd-10-production-planning/screen-production-run.md)       |
+| ⑳    | **Dispatch Queue**    | What is ready to go today                       | [screen-dispatch-queue.md](prd-11-dispatch/screen-dispatch-queue.md)                  |
+| ㉑   | **Dispatch Create**   | Confirm load; challan and e-Way Bill            | [screen-dispatch-create.md](prd-11-dispatch/screen-dispatch-create.md)                |
+| ㉒   | **Trip Assignment**   | Truck and driver against a dispatch             | [screen-trip-assignment.md](prd-12-trip-management/screen-trip-assignment.md)         |
+| ㉓   | **Trip Board**        | Fleet status, live                              | [screen-trip-board.md](prd-12-trip-management/screen-trip-board.md)                   |
 
 ## Rules that apply to every screen in this cut
 
 1. **One god user.** No login, no role switching, no permission errors. Roles are **narrated** —
-   *"this is what your store team sees"* — never enforced. Where a spec below lists a restricted state,
+   _"this is what your store team sees"_ — never enforced. Where a spec below lists a restricted state,
    it is design intent for the product, not demo behaviour.
 2. **Every money value carries the illustrative-figures marker.** A tint, a footnote or a chip that
    survives being photographed off a projector. demo-data-policy §4 rule 3.
@@ -73,11 +73,15 @@ prd: ../_index.md
 
 ## Open Questions
 
-1. **Does `DDP` mean Daily Dispatch Plan?** [`../prd.md`](../_index.md) `A-DM-01`. Two of these screens
-   depend on the answer.
+1. **Does `DDP` mean Daily Dispatch Plan?** [`../_index.md`](../_index.md) `A-DM-01`. Two of these
+   screens depend on the answer.
 2. **Do named stores exist inside a plant?** `A-DM-02`. Changes Stock by Location, GRN Create, RM issue
    and Dispatch Create.
 3. **What does UdyogERP export for an LR?** `A-DM-04`. The LR Tracker's import path is designed against
    a system nobody has opened.
-4. **Is a spare indented, or bought on sight?** `A-DM-03`. If spares never pass through an indent,
-   beat ⑤ should use a consumable instead.
+
+**Closed 2026-09-03 — spares are indented.** `A-DM-03` asked whether a spare is indented or bought on
+sight. [`proc-01-procurement.md`](../../../20-process-maps/proc-01-procurement.md) already answers this:
+machinery spares are Path B, run through the "Standard requisition flow" — the same indent → approval →
+PO flow as any other Path B material. Beat ⑤ Indent Create using a spare is correct as designed; no
+screen change needed.
