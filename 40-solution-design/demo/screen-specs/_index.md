@@ -9,7 +9,7 @@ prd: ../_index.md
 
 # Demo — Screen List
 
-22 screens, in demo order. Derived from [`../_index.md`](../_index.md) §Screens.
+24 screens, in demo order. Derived from [`../_index.md`](../_index.md) §Screens.
 
 ## Act 1 — Procure to Stock
 
@@ -23,8 +23,10 @@ prd: ../_index.md
 | ⑥    | **Indent Approval**   | HO approves or rejects                                | [screen-indent-approval.md](prd-01-purchase-indent/screen-indent-approval.md)          |
 | ⑦    | **PO Create**         | Approved indent becomes a purchase order              | [screen-po-create.md](prd-02-purchase-order/screen-po-create.md)                       |
 | ⑧    | **PO List**           | Open POs with ageing and receipt status               | [screen-po-list.md](prd-02-purchase-order/screen-po-list.md)                           |
-| ⑨    | **LR Tracker**        | Inbound LRs across the five stages                    | [screen-lr-tracker.md](prd-03-lr-tracking/screen-lr-tracker.md)                        |
-| ⑩    | **LR Detail**         | One LR's timeline; stage update                       | [screen-lr-detail.md](prd-03-lr-tracking/screen-lr-detail.md)                          |
+| ⑨    | **LR Create**         | Record an inbound LR against a PO                     | [screen-lr-create.md](prd-03-lr-tracking/screen-lr-create.md)                          |
+| ⑨    | **LR List**           | Inbound LRs across the five stages                    | [screen-lr-list.md](prd-03-lr-tracking/screen-lr-list.md)                              |
+| ⑨ ⑩  | **LR Stage Update**   | Mark a stage forward                                  | [screen-lr-stage-update.md](prd-03-lr-tracking/screen-lr-stage-update.md)              |
+| ⑩    | **LR Detail**         | One LR's full timeline and its breach                 | [screen-lr-detail.md](prd-03-lr-tracking/screen-lr-detail.md)                          |
 | ⑪    | **GRN Create**        | Receipt against PO and LR; variance                   | [screen-grn-create.md](prd-04-grn/screen-grn-create.md)                                |
 | ⑬    | **Stock Adjustment**  | Manual correction with a reason code                  | [screen-stock-adjustment.md](prd-05-inventory-management/screen-stock-adjustment.md)   |
 
@@ -56,7 +58,7 @@ prd: ../_index.md
 5. **Dates render relative to `DEMO_DAY`.** Never hardcoded.
 6. **Stock resolves to a location, not a plant** — `REQ-DM-002`. Four locations, no bins, no racks.
 7. **All writes go through `/events/emit`.** Domain routers are GET-only.
-8. **Nothing off-script is reachable.** Navigation shows only these 22 screens. A dead link found live
+8. **Nothing off-script is reachable.** Navigation shows only these 24 screens. A dead link found live
    costs more than a missing feature.
 
 ## What these screens cannot do
@@ -77,8 +79,6 @@ prd: ../_index.md
    screens depend on the answer.
 2. **Do named stores exist inside a plant?** `A-DM-02`. Changes Stock by Location, GRN Create, RM issue
    and Dispatch Create.
-3. **What does UdyogERP export for an LR?** `A-DM-04`. The LR Tracker's import path is designed against
-   a system nobody has opened.
 
 **Closed 2026-09-03 — spares are indented.** `A-DM-03` asked whether a spare is indented or bought on
 sight. [`proc-01-procurement.md`](../../../20-process-maps/proc-01-procurement.md) already answers this:

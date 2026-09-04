@@ -2,80 +2,80 @@
 title: "Screen — LR Detail"
 status: draft
 created: 2026-09-02
-updated: 2026-09-02
+updated: 2026-09-04
 tags: [screen-spec, demo, lr, timeline, alert]
 prd: ../../prd-03-lr-tracking/prd.md
 parent_spec: ../../../screen-specs/prd-04-lr-tracking/screen-inbound-lr-detail.md
-requirements: [REQ-LR-101, REQ-LR-102, REQ-LR-103, REQ-LR-104, REQ-LR-105, REQ-LR-203, REQ-LR-303, REQ-LR-304]
+requirements:
+  [REQ-LR-101, REQ-LR-105, REQ-LR-201, REQ-LR-203, REQ-LR-304, REQ-LR-305]
 ---
 
 # Screen — LR Detail
 
 **Module:** Demo · LR Tracking · **Beat ⑩**
-**Purpose:** One LR's full timeline, and the place a stage is moved forward.
+**Purpose:** One LR's full timeline, and the breach it is or isn't in.
 
-Demo this on **`LR-4482`** — three days at a carrier's facility, alert fired, nobody sent to collect.
+Demo this on **the seeded stuck LR** — three days at a carrier's facility, alert fired, nobody sent to
+collect.
 
 > **Demo cut.** From prd-04's
-> [Inbound LR Detail](../../../screen-specs/prd-04-lr-tracking/screen-inbound-lr-detail.md) and
-> [Stage Update](../../../screen-specs/prd-04-lr-tracking/screen-lr-stage-update.md), **merged** — the
-> update belongs on the timeline, not on a page of its own. Cut: carrier deep-links, integration
-> health, alert configuration.
+> [Inbound LR Detail](../../../screen-specs/prd-04-lr-tracking/screen-inbound-lr-detail.md). Cut: raw
+> carrier status text (no integration exists to produce one), Cancel LR (prd-04 itself has no event for
+> it), Show event log. Kept: the timeline, the stage-ageing breakdown, and **Correct a stage** —
+> superseding, never overwriting.
 
 ---
 
 ## 1. Entry Points
 
-| From | Trigger | Context passed in |
-| ---- | ------- | ----------------- |
-| [LR Tracker](screen-lr-tracker.md) | Row click | `lr_id` — **this is beat ⑩** |
-| Alert to the store team | Notification link | `lr_id`, opened at the timeline |
-| [PO List](../prd-02-purchase-order/screen-po-list.md) | LR chip on the trail | `lr_id` |
-| [GRN Create](../prd-04-grn/screen-grn-create.md) | LR chip | `lr_id`, read-only |
+| From                                                  | Trigger              | Context passed in  |
+| ----------------------------------------------------- | -------------------- | ------------------ |
+| [LR List](screen-lr-list.md)                          | Row click            | `lr_id`            |
+| [LR Create](screen-lr-create.md)                      | After save           | `lr_id`, toast     |
+| [PO List](../prd-02-purchase-order/screen-po-list.md) | LR chip on the trail | `lr_id`            |
+| [GRN Create](../prd-04-grn/screen-grn-create.md)      | LR chip              | `lr_id`, read-only |
 
 ---
 
 ## 2. UX Layout
 
-Header, vertical timeline, action bar. The timeline is the screen.
+Header, timeline, stage-ageing panel, action bar.
 
 ```
 ┌────────────────────────────────────────────────────────────────────────┐
-│ ← LR Tracking   LR-4482 · Cargowing Express · docket CW-88214          │
-│ PO-U6-0219 · Sterling Coil & Strip · to Unit 6            [Attachment] │
+│ ← LR List   LR-0001 · Cargowing Express                                │
+│ PO-U7-SPARES-0002 · Fastline Fittings · to Unit 7 — Spares Store       │
+│ Expected: 8 NOS HYDRAULIC SEAL KIT                    [Attach]         │
 ├────────────────────────────────────────────────────────────────────────┤
 │ ⚠ At carrier facility for 3 days. Threshold is 1 day.                  │
-│   Alert sent to the Unit 6 store team −2 d.                            │
-├────────────────────────────────────────────────────────────────────────┤
-│  ●  Dispatched            −5 d   import · UdyogERP                     │
-│  │                        1 d in stage                                 │
-│  ●  In Transit            −4 d   import · UdyogERP                     │
-│  │                        1 d in stage                                 │
-│  ●  At Carrier Facility   −3 d   import · UdyogERP        ⚠ 3 d        │
-│  ○  Collected                    not yet                               │
-│  ○  Received                     not yet                               │
-├────────────────────────────────────────────────────────────────────────┤
-│  Next stage: Collected     [Record collection]                         │
+│   Alert sent to the Unit 7 — Spares Store store team −2 d.             │
+├──────────────────────────────────────┬─────────────────────────────────┤
+│ ── TIMELINE ─────────────────────    │ ── STAGE AGEING ──────────────  │
+│  ●  Dispatched         −5 d  manual  │  Dispatch → transit    1 d      │
+│  │                     1 d in stage  │  Transit               1 d      │
+│  ●  In Transit         −4 d  manual  │  At facility           3 d ⚠   │
+│  │                     1 d in stage  │  Collection            —        │
+│  ●  At Carrier Fac.    −3 d  manual  │  Receipt → GRN         —        │
+│  │  ⚠ 3 d                            │  ─────────────────────          │
+│  ○  Collected              not yet   │  Total open            5 d      │
+│  ○  Received               not yet   │                                 │
+├──────────────────────────────────────┴─────────────────────────────────┤
+│  Next stage: Collected            [Advance stage ▸]  [⋯ Correct]       │
 └────────────────────────────────────────────────────────────────────────┘
 ```
 
-- **Header** — LR, carrier, tracking reference, PO, vendor, destination, document attachment.
+- **Header** — LR, carrier, PO, vendor, destination, expected material, attachment.
 - **Breach banner** — only when a threshold is passed. States the fact and what was sent.
-- **Timeline** — five stages, filled and unfilled, each with a timestamp, a duration and a **source**.
-- **Action bar** — the single next stage. Never a dropdown of all five.
-
-### One button, not a stage picker
-
-The action bar offers exactly one transition: the next one. `REQ-LR-101` defines the sequence, and a
-free stage picker invites an LR to jump from In Transit to Received, which loses the collection step —
-the very step this module exists to expose.
+- **Timeline** — five stages, filled and unfilled, each with a timestamp, duration and source.
+- **Stage ageing** — the same numbers as the timeline, reframed as a breakdown with a total.
+- **Action bar** — opens [LR Stage Update](screen-lr-stage-update.md) for the next stage; never a
+  picker on this screen itself.
 
 ### The source column is the honest part
 
-`REQ-LR-304` records how each stage was set. Here, the first three came from **UdyogERP as an import**
-and the last two can only be set **manually** in Phlo, because they are Pyramid's own actions and no
-carrier knows about them (`REQ-LR-307`). A viewer can read straight off the timeline which facts came
-from a system and which came from a person.
+`REQ-LR-304` records how each stage was set. Every entry in this demo reads `manual` — there is no
+carrier integration to produce anything else. That absence is itself worth saying out loud in the room:
+the column exists in the data model for the day an `api`/`lookup` carrier is added.
 
 ---
 
@@ -83,98 +83,87 @@ from a system and which came from a person.
 
 ### Header
 
-| Label | Format | Source |
-| ----- | ------ | ------ |
-| LR number | `LR-4482` | `InboundLR.lr_number` |
-| Carrier | Name | `carriers.name` |
-| Tracking reference | Docket / AWB, monospace | `InboundLR.tracking_reference` |
-| PO | Number + link | `purchase_orders` |
-| Vendor | Name | `parties.name` |
-| Destination | Location name | `Location.name` |
-| Attachment | Scan or photo of the carrier LR | `InboundLR.document_url` |
-| Expected material | Item and quantity from the PO lines | `POLineItem` |
+| Label              | Format                                                                          | Source                                                        |
+| ------------------ | ------------------------------------------------------------------------------- | ------------------------------------------------------------- |
+| LR number          | Monospace                                                                       | `.lr_number`                                                  |
+| Carrier            | Name                                                                            | `Carrier.name`                                                |
+| Tracking reference | Monospace, deep-linked if a template exists                                     | `.tracking_reference`                                         |
+| PO                 | Number, links to [PO List](../prd-02-purchase-order/screen-po-list.md) expanded | `.po_id`                                                      |
+| Vendor             | Name                                                                            | `Party.name`                                                  |
+| Destination        | Location name                                                                   | `Location.name`                                               |
+| Expected material  | Item and quantity                                                               | this LR's own `.quantity`, or the PO's lines when none is set |
+| Attachment         | Scan or photo                                                                   | framework `Attachment`                                        |
 
 ### Timeline row
 
-| Label | Format | Source | Notes |
-| ----- | ------ | ------ | ----- |
-| Stage | One of five | `LRStageEvent.stage` | `REQ-LR-105` |
-| Timestamp | Relative — `−3 d` | `LRStageEvent.occurred_at` | Absolute on hover |
-| Time in stage | `3 d` | difference to the next event, or to `DEMO_DAY` | `REQ-LR-201` |
-| Source | `import · UdyogERP` · `manual` | `LRStageEvent.source` | `REQ-LR-304` |
-| Recorded by | **Position**, on a manual entry | `users` | Never a real name |
-| Breach | ⚠ + threshold | computed | |
-| Note | Free text | `LRStageEvent.note` | |
+| Label         | Format                                            | Source                                  | Notes                       |
+| ------------- | ------------------------------------------------- | --------------------------------------- | --------------------------- |
+| Stage         | One of five                                       | `LRStageEvent.stage`                    | `REQ-LR-105`                |
+| Timestamp     | Relative — `−3 d`                                 | `.occurred_at`                          | Absolute on hover           |
+| Time in stage | `3 d`                                             | difference to the next event, or to now | `REQ-LR-201`                |
+| Source        | `manual`                                          | `.source`                               | `REQ-LR-304`                |
+| Recorded by   | Position, on a manual entry                       | `users`                                 | Never a real name           |
+| Facility      | At-facility only                                  | `.facility_location`                    |                             |
+| Collected by  | Collected only                                    | `.collected_by`                         | Position, never a real name |
+| Note          | Free text                                         | `.note`                                 |                             |
+| Correction    | Struck-through original beneath the winning entry | `.is_correction`                        | `REQ-LR-305`                |
 
 ### Breach banner
 
-| Label | Format | Source |
-| ----- | ------ | ------ |
-| Stage and duration | *"At carrier facility for 3 days"* | computed |
-| Threshold | *"Threshold is 1 day"* | seeded per stage |
-| Alert record | *"Alert sent to the Unit 6 store team −2 d"* | `LR_ALERT_SENT` |
+| Label              | Format                                                      | Source           |
+| ------------------ | ----------------------------------------------------------- | ---------------- |
+| Stage and duration | _"At carrier facility for 3 days"_                          | computed         |
+| Threshold          | _"Threshold is 1 day"_                                      | seeded per stage |
+| Alert record       | _"Alert sent to the Unit 7 — Spares Store store team −2 d"_ | `LR_ALERT_SENT`  |
 
-**The alert record is shown, not just the breach.** *Something is late* is a dashboard. *Something is
-late and here is who was told and when* is a system — and it is the honest version, because it also
-shows that being told twice has not moved the material.
+**The alert record is shown, not just the breach.** _Something is late_ is a dashboard. _Something is
+late and here is who was told and when_ is a system.
 
 ---
 
 ## 4. CTAs
 
-| Control | Behaviour | Event |
-| ------- | --------- | ----- |
-| **Record collection** | Opens a small form — collected at, by, note. Commits | `INBOUND_COLLECTED` |
-| **Record arrival at plant** | Same, once collected | `INBOUND_ARRIVED_AT_PLANT` |
-| **Create GRN** | Appears only at `Received`. Opens [GRN Create](../prd-04-grn/screen-grn-create.md) with PO and LR — **this is beat ⑪** | none |
-| **Attachment** | Opens the scan | none |
-| **Correct a stage** | Edits a timestamp with a required reason. Appends, never overwrites | `LR_STAGE_CORRECTED` |
-| PO chip | Opens [PO List](../prd-02-purchase-order/screen-po-list.md) expanded | none |
-| **← LR Tracking** | Back to the board | none |
+| Control               | Behaviour                                                                     | Event                |
+| --------------------- | ----------------------------------------------------------------------------- | -------------------- |
+| **Advance stage**     | Opens [LR Stage Update](screen-lr-stage-update.md), next stage pre-selected   | prd-03 stage events  |
+| **Create GRN**        | Appears only at `Received`. Hands off to prd-04 GRN                           | none                 |
+| **Attach**            | Add a document                                                                | `FILE_ATTACHED`      |
+| **⋯ Correct a stage** | Edits a recorded timestamp on this LR. **Reason required**; original retained | `LR_STAGE_CORRECTED` |
+| PO chip               | Opens [PO List](../prd-02-purchase-order/screen-po-list.md), expanded         | none                 |
+| **← LR List**         | Back to the queue                                                             | none                 |
+
+**Correcting a stage never overwrites.** It supersedes, and both entries stay visible.
 
 ---
 
 ## 5. Validations
 
-| Field / action | Rule | Message |
-| -------------- | ---- | ------- |
-| Stage transition | Next stage only | "Record collection before arrival at the plant." |
-| Collected at | Not before the previous stage | "Collection cannot be earlier than arrival at the carrier." |
-| Collected at | Not in the future | "That is in the future." |
-| Correction | Reason required | "Say why this timestamp is being changed." |
-| Create GRN | Only at `Received` | "The material is not at the plant yet." |
-| Received without collection | Blocked | "This LR skips collection. Record it, or correct the earlier stage." |
+| Field / action  | Rule               | Message                                      |
+| --------------- | ------------------ | -------------------------------------------- |
+| Correct a stage | Reason required    | "Say why this timestamp is being corrected." |
+| Correct a stage | Not in the future  | "That time is in the future."                |
+| Create GRN      | Only at `Received` | "The material is not at the plant yet."      |
 
 ---
 
 ## 6. Conditional States
 
-| State | What the user sees |
-| ----- | ------------------ |
-| Loading | Header ready, timeline skeleton at five rows |
-| **Within threshold** | No banner. Timeline plain |
-| **Breaching** | Amber banner naming the stage, the duration, the threshold and the alert |
-| Long breach | Red banner past twice the threshold, with an escalation note. Never in the demo seed — one amber is enough |
-| Imported, never touched | Every source reads `import · UdyogERP`; the next action is manual |
-| Manually superseded | The row shows `manual`, with a sub-line: *"replaced an imported update from −1 d."* `REQ-LR-305` |
-| Stale import | *"Last checked −2 d"* under the current stage. `REQ-LR-309` without the config |
-| No attachment | *"No LR document attached"* with an upload control. `REQ-LR-002` |
-| Complete | All five filled, green header, **Create GRN** promoted; or the GRN chip if one exists |
-| GRN already made | Chip linking to it; **Create GRN** withdrawn |
-| Error | Header holds, timeline shows a retry card |
-| Restricted | *Design intent:* store roles at the destination update stages. **Not enforced in the demo** |
+| State                | What the user sees                                                                          |
+| -------------------- | ------------------------------------------------------------------------------------------- |
+| Loading              | Header ready, timeline skeleton at five rows                                                |
+| **Within threshold** | No banner. Timeline plain                                                                   |
+| **Breaching**        | Amber banner naming the stage, the duration, the threshold and the alert                    |
+| **Corrected stage**  | Original struck through with the correction reason inline                                   |
+| No attachment        | _"No LR document attached"_ with an upload control                                          |
+| Complete             | All five filled, green header; **Create GRN** promoted, or a chip if one already exists     |
+| GRN already made     | Chip linking to it; **Create GRN** withdrawn                                                |
+| Error                | Header holds, timeline shows a retry card                                                   |
+| Restricted           | _Design intent:_ store roles at the destination update stages. **Not enforced in the demo** |
 
 ---
 
 ## Open Questions
 
-1. **Who physically collects from a carrier's godown,** and in what vehicle? The stage exists because
-   this happens; the mechanics are unrecorded.
-2. **Is 1 day the right threshold at a carrier facility?** Invented. Must not be presented as a
-   recommendation.
-3. **Who receives the alert?** *The store team* is a role, not a channel. Email, SMS and WhatsApp are
-   all plausible and none is evidenced.
-4. **What does the carrier LR document look like?** None has been seen. The attachment is a placeholder
-   for an artefact nobody has described.
-5. **Does the vendor or Pyramid arrange the carrier?** Decides who owns the tracking reference — and
-   whether Pyramid can chase it at all.
+1. **Who physically collects from a carrier's godown,** and in what vehicle?
+2. **Is 1 day the right threshold at a carrier facility?** Invented.
+3. **Who receives the alert?** _The store team_ is a role, not a channel.
