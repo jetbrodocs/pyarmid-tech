@@ -2,7 +2,7 @@
 title: "Screen — DDP Builder"
 status: draft
 created: 2026-09-02
-updated: 2026-09-02
+updated: 2026-09-08
 tags: [screen-spec, demo, ddp, dispatch-plan, scheduling]
 prd: ../../prd-09-ddp/prd.md
 parent_spec: ../../../screen-specs/prd-08-delivery-scheduling/screen-dispatch-plan-builder.md
@@ -29,12 +29,12 @@ issues it.
 
 ## 1. Entry Points
 
-| From | Trigger | Context passed in |
-| ---- | ------- | ----------------- |
-| Main navigation | `Sales → Dispatch Plan` | Tomorrow's auto-draft, both plants |
-| Home | *Tomorrow's plan is not issued* tile | Same |
-| [SO List](../prd-08-sales-order/screen-so-list.md) | Row menu → **Add to today's plan** | Draft with that schedule line added |
-| [Today's Plan](screen-todays-plan.md) | **Revise plan** on an issued plan | The issued plan, as a new version |
+| From                                               | Trigger                              | Context passed in                   |
+| -------------------------------------------------- | ------------------------------------ | ----------------------------------- |
+| Main navigation                                    | `Sales → Dispatch Plan`              | Tomorrow's auto-draft, both plants  |
+| Home                                               | _Tomorrow's plan is not issued_ tile | Same                                |
+| [SO List](../prd-08-sales-order/screen-so-list.md) | Row menu → **Add to today's plan**   | Draft with that schedule line added |
+| [Today's Plan](screen-todays-plan.md)              | **Revise plan** on an issued plan    | The issued plan, as a new version   |
 
 ---
 
@@ -90,21 +90,21 @@ The stock figure is free stock. **Nothing is reserved by a plan** — stock is c
 
 ## 3. Data Points Displayed
 
-| Label | Format | Source | Notes |
-| ----- | ------ | ------ | ----- |
-| Plan date | Date picker, defaults to `DEMO_DAY + 1` | user | |
-| Plant | Unit 6 · Unit 7 | `Location` | One plan per plant per date |
-| Plan status | Draft · Issued · Revised `v2` | `DispatchPlan.status` | `REQ-SCH-009` |
-| Drafted at | *"auto-drafted 06:00"* | `DispatchPlan.drafted_at` | |
-| Selected | Checkbox | user | An unchecked line stays open for another day |
-| SO | Number + link | `sales_orders` | |
-| Customer | Name | `parties.name` | |
-| Product | SKU name | `items.name` | Real names |
-| Quantity | Editable integer | `DeliveryScheduleLine.quantity` | Adjustable — `REQ-SCH-005` |
-| **FG stock at this plant** | Read-only, ⚠ when short | `StockPosition` FG at the plant's locations | `REQ-DP-005` |
-| Due date | Relative | `DeliveryScheduleLine.due_date` | Overdue lines flagged |
-| Note | Free text per line | user | Travels to the plant |
-| Totals | Lines, units, selected | computed | |
+| Label                      | Format                                  | Source                                      | Notes                                        |
+| -------------------------- | --------------------------------------- | ------------------------------------------- | -------------------------------------------- |
+| Plan date                  | Date picker, defaults to `DEMO_DAY + 1` | user                                        |                                              |
+| Plant                      | Unit 6 · Unit 7                         | `Location`                                  | One plan per plant per date                  |
+| Plan status                | Draft · Issued · Revised `v2`           | `DispatchPlan.status`                       | `REQ-SCH-009`                                |
+| Drafted at                 | _"auto-drafted 06:00"_                  | `DispatchPlan.drafted_at`                   |                                              |
+| Selected                   | Checkbox                                | user                                        | An unchecked line stays open for another day |
+| SO                         | Number + link                           | `sales_orders`                              |                                              |
+| Customer                   | Name                                    | `parties.name`                              |                                              |
+| Product                    | SKU name                                | `items.name`                                | Real names                                   |
+| Quantity                   | Editable integer                        | `DeliveryScheduleLine.quantity`             | Adjustable — `REQ-SCH-005`                   |
+| **FG stock at this plant** | Read-only, ⚠ when short                 | `StockPosition` FG at the plant's locations | `REQ-DP-005`                                 |
+| Due date                   | Relative                                | `DeliveryScheduleLine.due_date`             | Overdue lines flagged                        |
+| Note                       | Free text per line                      | user                                        | Travels to the plant                         |
+| Totals                     | Lines, units, selected                  | computed                                    |                                              |
 
 **No value column.** A dispatch plan is a production and logistics instrument. Money on this screen
 invites the plan to be sequenced by invoice value, which is not what anyone at Pyramid described.
@@ -113,16 +113,16 @@ invites the plan to be sequenced by invoice value, which is not what anyone at P
 
 ## 4. CTAs
 
-| Control | Behaviour | Event |
-| ------- | --------- | ----- |
-| **Issue plan** | Confirmation dialog with the totals, then commits. Immediately visible to the plant — `REQ-SCH-006` | `PLAN_ISSUED` |
-| Checkbox | Includes or drops a line | none |
-| Quantity | Inline edit | `PLAN_LINE_ADJUSTED` |
-| **+ Add line** | Picker of open schedule lines, including later dates | none |
-| **Re-draft** | Rebuilds from current schedule lines, keeping manual edits | `PLAN_REDRAFTED` |
-| **Revise** | On an issued plan — opens `v2` — `REQ-SCH-009` | `PLAN_REVISED` |
-| SO chip | Opens [SO List](../prd-08-sales-order/screen-so-list.md) expanded | none |
-| FG stock figure | Opens [Stock by Location](../prd-05-inventory-management/screen-stock-by-location.md) filtered | none |
+| Control         | Behaviour                                                                                           | Event                |
+| --------------- | --------------------------------------------------------------------------------------------------- | -------------------- |
+| **Issue plan**  | Confirmation dialog with the totals, then commits. Immediately visible to the plant — `REQ-SCH-006` | `PLAN_ISSUED`        |
+| Checkbox        | Includes or drops a line                                                                            | none                 |
+| Quantity        | Inline edit                                                                                         | `PLAN_LINE_ADJUSTED` |
+| **+ Add line**  | Picker of open schedule lines, including later dates                                                | none                 |
+| **Re-draft**    | Rebuilds from current schedule lines, keeping manual edits                                          | `PLAN_REDRAFTED`     |
+| **Revise**      | On an issued plan — opens `v2` — `REQ-SCH-009`                                                      | `PLAN_REVISED`       |
+| SO chip         | Opens [SO List](../prd-08-sales-order/screen-so-list.md) expanded                                   | none                 |
+| FG stock figure | Opens [Stock by Location](../prd-05-inventory-management/screen-stock-by-location.md) filtered      | none                 |
 
 **Issuing is the commitment.** Before it, the plan is Phlo's opinion; after it, a plant head has
 something to acknowledge and be measured against. `REQ-SCH-010` carries the lines into work orders
@@ -132,15 +132,15 @@ something to acknowledge and be measured against. `REQ-SCH-010` carries the line
 
 ## 5. Validations
 
-| Field / action | Rule | Message |
-| -------------- | ---- | ------- |
-| Issue | At least one line selected | "Nothing selected. Select the lines to issue." |
-| Issue | Plan date not in the past | "That day has passed. Build tomorrow's plan instead." |
-| Issue | Warn where a plan is already issued for that plant and date | "Unit 7 already has a plan for +1 d. Issuing creates v2." |
-| Quantity | `> 0`, not above the schedule line's open quantity | "Only 300 of this line are open." |
-| Quantity | Warn where the plant's FG stock is short | "300 planned against 240 in stock at Unit 7. The plant has to make 60." |
-| Selection | Warn where two lines lean on the same free stock | "Two lines plan 500 drums against 240 free. Both cannot ship from stock." |
-| Plant | Warn where a line's schedule names a different plant | "This line is scheduled at Unit 6." |
+| Field / action | Rule                                                        | Message                                                                   |
+| -------------- | ----------------------------------------------------------- | ------------------------------------------------------------------------- |
+| Issue          | At least one line selected                                  | "Nothing selected. Select the lines to issue."                            |
+| Issue          | Plan date not in the past                                   | "That day has passed. Build tomorrow's plan instead."                     |
+| Issue          | Warn where a plan is already issued for that plant and date | "Unit 7 already has a plan for +1 d. Issuing creates v2."                 |
+| Quantity       | `> 0`, not above the schedule line's open quantity          | "Only 300 of this line are open."                                         |
+| Quantity       | Warn where the plant's FG stock is short                    | "300 planned against 240 in stock at Unit 7. The plant has to make 60."   |
+| Selection      | Warn where two lines lean on the same free stock            | "Two lines plan 500 drums against 240 free. Both cannot ship from stock." |
+| Plant          | Warn where a line's schedule names a different plant        | "This line is scheduled at Unit 6."                                       |
 
 The last warning is not a block: moving a line between plants is a legitimate call, and the plan is
 where a person makes it.
@@ -149,21 +149,22 @@ where a person makes it.
 
 ## 6. Conditional States
 
-| State | What the user sees |
-| ----- | ------------------ |
-| Loading | Selector ready, grid skeleton |
-| **Auto-drafted** | Blue strip: *"Auto-drafted at 06:00 from 4 open schedule lines."* All lines checked |
-| Empty draft | *"Nothing due at Unit 7 on +1 d."* with **+ Add line** promoted |
-| Short stock on a line | ⚠ beside the figure and an inline note naming the gap |
-| Over-committed stock | Amber total strip naming the two competing lines |
-| Overdue line | Red due date; sorted to the top of the draft |
-| Adjusted | Edited quantities carry a chip showing the original |
-| Re-drafted with edits | Blue note: *"2 lines changed since your edits."* Naming them, keeping the edits |
-| **Issued** | Header turns green, grid read-only, toast: *"Issued to Unit 7."* **Revise** offered — carries the demo to beat ⑰ |
-| Revised | Chip `v2`, with a diff against `v1` |
-| Plant already acknowledged | Banner: *"Unit 7 acknowledged this plan 10 minutes ago. A revision will need a fresh acknowledgement."* |
-| Error | Retry card; edits preserved |
-| Restricted | *Design intent:* sales issues, plants read. **Not enforced in the demo** |
+| State                       | What the user sees                                                                                                                    |
+| --------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
+| Loading                     | Selector ready, grid skeleton                                                                                                         |
+| **Auto-drafted**            | Blue strip: _"Auto-drafted at 06:00 from 4 open schedule lines."_ All lines checked                                                   |
+| Empty draft (no plan)       | _"Nothing due at Unit 7 on +1 d."_ with **Draft plan** button                                                                         |
+| Empty draft (plan, 0 lines) | _"No open schedule lines due on or before [date] at this plant. Create a Sales Order with a delivery schedule first, then re-draft."_ |
+| Short stock on a line       | ⚠ beside the figure and an inline note naming the gap                                                                                 |
+| Over-committed stock        | Amber total strip naming the two competing lines                                                                                      |
+| Overdue line                | Red due date; sorted to the top of the draft                                                                                          |
+| Adjusted                    | Edited quantities carry a chip showing the original                                                                                   |
+| Re-drafted with edits       | Blue note: _"2 lines changed since your edits."_ Naming them, keeping the edits                                                       |
+| **Issued**                  | Header turns green, grid read-only, toast: _"Issued to Unit 7."_ **Revise** offered — carries the demo to beat ⑰                      |
+| Revised                     | Chip `v2`, with a diff against `v1`                                                                                                   |
+| Plant already acknowledged  | Banner: _"Unit 7 acknowledged this plan 10 minutes ago. A revision will need a fresh acknowledgement."_                               |
+| Error                       | Retry card; edits preserved                                                                                                           |
+| Restricted                  | _Design intent:_ sales issues, plants read. **Not enforced in the demo**                                                              |
 
 ---
 

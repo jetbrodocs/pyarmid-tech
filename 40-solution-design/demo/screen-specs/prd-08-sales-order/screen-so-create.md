@@ -2,11 +2,21 @@
 title: "Screen — SO Create"
 status: draft
 created: 2026-09-02
-updated: 2026-09-02
+updated: 2026-09-08
 tags: [screen-spec, demo, sales-order, gst]
 prd: ../../prd-08-sales-order/prd.md
 parent_spec: ../../../screen-specs/prd-09-sales-orders/screen-so-create.md
-requirements: [REQ-SO-001, REQ-SO-002, REQ-SO-003, REQ-SO-004, REQ-SO-005, REQ-SO-006, REQ-SO-007, REQ-SCH-001]
+requirements:
+  [
+    REQ-SO-001,
+    REQ-SO-002,
+    REQ-SO-003,
+    REQ-SO-004,
+    REQ-SO-005,
+    REQ-SO-006,
+    REQ-SO-007,
+    REQ-SCH-001,
+  ]
 ---
 
 # Screen — SO Create
@@ -26,11 +36,11 @@ it.
 
 ## 1. Entry Points
 
-| From | Trigger | Context passed in |
-| ---- | ------- | ----------------- |
-| Main navigation | `Sales → New Order` | Blank |
-| [SO List](screen-so-list.md) | **+ New Order** | Blank |
-| Customer record | **New order** | Customer set |
+| From                         | Trigger             | Context passed in |
+| ---------------------------- | ------------------- | ----------------- |
+| Main navigation              | `Sales → New Order` | Blank             |
+| [SO List](screen-so-list.md) | **+ New Order**     | Blank             |
+| Customer record              | **New order**       | Customer set      |
 
 ---
 
@@ -88,38 +98,38 @@ site is not. The demo seeds one of each.
 
 ### Header
 
-| Label | Format | Source | Notes |
-| ----- | ------ | ------ | ----- |
-| SO number | Read-only until saved | auto | |
-| Customer (bill to) | Type-ahead | `parties` role customer | Fictional set only |
-| Consignee (ship to) | Dropdown of the customer's addresses | `party_addresses` | `REQ-SO-003` |
-| GSTIN | Read-only, both parties | `parties.gstin` | |
-| Place of supply | Read-only, from the consignee | `party_addresses.state_code` | `REQ-SO-004` |
-| **Received by** | Email · WhatsApp · Verbal · Portal | user | `REQ-SO-002`. Confirmed practice |
-| Received on | Date | user | |
-| Keyed at | Read-only — *Bombay* | fixed | Confirmed: sales keys orders at Bombay |
-| Customer PO reference | Free text, optional | user | |
+| Label                 | Format                               | Source                       | Notes                                  |
+| --------------------- | ------------------------------------ | ---------------------------- | -------------------------------------- |
+| SO number             | Read-only until saved                | auto                         |                                        |
+| Customer (bill to)    | Type-ahead                           | `parties` role customer      | Fictional set only                     |
+| Consignee (ship to)   | Dropdown of the customer's addresses | `party_addresses`            | `REQ-SO-003`                           |
+| GSTIN                 | Read-only, both parties              | `parties.gstin`              |                                        |
+| Place of supply       | Read-only, from the consignee        | `party_addresses.state_code` | `REQ-SO-004`                           |
+| **Received by**       | Email · WhatsApp · Verbal · Portal   | user                         | `REQ-SO-002`. Confirmed practice       |
+| Received on           | Date                                 | user                         |                                        |
+| Keyed at              | Read-only — _Bombay_                 | fixed                        | Confirmed: sales keys orders at Bombay |
+| Customer PO reference | Free text, optional                  | user                         |                                        |
 
 ### Line grid
 
-| Label | Format | Source | Notes |
-| ----- | ------ | ------ | ----- |
-| Product | Type-ahead over the SKU master | `items` | **Real SKU names** |
-| Quantity | Integer | user | |
-| UoM | Read-only | `items.uom` | |
-| Rate | Currency, defaults to the customer's last | seed register `F1`–`F3` | 🔴 Invented. Overridable |
-| HSN | From the item master | `items.hsn` | Drives GST |
-| Due date | Date | user | |
-| Amount, GST, total | Computed | | Illustrative marker on each |
+| Label              | Format                                    | Source                  | Notes                       |
+| ------------------ | ----------------------------------------- | ----------------------- | --------------------------- |
+| Product            | Type-ahead over the SKU master            | `items`                 | **Real SKU names**          |
+| Quantity           | Integer                                   | user                    |                             |
+| UoM                | Read-only                                 | `items.uom`             |                             |
+| Rate               | Currency, defaults to the customer's last | seed register `F1`–`F3` | 🔴 Invented. Overridable    |
+| HSN                | From the item master                      | `items.hsn`             | Drives GST                  |
+| Due date           | Date                                      | user                    |                             |
+| Amount, GST, total | Computed                                  |                         | Illustrative marker on each |
 
 ### Schedule line
 
-| Label | Format | Source |
-| ----- | ------ | ------ |
-| Quantity | Integer | `DeliveryScheduleLine.quantity` |
-| Date | Relative | `DeliveryScheduleLine.due_date` |
-| Plant | Unit 6 · Unit 7 | `DeliveryScheduleLine.plant_id` |
-| Produced / dispatched | Read-only, 0 on a new order | `REQ-SCH-003` |
+| Label                 | Format                                       | Source                          |
+| --------------------- | -------------------------------------------- | ------------------------------- |
+| Quantity              | Integer                                      | `DeliveryScheduleLine.quantity` |
+| Date                  | Relative                                     | `DeliveryScheduleLine.due_date` |
+| Plant                 | Dropdown: Unit 6 · Unit 7 (from `locations`) | `DeliveryScheduleLine.plant_id` |
+| Produced / dispatched | Read-only, 0 on a new order                  | `REQ-SCH-003`                   |
 
 **Pricing is invented and the model is unknown.** The demo assumes a per-SKU rate with an override.
 Pyramid's real pricing model has never been described — it is an open question in prd-09, not a solved
@@ -129,14 +139,14 @@ one.
 
 ## 4. CTAs
 
-| Control | Behaviour | Event |
-| ------- | --------- | ----- |
-| **Save Draft** | Persists, not visible to production or dispatch | `SO_CREATED` status Draft |
-| **Confirm** | Validates, commits, status Confirmed, schedule lines become live | `SO_CREATED` then `SO_CONFIRMED` |
-| **+ Add line** | Appends a product line with one schedule line | none |
-| **Split schedule** | Splits a line's quantity across dates and plants | none |
-| **✕** | Removes a line or a schedule line | none |
-| **Cancel** | Discards, confirming if dirty | none |
+| Control            | Behaviour                                                        | Event                            |
+| ------------------ | ---------------------------------------------------------------- | -------------------------------- |
+| **Save Draft**     | Persists, not visible to production or dispatch                  | `SO_CREATED` status Draft        |
+| **Confirm**        | Validates, commits, status Confirmed, schedule lines become live | `SO_CREATED` then `SO_CONFIRMED` |
+| **+ Add line**     | Appends a product line with one schedule line                    | none                             |
+| **Split schedule** | Splits a line's quantity across dates and plants                 | none                             |
+| **✕**              | Removes a line or a schedule line                                | none                             |
+| **Cancel**         | Discards, confirming if dirty                                    | none                             |
 
 **Confirming does not allocate stock.** Stock stays free until it is **loaded onto the truck**
 (confirmed 2026-08-29). Nothing here reserves anything, and no screen in this demo shows a reserved
@@ -146,20 +156,20 @@ quantity — say so, because every ERP the room has seen does the opposite.
 
 ## 5. Validations
 
-| Field | Rule | Message |
-| ----- | ---- | ------- |
-| Customer | Required, active | "Pick a customer." |
-| Consignee | Required | "Pick where this ships to." |
-| Consignee | Must have a state | "No state on the ship-to address — GST cannot be computed." |
-| Received by | Required | "How did this order arrive?" |
-| Lines | At least one | "Add at least one product." |
-| Quantity | `> 0`, whole units | "Quantity must be a whole number above zero." |
-| Rate | `> 0` to confirm | "A rate is needed to confirm." |
-| Rate override | Warn beyond ±10% of the last rate | "That is 18% below the last rate to this customer. Confirm anyway?" |
-| Due date | Not in the past | "That date has passed." |
-| Schedule total | Must equal the line quantity | "Line 1 schedules 350 of 400. Schedule the remaining 50." |
-| Schedule plant | Required per schedule line | "Say which plant makes this." |
-| HSN | Required to confirm | "HSN is required — it drives GST." |
+| Field          | Rule                              | Message                                                             |
+| -------------- | --------------------------------- | ------------------------------------------------------------------- |
+| Customer       | Required, active                  | "Pick a customer."                                                  |
+| Consignee      | Required                          | "Pick where this ships to."                                         |
+| Consignee      | Must have a state                 | "No state on the ship-to address — GST cannot be computed."         |
+| Received by    | Required                          | "How did this order arrive?"                                        |
+| Lines          | At least one                      | "Add at least one product."                                         |
+| Quantity       | `> 0`, whole units                | "Quantity must be a whole number above zero."                       |
+| Rate           | `> 0` to confirm                  | "A rate is needed to confirm."                                      |
+| Rate override  | Warn beyond ±10% of the last rate | "That is 18% below the last rate to this customer. Confirm anyway?" |
+| Due date       | Not in the past                   | "That date has passed."                                             |
+| Schedule total | Must equal the line quantity      | "Line 1 schedules 350 of 400. Schedule the remaining 50."           |
+| Schedule plant | Dropdown selection, optional      | Empty = no plant assigned yet. Dropdown lists all locations.        |
+| HSN            | Required to confirm               | "HSN is required — it drives GST."                                  |
 
 **The schedule-total rule is the important one.** An order line whose schedule does not add up produces
 a dispatch plan that is quietly short, and the shortfall surfaces at the plant on the morning it is due.
@@ -168,19 +178,19 @@ a dispatch plan that is quietly short, and the shortfall surfaces at the plant o
 
 ## 6. Conditional States
 
-| State | What the user sees |
-| ----- | ------------------ |
-| Loading | Header ready, product lookup disabled until the master resolves |
-| Empty | Cursor in *Customer*, one blank line |
-| New customer | Inline **+ Add customer** in the picker; a minimal form, no page change |
-| Interstate consignee | Tax rows switch to **IGST** with a note naming the reason |
-| No last rate | Rate blank and focused. **Never a guessed rate** |
-| Rate overridden | Amber chip on the line, reason optional but recorded |
-| Schedule incomplete | Amber strip: *"50 of 400 unscheduled."* **Confirm** disabled |
-| Draft saved | Chip **Draft**; not visible to [DDP Builder](../prd-09-ddp/screen-ddp-builder.md) |
-| Confirmed | Redirect to [SO List](screen-so-list.md), toast: *"Confirmed. 3 schedule lines are now in the pipeline."* — **carries the demo to beat ⑮** |
-| Save error | Everything kept, retry offered |
-| Restricted | *Design intent:* sales team only. **Not enforced in the demo** |
+| State                | What the user sees                                                                                                                         |
+| -------------------- | ------------------------------------------------------------------------------------------------------------------------------------------ |
+| Loading              | Header ready, product lookup disabled until the master resolves                                                                            |
+| Empty                | Cursor in _Customer_, one blank line                                                                                                       |
+| New customer         | Inline **+ Add customer** in the picker; a minimal form, no page change                                                                    |
+| Interstate consignee | Tax rows switch to **IGST** with a note naming the reason                                                                                  |
+| No last rate         | Rate blank and focused. **Never a guessed rate**                                                                                           |
+| Rate overridden      | Amber chip on the line, reason optional but recorded                                                                                       |
+| Schedule incomplete  | Amber strip: _"50 of 400 unscheduled."_ **Confirm** disabled                                                                               |
+| Draft saved          | Chip **Draft**; not visible to [DDP Builder](../prd-09-ddp/screen-ddp-builder.md)                                                          |
+| Confirmed            | Redirect to [SO List](screen-so-list.md), toast: _"Confirmed. 3 schedule lines are now in the pipeline."_ — **carries the demo to beat ⑮** |
+| Save error           | Everything kept, retry offered                                                                                                             |
+| Restricted           | _Design intent:_ sales team only. **Not enforced in the demo**                                                                             |
 
 ---
 
