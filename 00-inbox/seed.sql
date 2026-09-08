@@ -1,0 +1,195 @@
+-- BOM Seed Data for Phlo — Pyramid Technoplast Demo
+-- Generated: 2026-09-08
+-- Policy: demo-data-policy.md | Resolutions: A1–A5 applied
+-- ALL RATES ARE INVENTED. Quantities are Pyramid's own.
+
+BEGIN;
+
+-- ═══ ITEMS ═══
+
+INSERT INTO items (id, name, category, uom, product_line) VALUES ('hdpe-resin', 'HDPE Granules', 'RM', 'kg', 'shared');
+INSERT INTO items (id, name, category, uom, product_line) VALUES ('regrind', 'Grinding (Regrind)', 'RM', 'kg', 'shared');
+INSERT INTO items (id, name, category, uom, product_line) VALUES ('master-batch', 'Master Batch', 'RM', 'kg', 'shared');
+INSERT INTO items (id, name, category, uom, product_line) VALUES ('uv-stabiliser', 'UV Stabiliser', 'RM', 'kg', 'IBC');
+INSERT INTO items (id, name, category, uom, product_line) VALUES ('drum-235-nm-8.5', '235 LTR N/M 8.5 KGS', 'SFG', 'NOS', 'Plastic');
+INSERT INTO items (id, name, category, uom, product_line) VALUES ('bung-50mm-reg-white', '50 MM BUNGS REGULAR 1028 SPECIAL WHITE', 'ACC', 'NOS', 'Plastic');
+INSERT INTO items (id, name, category, uom, product_line) VALUES ('capseal-2in-pvc', 'CAPSEAL 2 INCH WITH PVC', 'ACC', 'NOS', 'Plastic');
+INSERT INTO items (id, name, category, uom, product_line) VALUES ('bung-50mm-hard-ring', '50 MM BUNGS NATURAL (HARD) RING', 'ACC', 'NOS', 'Plastic');
+INSERT INTO items (id, name, category, uom, product_line) VALUES ('dustcap-70mm-blue', '70 MM DUST CAP BLUE', 'ACC', 'NOS', 'Plastic');
+INSERT INTO items (id, name, category, uom, product_line) VALUES ('drum-235-nm-8.5-blue', '235 LTR N/M 8.5 KGS BLUE', 'FG', 'NOS', 'Plastic');
+INSERT INTO items (id, name, category, uom, product_line) VALUES ('crca-coil-0.97x914', 'CRCA COIL 0.97 × 914', 'RM', 'kg', 'MS');
+INSERT INTO items (id, name, category, uom, product_line) VALUES ('crca-coil-0.9x1315', 'CRCA COIL 0.9 × 1315', 'RM', 'kg', 'MS');
+INSERT INTO items (id, name, category, uom, product_line) VALUES ('body-sheet-0.97', 'BODY SHEET 0.97', 'SFG', 'NOS', 'MS');
+INSERT INTO items (id, name, category, uom, product_line) VALUES ('lid-sheet-0.9x1315', 'LID SHEET 0.9 × 1320 × 655', 'SFG', 'NOS', 'MS');
+INSERT INTO items (id, name, category, uom, product_line) VALUES ('tagring-2in', '2" TAG RING', 'ACC', 'NOS', 'MS');
+INSERT INTO items (id, name, category, uom, product_line) VALUES ('tagring-0.75in', '3/4" TAG RING', 'ACC', 'NOS', 'MS');
+INSERT INTO items (id, name, category, uom, product_line) VALUES ('bungs-2in-rubber', '2" BUNGS WITH BLACK RUBBER GASKET', 'ACC', 'NOS', 'MS');
+INSERT INTO items (id, name, category, uom, product_line) VALUES ('bungs-0.75in-rubber', '3/4" BUNGS WITH BLACK RUBBER GASKET', 'ACC', 'NOS', 'MS');
+INSERT INTO items (id, name, category, uom, product_line) VALUES ('bungs-2in-poly', '2" BUNGS WITH POLY SQ GASKET', 'ACC', 'NOS', 'MS');
+INSERT INTO items (id, name, category, uom, product_line) VALUES ('bungs-0.75in-poly', '3/4" BUNGS WITH POLY SQ GASKET', 'ACC', 'NOS', 'MS');
+INSERT INTO items (id, name, category, uom, product_line) VALUES ('capseal-2in-ms', '2" M S PLAIN CAPSEAL (VINYALRING)', 'ACC', 'NOS', 'MS');
+INSERT INTO items (id, name, category, uom, product_line) VALUES ('capseal-0.75in-ms', '3/4" M S PLAIN CAPSEAL (VINYALRING)', 'ACC', 'NOS', 'MS');
+INSERT INTO items (id, name, category, uom, product_line) VALUES ('stretch-film', 'STRETCH FILM (WRAPING ROLL) 1020 MM × 23 MIC', 'ACC', 'kg', 'MS');
+INSERT INTO items (id, name, category, uom, product_line) VALUES ('corrugated-sheet', 'CORRUGATED SHEET 2 PLY 36" × 75"', 'ACC', 'NOS', 'MS');
+INSERT INTO items (id, name, category, uom, product_line) VALUES ('barrel-210-crca-16', 'CRCA 210 LTR CLOSE MOUTH BARREL 16 KGS', 'FG', 'NOS', 'MS');
+INSERT INTO items (id, name, category, uom, product_line) VALUES ('ic-1000-15kg', 'IC 1000 LTRS. 2 INCH NAT (15kgs)', 'SFG', 'NOS', 'IBC');
+INSERT INTO items (id, name, category, uom, product_line) VALUES ('gp-coil-1.20x88', 'GP COIL 1.20 × 88 MM', 'RM', 'kg', 'IBC');
+INSERT INTO items (id, name, category, uom, product_line) VALUES ('gp-coil-0.90x65', 'GP COIL 0.90 × 65 MM', 'RM', 'kg', 'IBC');
+INSERT INTO items (id, name, category, uom, product_line) VALUES ('gp-coil-1.00x62', 'GP COIL 1.00 × 62 MM', 'RM', 'kg', 'IBC');
+INSERT INTO items (id, name, category, uom, product_line) VALUES ('tail-pipe-4175', 'TAIL PIPE (18×15×1×4175)', 'SFG', 'NOS', 'IBC');
+INSERT INTO items (id, name, category, uom, product_line) VALUES ('vertical-bar-5130', 'VERTICAL BAR (16×16×0.9×5130)', 'SFG', 'NOS', 'IBC');
+INSERT INTO items (id, name, category, uom, product_line) VALUES ('horizontal-bar-4230', 'HORIZONTAL BAR (16×16×0.9×4230)', 'SFG', 'NOS', 'IBC');
+INSERT INTO items (id, name, category, uom, product_line) VALUES ('round-pipe-4110', 'ROUND PIPE (19×1.0×4110)', 'SFG', 'NOS', 'IBC');
+INSERT INTO items (id, name, category, uom, product_line) VALUES ('round-pipe-4010', 'ROUND PIPE (19×1.0×4010)', 'SFG', 'NOS', 'IBC');
+INSERT INTO items (id, name, category, uom, product_line) VALUES ('zigzag-pipe-4420', 'ZIGZAG PIPE (19×1.0×4420)', 'SFG', 'NOS', 'IBC');
+INSERT INTO items (id, name, category, uom, product_line) VALUES ('cut-vbar-1002', 'CUT VERTICAL BAR (16×16×0.9×1002)', 'SFG', 'NOS', 'IBC');
+INSERT INTO items (id, name, category, uom, product_line) VALUES ('cut-vbar-1018', 'CUT VERTICAL BAR (16×16×0.9×1018)', 'SFG', 'NOS', 'IBC');
+INSERT INTO items (id, name, category, uom, product_line) VALUES ('top-cross-bar-1020', 'TOP CROSS BAR (1020)', 'SFG', 'NOS', 'IBC');
+INSERT INTO items (id, name, category, uom, product_line) VALUES ('flat-base-ring', 'FLAT BASE RING', 'SFG', 'NOS', 'IBC');
+INSERT INTO items (id, name, category, uom, product_line) VALUES ('easy-base-ring', 'EASY BASE RING', 'SFG', 'NOS', 'IBC');
+INSERT INTO items (id, name, category, uom, product_line) VALUES ('cage-big', 'CAGE-BIG', 'SFG', 'NOS', 'IBC');
+INSERT INTO items (id, name, category, uom, product_line) VALUES ('cage-max', 'CAGE-MAX', 'SFG', 'NOS', 'IBC');
+INSERT INTO items (id, name, category, uom, product_line) VALUES ('bottom-plate', 'BOTTOM PLATE', 'SFG', 'NOS', 'IBC');
+INSERT INTO items (id, name, category, uom, product_line) VALUES ('traversal-piece', 'TRAVERSAL PIECE', 'SFG', 'NOS', 'IBC');
+INSERT INTO items (id, name, category, uom, product_line) VALUES ('corner-spacer', 'CORNER SPACER', 'SFG', 'NOS', 'IBC');
+INSERT INTO items (id, name, category, uom, product_line) VALUES ('side-spacer', 'SIDE SPACER', 'SFG', 'NOS', 'IBC');
+INSERT INTO items (id, name, category, uom, product_line) VALUES ('back-spacer', 'BACK SPACER', 'SFG', 'NOS', 'IBC');
+INSERT INTO items (id, name, category, uom, product_line) VALUES ('drip-pan', 'DRIP PAN', 'SFG', 'NOS', 'IBC');
+INSERT INTO items (id, name, category, uom, product_line) VALUES ('base-ring-flat', 'BASE RING - FLAT', 'SFG', 'NOS', 'IBC');
+INSERT INTO items (id, name, category, uom, product_line) VALUES ('base-ring-easy', 'BASE RING - EASY', 'SFG', 'NOS', 'IBC');
+INSERT INTO items (id, name, category, uom, product_line) VALUES ('c-channel', 'C CHANNEL', 'SFG', 'NOS', 'IBC');
+INSERT INTO items (id, name, category, uom, product_line) VALUES ('cp-flat', 'CP-FLAT (COMPOSITE PALLETS) 1000MM × 1200MM', 'SFG', 'NOS', 'IBC');
+INSERT INTO items (id, name, category, uom, product_line) VALUES ('cp-easy', 'CP-EASY (COMPOSITE PALLETS) 1000MM × 1200MM', 'SFG', 'NOS', 'IBC');
+INSERT INTO items (id, name, category, uom, product_line) VALUES ('sp', 'SP (STEEL PALLETS) 1000MM × 1200MM', 'SFG', 'NOS', 'IBC');
+INSERT INTO items (id, name, category, uom, product_line) VALUES ('wp-pine', 'WP-PINE (WOODEN PALLETS) 1000MM × 1200MM', 'SFG', 'NOS', 'IBC');
+INSERT INTO items (id, name, category, uom, product_line) VALUES ('wp-jungle', 'WP-JUNGLE (WOODEN PALLETS) 1205MM × 1005MM', 'SFG', 'NOS', 'IBC');
+INSERT INTO items (id, name, category, uom, product_line) VALUES ('pp', 'PP (PLASTIC PALLETS) 1000MM × 1200MM', 'SFG', 'NOS', 'IBC');
+INSERT INTO items (id, name, category, uom, product_line) VALUES ('steel-pallet-bought', 'STEEL PALLETS (bought)', 'ACC', 'NOS', 'IBC');
+INSERT INTO items (id, name, category, uom, product_line) VALUES ('plastic-pallet-bought', 'PLASTIC PALLETS (bought)', 'ACC', 'NOS', 'IBC');
+INSERT INTO items (id, name, category, uom, product_line) VALUES ('pallet-pine-wood', 'PALLET PINE WOODEN 1000MM × 1200MM', 'ACC', 'NOS', 'IBC');
+INSERT INTO items (id, name, category, uom, product_line) VALUES ('pallet-jungle-wood', 'PALLET JUNGLE WOODEN 1205MM × 1005MM', 'ACC', 'NOS', 'IBC');
+INSERT INTO items (id, name, category, uom, product_line) VALUES ('screw-6.4x49-torex', 'SELF THREAD SCREW 6.4MM × 49MM (TOREX HEAD)', 'ACC', 'NOS', 'IBC');
+INSERT INTO items (id, name, category, uom, product_line) VALUES ('screw-6.4x27-torex', 'SELF THREAD SCREW 6.4MM × 27MM (TOREX HEAD)', 'ACC', 'NOS', 'IBC');
+INSERT INTO items (id, name, category, uom, product_line) VALUES ('screw-6.4x100', 'SELF THREAD SCREW 6.4MM × 100MM', 'ACC', 'NOS', 'IBC');
+INSERT INTO items (id, name, category, uom, product_line) VALUES ('screw-6.4x40', 'SELF THREAD SCREW 6.4MM × 40MM', 'ACC', 'NOS', 'IBC');
+INSERT INTO items (id, name, category, uom, product_line) VALUES ('screw-8x75-ft', 'SELF THREAD SCREW 8MM × 75MM (FT)', 'ACC', 'NOS', 'IBC');
+INSERT INTO items (id, name, category, uom, product_line) VALUES ('screw-6.4x20', 'SELF THREAD SCREW 6.4MM × 20MM', 'ACC', 'NOS', 'IBC');
+INSERT INTO items (id, name, category, uom, product_line) VALUES ('screw-6.4x60', 'SELF THREAD SCREW 6.4MM × 60MM', 'ACC', 'NOS', 'IBC');
+INSERT INTO items (id, name, category, uom, product_line) VALUES ('hex-bolt-m8x50', 'HEX BOLT (HALF THREAD) M8 × 50MM', 'ACC', 'NOS', 'IBC');
+INSERT INTO items (id, name, category, uom, product_line) VALUES ('hex-bolt-m8x25', 'HEX BOLT (HALF THREAD) M8 × 25MM', 'ACC', 'NOS', 'IBC');
+INSERT INTO items (id, name, category, uom, product_line) VALUES ('hex-bolt-m8x110', 'HEX BOLT (HALF THREAD) M8 × 110MM', 'ACC', 'NOS', 'IBC');
+INSERT INTO items (id, name, category, uom, product_line) VALUES ('hex-bolt-m8x145', 'HEX BOLT (HALF THREAD) M8 × 145MM', 'ACC', 'NOS', 'IBC');
+INSERT INTO items (id, name, category, uom, product_line) VALUES ('hex-bolt-m8x45', 'HEX BOLT (HALF THREAD) M8 × 45MM', 'ACC', 'NOS', 'IBC');
+INSERT INTO items (id, name, category, uom, product_line) VALUES ('allen-bolt-m8x140', 'ALLEN BOLT CSK M8 × 140MM', 'ACC', 'NOS', 'IBC');
+INSERT INTO items (id, name, category, uom, product_line) VALUES ('c-nut-m8', 'C NUT M8 × 25 × 16 × 15 × 1.5THK', 'ACC', 'NOS', 'IBC');
+INSERT INTO items (id, name, category, uom, product_line) VALUES ('u-clip-55x30', 'U CLIP 55 × 30 × 1.5MM', 'ACC', 'NOS', 'IBC');
+INSERT INTO items (id, name, category, uom, product_line) VALUES ('clamp-big', 'CLAMP BIG 55 × 75 × 1.5 MM', 'ACC', 'NOS', 'IBC');
+INSERT INTO items (id, name, category, uom, product_line) VALUES ('pipe-insert-70mm', 'PIPE INSERT 70MM', 'ACC', 'NOS', 'IBC');
+INSERT INTO items (id, name, category, uom, product_line) VALUES ('valve-btf-3in', 'BTF 3 INCH (Valve)', 'ACC', 'NOS', 'IBC');
+INSERT INTO items (id, name, category, uom, product_line) VALUES ('valve-gasket-pe', 'PE Valve Gasket', 'ACC', 'NOS', 'IBC');
+INSERT INTO items (id, name, category, uom, product_line) VALUES ('cap-dg', 'DG CAP', 'ACC', 'NOS', 'IBC');
+INSERT INTO items (id, name, category, uom, product_line) VALUES ('cap-gasket-epdm', 'EPDM Cap Gasket', 'ACC', 'NOS', 'IBC');
+INSERT INTO items (id, name, category, uom, product_line) VALUES ('cap-vent-d15', 'D15 Cap Vent Insert', 'ACC', 'NOS', 'IBC');
+INSERT INTO items (id, name, category, uom, product_line) VALUES ('id-plate', 'ID PLATE', 'ACC', 'NOS', 'IBC');
+INSERT INTO items (id, name, category, uom, product_line) VALUES ('corner-protector', 'CORNER PROTECTOR', 'ACC', 'NOS', 'IBC');
+INSERT INTO items (id, name, category, uom, product_line) VALUES ('security-flap', 'SECURITY FLAP', 'ACC', 'NOS', 'IBC');
+INSERT INTO items (id, name, category, uom, product_line) VALUES ('top-clinching-cover', 'TOP CLINCHING COVER', 'ACC', 'NOS', 'IBC');
+INSERT INTO items (id, name, category, uom, product_line) VALUES ('clinching-cover', 'CLINCHING COVER', 'ACC', 'NOS', 'IBC');
+INSERT INTO items (id, name, category, uom, product_line) VALUES ('screw-id-plate', 'SCREW FOR ID PLATE 4.2 × 13.3', 'ACC', 'NOS', 'IBC');
+INSERT INTO items (id, name, category, uom, product_line) VALUES ('screw-nylock-6x20', 'SCREW WITH NYLOCK NUT 6 × 20', 'ACC', 'NOS', 'IBC');
+INSERT INTO items (id, name, category, uom, product_line) VALUES ('screw-nylock-5x12', 'SCREW WITH NYLOCK NUT 5 × 12', 'ACC', 'NOS', 'IBC');
+INSERT INTO items (id, name, category, uom, product_line) VALUES ('sticker-recollect', 'STICKER RECOLLECT', 'ACC', 'NOS', 'IBC');
+INSERT INTO items (id, name, category, uom, product_line) VALUES ('ibc-1000-cpflat-dn50', '1000 LTR IBC HM-HDPE BULK CONTAINER CP-FLAT DN50 QD BV 2.5 INCH', 'FG', 'NOS', 'IBC');
+
+-- ═══ BOMS ═══
+
+INSERT INTO boms (id, product_id, product_category, version, is_active, net_output_kg, charge_kg, max_depth, updated_at) VALUES ('bom-hdpe-235', 'drum-235-nm-8.5', 'Plastic', 2, True, 8.45, 8.625, 1, '2026-07-30');
+INSERT INTO boms (id, product_id, product_category, version, is_active, net_output_kg, charge_kg, max_depth, updated_at) VALUES ('bom-ms-210', 'barrel-210-crca-16', 'MS', 1, True, 16.0, 18.552, 2, '2026-07-30');
+INSERT INTO boms (id, product_id, product_category, version, is_active, net_output_kg, charge_kg, max_depth, updated_at) VALUES ('bom-ibc-1000', 'ibc-1000-cpflat-dn50', 'IBC', 3, True, 15.2, 21.35, 4, '2026-08-27');
+
+-- ═══ BOM LEVELS ═══
+
+INSERT INTO bom_levels (id, bom_id, parent_item_id, child_item_id, quantity_per, uom, category, depth, scrap_allowance_pct, is_regrind, note) VALUES ('bl-0001', 'bom-hdpe-235', 'drum-235-nm-8.5', 'hdpe-resin', 6.375, 'kg', 'RM', 1, NULL, False, 'virgin resin');
+INSERT INTO bom_levels (id, bom_id, parent_item_id, child_item_id, quantity_per, uom, category, depth, scrap_allowance_pct, is_regrind, note) VALUES ('bl-0002', 'bom-hdpe-235', 'drum-235-nm-8.5', 'regrind', 2.205, 'kg', 'RM', 1, NULL, True, '26% of charge; flash returns here');
+INSERT INTO bom_levels (id, bom_id, parent_item_id, child_item_id, quantity_per, uom, category, depth, scrap_allowance_pct, is_regrind, note) VALUES ('bl-0003', 'bom-hdpe-235', 'drum-235-nm-8.5', 'master-batch', 0.045, 'kg', 'RM', 1, NULL, False, 'colourant additive');
+INSERT INTO bom_levels (id, bom_id, parent_item_id, child_item_id, quantity_per, uom, category, depth, scrap_allowance_pct, is_regrind, note) VALUES ('bl-0004', 'bom-ms-210', 'barrel-210-crca-16', 'body-sheet-0.97', 1, 'NOS', 'SFG', 1, NULL, False, NULL);
+INSERT INTO bom_levels (id, bom_id, parent_item_id, child_item_id, quantity_per, uom, category, depth, scrap_allowance_pct, is_regrind, note) VALUES ('bl-0005', 'bom-ms-210', 'barrel-210-crca-16', 'lid-sheet-0.9x1315', 1, 'NOS', 'SFG', 1, NULL, False, NULL);
+INSERT INTO bom_levels (id, bom_id, parent_item_id, child_item_id, quantity_per, uom, category, depth, scrap_allowance_pct, is_regrind, note) VALUES ('bl-0006', 'bom-ms-210', 'barrel-210-crca-16', 'tagring-2in', 1, 'NOS', 'ACC', 1, NULL, False, NULL);
+INSERT INTO bom_levels (id, bom_id, parent_item_id, child_item_id, quantity_per, uom, category, depth, scrap_allowance_pct, is_regrind, note) VALUES ('bl-0007', 'bom-ms-210', 'barrel-210-crca-16', 'tagring-0.75in', 1, 'NOS', 'ACC', 1, NULL, False, NULL);
+INSERT INTO bom_levels (id, bom_id, parent_item_id, child_item_id, quantity_per, uom, category, depth, scrap_allowance_pct, is_regrind, note) VALUES ('bl-0008', 'bom-ms-210', 'barrel-210-crca-16', 'bungs-2in-rubber', 1, 'NOS', 'ACC', 1, NULL, False, NULL);
+INSERT INTO bom_levels (id, bom_id, parent_item_id, child_item_id, quantity_per, uom, category, depth, scrap_allowance_pct, is_regrind, note) VALUES ('bl-0009', 'bom-ms-210', 'barrel-210-crca-16', 'bungs-0.75in-rubber', 1, 'NOS', 'ACC', 1, NULL, False, NULL);
+INSERT INTO bom_levels (id, bom_id, parent_item_id, child_item_id, quantity_per, uom, category, depth, scrap_allowance_pct, is_regrind, note) VALUES ('bl-0010', 'bom-ms-210', 'barrel-210-crca-16', 'bungs-2in-poly', 1, 'NOS', 'ACC', 1, NULL, False, NULL);
+INSERT INTO bom_levels (id, bom_id, parent_item_id, child_item_id, quantity_per, uom, category, depth, scrap_allowance_pct, is_regrind, note) VALUES ('bl-0011', 'bom-ms-210', 'barrel-210-crca-16', 'bungs-0.75in-poly', 1, 'NOS', 'ACC', 1, NULL, False, NULL);
+INSERT INTO bom_levels (id, bom_id, parent_item_id, child_item_id, quantity_per, uom, category, depth, scrap_allowance_pct, is_regrind, note) VALUES ('bl-0012', 'bom-ms-210', 'barrel-210-crca-16', 'capseal-2in-ms', 1, 'NOS', 'ACC', 1, NULL, False, NULL);
+INSERT INTO bom_levels (id, bom_id, parent_item_id, child_item_id, quantity_per, uom, category, depth, scrap_allowance_pct, is_regrind, note) VALUES ('bl-0013', 'bom-ms-210', 'barrel-210-crca-16', 'capseal-0.75in-ms', 1, 'NOS', 'ACC', 1, NULL, False, NULL);
+INSERT INTO bom_levels (id, bom_id, parent_item_id, child_item_id, quantity_per, uom, category, depth, scrap_allowance_pct, is_regrind, note) VALUES ('bl-0014', 'bom-ms-210', 'barrel-210-crca-16', 'stretch-film', 0.05, 'kg', 'ACC', 1, NULL, False, NULL);
+INSERT INTO bom_levels (id, bom_id, parent_item_id, child_item_id, quantity_per, uom, category, depth, scrap_allowance_pct, is_regrind, note) VALUES ('bl-0015', 'bom-ms-210', 'barrel-210-crca-16', 'corrugated-sheet', 1, 'NOS', 'ACC', 1, NULL, False, NULL);
+INSERT INTO bom_levels (id, bom_id, parent_item_id, child_item_id, quantity_per, uom, category, depth, scrap_allowance_pct, is_regrind, note) VALUES ('bl-0016', 'bom-ms-210', 'body-sheet-0.97', 'crca-coil-0.97x914', 12.4, 'kg', 'RM', 2, 13.7, False, 'A4+A5: trim/blanking allowance, steel scrap is waste not regrind');
+INSERT INTO bom_levels (id, bom_id, parent_item_id, child_item_id, quantity_per, uom, category, depth, scrap_allowance_pct, is_regrind, note) VALUES ('bl-0017', 'bom-ms-210', 'lid-sheet-0.9x1315', 'crca-coil-0.9x1315', 6.152, 'kg', 'RM', 2, 13.7, False, 'A4+A5: trim/blanking allowance');
+INSERT INTO bom_levels (id, bom_id, parent_item_id, child_item_id, quantity_per, uom, category, depth, scrap_allowance_pct, is_regrind, note) VALUES ('bl-0018', 'bom-ibc-1000', 'ibc-1000-cpflat-dn50', 'ic-1000-15kg', 1, 'NOS', 'SFG', 1, NULL, False, 'inner container — blow moulded');
+INSERT INTO bom_levels (id, bom_id, parent_item_id, child_item_id, quantity_per, uom, category, depth, scrap_allowance_pct, is_regrind, note) VALUES ('bl-0019', 'bom-ibc-1000', 'ibc-1000-cpflat-dn50', 'cage-big', 1, 'NOS', 'SFG', 1, NULL, False, 'A1: BIG variant, not MAX');
+INSERT INTO bom_levels (id, bom_id, parent_item_id, child_item_id, quantity_per, uom, category, depth, scrap_allowance_pct, is_regrind, note) VALUES ('bl-0020', 'bom-ibc-1000', 'ibc-1000-cpflat-dn50', 'cp-flat', 1, 'NOS', 'SFG', 1, NULL, False, 'composite pallet');
+INSERT INTO bom_levels (id, bom_id, parent_item_id, child_item_id, quantity_per, uom, category, depth, scrap_allowance_pct, is_regrind, note) VALUES ('bl-0021', 'bom-ibc-1000', 'ibc-1000-cpflat-dn50', 'valve-btf-3in', 1, 'NOS', 'ACC', 1, NULL, False, 'BTF 3 INCH, DN50');
+INSERT INTO bom_levels (id, bom_id, parent_item_id, child_item_id, quantity_per, uom, category, depth, scrap_allowance_pct, is_regrind, note) VALUES ('bl-0022', 'bom-ibc-1000', 'ibc-1000-cpflat-dn50', 'valve-gasket-pe', 1, 'NOS', 'ACC', 1, NULL, False, NULL);
+INSERT INTO bom_levels (id, bom_id, parent_item_id, child_item_id, quantity_per, uom, category, depth, scrap_allowance_pct, is_regrind, note) VALUES ('bl-0023', 'bom-ibc-1000', 'ibc-1000-cpflat-dn50', 'cap-dg', 1, 'NOS', 'ACC', 1, NULL, False, NULL);
+INSERT INTO bom_levels (id, bom_id, parent_item_id, child_item_id, quantity_per, uom, category, depth, scrap_allowance_pct, is_regrind, note) VALUES ('bl-0024', 'bom-ibc-1000', 'ibc-1000-cpflat-dn50', 'cap-gasket-epdm', 1, 'NOS', 'ACC', 1, NULL, False, NULL);
+INSERT INTO bom_levels (id, bom_id, parent_item_id, child_item_id, quantity_per, uom, category, depth, scrap_allowance_pct, is_regrind, note) VALUES ('bl-0025', 'bom-ibc-1000', 'ibc-1000-cpflat-dn50', 'cap-vent-d15', 1, 'NOS', 'ACC', 1, NULL, False, NULL);
+INSERT INTO bom_levels (id, bom_id, parent_item_id, child_item_id, quantity_per, uom, category, depth, scrap_allowance_pct, is_regrind, note) VALUES ('bl-0026', 'bom-ibc-1000', 'ibc-1000-cpflat-dn50', 'id-plate', 1, 'NOS', 'ACC', 1, NULL, False, NULL);
+INSERT INTO bom_levels (id, bom_id, parent_item_id, child_item_id, quantity_per, uom, category, depth, scrap_allowance_pct, is_regrind, note) VALUES ('bl-0027', 'bom-ibc-1000', 'ibc-1000-cpflat-dn50', 'corner-protector', 4, 'NOS', 'ACC', 1, NULL, False, 'A2: workbook had 2×4, deduped to 4');
+INSERT INTO bom_levels (id, bom_id, parent_item_id, child_item_id, quantity_per, uom, category, depth, scrap_allowance_pct, is_regrind, note) VALUES ('bl-0028', 'bom-ibc-1000', 'ibc-1000-cpflat-dn50', 'security-flap', 1, 'NOS', 'ACC', 1, NULL, False, NULL);
+INSERT INTO bom_levels (id, bom_id, parent_item_id, child_item_id, quantity_per, uom, category, depth, scrap_allowance_pct, is_regrind, note) VALUES ('bl-0029', 'bom-ibc-1000', 'ibc-1000-cpflat-dn50', 'c-nut-m8', 4, 'NOS', 'ACC', 1, NULL, False, NULL);
+INSERT INTO bom_levels (id, bom_id, parent_item_id, child_item_id, quantity_per, uom, category, depth, scrap_allowance_pct, is_regrind, note) VALUES ('bl-0030', 'bom-ibc-1000', 'ibc-1000-cpflat-dn50', 'u-clip-55x30', 3, 'NOS', 'ACC', 1, NULL, False, NULL);
+INSERT INTO bom_levels (id, bom_id, parent_item_id, child_item_id, quantity_per, uom, category, depth, scrap_allowance_pct, is_regrind, note) VALUES ('bl-0031', 'bom-ibc-1000', 'ibc-1000-cpflat-dn50', 'screw-nylock-6x20', 5, 'NOS', 'ACC', 1, NULL, False, 'A3 position 1: BOLT variant — total across both = 10');
+INSERT INTO bom_levels (id, bom_id, parent_item_id, child_item_id, quantity_per, uom, category, depth, scrap_allowance_pct, is_regrind, note) VALUES ('bl-0032', 'bom-ibc-1000', 'ibc-1000-cpflat-dn50', 'hex-bolt-m8x110', 4, 'NOS', 'ACC', 1, NULL, False, NULL);
+INSERT INTO bom_levels (id, bom_id, parent_item_id, child_item_id, quantity_per, uom, category, depth, scrap_allowance_pct, is_regrind, note) VALUES ('bl-0033', 'bom-ibc-1000', 'ibc-1000-cpflat-dn50', 'screw-6.4x20', 4, 'NOS', 'ACC', 1, NULL, False, NULL);
+INSERT INTO bom_levels (id, bom_id, parent_item_id, child_item_id, quantity_per, uom, category, depth, scrap_allowance_pct, is_regrind, note) VALUES ('bl-0034', 'bom-ibc-1000', 'ibc-1000-cpflat-dn50', 'screw-6.4x60', 5, 'NOS', 'ACC', 1, NULL, False, NULL);
+INSERT INTO bom_levels (id, bom_id, parent_item_id, child_item_id, quantity_per, uom, category, depth, scrap_allowance_pct, is_regrind, note) VALUES ('bl-0035', 'bom-ibc-1000', 'ibc-1000-cpflat-dn50', 'top-clinching-cover', 1, 'NOS', 'ACC', 1, NULL, False, NULL);
+INSERT INTO bom_levels (id, bom_id, parent_item_id, child_item_id, quantity_per, uom, category, depth, scrap_allowance_pct, is_regrind, note) VALUES ('bl-0036', 'bom-ibc-1000', 'ibc-1000-cpflat-dn50', 'clinching-cover', 5, 'NOS', 'ACC', 1, NULL, False, NULL);
+INSERT INTO bom_levels (id, bom_id, parent_item_id, child_item_id, quantity_per, uom, category, depth, scrap_allowance_pct, is_regrind, note) VALUES ('bl-0037', 'bom-ibc-1000', 'ibc-1000-cpflat-dn50', 'screw-id-plate', 8, 'NOS', 'ACC', 1, NULL, False, NULL);
+INSERT INTO bom_levels (id, bom_id, parent_item_id, child_item_id, quantity_per, uom, category, depth, scrap_allowance_pct, is_regrind, note) VALUES ('bl-0038', 'bom-ibc-1000', 'ibc-1000-cpflat-dn50', 'screw-nylock-5x12', 20, 'NOS', 'ACC', 1, NULL, False, NULL);
+INSERT INTO bom_levels (id, bom_id, parent_item_id, child_item_id, quantity_per, uom, category, depth, scrap_allowance_pct, is_regrind, note) VALUES ('bl-0039', 'bom-ibc-1000', 'ibc-1000-cpflat-dn50', 'sticker-recollect', 1, 'NOS', 'ACC', 1, NULL, False, NULL);
+INSERT INTO bom_levels (id, bom_id, parent_item_id, child_item_id, quantity_per, uom, category, depth, scrap_allowance_pct, is_regrind, note) VALUES ('bl-0040', 'bom-ibc-1000', 'ibc-1000-cpflat-dn50', 'screw-nylock-6x20', 5, 'NOS', 'ACC', 1, NULL, False, 'A3 position 2: MM variant — total across both = 10');
+INSERT INTO bom_levels (id, bom_id, parent_item_id, child_item_id, quantity_per, uom, category, depth, scrap_allowance_pct, is_regrind, note) VALUES ('bl-0041', 'bom-ibc-1000', 'ic-1000-15kg', 'hdpe-resin', 14.945, 'kg', 'RM', 2, NULL, False, 'virgin resin');
+INSERT INTO bom_levels (id, bom_id, parent_item_id, child_item_id, quantity_per, uom, category, depth, scrap_allowance_pct, is_regrind, note) VALUES ('bl-0042', 'bom-ibc-1000', 'ic-1000-15kg', 'regrind', 6.405, 'kg', 'RM', 2, NULL, True, '30% of charge; flash returns here');
+INSERT INTO bom_levels (id, bom_id, parent_item_id, child_item_id, quantity_per, uom, category, depth, scrap_allowance_pct, is_regrind, note) VALUES ('bl-0043', 'bom-ibc-1000', 'ic-1000-15kg', 'uv-stabiliser', 0.2135, 'kg', 'RM', 2, NULL, False, '1% of non-UV HDPE granules charge');
+INSERT INTO bom_levels (id, bom_id, parent_item_id, child_item_id, quantity_per, uom, category, depth, scrap_allowance_pct, is_regrind, note) VALUES ('bl-0044', 'bom-ibc-1000', 'cage-big', 'tail-pipe-4175', 1, 'NOS', 'SFG', 2, NULL, False, 'net 3445 g');
+INSERT INTO bom_levels (id, bom_id, parent_item_id, child_item_id, quantity_per, uom, category, depth, scrap_allowance_pct, is_regrind, note) VALUES ('bl-0045', 'bom-ibc-1000', 'cage-big', 'cut-vbar-1018', 20, 'NOS', 'SFG', 2, NULL, False, '20 cut pieces × 463 g = 9260 g');
+INSERT INTO bom_levels (id, bom_id, parent_item_id, child_item_id, quantity_per, uom, category, depth, scrap_allowance_pct, is_regrind, note) VALUES ('bl-0046', 'bom-ibc-1000', 'cage-big', 'horizontal-bar-4230', 5, 'NOS', 'SFG', 2, NULL, False, '5 bars × 1875 g net = 9375 g gross');
+INSERT INTO bom_levels (id, bom_id, parent_item_id, child_item_id, quantity_per, uom, category, depth, scrap_allowance_pct, is_regrind, note) VALUES ('bl-0047', 'bom-ibc-1000', 'cage-big', 'pipe-insert-70mm', 1, 'NOS', 'ACC', 2, NULL, False, 'purchased');
+INSERT INTO bom_levels (id, bom_id, parent_item_id, child_item_id, quantity_per, uom, category, depth, scrap_allowance_pct, is_regrind, note) VALUES ('bl-0048', 'bom-ibc-1000', 'cp-flat', 'bottom-plate', 1, 'NOS', 'SFG', 2, NULL, False, NULL);
+INSERT INTO bom_levels (id, bom_id, parent_item_id, child_item_id, quantity_per, uom, category, depth, scrap_allowance_pct, is_regrind, note) VALUES ('bl-0049', 'bom-ibc-1000', 'cp-flat', 'traversal-piece', 1, 'NOS', 'SFG', 2, NULL, False, NULL);
+INSERT INTO bom_levels (id, bom_id, parent_item_id, child_item_id, quantity_per, uom, category, depth, scrap_allowance_pct, is_regrind, note) VALUES ('bl-0050', 'bom-ibc-1000', 'cp-flat', 'corner-spacer', 4, 'NOS', 'SFG', 2, NULL, False, NULL);
+INSERT INTO bom_levels (id, bom_id, parent_item_id, child_item_id, quantity_per, uom, category, depth, scrap_allowance_pct, is_regrind, note) VALUES ('bl-0051', 'bom-ibc-1000', 'cp-flat', 'side-spacer', 2, 'NOS', 'SFG', 2, NULL, False, NULL);
+INSERT INTO bom_levels (id, bom_id, parent_item_id, child_item_id, quantity_per, uom, category, depth, scrap_allowance_pct, is_regrind, note) VALUES ('bl-0052', 'bom-ibc-1000', 'cp-flat', 'back-spacer', 1, 'NOS', 'SFG', 2, NULL, False, NULL);
+INSERT INTO bom_levels (id, bom_id, parent_item_id, child_item_id, quantity_per, uom, category, depth, scrap_allowance_pct, is_regrind, note) VALUES ('bl-0053', 'bom-ibc-1000', 'cp-flat', 'drip-pan', 1, 'NOS', 'SFG', 2, NULL, False, NULL);
+INSERT INTO bom_levels (id, bom_id, parent_item_id, child_item_id, quantity_per, uom, category, depth, scrap_allowance_pct, is_regrind, note) VALUES ('bl-0054', 'bom-ibc-1000', 'cp-flat', 'base-ring-flat', 1, 'NOS', 'SFG', 2, NULL, False, 'made from round pipe, not bought');
+INSERT INTO bom_levels (id, bom_id, parent_item_id, child_item_id, quantity_per, uom, category, depth, scrap_allowance_pct, is_regrind, note) VALUES ('bl-0055', 'bom-ibc-1000', 'cp-flat', 'screw-6.4x49-torex', 12, 'NOS', 'ACC', 2, NULL, False, NULL);
+INSERT INTO bom_levels (id, bom_id, parent_item_id, child_item_id, quantity_per, uom, category, depth, scrap_allowance_pct, is_regrind, note) VALUES ('bl-0056', 'bom-ibc-1000', 'cp-flat', 'screw-6.4x27-torex', 3, 'NOS', 'ACC', 2, NULL, False, NULL);
+INSERT INTO bom_levels (id, bom_id, parent_item_id, child_item_id, quantity_per, uom, category, depth, scrap_allowance_pct, is_regrind, note) VALUES ('bl-0057', 'bom-ibc-1000', 'tail-pipe-4175', 'gp-coil-1.20x88', 3.48, 'kg', 'RM', 3, NULL, False, 'gross 3.48 kg, net 3445 g, waste 35 g');
+INSERT INTO bom_levels (id, bom_id, parent_item_id, child_item_id, quantity_per, uom, category, depth, scrap_allowance_pct, is_regrind, note) VALUES ('bl-0058', 'bom-ibc-1000', 'cut-vbar-1018', 'vertical-bar-5130', 0.2, 'NOS', 'SFG', 3, NULL, False, '5 cut pieces from 1 pipe; per cut: 466 g gross, 463 g net, 3 g scrap');
+INSERT INTO bom_levels (id, bom_id, parent_item_id, child_item_id, quantity_per, uom, category, depth, scrap_allowance_pct, is_regrind, note) VALUES ('bl-0059', 'bom-ibc-1000', 'horizontal-bar-4230', 'gp-coil-0.90x65', 1.91, 'kg', 'RM', 3, NULL, False, 'gross 1.91 kg, net 1875 g, waste 35 g');
+INSERT INTO bom_levels (id, bom_id, parent_item_id, child_item_id, quantity_per, uom, category, depth, scrap_allowance_pct, is_regrind, note) VALUES ('bl-0060', 'bom-ibc-1000', 'base-ring-flat', 'round-pipe-4010', 1, 'NOS', 'SFG', 3, NULL, False, '1:1 conversion, gross 1962 g, net 1912 g, waste 50 g');
+INSERT INTO bom_levels (id, bom_id, parent_item_id, child_item_id, quantity_per, uom, category, depth, scrap_allowance_pct, is_regrind, note) VALUES ('bl-0061', 'bom-ibc-1000', 'vertical-bar-5130', 'gp-coil-0.90x65', 2.33, 'kg', 'RM', 4, NULL, False, 'gross 2.33 kg, net 2295 g, waste 35 g');
+INSERT INTO bom_levels (id, bom_id, parent_item_id, child_item_id, quantity_per, uom, category, depth, scrap_allowance_pct, is_regrind, note) VALUES ('bl-0062', 'bom-ibc-1000', 'round-pipe-4010', 'gp-coil-1.00x62', 1.962, 'kg', 'RM', 4, NULL, False, 'gross 1.962 kg, net 1912 g, waste 50 g');
+
+-- ═══ SEED RATES ═══
+
+INSERT INTO seed_rates (ref, item_id, rate, unit, description) VALUES ('R1', 'hdpe-resin', 100.0, 'per kg', 'HDPE resin (natural)');
+INSERT INTO seed_rates (ref, item_id, rate, unit, description) VALUES ('R2', 'regrind', 60.0, 'per kg', 'Regrind / recycled granule');
+INSERT INTO seed_rates (ref, item_id, rate, unit, description) VALUES ('R3', 'master-batch', 250.0, 'per kg', 'Master batch / colourant');
+INSERT INTO seed_rates (ref, item_id, rate, unit, description) VALUES ('R4', 'uv-stabiliser', 300.0, 'per kg', 'UV stabiliser');
+INSERT INTO seed_rates (ref, item_id, rate, unit, description) VALUES ('R5', 'crca-coil-0.97x914', 60.0, 'per kg', 'CRCA coil (all gauges)');
+INSERT INTO seed_rates (ref, item_id, rate, unit, description) VALUES ('R6', 'gp-coil-1.20x88', 70.0, 'per kg', 'GP (galvanised plain) coil');
+INSERT INTO seed_rates (ref, item_id, rate, unit, description) VALUES ('C1', 'valve-btf-3in', 450.0, 'each', 'IBC valve (BTF 3 inch, DN50)');
+INSERT INTO seed_rates (ref, item_id, rate, unit, description) VALUES ('C2', 'cap-dg', 60.0, 'each', 'Cap + gasket + vent insert set');
+INSERT INTO seed_rates (ref, item_id, rate, unit, description) VALUES ('C3', 'pipe-insert-70mm', 25.0, 'each', 'Pipe insert 70 mm');
+INSERT INTO seed_rates (ref, item_id, rate, unit, description) VALUES ('C4', 'cp-flat', 900.0, 'each', 'Composite pallet (CP-FLAT)');
+INSERT INTO seed_rates (ref, item_id, rate, unit, description) VALUES ('C5', 'pallet-pine-wood', 700.0, 'each', 'Wooden pallet (bought in)');
+INSERT INTO seed_rates (ref, item_id, rate, unit, description) VALUES ('C6', 'screw-nylock-6x20', 150.0, 'per unit', 'Fastener set (per IBC, all types)');
+INSERT INTO seed_rates (ref, item_id, rate, unit, description) VALUES ('F1', 'ibc-1000-cpflat-dn50', 10000.0, 'each', 'IBC 1000 L, CP-FLAT DN50');
+INSERT INTO seed_rates (ref, item_id, rate, unit, description) VALUES ('F2', 'drum-235-nm-8.5', 1200.0, 'each', 'HDPE drum 235 L N/M 8.5 kg');
+INSERT INTO seed_rates (ref, item_id, rate, unit, description) VALUES ('F3', 'barrel-210-crca-16', 1800.0, 'each', 'MS barrel 210 L CRCA 16 kg');
+INSERT INTO seed_rates (ref, item_id, rate, unit, description) VALUES ('S3', 'corner-protector', 40.0, 'per NOS', 'Corner protector');
+INSERT INTO seed_rates (ref, item_id, rate, unit, description) VALUES ('S4', 'screw-nylock-6x20', 5.0, 'per NOS', 'Screw with nylock nut 6×20');
+
+COMMIT;

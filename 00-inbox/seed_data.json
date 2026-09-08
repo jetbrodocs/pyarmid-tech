@@ -1,0 +1,2033 @@
+{
+  "_meta": {
+    "generated": "2026-09-08",
+    "generator": "40-solution-design/demo/seed/bom_seed.py",
+    "sources": [
+      "00-inbox/HDPE-DRUM-DETAILS.xlsx",
+      "00-inbox/MS-DRUM.xlsx",
+      "00-inbox/IBC-DETAILS.xlsx"
+    ],
+    "policy": "40-solution-design/demo-data-policy.md",
+    "resolutions": {
+      "A1": "CAGE TYPE = BIG (not MAX)",
+      "A2": "CORNER PROTECTOR deduped to ×4",
+      "A3": "SCREW WITH NYLOCK NUT 6×20 two positions, total ×10",
+      "A4": "MS body 0.97×914 → 12.4 kg, lid 0.9×1315 → 6.152 kg",
+      "A5": "13.7% steel trim/blanking allowance stated"
+    },
+    "item_count": 93,
+    "bom_count": 3,
+    "bom_level_count": 62
+  },
+  "items": [
+    {
+      "id": "hdpe-resin",
+      "name": "HDPE Granules",
+      "category": "RM",
+      "uom": "kg",
+      "product_line": "shared"
+    },
+    {
+      "id": "regrind",
+      "name": "Grinding (Regrind)",
+      "category": "RM",
+      "uom": "kg",
+      "product_line": "shared"
+    },
+    {
+      "id": "master-batch",
+      "name": "Master Batch",
+      "category": "RM",
+      "uom": "kg",
+      "product_line": "shared"
+    },
+    {
+      "id": "uv-stabiliser",
+      "name": "UV Stabiliser",
+      "category": "RM",
+      "uom": "kg",
+      "product_line": "IBC"
+    },
+    {
+      "id": "drum-235-nm-8.5",
+      "name": "235 LTR N/M 8.5 KGS",
+      "category": "SFG",
+      "uom": "NOS",
+      "product_line": "Plastic"
+    },
+    {
+      "id": "bung-50mm-reg-white",
+      "name": "50 MM BUNGS REGULAR 1028 SPECIAL WHITE",
+      "category": "ACC",
+      "uom": "NOS",
+      "product_line": "Plastic"
+    },
+    {
+      "id": "capseal-2in-pvc",
+      "name": "CAPSEAL 2 INCH WITH PVC",
+      "category": "ACC",
+      "uom": "NOS",
+      "product_line": "Plastic"
+    },
+    {
+      "id": "bung-50mm-hard-ring",
+      "name": "50 MM BUNGS NATURAL (HARD) RING",
+      "category": "ACC",
+      "uom": "NOS",
+      "product_line": "Plastic"
+    },
+    {
+      "id": "dustcap-70mm-blue",
+      "name": "70 MM DUST CAP BLUE",
+      "category": "ACC",
+      "uom": "NOS",
+      "product_line": "Plastic"
+    },
+    {
+      "id": "drum-235-nm-8.5-blue",
+      "name": "235 LTR N/M 8.5 KGS BLUE",
+      "category": "FG",
+      "uom": "NOS",
+      "product_line": "Plastic"
+    },
+    {
+      "id": "crca-coil-0.97x914",
+      "name": "CRCA COIL 0.97 × 914",
+      "category": "RM",
+      "uom": "kg",
+      "product_line": "MS"
+    },
+    {
+      "id": "crca-coil-0.9x1315",
+      "name": "CRCA COIL 0.9 × 1315",
+      "category": "RM",
+      "uom": "kg",
+      "product_line": "MS"
+    },
+    {
+      "id": "body-sheet-0.97",
+      "name": "BODY SHEET 0.97",
+      "category": "SFG",
+      "uom": "NOS",
+      "product_line": "MS"
+    },
+    {
+      "id": "lid-sheet-0.9x1315",
+      "name": "LID SHEET 0.9 × 1320 × 655",
+      "category": "SFG",
+      "uom": "NOS",
+      "product_line": "MS"
+    },
+    {
+      "id": "tagring-2in",
+      "name": "2\" TAG RING",
+      "category": "ACC",
+      "uom": "NOS",
+      "product_line": "MS"
+    },
+    {
+      "id": "tagring-0.75in",
+      "name": "3/4\" TAG RING",
+      "category": "ACC",
+      "uom": "NOS",
+      "product_line": "MS"
+    },
+    {
+      "id": "bungs-2in-rubber",
+      "name": "2\" BUNGS WITH BLACK RUBBER GASKET",
+      "category": "ACC",
+      "uom": "NOS",
+      "product_line": "MS"
+    },
+    {
+      "id": "bungs-0.75in-rubber",
+      "name": "3/4\" BUNGS WITH BLACK RUBBER GASKET",
+      "category": "ACC",
+      "uom": "NOS",
+      "product_line": "MS"
+    },
+    {
+      "id": "bungs-2in-poly",
+      "name": "2\" BUNGS WITH POLY SQ GASKET",
+      "category": "ACC",
+      "uom": "NOS",
+      "product_line": "MS"
+    },
+    {
+      "id": "bungs-0.75in-poly",
+      "name": "3/4\" BUNGS WITH POLY SQ GASKET",
+      "category": "ACC",
+      "uom": "NOS",
+      "product_line": "MS"
+    },
+    {
+      "id": "capseal-2in-ms",
+      "name": "2\" M S PLAIN CAPSEAL (VINYALRING)",
+      "category": "ACC",
+      "uom": "NOS",
+      "product_line": "MS"
+    },
+    {
+      "id": "capseal-0.75in-ms",
+      "name": "3/4\" M S PLAIN CAPSEAL (VINYALRING)",
+      "category": "ACC",
+      "uom": "NOS",
+      "product_line": "MS"
+    },
+    {
+      "id": "stretch-film",
+      "name": "STRETCH FILM (WRAPING ROLL) 1020 MM × 23 MIC",
+      "category": "ACC",
+      "uom": "kg",
+      "product_line": "MS"
+    },
+    {
+      "id": "corrugated-sheet",
+      "name": "CORRUGATED SHEET 2 PLY 36\" × 75\"",
+      "category": "ACC",
+      "uom": "NOS",
+      "product_line": "MS"
+    },
+    {
+      "id": "barrel-210-crca-16",
+      "name": "CRCA 210 LTR CLOSE MOUTH BARREL 16 KGS",
+      "category": "FG",
+      "uom": "NOS",
+      "product_line": "MS"
+    },
+    {
+      "id": "ic-1000-15kg",
+      "name": "IC 1000 LTRS. 2 INCH NAT (15kgs)",
+      "category": "SFG",
+      "uom": "NOS",
+      "product_line": "IBC"
+    },
+    {
+      "id": "gp-coil-1.20x88",
+      "name": "GP COIL 1.20 × 88 MM",
+      "category": "RM",
+      "uom": "kg",
+      "product_line": "IBC"
+    },
+    {
+      "id": "gp-coil-0.90x65",
+      "name": "GP COIL 0.90 × 65 MM",
+      "category": "RM",
+      "uom": "kg",
+      "product_line": "IBC"
+    },
+    {
+      "id": "gp-coil-1.00x62",
+      "name": "GP COIL 1.00 × 62 MM",
+      "category": "RM",
+      "uom": "kg",
+      "product_line": "IBC"
+    },
+    {
+      "id": "tail-pipe-4175",
+      "name": "TAIL PIPE (18×15×1×4175)",
+      "category": "SFG",
+      "uom": "NOS",
+      "product_line": "IBC"
+    },
+    {
+      "id": "vertical-bar-5130",
+      "name": "VERTICAL BAR (16×16×0.9×5130)",
+      "category": "SFG",
+      "uom": "NOS",
+      "product_line": "IBC"
+    },
+    {
+      "id": "horizontal-bar-4230",
+      "name": "HORIZONTAL BAR (16×16×0.9×4230)",
+      "category": "SFG",
+      "uom": "NOS",
+      "product_line": "IBC"
+    },
+    {
+      "id": "round-pipe-4110",
+      "name": "ROUND PIPE (19×1.0×4110)",
+      "category": "SFG",
+      "uom": "NOS",
+      "product_line": "IBC"
+    },
+    {
+      "id": "round-pipe-4010",
+      "name": "ROUND PIPE (19×1.0×4010)",
+      "category": "SFG",
+      "uom": "NOS",
+      "product_line": "IBC"
+    },
+    {
+      "id": "zigzag-pipe-4420",
+      "name": "ZIGZAG PIPE (19×1.0×4420)",
+      "category": "SFG",
+      "uom": "NOS",
+      "product_line": "IBC"
+    },
+    {
+      "id": "cut-vbar-1002",
+      "name": "CUT VERTICAL BAR (16×16×0.9×1002)",
+      "category": "SFG",
+      "uom": "NOS",
+      "product_line": "IBC"
+    },
+    {
+      "id": "cut-vbar-1018",
+      "name": "CUT VERTICAL BAR (16×16×0.9×1018)",
+      "category": "SFG",
+      "uom": "NOS",
+      "product_line": "IBC"
+    },
+    {
+      "id": "top-cross-bar-1020",
+      "name": "TOP CROSS BAR (1020)",
+      "category": "SFG",
+      "uom": "NOS",
+      "product_line": "IBC"
+    },
+    {
+      "id": "flat-base-ring",
+      "name": "FLAT BASE RING",
+      "category": "SFG",
+      "uom": "NOS",
+      "product_line": "IBC"
+    },
+    {
+      "id": "easy-base-ring",
+      "name": "EASY BASE RING",
+      "category": "SFG",
+      "uom": "NOS",
+      "product_line": "IBC"
+    },
+    {
+      "id": "cage-big",
+      "name": "CAGE-BIG",
+      "category": "SFG",
+      "uom": "NOS",
+      "product_line": "IBC"
+    },
+    {
+      "id": "cage-max",
+      "name": "CAGE-MAX",
+      "category": "SFG",
+      "uom": "NOS",
+      "product_line": "IBC"
+    },
+    {
+      "id": "bottom-plate",
+      "name": "BOTTOM PLATE",
+      "category": "SFG",
+      "uom": "NOS",
+      "product_line": "IBC"
+    },
+    {
+      "id": "traversal-piece",
+      "name": "TRAVERSAL PIECE",
+      "category": "SFG",
+      "uom": "NOS",
+      "product_line": "IBC"
+    },
+    {
+      "id": "corner-spacer",
+      "name": "CORNER SPACER",
+      "category": "SFG",
+      "uom": "NOS",
+      "product_line": "IBC"
+    },
+    {
+      "id": "side-spacer",
+      "name": "SIDE SPACER",
+      "category": "SFG",
+      "uom": "NOS",
+      "product_line": "IBC"
+    },
+    {
+      "id": "back-spacer",
+      "name": "BACK SPACER",
+      "category": "SFG",
+      "uom": "NOS",
+      "product_line": "IBC"
+    },
+    {
+      "id": "drip-pan",
+      "name": "DRIP PAN",
+      "category": "SFG",
+      "uom": "NOS",
+      "product_line": "IBC"
+    },
+    {
+      "id": "base-ring-flat",
+      "name": "BASE RING - FLAT",
+      "category": "SFG",
+      "uom": "NOS",
+      "product_line": "IBC"
+    },
+    {
+      "id": "base-ring-easy",
+      "name": "BASE RING - EASY",
+      "category": "SFG",
+      "uom": "NOS",
+      "product_line": "IBC"
+    },
+    {
+      "id": "c-channel",
+      "name": "C CHANNEL",
+      "category": "SFG",
+      "uom": "NOS",
+      "product_line": "IBC"
+    },
+    {
+      "id": "cp-flat",
+      "name": "CP-FLAT (COMPOSITE PALLETS) 1000MM × 1200MM",
+      "category": "SFG",
+      "uom": "NOS",
+      "product_line": "IBC"
+    },
+    {
+      "id": "cp-easy",
+      "name": "CP-EASY (COMPOSITE PALLETS) 1000MM × 1200MM",
+      "category": "SFG",
+      "uom": "NOS",
+      "product_line": "IBC"
+    },
+    {
+      "id": "sp",
+      "name": "SP (STEEL PALLETS) 1000MM × 1200MM",
+      "category": "SFG",
+      "uom": "NOS",
+      "product_line": "IBC"
+    },
+    {
+      "id": "wp-pine",
+      "name": "WP-PINE (WOODEN PALLETS) 1000MM × 1200MM",
+      "category": "SFG",
+      "uom": "NOS",
+      "product_line": "IBC"
+    },
+    {
+      "id": "wp-jungle",
+      "name": "WP-JUNGLE (WOODEN PALLETS) 1205MM × 1005MM",
+      "category": "SFG",
+      "uom": "NOS",
+      "product_line": "IBC"
+    },
+    {
+      "id": "pp",
+      "name": "PP (PLASTIC PALLETS) 1000MM × 1200MM",
+      "category": "SFG",
+      "uom": "NOS",
+      "product_line": "IBC"
+    },
+    {
+      "id": "steel-pallet-bought",
+      "name": "STEEL PALLETS (bought)",
+      "category": "ACC",
+      "uom": "NOS",
+      "product_line": "IBC"
+    },
+    {
+      "id": "plastic-pallet-bought",
+      "name": "PLASTIC PALLETS (bought)",
+      "category": "ACC",
+      "uom": "NOS",
+      "product_line": "IBC"
+    },
+    {
+      "id": "pallet-pine-wood",
+      "name": "PALLET PINE WOODEN 1000MM × 1200MM",
+      "category": "ACC",
+      "uom": "NOS",
+      "product_line": "IBC"
+    },
+    {
+      "id": "pallet-jungle-wood",
+      "name": "PALLET JUNGLE WOODEN 1205MM × 1005MM",
+      "category": "ACC",
+      "uom": "NOS",
+      "product_line": "IBC"
+    },
+    {
+      "id": "screw-6.4x49-torex",
+      "name": "SELF THREAD SCREW 6.4MM × 49MM (TOREX HEAD)",
+      "category": "ACC",
+      "uom": "NOS",
+      "product_line": "IBC"
+    },
+    {
+      "id": "screw-6.4x27-torex",
+      "name": "SELF THREAD SCREW 6.4MM × 27MM (TOREX HEAD)",
+      "category": "ACC",
+      "uom": "NOS",
+      "product_line": "IBC"
+    },
+    {
+      "id": "screw-6.4x100",
+      "name": "SELF THREAD SCREW 6.4MM × 100MM",
+      "category": "ACC",
+      "uom": "NOS",
+      "product_line": "IBC"
+    },
+    {
+      "id": "screw-6.4x40",
+      "name": "SELF THREAD SCREW 6.4MM × 40MM",
+      "category": "ACC",
+      "uom": "NOS",
+      "product_line": "IBC"
+    },
+    {
+      "id": "screw-8x75-ft",
+      "name": "SELF THREAD SCREW 8MM × 75MM (FT)",
+      "category": "ACC",
+      "uom": "NOS",
+      "product_line": "IBC"
+    },
+    {
+      "id": "screw-6.4x20",
+      "name": "SELF THREAD SCREW 6.4MM × 20MM",
+      "category": "ACC",
+      "uom": "NOS",
+      "product_line": "IBC"
+    },
+    {
+      "id": "screw-6.4x60",
+      "name": "SELF THREAD SCREW 6.4MM × 60MM",
+      "category": "ACC",
+      "uom": "NOS",
+      "product_line": "IBC"
+    },
+    {
+      "id": "hex-bolt-m8x50",
+      "name": "HEX BOLT (HALF THREAD) M8 × 50MM",
+      "category": "ACC",
+      "uom": "NOS",
+      "product_line": "IBC"
+    },
+    {
+      "id": "hex-bolt-m8x25",
+      "name": "HEX BOLT (HALF THREAD) M8 × 25MM",
+      "category": "ACC",
+      "uom": "NOS",
+      "product_line": "IBC"
+    },
+    {
+      "id": "hex-bolt-m8x110",
+      "name": "HEX BOLT (HALF THREAD) M8 × 110MM",
+      "category": "ACC",
+      "uom": "NOS",
+      "product_line": "IBC"
+    },
+    {
+      "id": "hex-bolt-m8x145",
+      "name": "HEX BOLT (HALF THREAD) M8 × 145MM",
+      "category": "ACC",
+      "uom": "NOS",
+      "product_line": "IBC"
+    },
+    {
+      "id": "hex-bolt-m8x45",
+      "name": "HEX BOLT (HALF THREAD) M8 × 45MM",
+      "category": "ACC",
+      "uom": "NOS",
+      "product_line": "IBC"
+    },
+    {
+      "id": "allen-bolt-m8x140",
+      "name": "ALLEN BOLT CSK M8 × 140MM",
+      "category": "ACC",
+      "uom": "NOS",
+      "product_line": "IBC"
+    },
+    {
+      "id": "c-nut-m8",
+      "name": "C NUT M8 × 25 × 16 × 15 × 1.5THK",
+      "category": "ACC",
+      "uom": "NOS",
+      "product_line": "IBC"
+    },
+    {
+      "id": "u-clip-55x30",
+      "name": "U CLIP 55 × 30 × 1.5MM",
+      "category": "ACC",
+      "uom": "NOS",
+      "product_line": "IBC"
+    },
+    {
+      "id": "clamp-big",
+      "name": "CLAMP BIG 55 × 75 × 1.5 MM",
+      "category": "ACC",
+      "uom": "NOS",
+      "product_line": "IBC"
+    },
+    {
+      "id": "pipe-insert-70mm",
+      "name": "PIPE INSERT 70MM",
+      "category": "ACC",
+      "uom": "NOS",
+      "product_line": "IBC"
+    },
+    {
+      "id": "valve-btf-3in",
+      "name": "BTF 3 INCH (Valve)",
+      "category": "ACC",
+      "uom": "NOS",
+      "product_line": "IBC"
+    },
+    {
+      "id": "valve-gasket-pe",
+      "name": "PE Valve Gasket",
+      "category": "ACC",
+      "uom": "NOS",
+      "product_line": "IBC"
+    },
+    {
+      "id": "cap-dg",
+      "name": "DG CAP",
+      "category": "ACC",
+      "uom": "NOS",
+      "product_line": "IBC"
+    },
+    {
+      "id": "cap-gasket-epdm",
+      "name": "EPDM Cap Gasket",
+      "category": "ACC",
+      "uom": "NOS",
+      "product_line": "IBC"
+    },
+    {
+      "id": "cap-vent-d15",
+      "name": "D15 Cap Vent Insert",
+      "category": "ACC",
+      "uom": "NOS",
+      "product_line": "IBC"
+    },
+    {
+      "id": "id-plate",
+      "name": "ID PLATE",
+      "category": "ACC",
+      "uom": "NOS",
+      "product_line": "IBC"
+    },
+    {
+      "id": "corner-protector",
+      "name": "CORNER PROTECTOR",
+      "category": "ACC",
+      "uom": "NOS",
+      "product_line": "IBC"
+    },
+    {
+      "id": "security-flap",
+      "name": "SECURITY FLAP",
+      "category": "ACC",
+      "uom": "NOS",
+      "product_line": "IBC"
+    },
+    {
+      "id": "top-clinching-cover",
+      "name": "TOP CLINCHING COVER",
+      "category": "ACC",
+      "uom": "NOS",
+      "product_line": "IBC"
+    },
+    {
+      "id": "clinching-cover",
+      "name": "CLINCHING COVER",
+      "category": "ACC",
+      "uom": "NOS",
+      "product_line": "IBC"
+    },
+    {
+      "id": "screw-id-plate",
+      "name": "SCREW FOR ID PLATE 4.2 × 13.3",
+      "category": "ACC",
+      "uom": "NOS",
+      "product_line": "IBC"
+    },
+    {
+      "id": "screw-nylock-6x20",
+      "name": "SCREW WITH NYLOCK NUT 6 × 20",
+      "category": "ACC",
+      "uom": "NOS",
+      "product_line": "IBC"
+    },
+    {
+      "id": "screw-nylock-5x12",
+      "name": "SCREW WITH NYLOCK NUT 5 × 12",
+      "category": "ACC",
+      "uom": "NOS",
+      "product_line": "IBC"
+    },
+    {
+      "id": "sticker-recollect",
+      "name": "STICKER RECOLLECT",
+      "category": "ACC",
+      "uom": "NOS",
+      "product_line": "IBC"
+    },
+    {
+      "id": "ibc-1000-cpflat-dn50",
+      "name": "1000 LTR IBC HM-HDPE BULK CONTAINER CP-FLAT DN50 QD BV 2.5 INCH",
+      "category": "FG",
+      "uom": "NOS",
+      "product_line": "IBC"
+    }
+  ],
+  "boms": [
+    {
+      "id": "bom-hdpe-235",
+      "product_id": "drum-235-nm-8.5",
+      "product_category": "Plastic",
+      "version": 2,
+      "is_active": true,
+      "net_output_kg": 8.45,
+      "charge_kg": 8.625,
+      "max_depth": 1,
+      "updated_days_ago": 40,
+      "updated_at": "2026-07-30"
+    },
+    {
+      "id": "bom-ms-210",
+      "product_id": "barrel-210-crca-16",
+      "product_category": "MS",
+      "version": 1,
+      "is_active": true,
+      "net_output_kg": 16.0,
+      "charge_kg": 18.552,
+      "max_depth": 2,
+      "updated_days_ago": 40,
+      "updated_at": "2026-07-30"
+    },
+    {
+      "id": "bom-ibc-1000",
+      "product_id": "ibc-1000-cpflat-dn50",
+      "product_category": "IBC",
+      "version": 3,
+      "is_active": true,
+      "net_output_kg": 15.2,
+      "charge_kg": 21.35,
+      "max_depth": 4,
+      "updated_days_ago": 12,
+      "updated_at": "2026-08-27"
+    }
+  ],
+  "bom_levels": [
+    {
+      "id": "bl-0001",
+      "bom_id": "bom-hdpe-235",
+      "parent_item_id": "drum-235-nm-8.5",
+      "child_item_id": "hdpe-resin",
+      "quantity_per": 6.375,
+      "uom": "kg",
+      "category": "RM",
+      "depth": 1,
+      "scrap_allowance_pct": null,
+      "is_regrind": false,
+      "note": "virgin resin"
+    },
+    {
+      "id": "bl-0002",
+      "bom_id": "bom-hdpe-235",
+      "parent_item_id": "drum-235-nm-8.5",
+      "child_item_id": "regrind",
+      "quantity_per": 2.205,
+      "uom": "kg",
+      "category": "RM",
+      "depth": 1,
+      "scrap_allowance_pct": null,
+      "is_regrind": true,
+      "note": "26% of charge; flash returns here"
+    },
+    {
+      "id": "bl-0003",
+      "bom_id": "bom-hdpe-235",
+      "parent_item_id": "drum-235-nm-8.5",
+      "child_item_id": "master-batch",
+      "quantity_per": 0.045,
+      "uom": "kg",
+      "category": "RM",
+      "depth": 1,
+      "scrap_allowance_pct": null,
+      "is_regrind": false,
+      "note": "colourant additive"
+    },
+    {
+      "id": "bl-0004",
+      "bom_id": "bom-ms-210",
+      "parent_item_id": "barrel-210-crca-16",
+      "child_item_id": "body-sheet-0.97",
+      "quantity_per": 1,
+      "uom": "NOS",
+      "category": "SFG",
+      "depth": 1,
+      "scrap_allowance_pct": null,
+      "is_regrind": false,
+      "note": null
+    },
+    {
+      "id": "bl-0005",
+      "bom_id": "bom-ms-210",
+      "parent_item_id": "barrel-210-crca-16",
+      "child_item_id": "lid-sheet-0.9x1315",
+      "quantity_per": 1,
+      "uom": "NOS",
+      "category": "SFG",
+      "depth": 1,
+      "scrap_allowance_pct": null,
+      "is_regrind": false,
+      "note": null
+    },
+    {
+      "id": "bl-0006",
+      "bom_id": "bom-ms-210",
+      "parent_item_id": "barrel-210-crca-16",
+      "child_item_id": "tagring-2in",
+      "quantity_per": 1,
+      "uom": "NOS",
+      "category": "ACC",
+      "depth": 1,
+      "scrap_allowance_pct": null,
+      "is_regrind": false,
+      "note": null
+    },
+    {
+      "id": "bl-0007",
+      "bom_id": "bom-ms-210",
+      "parent_item_id": "barrel-210-crca-16",
+      "child_item_id": "tagring-0.75in",
+      "quantity_per": 1,
+      "uom": "NOS",
+      "category": "ACC",
+      "depth": 1,
+      "scrap_allowance_pct": null,
+      "is_regrind": false,
+      "note": null
+    },
+    {
+      "id": "bl-0008",
+      "bom_id": "bom-ms-210",
+      "parent_item_id": "barrel-210-crca-16",
+      "child_item_id": "bungs-2in-rubber",
+      "quantity_per": 1,
+      "uom": "NOS",
+      "category": "ACC",
+      "depth": 1,
+      "scrap_allowance_pct": null,
+      "is_regrind": false,
+      "note": null
+    },
+    {
+      "id": "bl-0009",
+      "bom_id": "bom-ms-210",
+      "parent_item_id": "barrel-210-crca-16",
+      "child_item_id": "bungs-0.75in-rubber",
+      "quantity_per": 1,
+      "uom": "NOS",
+      "category": "ACC",
+      "depth": 1,
+      "scrap_allowance_pct": null,
+      "is_regrind": false,
+      "note": null
+    },
+    {
+      "id": "bl-0010",
+      "bom_id": "bom-ms-210",
+      "parent_item_id": "barrel-210-crca-16",
+      "child_item_id": "bungs-2in-poly",
+      "quantity_per": 1,
+      "uom": "NOS",
+      "category": "ACC",
+      "depth": 1,
+      "scrap_allowance_pct": null,
+      "is_regrind": false,
+      "note": null
+    },
+    {
+      "id": "bl-0011",
+      "bom_id": "bom-ms-210",
+      "parent_item_id": "barrel-210-crca-16",
+      "child_item_id": "bungs-0.75in-poly",
+      "quantity_per": 1,
+      "uom": "NOS",
+      "category": "ACC",
+      "depth": 1,
+      "scrap_allowance_pct": null,
+      "is_regrind": false,
+      "note": null
+    },
+    {
+      "id": "bl-0012",
+      "bom_id": "bom-ms-210",
+      "parent_item_id": "barrel-210-crca-16",
+      "child_item_id": "capseal-2in-ms",
+      "quantity_per": 1,
+      "uom": "NOS",
+      "category": "ACC",
+      "depth": 1,
+      "scrap_allowance_pct": null,
+      "is_regrind": false,
+      "note": null
+    },
+    {
+      "id": "bl-0013",
+      "bom_id": "bom-ms-210",
+      "parent_item_id": "barrel-210-crca-16",
+      "child_item_id": "capseal-0.75in-ms",
+      "quantity_per": 1,
+      "uom": "NOS",
+      "category": "ACC",
+      "depth": 1,
+      "scrap_allowance_pct": null,
+      "is_regrind": false,
+      "note": null
+    },
+    {
+      "id": "bl-0014",
+      "bom_id": "bom-ms-210",
+      "parent_item_id": "barrel-210-crca-16",
+      "child_item_id": "stretch-film",
+      "quantity_per": 0.05,
+      "uom": "kg",
+      "category": "ACC",
+      "depth": 1,
+      "scrap_allowance_pct": null,
+      "is_regrind": false,
+      "note": null
+    },
+    {
+      "id": "bl-0015",
+      "bom_id": "bom-ms-210",
+      "parent_item_id": "barrel-210-crca-16",
+      "child_item_id": "corrugated-sheet",
+      "quantity_per": 1,
+      "uom": "NOS",
+      "category": "ACC",
+      "depth": 1,
+      "scrap_allowance_pct": null,
+      "is_regrind": false,
+      "note": null
+    },
+    {
+      "id": "bl-0016",
+      "bom_id": "bom-ms-210",
+      "parent_item_id": "body-sheet-0.97",
+      "child_item_id": "crca-coil-0.97x914",
+      "quantity_per": 12.4,
+      "uom": "kg",
+      "category": "RM",
+      "depth": 2,
+      "scrap_allowance_pct": 13.7,
+      "is_regrind": false,
+      "note": "A4+A5: trim/blanking allowance, steel scrap is waste not regrind"
+    },
+    {
+      "id": "bl-0017",
+      "bom_id": "bom-ms-210",
+      "parent_item_id": "lid-sheet-0.9x1315",
+      "child_item_id": "crca-coil-0.9x1315",
+      "quantity_per": 6.152,
+      "uom": "kg",
+      "category": "RM",
+      "depth": 2,
+      "scrap_allowance_pct": 13.7,
+      "is_regrind": false,
+      "note": "A4+A5: trim/blanking allowance"
+    },
+    {
+      "id": "bl-0018",
+      "bom_id": "bom-ibc-1000",
+      "parent_item_id": "ibc-1000-cpflat-dn50",
+      "child_item_id": "ic-1000-15kg",
+      "quantity_per": 1,
+      "uom": "NOS",
+      "category": "SFG",
+      "depth": 1,
+      "scrap_allowance_pct": null,
+      "is_regrind": false,
+      "note": "inner container — blow moulded"
+    },
+    {
+      "id": "bl-0019",
+      "bom_id": "bom-ibc-1000",
+      "parent_item_id": "ibc-1000-cpflat-dn50",
+      "child_item_id": "cage-big",
+      "quantity_per": 1,
+      "uom": "NOS",
+      "category": "SFG",
+      "depth": 1,
+      "scrap_allowance_pct": null,
+      "is_regrind": false,
+      "note": "A1: BIG variant, not MAX"
+    },
+    {
+      "id": "bl-0020",
+      "bom_id": "bom-ibc-1000",
+      "parent_item_id": "ibc-1000-cpflat-dn50",
+      "child_item_id": "cp-flat",
+      "quantity_per": 1,
+      "uom": "NOS",
+      "category": "SFG",
+      "depth": 1,
+      "scrap_allowance_pct": null,
+      "is_regrind": false,
+      "note": "composite pallet"
+    },
+    {
+      "id": "bl-0021",
+      "bom_id": "bom-ibc-1000",
+      "parent_item_id": "ibc-1000-cpflat-dn50",
+      "child_item_id": "valve-btf-3in",
+      "quantity_per": 1,
+      "uom": "NOS",
+      "category": "ACC",
+      "depth": 1,
+      "scrap_allowance_pct": null,
+      "is_regrind": false,
+      "note": "BTF 3 INCH, DN50"
+    },
+    {
+      "id": "bl-0022",
+      "bom_id": "bom-ibc-1000",
+      "parent_item_id": "ibc-1000-cpflat-dn50",
+      "child_item_id": "valve-gasket-pe",
+      "quantity_per": 1,
+      "uom": "NOS",
+      "category": "ACC",
+      "depth": 1,
+      "scrap_allowance_pct": null,
+      "is_regrind": false,
+      "note": null
+    },
+    {
+      "id": "bl-0023",
+      "bom_id": "bom-ibc-1000",
+      "parent_item_id": "ibc-1000-cpflat-dn50",
+      "child_item_id": "cap-dg",
+      "quantity_per": 1,
+      "uom": "NOS",
+      "category": "ACC",
+      "depth": 1,
+      "scrap_allowance_pct": null,
+      "is_regrind": false,
+      "note": null
+    },
+    {
+      "id": "bl-0024",
+      "bom_id": "bom-ibc-1000",
+      "parent_item_id": "ibc-1000-cpflat-dn50",
+      "child_item_id": "cap-gasket-epdm",
+      "quantity_per": 1,
+      "uom": "NOS",
+      "category": "ACC",
+      "depth": 1,
+      "scrap_allowance_pct": null,
+      "is_regrind": false,
+      "note": null
+    },
+    {
+      "id": "bl-0025",
+      "bom_id": "bom-ibc-1000",
+      "parent_item_id": "ibc-1000-cpflat-dn50",
+      "child_item_id": "cap-vent-d15",
+      "quantity_per": 1,
+      "uom": "NOS",
+      "category": "ACC",
+      "depth": 1,
+      "scrap_allowance_pct": null,
+      "is_regrind": false,
+      "note": null
+    },
+    {
+      "id": "bl-0026",
+      "bom_id": "bom-ibc-1000",
+      "parent_item_id": "ibc-1000-cpflat-dn50",
+      "child_item_id": "id-plate",
+      "quantity_per": 1,
+      "uom": "NOS",
+      "category": "ACC",
+      "depth": 1,
+      "scrap_allowance_pct": null,
+      "is_regrind": false,
+      "note": null
+    },
+    {
+      "id": "bl-0027",
+      "bom_id": "bom-ibc-1000",
+      "parent_item_id": "ibc-1000-cpflat-dn50",
+      "child_item_id": "corner-protector",
+      "quantity_per": 4,
+      "uom": "NOS",
+      "category": "ACC",
+      "depth": 1,
+      "scrap_allowance_pct": null,
+      "is_regrind": false,
+      "note": "A2: workbook had 2×4, deduped to 4"
+    },
+    {
+      "id": "bl-0028",
+      "bom_id": "bom-ibc-1000",
+      "parent_item_id": "ibc-1000-cpflat-dn50",
+      "child_item_id": "security-flap",
+      "quantity_per": 1,
+      "uom": "NOS",
+      "category": "ACC",
+      "depth": 1,
+      "scrap_allowance_pct": null,
+      "is_regrind": false,
+      "note": null
+    },
+    {
+      "id": "bl-0029",
+      "bom_id": "bom-ibc-1000",
+      "parent_item_id": "ibc-1000-cpflat-dn50",
+      "child_item_id": "c-nut-m8",
+      "quantity_per": 4,
+      "uom": "NOS",
+      "category": "ACC",
+      "depth": 1,
+      "scrap_allowance_pct": null,
+      "is_regrind": false,
+      "note": null
+    },
+    {
+      "id": "bl-0030",
+      "bom_id": "bom-ibc-1000",
+      "parent_item_id": "ibc-1000-cpflat-dn50",
+      "child_item_id": "u-clip-55x30",
+      "quantity_per": 3,
+      "uom": "NOS",
+      "category": "ACC",
+      "depth": 1,
+      "scrap_allowance_pct": null,
+      "is_regrind": false,
+      "note": null
+    },
+    {
+      "id": "bl-0031",
+      "bom_id": "bom-ibc-1000",
+      "parent_item_id": "ibc-1000-cpflat-dn50",
+      "child_item_id": "screw-nylock-6x20",
+      "quantity_per": 5,
+      "uom": "NOS",
+      "category": "ACC",
+      "depth": 1,
+      "scrap_allowance_pct": null,
+      "is_regrind": false,
+      "note": "A3 position 1: BOLT variant — total across both = 10"
+    },
+    {
+      "id": "bl-0032",
+      "bom_id": "bom-ibc-1000",
+      "parent_item_id": "ibc-1000-cpflat-dn50",
+      "child_item_id": "hex-bolt-m8x110",
+      "quantity_per": 4,
+      "uom": "NOS",
+      "category": "ACC",
+      "depth": 1,
+      "scrap_allowance_pct": null,
+      "is_regrind": false,
+      "note": null
+    },
+    {
+      "id": "bl-0033",
+      "bom_id": "bom-ibc-1000",
+      "parent_item_id": "ibc-1000-cpflat-dn50",
+      "child_item_id": "screw-6.4x20",
+      "quantity_per": 4,
+      "uom": "NOS",
+      "category": "ACC",
+      "depth": 1,
+      "scrap_allowance_pct": null,
+      "is_regrind": false,
+      "note": null
+    },
+    {
+      "id": "bl-0034",
+      "bom_id": "bom-ibc-1000",
+      "parent_item_id": "ibc-1000-cpflat-dn50",
+      "child_item_id": "screw-6.4x60",
+      "quantity_per": 5,
+      "uom": "NOS",
+      "category": "ACC",
+      "depth": 1,
+      "scrap_allowance_pct": null,
+      "is_regrind": false,
+      "note": null
+    },
+    {
+      "id": "bl-0035",
+      "bom_id": "bom-ibc-1000",
+      "parent_item_id": "ibc-1000-cpflat-dn50",
+      "child_item_id": "top-clinching-cover",
+      "quantity_per": 1,
+      "uom": "NOS",
+      "category": "ACC",
+      "depth": 1,
+      "scrap_allowance_pct": null,
+      "is_regrind": false,
+      "note": null
+    },
+    {
+      "id": "bl-0036",
+      "bom_id": "bom-ibc-1000",
+      "parent_item_id": "ibc-1000-cpflat-dn50",
+      "child_item_id": "clinching-cover",
+      "quantity_per": 5,
+      "uom": "NOS",
+      "category": "ACC",
+      "depth": 1,
+      "scrap_allowance_pct": null,
+      "is_regrind": false,
+      "note": null
+    },
+    {
+      "id": "bl-0037",
+      "bom_id": "bom-ibc-1000",
+      "parent_item_id": "ibc-1000-cpflat-dn50",
+      "child_item_id": "screw-id-plate",
+      "quantity_per": 8,
+      "uom": "NOS",
+      "category": "ACC",
+      "depth": 1,
+      "scrap_allowance_pct": null,
+      "is_regrind": false,
+      "note": null
+    },
+    {
+      "id": "bl-0038",
+      "bom_id": "bom-ibc-1000",
+      "parent_item_id": "ibc-1000-cpflat-dn50",
+      "child_item_id": "screw-nylock-5x12",
+      "quantity_per": 20,
+      "uom": "NOS",
+      "category": "ACC",
+      "depth": 1,
+      "scrap_allowance_pct": null,
+      "is_regrind": false,
+      "note": null
+    },
+    {
+      "id": "bl-0039",
+      "bom_id": "bom-ibc-1000",
+      "parent_item_id": "ibc-1000-cpflat-dn50",
+      "child_item_id": "sticker-recollect",
+      "quantity_per": 1,
+      "uom": "NOS",
+      "category": "ACC",
+      "depth": 1,
+      "scrap_allowance_pct": null,
+      "is_regrind": false,
+      "note": null
+    },
+    {
+      "id": "bl-0040",
+      "bom_id": "bom-ibc-1000",
+      "parent_item_id": "ibc-1000-cpflat-dn50",
+      "child_item_id": "screw-nylock-6x20",
+      "quantity_per": 5,
+      "uom": "NOS",
+      "category": "ACC",
+      "depth": 1,
+      "scrap_allowance_pct": null,
+      "is_regrind": false,
+      "note": "A3 position 2: MM variant — total across both = 10"
+    },
+    {
+      "id": "bl-0041",
+      "bom_id": "bom-ibc-1000",
+      "parent_item_id": "ic-1000-15kg",
+      "child_item_id": "hdpe-resin",
+      "quantity_per": 14.945,
+      "uom": "kg",
+      "category": "RM",
+      "depth": 2,
+      "scrap_allowance_pct": null,
+      "is_regrind": false,
+      "note": "virgin resin"
+    },
+    {
+      "id": "bl-0042",
+      "bom_id": "bom-ibc-1000",
+      "parent_item_id": "ic-1000-15kg",
+      "child_item_id": "regrind",
+      "quantity_per": 6.405,
+      "uom": "kg",
+      "category": "RM",
+      "depth": 2,
+      "scrap_allowance_pct": null,
+      "is_regrind": true,
+      "note": "30% of charge; flash returns here"
+    },
+    {
+      "id": "bl-0043",
+      "bom_id": "bom-ibc-1000",
+      "parent_item_id": "ic-1000-15kg",
+      "child_item_id": "uv-stabiliser",
+      "quantity_per": 0.2135,
+      "uom": "kg",
+      "category": "RM",
+      "depth": 2,
+      "scrap_allowance_pct": null,
+      "is_regrind": false,
+      "note": "1% of non-UV HDPE granules charge"
+    },
+    {
+      "id": "bl-0044",
+      "bom_id": "bom-ibc-1000",
+      "parent_item_id": "cage-big",
+      "child_item_id": "tail-pipe-4175",
+      "quantity_per": 1,
+      "uom": "NOS",
+      "category": "SFG",
+      "depth": 2,
+      "scrap_allowance_pct": null,
+      "is_regrind": false,
+      "note": "net 3445 g"
+    },
+    {
+      "id": "bl-0045",
+      "bom_id": "bom-ibc-1000",
+      "parent_item_id": "cage-big",
+      "child_item_id": "cut-vbar-1018",
+      "quantity_per": 20,
+      "uom": "NOS",
+      "category": "SFG",
+      "depth": 2,
+      "scrap_allowance_pct": null,
+      "is_regrind": false,
+      "note": "20 cut pieces × 463 g = 9260 g"
+    },
+    {
+      "id": "bl-0046",
+      "bom_id": "bom-ibc-1000",
+      "parent_item_id": "cage-big",
+      "child_item_id": "horizontal-bar-4230",
+      "quantity_per": 5,
+      "uom": "NOS",
+      "category": "SFG",
+      "depth": 2,
+      "scrap_allowance_pct": null,
+      "is_regrind": false,
+      "note": "5 bars × 1875 g net = 9375 g gross"
+    },
+    {
+      "id": "bl-0047",
+      "bom_id": "bom-ibc-1000",
+      "parent_item_id": "cage-big",
+      "child_item_id": "pipe-insert-70mm",
+      "quantity_per": 1,
+      "uom": "NOS",
+      "category": "ACC",
+      "depth": 2,
+      "scrap_allowance_pct": null,
+      "is_regrind": false,
+      "note": "purchased"
+    },
+    {
+      "id": "bl-0048",
+      "bom_id": "bom-ibc-1000",
+      "parent_item_id": "cp-flat",
+      "child_item_id": "bottom-plate",
+      "quantity_per": 1,
+      "uom": "NOS",
+      "category": "SFG",
+      "depth": 2,
+      "scrap_allowance_pct": null,
+      "is_regrind": false,
+      "note": null
+    },
+    {
+      "id": "bl-0049",
+      "bom_id": "bom-ibc-1000",
+      "parent_item_id": "cp-flat",
+      "child_item_id": "traversal-piece",
+      "quantity_per": 1,
+      "uom": "NOS",
+      "category": "SFG",
+      "depth": 2,
+      "scrap_allowance_pct": null,
+      "is_regrind": false,
+      "note": null
+    },
+    {
+      "id": "bl-0050",
+      "bom_id": "bom-ibc-1000",
+      "parent_item_id": "cp-flat",
+      "child_item_id": "corner-spacer",
+      "quantity_per": 4,
+      "uom": "NOS",
+      "category": "SFG",
+      "depth": 2,
+      "scrap_allowance_pct": null,
+      "is_regrind": false,
+      "note": null
+    },
+    {
+      "id": "bl-0051",
+      "bom_id": "bom-ibc-1000",
+      "parent_item_id": "cp-flat",
+      "child_item_id": "side-spacer",
+      "quantity_per": 2,
+      "uom": "NOS",
+      "category": "SFG",
+      "depth": 2,
+      "scrap_allowance_pct": null,
+      "is_regrind": false,
+      "note": null
+    },
+    {
+      "id": "bl-0052",
+      "bom_id": "bom-ibc-1000",
+      "parent_item_id": "cp-flat",
+      "child_item_id": "back-spacer",
+      "quantity_per": 1,
+      "uom": "NOS",
+      "category": "SFG",
+      "depth": 2,
+      "scrap_allowance_pct": null,
+      "is_regrind": false,
+      "note": null
+    },
+    {
+      "id": "bl-0053",
+      "bom_id": "bom-ibc-1000",
+      "parent_item_id": "cp-flat",
+      "child_item_id": "drip-pan",
+      "quantity_per": 1,
+      "uom": "NOS",
+      "category": "SFG",
+      "depth": 2,
+      "scrap_allowance_pct": null,
+      "is_regrind": false,
+      "note": null
+    },
+    {
+      "id": "bl-0054",
+      "bom_id": "bom-ibc-1000",
+      "parent_item_id": "cp-flat",
+      "child_item_id": "base-ring-flat",
+      "quantity_per": 1,
+      "uom": "NOS",
+      "category": "SFG",
+      "depth": 2,
+      "scrap_allowance_pct": null,
+      "is_regrind": false,
+      "note": "made from round pipe, not bought"
+    },
+    {
+      "id": "bl-0055",
+      "bom_id": "bom-ibc-1000",
+      "parent_item_id": "cp-flat",
+      "child_item_id": "screw-6.4x49-torex",
+      "quantity_per": 12,
+      "uom": "NOS",
+      "category": "ACC",
+      "depth": 2,
+      "scrap_allowance_pct": null,
+      "is_regrind": false,
+      "note": null
+    },
+    {
+      "id": "bl-0056",
+      "bom_id": "bom-ibc-1000",
+      "parent_item_id": "cp-flat",
+      "child_item_id": "screw-6.4x27-torex",
+      "quantity_per": 3,
+      "uom": "NOS",
+      "category": "ACC",
+      "depth": 2,
+      "scrap_allowance_pct": null,
+      "is_regrind": false,
+      "note": null
+    },
+    {
+      "id": "bl-0057",
+      "bom_id": "bom-ibc-1000",
+      "parent_item_id": "tail-pipe-4175",
+      "child_item_id": "gp-coil-1.20x88",
+      "quantity_per": 3.48,
+      "uom": "kg",
+      "category": "RM",
+      "depth": 3,
+      "scrap_allowance_pct": null,
+      "is_regrind": false,
+      "note": "gross 3.48 kg, net 3445 g, waste 35 g"
+    },
+    {
+      "id": "bl-0058",
+      "bom_id": "bom-ibc-1000",
+      "parent_item_id": "cut-vbar-1018",
+      "child_item_id": "vertical-bar-5130",
+      "quantity_per": 0.2,
+      "uom": "NOS",
+      "category": "SFG",
+      "depth": 3,
+      "scrap_allowance_pct": null,
+      "is_regrind": false,
+      "note": "5 cut pieces from 1 pipe; per cut: 466 g gross, 463 g net, 3 g scrap"
+    },
+    {
+      "id": "bl-0059",
+      "bom_id": "bom-ibc-1000",
+      "parent_item_id": "horizontal-bar-4230",
+      "child_item_id": "gp-coil-0.90x65",
+      "quantity_per": 1.91,
+      "uom": "kg",
+      "category": "RM",
+      "depth": 3,
+      "scrap_allowance_pct": null,
+      "is_regrind": false,
+      "note": "gross 1.91 kg, net 1875 g, waste 35 g"
+    },
+    {
+      "id": "bl-0060",
+      "bom_id": "bom-ibc-1000",
+      "parent_item_id": "base-ring-flat",
+      "child_item_id": "round-pipe-4010",
+      "quantity_per": 1,
+      "uom": "NOS",
+      "category": "SFG",
+      "depth": 3,
+      "scrap_allowance_pct": null,
+      "is_regrind": false,
+      "note": "1:1 conversion, gross 1962 g, net 1912 g, waste 50 g"
+    },
+    {
+      "id": "bl-0061",
+      "bom_id": "bom-ibc-1000",
+      "parent_item_id": "vertical-bar-5130",
+      "child_item_id": "gp-coil-0.90x65",
+      "quantity_per": 2.33,
+      "uom": "kg",
+      "category": "RM",
+      "depth": 4,
+      "scrap_allowance_pct": null,
+      "is_regrind": false,
+      "note": "gross 2.33 kg, net 2295 g, waste 35 g"
+    },
+    {
+      "id": "bl-0062",
+      "bom_id": "bom-ibc-1000",
+      "parent_item_id": "round-pipe-4010",
+      "child_item_id": "gp-coil-1.00x62",
+      "quantity_per": 1.962,
+      "uom": "kg",
+      "category": "RM",
+      "depth": 4,
+      "scrap_allowance_pct": null,
+      "is_regrind": false,
+      "note": "gross 1.962 kg, net 1912 g, waste 50 g"
+    }
+  ],
+  "seed_rates": [
+    {
+      "ref": "R1",
+      "item_id": "hdpe-resin",
+      "rate": 100.0,
+      "unit": "per kg",
+      "description": "HDPE resin (natural)"
+    },
+    {
+      "ref": "R2",
+      "item_id": "regrind",
+      "rate": 60.0,
+      "unit": "per kg",
+      "description": "Regrind / recycled granule"
+    },
+    {
+      "ref": "R3",
+      "item_id": "master-batch",
+      "rate": 250.0,
+      "unit": "per kg",
+      "description": "Master batch / colourant"
+    },
+    {
+      "ref": "R4",
+      "item_id": "uv-stabiliser",
+      "rate": 300.0,
+      "unit": "per kg",
+      "description": "UV stabiliser"
+    },
+    {
+      "ref": "R5",
+      "item_id": "crca-coil-0.97x914",
+      "rate": 60.0,
+      "unit": "per kg",
+      "description": "CRCA coil (all gauges)"
+    },
+    {
+      "ref": "R6",
+      "item_id": "gp-coil-1.20x88",
+      "rate": 70.0,
+      "unit": "per kg",
+      "description": "GP (galvanised plain) coil"
+    },
+    {
+      "ref": "C1",
+      "item_id": "valve-btf-3in",
+      "rate": 450.0,
+      "unit": "each",
+      "description": "IBC valve (BTF 3 inch, DN50)"
+    },
+    {
+      "ref": "C2",
+      "item_id": "cap-dg",
+      "rate": 60.0,
+      "unit": "each",
+      "description": "Cap + gasket + vent insert set"
+    },
+    {
+      "ref": "C3",
+      "item_id": "pipe-insert-70mm",
+      "rate": 25.0,
+      "unit": "each",
+      "description": "Pipe insert 70 mm"
+    },
+    {
+      "ref": "C4",
+      "item_id": "cp-flat",
+      "rate": 900.0,
+      "unit": "each",
+      "description": "Composite pallet (CP-FLAT)"
+    },
+    {
+      "ref": "C5",
+      "item_id": "pallet-pine-wood",
+      "rate": 700.0,
+      "unit": "each",
+      "description": "Wooden pallet (bought in)"
+    },
+    {
+      "ref": "C6",
+      "item_id": "screw-nylock-6x20",
+      "rate": 150.0,
+      "unit": "per unit",
+      "description": "Fastener set (per IBC, all types)"
+    },
+    {
+      "ref": "F1",
+      "item_id": "ibc-1000-cpflat-dn50",
+      "rate": 10000.0,
+      "unit": "each",
+      "description": "IBC 1000 L, CP-FLAT DN50"
+    },
+    {
+      "ref": "F2",
+      "item_id": "drum-235-nm-8.5",
+      "rate": 1200.0,
+      "unit": "each",
+      "description": "HDPE drum 235 L N/M 8.5 kg"
+    },
+    {
+      "ref": "F3",
+      "item_id": "barrel-210-crca-16",
+      "rate": 1800.0,
+      "unit": "each",
+      "description": "MS barrel 210 L CRCA 16 kg"
+    },
+    {
+      "ref": "S3",
+      "item_id": "corner-protector",
+      "rate": 40.0,
+      "unit": "per NOS",
+      "description": "Corner protector"
+    },
+    {
+      "ref": "S4",
+      "item_id": "screw-nylock-6x20",
+      "rate": 5.0,
+      "unit": "per NOS",
+      "description": "Screw with nylock nut 6×20"
+    }
+  ],
+  "supplementary_boms": {
+    "hdpe-assembly": {
+      "description": "HDPE drum assembly (moulded drum + accessories → FG BLUE)",
+      "product_id": "drum-235-nm-8.5-blue",
+      "components": [
+        {
+          "item_id": "drum-235-nm-8.5",
+          "qty": 1,
+          "uom": "NOS",
+          "category": "SFG"
+        },
+        {
+          "item_id": "bung-50mm-reg-white",
+          "qty": 2,
+          "uom": "NOS",
+          "category": "ACC"
+        },
+        {
+          "item_id": "capseal-2in-pvc",
+          "qty": 2,
+          "uom": "NOS",
+          "category": "ACC"
+        },
+        {
+          "item_id": "bung-50mm-hard-ring",
+          "qty": 2,
+          "uom": "NOS",
+          "category": "ACC"
+        },
+        {
+          "item_id": "dustcap-70mm-blue",
+          "qty": 2,
+          "uom": "NOS",
+          "category": "ACC"
+        }
+      ]
+    },
+    "cp-easy-pallet": {
+      "description": "CP-EASY composite pallet assembly",
+      "product_id": "cp-easy",
+      "components": [
+        {
+          "item_id": "bottom-plate",
+          "qty": 1,
+          "uom": "NOS",
+          "category": "SFG"
+        },
+        {
+          "item_id": "traversal-piece",
+          "qty": 1,
+          "uom": "NOS",
+          "category": "SFG"
+        },
+        {
+          "item_id": "corner-spacer",
+          "qty": 4,
+          "uom": "NOS",
+          "category": "SFG"
+        },
+        {
+          "item_id": "side-spacer",
+          "qty": 2,
+          "uom": "NOS",
+          "category": "SFG"
+        },
+        {
+          "item_id": "back-spacer",
+          "qty": 1,
+          "uom": "NOS",
+          "category": "SFG"
+        },
+        {
+          "item_id": "drip-pan",
+          "qty": 1,
+          "uom": "NOS",
+          "category": "SFG"
+        },
+        {
+          "item_id": "base-ring-easy",
+          "qty": 1,
+          "uom": "NOS",
+          "category": "SFG"
+        },
+        {
+          "item_id": "screw-6.4x49-torex",
+          "qty": 14,
+          "uom": "NOS",
+          "category": "ACC"
+        },
+        {
+          "item_id": "screw-6.4x27-torex",
+          "qty": 3,
+          "uom": "NOS",
+          "category": "ACC"
+        }
+      ]
+    },
+    "sp-pallet": {
+      "description": "SP steel pallet assembly",
+      "product_id": "sp",
+      "components": [
+        {
+          "item_id": "bottom-plate",
+          "qty": 1,
+          "uom": "NOS",
+          "category": "SFG"
+        },
+        {
+          "item_id": "traversal-piece",
+          "qty": 1,
+          "uom": "NOS",
+          "category": "SFG"
+        },
+        {
+          "item_id": "base-ring-flat",
+          "qty": 1,
+          "uom": "NOS",
+          "category": "SFG"
+        },
+        {
+          "item_id": "corner-spacer",
+          "qty": 4,
+          "uom": "NOS",
+          "category": "SFG"
+        },
+        {
+          "item_id": "back-spacer",
+          "qty": 1,
+          "uom": "NOS",
+          "category": "SFG"
+        },
+        {
+          "item_id": "hex-bolt-m8x50",
+          "qty": 7,
+          "uom": "NOS",
+          "category": "ACC"
+        },
+        {
+          "item_id": "hex-bolt-m8x25",
+          "qty": 2,
+          "uom": "NOS",
+          "category": "ACC"
+        },
+        {
+          "item_id": "u-clip-55x30",
+          "qty": 3,
+          "uom": "NOS",
+          "category": "ACC"
+        },
+        {
+          "item_id": "steel-pallet-bought",
+          "qty": 1,
+          "uom": "NOS",
+          "category": "ACC"
+        }
+      ]
+    },
+    "wp-pine-pallet": {
+      "description": "WP-PINE wooden pallet assembly",
+      "product_id": "wp-pine",
+      "components": [
+        {
+          "item_id": "screw-6.4x100",
+          "qty": 7,
+          "uom": "NOS",
+          "category": "ACC"
+        },
+        {
+          "item_id": "screw-6.4x40",
+          "qty": 4,
+          "uom": "NOS",
+          "category": "ACC"
+        },
+        {
+          "item_id": "clamp-big",
+          "qty": 2,
+          "uom": "NOS",
+          "category": "ACC"
+        },
+        {
+          "item_id": "pallet-pine-wood",
+          "qty": 1,
+          "uom": "NOS",
+          "category": "ACC"
+        }
+      ]
+    },
+    "wp-jungle-pallet": {
+      "description": "WP-JUNGLE wooden pallet assembly",
+      "product_id": "wp-jungle",
+      "components": [
+        {
+          "item_id": "clamp-big",
+          "qty": 2,
+          "uom": "NOS",
+          "category": "ACC"
+        },
+        {
+          "item_id": "screw-6.4x40",
+          "qty": 4,
+          "uom": "NOS",
+          "category": "ACC"
+        },
+        {
+          "item_id": "screw-8x75-ft",
+          "qty": 7,
+          "uom": "NOS",
+          "category": "ACC"
+        },
+        {
+          "item_id": "pallet-jungle-wood",
+          "qty": 1,
+          "uom": "NOS",
+          "category": "ACC"
+        }
+      ]
+    },
+    "pp-pallet": {
+      "description": "PP plastic pallet assembly",
+      "product_id": "pp",
+      "components": [
+        {
+          "item_id": "c-channel",
+          "qty": 1,
+          "uom": "NOS",
+          "category": "SFG"
+        },
+        {
+          "item_id": "hex-bolt-m8x145",
+          "qty": 3,
+          "uom": "NOS",
+          "category": "ACC"
+        },
+        {
+          "item_id": "hex-bolt-m8x45",
+          "qty": 2,
+          "uom": "NOS",
+          "category": "ACC"
+        },
+        {
+          "item_id": "allen-bolt-m8x140",
+          "qty": 2,
+          "uom": "NOS",
+          "category": "ACC"
+        },
+        {
+          "item_id": "c-nut-m8",
+          "qty": 7,
+          "uom": "NOS",
+          "category": "ACC"
+        },
+        {
+          "item_id": "u-clip-55x30",
+          "qty": 3,
+          "uom": "NOS",
+          "category": "ACC"
+        },
+        {
+          "item_id": "plastic-pallet-bought",
+          "qty": 1,
+          "uom": "NOS",
+          "category": "ACC"
+        }
+      ]
+    },
+    "cage-max": {
+      "description": "CAGE-MAX assembly (not used in demo — see A1)",
+      "product_id": "cage-max",
+      "components": [
+        {
+          "item_id": "tail-pipe-4175",
+          "qty": 1,
+          "uom": "NOS",
+          "category": "SFG"
+        },
+        {
+          "item_id": "cut-vbar-1018",
+          "qty": 20,
+          "uom": "NOS",
+          "category": "SFG"
+        },
+        {
+          "item_id": "cut-vbar-1002",
+          "qty": 20,
+          "uom": "NOS",
+          "category": "SFG"
+        },
+        {
+          "item_id": "horizontal-bar-4230",
+          "qty": 5,
+          "uom": "NOS",
+          "category": "SFG"
+        },
+        {
+          "item_id": "pipe-insert-70mm",
+          "qty": 1,
+          "uom": "NOS",
+          "category": "ACC"
+        }
+      ]
+    },
+    "pipe-conversions": {
+      "description": "Steel coil to pipe conversion rates (for reference)",
+      "product_id": null,
+      "components": [
+        {
+          "item_id": "gp-coil-1.20x88",
+          "qty": 3.48,
+          "uom": "kg",
+          "makes": "tail-pipe-4175",
+          "note": "net 3445 g, waste 35 g"
+        },
+        {
+          "item_id": "gp-coil-0.90x65",
+          "qty": 2.33,
+          "uom": "kg",
+          "makes": "vertical-bar-5130",
+          "note": "net 2295 g, waste 35 g"
+        },
+        {
+          "item_id": "gp-coil-0.90x65",
+          "qty": 1.91,
+          "uom": "kg",
+          "makes": "horizontal-bar-4230",
+          "note": "net 1875 g, waste 35 g"
+        },
+        {
+          "item_id": "gp-coil-1.00x62",
+          "qty": 2.013,
+          "uom": "kg",
+          "makes": "round-pipe-4110",
+          "note": "net 1963 g, waste 50 g"
+        },
+        {
+          "item_id": "gp-coil-1.00x62",
+          "qty": 1.962,
+          "uom": "kg",
+          "makes": "round-pipe-4010",
+          "note": "net 1912 g, waste 50 g"
+        },
+        {
+          "item_id": "gp-coil-1.00x62",
+          "qty": 2.1,
+          "uom": "kg",
+          "makes": "zigzag-pipe-4420",
+          "note": "net 2065 g, waste 35 g"
+        }
+      ]
+    },
+    "cut-piece-conversions": {
+      "description": "Pipe to cut piece conversion rates (for reference)",
+      "product_id": null,
+      "components": [
+        {
+          "item_id": "vertical-bar-5130",
+          "qty": 0.2,
+          "uom": "NOS",
+          "makes": "cut-vbar-1002",
+          "note": "5 cuts/pipe, FOR MAX, 466 g gross, 456 g net"
+        },
+        {
+          "item_id": "vertical-bar-5130",
+          "qty": 0.2,
+          "uom": "NOS",
+          "makes": "cut-vbar-1018",
+          "note": "5 cuts/pipe, FOR BIG, 466 g gross, 463 g net"
+        },
+        {
+          "item_id": "round-pipe-4110",
+          "qty": 0.25,
+          "uom": "NOS",
+          "makes": "top-cross-bar-1020",
+          "note": "4 cuts/pipe, 503.25 g gross — CONSUMED NOWHERE"
+        },
+        {
+          "item_id": "round-pipe-4010",
+          "qty": 1,
+          "uom": "NOS",
+          "makes": "flat-base-ring",
+          "note": "1:1, 1962 g gross, 1912 g net"
+        },
+        {
+          "item_id": "zigzag-pipe-4420",
+          "qty": 1,
+          "uom": "NOS",
+          "makes": "easy-base-ring",
+          "note": "1:1, 2065 g gross, 2055 g net"
+        }
+      ]
+    }
+  }
+}
