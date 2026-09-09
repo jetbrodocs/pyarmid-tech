@@ -2,7 +2,7 @@
 title: "Screen — Trip Board"
 status: draft
 created: 2026-09-02
-updated: 2026-09-02
+updated: 2026-09-09
 tags: [screen-spec, demo, fleet, trip, pod]
 prd: ../../prd-12-trip-management/prd.md
 parent_spec: ../../../screen-specs/prd-12-fleet-management/screen-fleet-dashboard.md
@@ -11,7 +11,7 @@ requirements: [REQ-FM-008, REQ-FM-009, REQ-FM-010, REQ-FM-011, REQ-FM-012, REQ-F
 
 # Screen — Trip Board
 
-**Module:** Demo · Trip Management · **Beat ㉓** — the last screen of the demo.
+**Module:** Demo · Trip Management · **Beat ㉔** — the last screen of the demo.
 **Purpose:** Every truck, where it is, and what it is carrying.
 
 Close here. It is the one screen that answers a question the promoters ask daily and nothing can
@@ -21,7 +21,7 @@ currently answer: **where are my trucks?**
 > [Fleet Dashboard](../../../screen-specs/prd-12-fleet-management/screen-fleet-dashboard.md),
 > [Trip List](../../../screen-specs/prd-12-fleet-management/screen-trip-list.md) and
 > [Trip Detail](../../../screen-specs/prd-12-fleet-management/screen-trip-detail.md), **merged** into a
-> board with an expanding row. Cut: vehicle and driver history, and **all of prd-13** — no trip cost,
+> board with an expanding row. Cut: vehicle and driver history, and **all of prd-13 Fleet Cost** — no trip cost,
 > no cost-to-serve, no driver advance.
 
 ---
@@ -32,7 +32,7 @@ currently answer: **where are my trucks?**
 | ---- | ------- | ----------------- |
 | Main navigation | `Fleet → Trips` | All trips, active first |
 | Home | *N trucks on the road* tile | Active trips |
-| [Trip Assignment](screen-trip-assignment.md) | After opening a trip | Board with the new trip expanded — **this is beat ㉓** |
+| [Trip Assignment](screen-trip-assignment.md) | After opening a trip | Board with the new trip expanded — **this is beat ㉔** |
 | [Trip Assignment](screen-trip-assignment.md) | Unavailable vehicle → its trip | That trip, expanded |
 | [SO List](../prd-08-sales-order/screen-so-list.md) | Trip chip on the trail | Same |
 
@@ -76,7 +76,7 @@ row rather than on a summary slide.
 ### Idle is a status, and it is the interesting one
 
 The strip counts an idle truck. A fleet system that only shows moving trucks answers the easy question;
-a truck sitting at Unit 7 with no dispatch against it is the one that costs money — and prd-13, which
+a truck sitting at Unit 7 with no dispatch against it is the one that costs money — and prd-13 Fleet Cost, which
 would put a number on that, is deliberately cut.
 
 **Show that the truck is idle. Never say what idling costs.** That is the mechanism-not-magnitude rule,
@@ -126,7 +126,7 @@ that implies live tracking promises an integration nobody has scoped.
 | Status track | Six stages, filled to date | `TripStatusEvent` |
 | Recorded by | **Position** per transition | `users` |
 
-**No cost, anywhere on this screen.** Not fuel, not driver cost, not a per-trip total. prd-13 is cut,
+**No cost, anywhere on this screen.** Not fuel, not driver cost, not a per-trip total. prd-13 Fleet Cost is cut,
 and the seed register's diesel and mileage figures exist for that PRD, not for this demo.
 
 ---

@@ -2,14 +2,14 @@
 title: "Demo — Screen List"
 status: draft
 created: 2026-09-02
-updated: 2026-09-03
+updated: 2026-09-09
 tags: [screen-specs, index, demo]
 prd: ../_index.md
 ---
 
 # Demo — Screen List
 
-24 screens, in demo order. Derived from [`../_index.md`](../_index.md) §Screens.
+26 screens, in demo order. Derived from [`../_index.md`](../_index.md) §Screens.
 
 ## Act 1 — Procure to Stock
 
@@ -20,7 +20,8 @@ prd: ../_index.md
 | ③    | **BOM Detail**        | One BOM exploded — levels, quantities, regrind, scrap | [screen-bom-detail.md](prd-06-bom-management/screen-bom-detail.md)                     |
 | ④ ⑫  | **Stock by Location** | RM, spares and FG by location and category            | [screen-stock-by-location.md](prd-05-inventory-management/screen-stock-by-location.md) |
 | ⑤    | **Indent Create**     | Store team raises a shortfall                         | [screen-indent-create.md](prd-01-purchase-indent/screen-indent-create.md)              |
-| ⑥    | **Indent Approval**   | HO approves or rejects                                | [screen-indent-approval.md](prd-01-purchase-indent/screen-indent-approval.md)          |
+| ⑥    | **Indent Approval**   | PO officer's table — find the indent                  | [screen-indent-approval.md](prd-01-purchase-indent/screen-indent-approval.md)          |
+| ⑥ ⑦  | **Indent Detail**     | Approve, reject, or convert one indent to a PO        | [screen-indent-detail.md](prd-01-purchase-indent/screen-indent-detail.md)              |
 | ⑦    | **PO Create**         | Approved indent becomes a purchase order              | [screen-po-create.md](prd-02-purchase-order/screen-po-create.md)                       |
 | ⑧    | **PO List**           | Open POs with ageing and receipt status               | [screen-po-list.md](prd-02-purchase-order/screen-po-list.md)                           |
 | ⑨    | **LR Create**         | Record an inbound LR against a PO                     | [screen-lr-create.md](prd-03-lr-tracking/screen-lr-create.md)                          |
@@ -42,8 +43,9 @@ prd: ../_index.md
 | ⑲    | **Production Run**    | Record output, generate serials, deduct RM      | [screen-production-run.md](prd-10-production-planning/screen-production-run.md)       |
 | ⑳    | **Dispatch Queue**    | What is ready to go today                       | [screen-dispatch-queue.md](prd-11-dispatch/screen-dispatch-queue.md)                  |
 | ㉑   | **Dispatch Create**   | Confirm load; challan and e-Way Bill            | [screen-dispatch-create.md](prd-11-dispatch/screen-dispatch-create.md)                |
-| ㉒   | **Trip Assignment**   | Truck and driver against a dispatch             | [screen-trip-assignment.md](prd-12-trip-management/screen-trip-assignment.md)         |
-| ㉓   | **Trip Board**        | Fleet status, live                              | [screen-trip-board.md](prd-12-trip-management/screen-trip-board.md)                   |
+| ㉒   | **Vehicle Registry**  | The fleet master — add and edit a truck         | [screen-vehicle-registry.md](prd-13-vehicle-management/screen-vehicle-registry.md)    |
+| ㉓   | **Trip Assignment**   | Truck and driver against a dispatch             | [screen-trip-assignment.md](prd-12-trip-management/screen-trip-assignment.md)         |
+| ㉔   | **Trip Board**        | Fleet status, live                              | [screen-trip-board.md](prd-12-trip-management/screen-trip-board.md)                   |
 
 ## Rules that apply to every screen in this cut
 
@@ -58,12 +60,12 @@ prd: ../_index.md
 5. **Dates render relative to `DEMO_DAY`.** Never hardcoded.
 6. **Stock resolves to a location, not a plant** — `REQ-DM-002`. Four locations, no bins, no racks.
 7. **All writes go through `/events/emit`.** Domain routers are GET-only.
-8. **Nothing off-script is reachable.** Navigation shows only these 24 screens. A dead link found live
+8. **Nothing off-script is reachable.** Navigation shows only these 26 screens. A dead link found live
    costs more than a missing feature.
 
 ## What these screens cannot do
 
-- **Show money moving.** Invoicing (prd-11) and fleet cost (prd-13) are cut. Act 2 ends when the truck
+- **Show money moving.** Invoicing (prd-11) and fleet cost (prd-13 Fleet Cost) are cut. Act 2 ends when the truck
   leaves. Expect the question and answer it from the PRD.
 - **Locate anything below a named store.** There is no bin or rack discipline to digitise
   (proc-05 §Stage 2). Four coarse locations is the honest ceiling.

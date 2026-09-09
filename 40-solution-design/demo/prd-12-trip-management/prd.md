@@ -2,8 +2,8 @@
 title: "PRD-DEMO-12 — Trip Management"
 status: draft
 created: 2026-09-02
-updated: 2026-09-02
-demo_beats: [22, 23]
+updated: 2026-09-09
+demo_beats: [23, 24]
 tags: [prd, demo, fleet, trip, pod]
 source_prd: ../../prd-12-fleet-management/prd.md
 screens: ../screen-specs/prd-12-trip-management/
@@ -11,7 +11,7 @@ screens: ../screen-specs/prd-12-trip-management/
 
 # PRD-DEMO-12 — Trip Management
 
-**Demo beats ㉒ and ㉓ — the close of the demo.** Source:
+**Demo beats ㉓ and ㉔ — the close of the demo.** Source:
 [prd-12](../../prd-12-fleet-management/prd.md). Demo cut defined in [`../_index.md`](../_index.md).
 
 ## Summary
@@ -22,19 +22,24 @@ Pyramid runs roughly **100 owned trucks with drivers on payroll**, and assignmen
 made today without a system. The last screen answers a question the promoters ask daily and nothing can
 currently answer: **where are my trucks?**
 
+> **Revised 2026-09-09.** Vehicle registry is no longer folded into the picker here — it moved to its
+> own screen, [PRD-DEMO-13 Vehicle Management](../prd-13-vehicle-management/prd.md), **beat ㉒**,
+> opened just before this module. That inserted beat is why this PRD's beats shifted from ㉒/㉓ to
+> ㉓/㉔. Driver registry stays a picker only — nobody asked to reopen that cut.
+
 ## Demo Scope
 
-| In | Out |
-| -- | --- |
-| Vehicle and driver registries, **as pickers** (`REQ-FM-001`, `002`) | Registries as standalone screens |
-| Assignment with availability check (`REQ-FM-004`, `005`) | Vehicle and driver history screens (`REQ-FM-011`) |
-| Outbound LR on assignment (`REQ-FM-007`) | Cross-plant assignment (`REQ-FM-006`) — `A-FM-05` parks it |
-| Trip record and status (`REQ-FM-008`, `009`) | **All of prd-13** — trip cost, cost-to-serve, driver advance |
-| POD capture (`REQ-FM-010`) | GPS, telematics, live tracking of any kind |
-| Fleet board by status (`REQ-FM-012`) | Route planning or optimisation |
-| Driver availability by plant (`REQ-FM-013`) | Return-leg loads |
+| In                                                       | Out                                                          |
+| -------------------------------------------------------- | ------------------------------------------------------------ |
+| Driver registry, **as a picker** (`REQ-FM-002`)          | Driver registry as a standalone screen                       |
+| Assignment with availability check (`REQ-FM-004`, `005`) | Vehicle and driver history screens (`REQ-FM-011`)            |
+| Outbound LR on assignment (`REQ-FM-007`)                 | Cross-plant assignment (`REQ-FM-006`) — `A-FM-05` parks it   |
+| Trip record and status (`REQ-FM-008`, `009`)             | **All of prd-13 Fleet Cost** — trip cost, cost-to-serve, driver advance |
+| POD capture (`REQ-FM-010`)                               | GPS, telematics, live tracking of any kind                   |
+| Fleet board by status (`REQ-FM-012`)                     | Route planning or optimisation                               |
+| Driver availability by plant (`REQ-FM-013`)              | Return-leg loads                                             |
 
-> ### prd-13 is cut on purpose, and it is the cut most likely to be questioned
+> ### prd-13 Fleet Cost is cut on purpose, and it is the cut most likely to be questioned
 >
 > The whole Class A/B cost taxonomy is **our design intent, not Pyramid's practice**, and it is the
 > likeliest source of a quotable figure. The demo shows Phlo **knows which truck went where** — the
@@ -44,12 +49,12 @@ currently answer: **where are my trucks?**
 
 ## As-Is
 
-| What exists | What does not |
-| ----------- | ------------- |
-| ~100 owned trucks, drivers on payroll | Any system holding where a truck is |
-| Assignment decided daily by someone | Any record of who assigned what, or why |
-| Proof of delivery, in some form | Anything anyone has described. The artefact is unknown |
-| — | GPS or telematics anywhere in this project |
+| What exists                           | What does not                                          |
+| ------------------------------------- | ------------------------------------------------------ |
+| ~100 owned trucks, drivers on payroll | Any system holding where a truck is                    |
+| Assignment decided daily by someone   | Any record of who assigned what, or why                |
+| Proof of delivery, in some form       | Anything anyone has described. The artefact is unknown |
+| —                                     | GPS or telematics anywhere in this project             |
 
 ## Goals
 
@@ -60,47 +65,47 @@ currently answer: **where are my trucks?**
 
 ## Requirements
 
-| ID | Requirement | Demonstrated by |
-| -- | ----------- | --------------- |
-| `REQ-FM-001` | Vehicle registry: registration, type, capacity, home plant, status | Vehicle picker on [Trip Assignment](../screen-specs/prd-12-trip-management/screen-trip-assignment.md) |
-| `REQ-FM-002` | Driver registry: name, licence, contact, home plant, status | Driver picker |
-| `REQ-FM-003` | Vehicle-driver pairing history | *Last pairing* on hover |
-| `REQ-FM-004` | Assign truck and driver to a dispatch | **Open trip** |
-| `REQ-FM-005` | Availability check before assignment | Unavailable rows **shown and disabled**, naming their trip |
-| `REQ-FM-007` | Outbound LR generated on dispatch | Created with the trip |
-| `REQ-FM-008` | Trip record: dispatch, truck, driver, departure, arrival | [Trip Board](../screen-specs/prd-12-trip-management/screen-trip-board.md) expanded row |
-| `REQ-FM-009` | Status: Assigned · Loading · In Transit · Delivered · Returning · Completed | Status track, one-step-forward |
-| `REQ-FM-010` | POD capture | **Record POD**; required to complete |
-| `REQ-FM-012` | Fleet dashboard by status | Status strip, **including idle** |
-| `REQ-FM-013` | Driver availability by plant | Driver picker |
+| ID           | Requirement                                                                 | Demonstrated by                                                                                                                                                                     |
+| ------------ | --------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `REQ-FM-001` | Vehicle registry: registration, type, capacity, home plant, status          | [PRD-DEMO-13 Vehicle Registry](../prd-13-vehicle-management/prd.md); read here as the picker on [Trip Assignment](../screen-specs/prd-12-trip-management/screen-trip-assignment.md) |
+| `REQ-FM-002` | Driver registry: name, licence, contact, home plant, status                 | Driver picker                                                                                                                                                                       |
+| `REQ-FM-003` | Vehicle-driver pairing history                                              | _Last pairing_ on hover                                                                                                                                                             |
+| `REQ-FM-004` | Assign truck and driver to a dispatch                                       | **Open trip**                                                                                                                                                                       |
+| `REQ-FM-005` | Availability check before assignment                                        | Unavailable rows **shown and disabled**, naming their trip                                                                                                                          |
+| `REQ-FM-007` | Outbound LR generated on dispatch                                           | Created with the trip                                                                                                                                                               |
+| `REQ-FM-008` | Trip record: dispatch, truck, driver, departure, arrival                    | [Trip Board](../screen-specs/prd-12-trip-management/screen-trip-board.md) expanded row                                                                                              |
+| `REQ-FM-009` | Status: Assigned · Loading · In Transit · Delivered · Returning · Completed | Status track, one-step-forward                                                                                                                                                      |
+| `REQ-FM-010` | POD capture                                                                 | **Record POD**; required to complete                                                                                                                                                |
+| `REQ-FM-012` | Fleet dashboard by status                                                   | Status strip, **including idle**                                                                                                                                                    |
+| `REQ-FM-013` | Driver availability by plant                                                | Driver picker                                                                                                                                                                       |
 
 ## Assumptions
 
-| ID | Assumption | Reality |
-| -- | ---------- | ------- |
-| `A-FM-05` | **Outbound only** — no inter-plant trips | **Deferred, not answered.** Must be re-asked before implementation |
-| new | Two days in transit is the amber threshold | Invented. Not a recommendation |
-| new | Load weight is an indicative guide only | **Volume, not weight, usually limits a drum load**, and no volumetric data exists anywhere |
-| inherited | A signed challan is the proof of delivery | Nobody has described the real artefact |
-| inherited | Drivers are not fixed to trucks | `REQ-FM-003` keeps pairing history, which implies they are not. Unverified |
+| ID        | Assumption                                 | Reality                                                                                    |
+| --------- | ------------------------------------------ | ------------------------------------------------------------------------------------------ |
+| `A-FM-05` | **Outbound only** — no inter-plant trips   | **Deferred, not answered.** Must be re-asked before implementation                         |
+| new       | Two days in transit is the amber threshold | Invented. Not a recommendation                                                             |
+| new       | Load weight is an indicative guide only    | **Volume, not weight, usually limits a drum load**, and no volumetric data exists anywhere |
+| inherited | A signed challan is the proof of delivery  | Nobody has described the real artefact                                                     |
+| inherited | Drivers are not fixed to trucks            | `REQ-FM-003` keeps pairing history, which implies they are not. Unverified                 |
 
 ## Data Model
 
-| Entity | Key attributes |
-| ------ | -------------- |
-| `Vehicle` | id, registration, type, capacity_tonnes, home_plant_id, status |
-| `Driver` | id, name (**position label in the demo**), license_number, contact, home_plant_id, status |
-| `Trip` | id, trip_number, vehicle_id, driver_id, status, departed_at, delivered_at, pod_received_at |
-| `TripDispatch` | id, trip_id, dispatch_id — a trip may carry more than one dispatch |
-| `TripStatusEvent` | id, trip_id, status, occurred_at, recorded_by |
+| Entity            | Key attributes                                                                             |
+| ----------------- | ------------------------------------------------------------------------------------------ |
+| `Vehicle`         | id, registration, type, capacity_tonnes, home_plant_id, status                             |
+| `Driver`          | id, name (**position label in the demo**), license_number, contact, home_plant_id, status  |
+| `Trip`            | id, trip_number, vehicle_id, driver_id, status, departed_at, delivered_at, pod_received_at |
+| `TripDispatch`    | id, trip_id, dispatch_id — a trip may carry more than one dispatch                         |
+| `TripStatusEvent` | id, trip_id, status, occurred_at, recorded_by                                              |
 
 **Events:** `TRIP_CREATED` · `VEHICLE_ASSIGNED` · `DRIVER_ASSIGNED` · `DISPATCH_ATTACHED` ·
 `TRIP_STATUS_UPDATED` · `POD_RECEIVED`.
 
 ## Business Rules
 
-- **Show unavailable trucks, disabled**, naming the trip they are on. Hiding one answers *"where is
-  GJ-16-XX-4090?"* with silence.
+- **Show unavailable trucks, disabled**, naming the trip they are on. Hiding one answers _"where is
+  GJ-16-XX-4090?"_ with silence.
 - **Statuses move forward, one step.** Same discipline as the LR timeline: a free picker lets a trip
   jump from Assigned to Completed and lose the delivery — the record the customer argues about.
 - **Completion requires a POD**, and frees the vehicle and the driver.
@@ -110,15 +115,15 @@ currently answer: **where are my trucks?**
   implies live tracking promises an integration nobody has scoped.
 - **Invented registrations only.** Never `MH20DE4349` — a real third-party vehicle from an e-Way Bill,
   wrongly used as an owned truck in four deleted screen specs.
-- **Driver names are positions** — *Driver A*, *Driver B*. All real person names were stripped from
+- **Driver names are positions** — _Driver A_, _Driver B_. All real person names were stripped from
   this project on 2026-08-30 and several of those people may be in the room.
 
 ## Screens
 
-| Screen | Beat | Purpose |
-| ------ | ---- | ------- |
-| [Trip Assignment](../screen-specs/prd-12-trip-management/screen-trip-assignment.md) | ㉒ | Truck and driver against a dispatch |
-| [Trip Board](../screen-specs/prd-12-trip-management/screen-trip-board.md) | ㉓ | The fleet by status, with the full trail |
+| Screen                                                                              | Beat | Purpose                                  |
+| ----------------------------------------------------------------------------------- | ---- | ---------------------------------------- |
+| [Trip Assignment](../screen-specs/prd-12-trip-management/screen-trip-assignment.md) | ㉓   | Truck and driver against a dispatch      |
+| [Trip Board](../screen-specs/prd-12-trip-management/screen-trip-board.md)           | ㉔   | The fleet by status, with the full trail |
 
 ### End the demo on the trail row
 
@@ -131,11 +136,11 @@ anywhere at Pyramid today.** Close there, not on a summary slide.
 
 ## Dependencies
 
-| Direction | Module | For |
-| --------- | ------ | --- |
-| Reads | [PRD-DEMO-11 Dispatch](../prd-11-dispatch/prd.md) | The dispatch, its load, its documents |
-| Writes | [PRD-DEMO-11 Dispatch](../prd-11-dispatch/prd.md) | Vehicle number back onto the e-Way Bill |
-| Feeds | prd-13 Fleet Cost | **Designed, out of the demo** |
+| Direction | Module                                            | For                                     |
+| --------- | ------------------------------------------------- | --------------------------------------- |
+| Reads     | [PRD-DEMO-11 Dispatch](../prd-11-dispatch/prd.md) | The dispatch, its load, its documents   |
+| Writes    | [PRD-DEMO-11 Dispatch](../prd-11-dispatch/prd.md) | Vehicle number back onto the e-Way Bill |
+| Feeds     | prd-13 Fleet Cost                                 | **Designed, out of the demo**           |
 
 ## Open Questions
 
@@ -147,5 +152,5 @@ anywhere at Pyramid today.** Close there, not on a summary slide.
    than one person's daily decision.
 4. **Can a truck from another plant be used?** `A-FM-05`. **Re-ask before implementation.**
 5. **What proof of delivery does Pyramid actually get?**
-6. **What happens on a return leg?** *Returning* is a status with nothing behind it, and a truck coming
+6. **What happens on a return leg?** _Returning_ is a status with nothing behind it, and a truck coming
    back with returned packaging is modelled nowhere.

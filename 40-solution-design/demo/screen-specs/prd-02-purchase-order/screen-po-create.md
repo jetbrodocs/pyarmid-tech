@@ -2,7 +2,7 @@
 title: "Screen — PO Create"
 status: draft
 created: 2026-09-02
-updated: 2026-09-02
+updated: 2026-09-09
 tags: [screen-spec, demo, purchase-order]
 prd: ../../prd-02-purchase-order/prd.md
 parent_spec: ../../../screen-specs/prd-03-po-creation/screen-po-create.md

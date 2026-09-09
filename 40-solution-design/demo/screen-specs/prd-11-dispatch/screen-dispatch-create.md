@@ -2,7 +2,7 @@
 title: "Screen — Dispatch Create"
 status: draft
 created: 2026-09-02
-updated: 2026-09-02
+updated: 2026-09-09
 tags: [screen-spec, demo, dispatch, challan, eway-bill]
 prd: ../../prd-11-dispatch/prd.md
 parent_spec: ../../../screen-specs/prd-10-dispatch/screen-dispatch-create.md
@@ -141,7 +141,7 @@ Today that is a stack of paper.
 | **Preview** | Renders the challan | none |
 | **Download** | PDF of challan or e-Way Bill | none |
 | Loaded quantity | Recomputes value and the serial range | none |
-| **Assign truck** | Opens [Trip Assignment](../prd-12-trip-management/screen-trip-assignment.md) — **this is beat ㉒** | none |
+| **Assign truck** | Opens [Trip Assignment](../prd-12-trip-management/screen-trip-assignment.md) — **this is beat ㉓** | none |
 | SO chip | Opens [SO List](../prd-08-sales-order/screen-so-list.md) expanded | none |
 
 ---
@@ -181,7 +181,7 @@ move without one, so it blocks. Everything else about loading warns.
 | e-Way Bill generated | Number and a **Download**, plus *"Not filed with the portal in this demo"* |
 | No serials | Where the product is not serialised, the column reads `—`. Legitimate for RM and bulk |
 | Interstate | Documents switch to **IGST**, with a note naming the reason |
-| **Dispatched** | Read-only, green header, toast: *"Dispatched. 300 units. DC-U7-1140."* with **Assign truck** — carries the demo to beat ㉒ |
+| **Dispatched** | Read-only, green header, toast: *"Dispatched. 300 units. DC-U7-1140."* with **Assign truck** — carries the demo to beat ㉓ |
 | Draft | Chip **Draft**; nothing deducted, nothing documented |
 | Error | Nothing committed; the load is kept on screen |
 | Restricted | *Design intent:* dispatch roles at their own plant. **Not enforced in the demo** |

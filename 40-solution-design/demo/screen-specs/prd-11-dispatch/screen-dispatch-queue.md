@@ -2,7 +2,7 @@
 title: "Screen — Dispatch Queue"
 status: draft
 created: 2026-09-02
-updated: 2026-09-02
+updated: 2026-09-09
 tags: [screen-spec, demo, dispatch, queue]
 prd: ../../prd-11-dispatch/prd.md
 parent_spec: ../../../screen-specs/prd-10-dispatch/screen-dispatch-queue.md
@@ -74,7 +74,7 @@ Say this explicitly at beat ⑳: every ERP in the room reserves at order entry, 
 ### Grouping by consignee city is a hint, not a rule
 
 Where selected lines ship to the same city, the bar says so — a nudge toward one truck for two orders,
-which is what [Trip Assignment](../prd-12-trip-management/screen-trip-assignment.md) does at beat ㉒. Phlo does not group them
+which is what [Trip Assignment](../prd-12-trip-management/screen-trip-assignment.md) does at beat ㉓. Phlo does not group them
 automatically; the fleet team decides, and no route optimisation is claimed anywhere in this demo.
 
 ---

@@ -1172,42 +1172,48 @@
       "type": "open_body",
       "capacity_tonnes": 10,
       "home_plant_code": "U7-FG",
-      "status": "available"
+      "status": "available",
+      "is_active": true
     },
     {
       "registration": "GJ-16-XX-4118",
       "type": "container",
       "capacity_tonnes": 16,
       "home_plant_code": "U7-FG",
-      "status": "on_trip"
+      "status": "on_trip",
+      "is_active": true
     },
     {
       "registration": "GJ-16-XX-4090",
       "type": "open_body",
       "capacity_tonnes": 10,
       "home_plant_code": "U7-FG",
-      "status": "on_trip"
+      "status": "on_trip",
+      "is_active": true
     },
     {
       "registration": "GJ-16-XX-4077",
       "type": "container",
       "capacity_tonnes": 16,
       "home_plant_code": "U7-FG",
-      "status": "on_trip"
+      "status": "on_trip",
+      "is_active": true
     },
     {
       "registration": "GJ-16-XX-4055",
       "type": "open_body",
       "capacity_tonnes": 10,
       "home_plant_code": "U6",
-      "status": "available"
+      "status": "available",
+      "is_active": true
     },
     {
       "registration": "GJ-16-XX-4033",
       "type": "container",
       "capacity_tonnes": 16,
       "home_plant_code": "U6",
-      "status": "maintenance"
+      "status": "maintenance",
+      "is_active": true
     }
   ],
   "drivers": [

@@ -662,19 +662,21 @@ WORK_ORDERS = [
 
 
 # ═══════════════════════════════════════════════════════════════════════════
-# MODULE 15 — VEHICLES & DRIVERS (prd-12, beats ㉒ ㉓)
+# MODULE 15 — VEHICLES & DRIVERS
+# Vehicles: prd-13-vehicle-management (beat ㉒, the standalone registry).
+# Drivers, trip pairing: prd-12-trip-management (beats ㉓ ㉔).
 # 6 trucks, 6 drivers. Invented registrations only.
 # Never MH20DE4349 (a real third-party vehicle).
 # Driver names are positions — no real person names.
 # ═══════════════════════════════════════════════════════════════════════════
 
 VEHICLES = [
-    {"registration": "GJ-16-XX-4102", "type": "open_body",  "capacity_tonnes": 10, "home_plant_code": "U7-FG", "status": "available"},
-    {"registration": "GJ-16-XX-4118", "type": "container",  "capacity_tonnes": 16, "home_plant_code": "U7-FG", "status": "on_trip"},
-    {"registration": "GJ-16-XX-4090", "type": "open_body",  "capacity_tonnes": 10, "home_plant_code": "U7-FG", "status": "on_trip"},
-    {"registration": "GJ-16-XX-4077", "type": "container",  "capacity_tonnes": 16, "home_plant_code": "U7-FG", "status": "on_trip"},
-    {"registration": "GJ-16-XX-4055", "type": "open_body",  "capacity_tonnes": 10, "home_plant_code": "U6",    "status": "available"},
-    {"registration": "GJ-16-XX-4033", "type": "container",  "capacity_tonnes": 16, "home_plant_code": "U6",    "status": "maintenance"},
+    {"registration": "GJ-16-XX-4102", "type": "open_body",  "capacity_tonnes": 10, "home_plant_code": "U7-FG", "status": "available",   "is_active": True},
+    {"registration": "GJ-16-XX-4118", "type": "container",  "capacity_tonnes": 16, "home_plant_code": "U7-FG", "status": "on_trip",     "is_active": True},
+    {"registration": "GJ-16-XX-4090", "type": "open_body",  "capacity_tonnes": 10, "home_plant_code": "U7-FG", "status": "on_trip",     "is_active": True},
+    {"registration": "GJ-16-XX-4077", "type": "container",  "capacity_tonnes": 16, "home_plant_code": "U7-FG", "status": "on_trip",     "is_active": True},
+    {"registration": "GJ-16-XX-4055", "type": "open_body",  "capacity_tonnes": 10, "home_plant_code": "U6",    "status": "available",   "is_active": True},
+    {"registration": "GJ-16-XX-4033", "type": "container",  "capacity_tonnes": 16, "home_plant_code": "U6",    "status": "maintenance", "is_active": True},
 ]
 
 DRIVERS = [

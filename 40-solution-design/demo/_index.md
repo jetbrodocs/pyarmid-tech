@@ -2,7 +2,7 @@
 title: "Phlo Client Demo — Index"
 status: draft
 created: 2026-09-02
-updated: 2026-09-03
+updated: 2026-09-09
 tags: [index, demo, client-demo, scope-cut]
 tech_decision: 30-analysis/tech-decision-phlo-stack.md
 sources:
@@ -43,14 +43,15 @@ advance it.
 The two acts join at **stock**. Act 1 fills it, Act 2 empties it. That join is the demo's whole
 argument: today nothing connects a purchase order to the drum that ships.
 
-## The Twelve Demo PRDs
+## The Thirteen Demo PRDs
 
-One PRD per module Pyramid asked for, numbered in the order they were asked for. Each carries its own
-scope cut, requirements, assumptions, data model, business rules and open questions.
+One PRD per module Pyramid asked for, numbered in the order they were asked for, **plus one reopened
+cut** (13, Vehicle Management — see below). Each carries its own scope cut, requirements, assumptions,
+data model, business rules and open questions.
 
 | #   | Demo PRD                                                   | Beats | Derived from                                                                                     | Screens |
 | --- | ---------------------------------------------------------- | ----- | ------------------------------------------------------------------------------------------------ | ------- |
-| 01  | [Purchase Indent](prd-01-purchase-indent/prd.md)           | ⑤ ⑥   | [prd-02](../prd-02-purchase-indent/prd.md)                                                       | 2       |
+| 01  | [Purchase Indent](prd-01-purchase-indent/prd.md)           | ⑤ ⑥   | [prd-02](../prd-02-purchase-indent/prd.md)                                                       | 3       |
 | 02  | [Purchase Order](prd-02-purchase-order/prd.md)             | ⑦ ⑧   | [prd-03](../prd-03-po-creation/prd.md)                                                           | 2       |
 | 03  | [LR Tracking](prd-03-lr-tracking/prd.md)                   | ⑨ ⑩   | [prd-04](../prd-04-lr-tracking/prd.md)                                                           | 4       |
 | 04  | [GRN](prd-04-grn/prd.md)                                   | ⑪     | [prd-05](../prd-05-grn/prd.md)                                                                   | 1       |
@@ -61,7 +62,15 @@ scope cut, requirements, assumptions, data model, business rules and open questi
 | 09  | [DDP — Daily Dispatch Plan](prd-09-ddp/prd.md)             | ⑯ ⑰   | [prd-08](../prd-08-delivery-scheduling/prd.md)                                                   | 2       |
 | 10  | [Production Planning](prd-10-production-planning/prd.md)   | ⑱ ⑲   | [prd-07](../prd-07-production-planning/prd.md)                                                   | 2       |
 | 11  | [Dispatch](prd-11-dispatch/prd.md)                         | ⑳ ㉑  | [prd-10](../prd-10-dispatch/prd.md)                                                              | 2       |
-| 12  | [Trip Management](prd-12-trip-management/prd.md)           | ㉒ ㉓ | [prd-12](../prd-12-fleet-management/prd.md)                                                      | 2       |
+| 12  | [Trip Management](prd-12-trip-management/prd.md)           | ㉓ ㉔ | [prd-12](../prd-12-fleet-management/prd.md)                                                      | 2       |
+| 13  | [Vehicle Management](prd-13-vehicle-management/prd.md)     | ㉒    | [prd-12](../prd-12-fleet-management/prd.md)                                                      | 1       |
+
+> **13 is a reopened cut, added 2026-09-09.** Vehicle registry was originally folded into Trip
+> Assignment's picker; Pyramid asked for it as its own screen. It shares its source PRD with Trip
+> Management (12), and its one beat (㉒) sits immediately before Trip Management's, which is why 12's
+> beats shifted from ㉒/㉓ to ㉓/㉔. **Don't confuse this with the main `prd-13-fleet-cost`** — that is a
+> different numbering track (the 13 non-demo PRDs) and stays entirely cut, referenced below as
+> "prd-13 Fleet Cost."
 
 **Numbering follows Pyramid's own module list, not the demo running order.** The beats column is the
 running order; the spine below is the script.
@@ -80,17 +89,17 @@ mirroring the layout of the main `40-solution-design/screen-specs/`.
 Cutting is the point of this folder. Everything below is **designed in the main PRDs and not built for
 the demo**. Each demo PRD repeats its own module's cut; this is the demo-wide list. If a question in the room reaches one of these, answer from the PRD — do not open a screen.
 
-| Out of the demo                                      | Where it lives | Why it is out                                                                                                                                   |
-| ---------------------------------------------------- | -------------- | ----------------------------------------------------------------------------------------------------------------------------------------------- |
-| Sales invoice, e-Invoice, IRN, TCS, Tally push       | prd-11         | Act 2 ends at the truck leaving. Invoicing is a second story and doubles the demo length                                                        |
-| Fleet cost, cost-to-serve, driver advance            | prd-13         | The whole Class A/B model is our design intent, not observed practice. Highest risk of producing a quotable number — demo-data-policy §4 rule 4 |
-| Credit / debit notes                                 | prd-11         | Excluded by decision, already recorded in [`../_index.md`](../_index.md)                                                                        |
-| Inter-plant transfers                                | prd-06         | Needs the GSTIN document logic to be worth showing. Act 1 already carries a receipt story                                                       |
-| Stock-take, returns, regrind tracker                 | prd-06, prd-07 | Real modules, no place in this narrative                                                                                                        |
-| Inventory ageing, LR ageing dashboard, pipeline view | prd-01, prd-04 | **Partially in.** Age appears as a **column** on LR List and Stock by Location. The standalone dashboards are not built                         |
-| Vendor invoice, three-way match                      | prd-03         | Requires invoices, which are out                                                                                                                |
-| Routing editor, serial ledger, customer modification | prd-07         | Production Run shows serials being generated; the ledger screen is not built                                                                    |
-| RBAC, login, role switching                          | all            | **One god user.** Roles are narrated, not enforced — demo-data-policy §3                                                                        |
+| Out of the demo                                      | Where it lives    | Why it is out                                                                                                                                   |
+| ---------------------------------------------------- | ----------------- | ----------------------------------------------------------------------------------------------------------------------------------------------- |
+| Sales invoice, e-Invoice, IRN, TCS, Tally push       | prd-11            | Act 2 ends at the truck leaving. Invoicing is a second story and doubles the demo length                                                        |
+| Fleet cost, cost-to-serve, driver advance            | prd-13 Fleet Cost | The whole Class A/B model is our design intent, not observed practice. Highest risk of producing a quotable number — demo-data-policy §4 rule 4 |
+| Credit / debit notes                                 | prd-11            | Excluded by decision, already recorded in [`../_index.md`](../_index.md)                                                                        |
+| Inter-plant transfers                                | prd-06            | Needs the GSTIN document logic to be worth showing. Act 1 already carries a receipt story                                                       |
+| Stock-take, returns, regrind tracker                 | prd-06, prd-07    | Real modules, no place in this narrative                                                                                                        |
+| Inventory ageing, LR ageing dashboard, pipeline view | prd-01, prd-04    | **Partially in.** Age appears as a **column** on LR List and Stock by Location. The standalone dashboards are not built                         |
+| Vendor invoice, three-way match                      | prd-03            | Requires invoices, which are out                                                                                                                |
+| Routing editor, serial ledger, customer modification | prd-07            | Production Run shows serials being generated; the ledger screen is not built                                                                    |
+| RBAC, login, role switching                          | all               | **One god user.** Roles are narrated, not enforced — demo-data-policy §3                                                                        |
 
 ## Requirements
 
@@ -102,7 +111,7 @@ with the screen that demonstrates each one.
 | ---------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | [Vendor Management](prd-07-vendor-management/prd.md)       | `REQ-PO-010`                                                                                                                                                           |
 | [BOM Master](prd-06-bom-management/prd.md)                 | `REQ-PP-004`, `REQ-PP-009`, `REQ-PP-010`, `REQ-PP-011`, `REQ-PP-012`                                                                                                   |
-| [Purchase Indent](prd-01-purchase-indent/prd.md)           | `REQ-PI-001`, `REQ-PI-002`, `REQ-PI-003`, `REQ-PI-004`, `REQ-PI-005`, `REQ-PI-006`                                                                                     |
+| [Purchase Indent](prd-01-purchase-indent/prd.md)           | `REQ-PI-001`, `REQ-PI-002`, `REQ-PI-003`, `REQ-PI-004`, `REQ-PI-005`, `REQ-PI-006`, `REQ-PI-007`, `REQ-PI-009`                                                         |
 | [Purchase Order](prd-02-purchase-order/prd.md)             | `REQ-PO-001`, `REQ-PO-003`, `REQ-PO-004`, `REQ-PO-005`, `REQ-PO-006`, `REQ-PO-007`, `REQ-PO-008`, `REQ-PO-009`                                                         |
 | [LR Tracking](prd-03-lr-tracking/prd.md)                   | `REQ-LR-001`, `REQ-LR-004`, `REQ-LR-101`, `REQ-LR-102`, `REQ-LR-103`, `REQ-LR-104`, `REQ-LR-105`, `REQ-LR-201`, `REQ-LR-203`, `REQ-LR-303`, `REQ-LR-304`, `REQ-LR-305` |
 | [GRN](prd-04-grn/prd.md)                                   | `REQ-GRN-001`, `REQ-GRN-002`, `REQ-GRN-003`, `REQ-GRN-005`, `REQ-GRN-006`, `REQ-GRN-008`                                                                               |
@@ -111,7 +120,8 @@ with the screen that demonstrates each one.
 | [DDP](prd-09-ddp/prd.md)                                   | `REQ-SCH-004`, `REQ-SCH-005`, `REQ-SCH-006`, `REQ-SCH-007`, `REQ-SCH-008`, `REQ-SCH-010`                                                                               |
 | [Production Planning](prd-10-production-planning/prd.md)   | `REQ-PP-001`, `REQ-PP-002`, `REQ-PP-005`, `REQ-PP-006`, `REQ-PP-007`, `REQ-PP-008`, `REQ-PP-013`, `REQ-PP-014`                                                         |
 | [Dispatch](prd-11-dispatch/prd.md)                         | `REQ-DS-001`, `REQ-DS-002`, `REQ-DS-003`, `REQ-DS-004`, `REQ-DS-006`, `REQ-DS-008`                                                                                     |
-| [Trip Management](prd-12-trip-management/prd.md)           | `REQ-FM-001`, `REQ-FM-002`, `REQ-FM-004`, `REQ-FM-005`, `REQ-FM-007`, `REQ-FM-008`, `REQ-FM-009`, `REQ-FM-012`                                                         |
+| [Trip Management](prd-12-trip-management/prd.md)           | `REQ-FM-002`, `REQ-FM-004`, `REQ-FM-005`, `REQ-FM-007`, `REQ-FM-008`, `REQ-FM-009`, `REQ-FM-012`                                                                       |
+| [Vehicle Management](prd-13-vehicle-management/prd.md)     | `REQ-FM-001`                                                                                                                                                           |
 
 ### New — introduced by this demo cut
 
@@ -196,8 +206,9 @@ ACT 2 — ORDER TO DELIVERY
  ⑲  Production Run         serials generated, RM deducted on gross
  ⑳  Dispatch Queue         what is ready to go today
  ㉑ Dispatch Create        challan and e-Way Bill
- ㉒ Trip Assignment        truck and driver, availability checked
- ㉓ Trip Board             the fleet, live
+ ㉒ Vehicle Registry       the fleet master — add a truck, before one gets picked
+ ㉓ Trip Assignment        truck and driver, availability checked
+ ㉔ Trip Board             the fleet, live
 ```
 
 > **Beat ⑫ is the demo.** It is the same screen as beat ④, and everything between them is why the
@@ -251,7 +262,7 @@ It is not optional reading. The short version:
 
 ## Screens
 
-24 screens across the 12 PRDs. Full detail in [`screen-specs/`](screen-specs/_index.md); each PRD's
+26 screens across the 13 PRDs. Full detail in [`screen-specs/`](screen-specs/_index.md); each PRD's
 §Screens section lists its own.
 
 | Beat | Screen            | Demo PRD                                                      |
@@ -262,6 +273,7 @@ It is not optional reading. The short version:
 | ④ ⑫  | Stock by Location | [05 Inventory Management](prd-05-inventory-management/prd.md) |
 | ⑤    | Indent Create     | [01 Purchase Indent](prd-01-purchase-indent/prd.md)           |
 | ⑥    | Indent Approval   | [01 Purchase Indent](prd-01-purchase-indent/prd.md)           |
+| ⑥ ⑦  | Indent Detail     | [01 Purchase Indent](prd-01-purchase-indent/prd.md)           |
 | ⑦    | PO Create         | [02 Purchase Order](prd-02-purchase-order/prd.md)             |
 | ⑧    | PO List           | [02 Purchase Order](prd-02-purchase-order/prd.md)             |
 | ⑨    | LR Create         | [03 LR Tracking](prd-03-lr-tracking/prd.md)                   |
@@ -278,8 +290,9 @@ It is not optional reading. The short version:
 | ⑲    | Production Run    | [10 Production Planning](prd-10-production-planning/prd.md)   |
 | ⑳    | Dispatch Queue    | [11 Dispatch](prd-11-dispatch/prd.md)                         |
 | ㉑   | Dispatch Create   | [11 Dispatch](prd-11-dispatch/prd.md)                         |
-| ㉒   | Trip Assignment   | [12 Trip Management](prd-12-trip-management/prd.md)           |
-| ㉓   | Trip Board        | [12 Trip Management](prd-12-trip-management/prd.md)           |
+| ㉒   | Vehicle Registry  | [13 Vehicle Management](prd-13-vehicle-management/prd.md)     |
+| ㉓   | Trip Assignment   | [12 Trip Management](prd-12-trip-management/prd.md)           |
+| ㉔   | Trip Board        | [12 Trip Management](prd-12-trip-management/prd.md)           |
 
 ## Open Questions
 
