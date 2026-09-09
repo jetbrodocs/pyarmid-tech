@@ -2,7 +2,7 @@
 title: "PRD-DEMO-01 — Purchase Indent"
 status: draft
 created: 2026-09-02
-updated: 2026-09-02
+updated: 2026-09-09
 demo_beats: [5, 6]
 tags: [prd, demo, indent, procurement, path-b]
 source_prd: ../../prd-02-purchase-indent/prd.md
@@ -24,23 +24,23 @@ because the system found the shortfall. That continuity is the argument.
 
 ## Demo Scope
 
-| In | Out |
-| -- | --- |
-| Manual indent raised from a shortfall (`REQ-PI-001`) | Draft indents and the re-edit flow |
-| An **auto-raised** indent already waiting in the queue (`REQ-PI-002`) | Re-order level configuration screen |
-| Single-level approval at HO (`REQ-PI-003`) | Multi-level approval, delegation, thresholds |
-| Multi-line indents (`REQ-PI-004`) | Line-level part-approval |
-| Indent ageing as a queue column (`REQ-PI-007`) | Indent list as a separate screen |
-| Link to the triggering work order (`REQ-PI-006`) | Copy-from-rejected path |
+| In                                                                    | Out                                          |
+| --------------------------------------------------------------------- | -------------------------------------------- |
+| Manual indent raised from a shortfall (`REQ-PI-001`)                  | Draft indents and the re-edit flow           |
+| An **auto-raised** indent already waiting in the queue (`REQ-PI-002`) | Re-order level configuration screen          |
+| Single-level approval at HO (`REQ-PI-003`)                            | Multi-level approval, delegation, thresholds |
+| Multi-line indents (`REQ-PI-004`)                                     | Line-level part-approval                     |
+| Indent ageing as a queue column (`REQ-PI-007`)                        | Indent list as a separate screen             |
+| Link to the triggering work order (`REQ-PI-006`)                      | Copy-from-rejected path                      |
 
 ## As-Is
 
-| What exists | What does not |
-| ----------- | ------------- |
-| Indent raised in UdyogERP by plant teams | Any visibility of indent status across plants |
-| Approval at HO — purchase team, sometimes promoters | Known approval levels or thresholds |
-| Purchase team converts to a PO | Any link from indent to PO, LR or GRN |
-| — | Re-order levels. **They are `0.00` on every sampled item**, so no shortfall can ever raise itself |
+| What exists                                         | What does not                                                                                     |
+| --------------------------------------------------- | ------------------------------------------------------------------------------------------------- |
+| Indent raised in UdyogERP by plant teams            | Any visibility of indent status across plants                                                     |
+| Approval at HO — purchase team, sometimes promoters | Known approval levels or thresholds                                                               |
+| Purchase team converts to a PO                      | Any link from indent to PO, LR or GRN                                                             |
+| —                                                   | Re-order levels. **They are `0.00` on every sampled item**, so no shortfall can ever raise itself |
 
 **No purchase-side ERP screen has ever been seen.** Every field in the demo screens comes from proc-01
 and the prd-02 data model, not from anything anyone has looked at. Say so if asked.
@@ -55,43 +55,60 @@ and the prd-02 data model, not from anything anyone has looked at. Say so if ask
 
 ## Requirements
 
-| ID | Requirement | Demonstrated by |
-| -- | ----------- | --------------- |
-| `REQ-PI-001` | Create an indent with item, quantity, location, reason | [Indent Create](../screen-specs/prd-01-purchase-indent/screen-indent-create.md) |
-| `REQ-PI-002` | Auto-generate an indent when stock falls below re-order level | The seeded `auto ⚡` indent in the queue |
-| `REQ-PI-003` | Approval workflow — approve or reject with a reason | [Indent Approval](../screen-specs/prd-01-purchase-indent/screen-indent-approval.md) |
-| `REQ-PI-004` | Multi-item indent | Line grid |
-| `REQ-PI-005` | Status: Draft · Pending Approval · Approved · Rejected · Converted to PO | Chips on both screens |
-| `REQ-PI-006` | Indent linked to the triggering work order or BOM explosion | Entry from [Work Order Create](../screen-specs/prd-10-production-planning/screen-work-order-create.md) |
-| `REQ-PI-007` | Indent ageing — days pending approval | Age column, amber at 3 days, red at 7 |
-| `REQ-DM-001` | **A machinery spare is a legitimate indent line** | Category chip on the line grid |
-| `REQ-DM-002` | **An indent names a location, not a plant** | Location field in the header |
+| ID           | Requirement                                                                                  | Demonstrated by                                                                                        |
+| ------------ | -------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------ |
+| `REQ-PI-001` | Create an indent with item, quantity, location, reason                                       | [Indent Create](../screen-specs/prd-01-purchase-indent/screen-indent-create.md)                        |
+| `REQ-PI-002` | Auto-generate an indent when stock falls below re-order level                                | The seeded `auto ⚡` indent in the queue                                                               |
+| `REQ-PI-003` | Approval workflow — approve or reject with a reason                                          | [Indent Approval](../screen-specs/prd-01-purchase-indent/screen-indent-approval.md)                    |
+| `REQ-PI-004` | Multi-item indent                                                                            | Line grid                                                                                              |
+| `REQ-PI-005` | Status: Draft · Pending Approval · Approved · Rejected · Converted to PO                     | Chips on both screens                                                                                  |
+| `REQ-PI-006` | Indent linked to the triggering work order or BOM explosion                                  | Entry from [Work Order Create](../screen-specs/prd-10-production-planning/screen-work-order-create.md) |
+| `REQ-PI-007` | Indent ageing — days pending approval                                                        | Age column, amber at 3 days, red at 7                                                                  |
+| `REQ-PI-009` | **Document status** — a coarse bucket derived from status, for the PO officer's first filter | Status filter on [Indent Approval](../screen-specs/prd-01-purchase-indent/screen-indent-approval.md)   |
+| `REQ-DM-001` | **A machinery spare is a legitimate indent line**                                            | Category chip on the line grid                                                                         |
+| `REQ-DM-002` | **An indent names a location, not a plant**                                                  | Location field in the header                                                                           |
 
 `REQ-PI-008` (plant-level access control) is **designed, not demonstrated** — the demo runs one god
 user.
 
 ## Assumptions
 
-| ID | Assumption | Reality |
-| -- | ---------- | ------- |
-| `A-DM-06` | Single-level approval by the purchase team at HO | proc-01 says *"in some cases promoters or management"* — a second level nobody has described |
-| `A-DM-03` | Machinery spares are indented at all | Not evidenced. If spares are bought on sight, beat ⑤ should use a consumable |
-| inherited | Reason is captured **per line**, not per indent | proc-01 gives no evidence either way |
-| inherited | Re-order levels will exist per item per location | They are `0.00` everywhere today. Phlo introduces them |
+| ID        | Assumption                                       | Reality                                                                                      |
+| --------- | ------------------------------------------------ | -------------------------------------------------------------------------------------------- |
+| `A-DM-06` | Single-level approval by the purchase team at HO | proc-01 says _"in some cases promoters or management"_ — a second level nobody has described |
+| `A-DM-03` | Machinery spares are indented at all             | Not evidenced. If spares are bought on sight, beat ⑤ should use a consumable                 |
+| inherited | Reason is captured **per line**, not per indent  | proc-01 gives no evidence either way                                                         |
+| inherited | Re-order levels will exist per item per location | They are `0.00` everywhere today. Phlo introduces them                                       |
 
 ## Data Model
 
-| Entity | Key attributes |
-| ------ | -------------- |
+| Entity           | Key attributes                                                                                                                                                         |
+| ---------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `PurchaseIndent` | id, indent_number, **location_id**, raised_by_user_id, source (`manual`/`auto`), status, created_at, approved_at, approved_by_user_id, rejection_reason, work_order_id |
-| `IndentLineItem` | id, indent_id, item_id, quantity_requested, uom, reason |
-| `ReorderLevel` | id, item_id, **location_id**, level, auto_indent_enabled |
+| `IndentLineItem` | id, indent_id, item_id, quantity_requested, uom, reason                                                                                                                |
+| `ReorderLevel`   | id, item_id, **location_id**, level, auto_indent_enabled                                                                                                               |
 
 **Events:** `INDENT_CREATED` · `INDENT_AUTO_GENERATED` · `INDENT_APPROVED` · `INDENT_REJECTED` ·
 `INDENT_CONVERTED`.
 
 `INDENT_WITHDRAWN` and the re-order configuration events exist in prd-02 and are **not exercised** by
 the demo.
+
+### Document status (`REQ-PI-009`)
+
+`status` is granular and event-sourced; `document_status` is a derived, three-value bucket for the PO
+officer's first read of the queue — _do I owe this an action, have I cleared it, or is it done._ Draft
+does not appear — it is cut from the demo (`REQ-PI-001` cut list).
+
+| `document_status` | `status` values it covers  | What it means to the PO officer                                        |
+| ----------------- | -------------------------- | ---------------------------------------------------------------------- |
+| **Pending**       | Pending Approval           | Waiting on my decision                                                 |
+| **Open**          | Approved                   | I approved it; not yet a PO. `REQ-PO-001`'s aggregation gap lives here |
+| **Closed**        | Rejected · Converted to PO | Nothing left to do                                                     |
+
+**Open is the bucket that matters.** An approved indent can sit for days before anyone raises the PO —
+prd-02's Indent List spec calls this the same shape as LR ageing, one step earlier in the chain, and
+nobody currently measures it. `document_status` is what lets the PO officer filter straight to it.
 
 ## Business Rules
 
@@ -101,25 +118,26 @@ the demo.
 - **Path A exclusion:** HDPE resin and steel are filtered out of the item search entirely. Never
   offered, so never rejected.
 - **No self-approval.** Even an HO user raising an indent submits it into the same queue.
-- **Approval does not create a PO.** Approval says *buy this*; the vendor and the price are chosen
+- **Approval does not create a PO.** Approval says _buy this_; the vendor and the price are chosen
   afterwards in [PRD-DEMO-02](../prd-02-purchase-order/prd.md).
 - **A rejected indent is copied, never reopened**, so the approved record always matches what was
   approved. (The copy path itself is cut from the demo.)
 
 ## Screens
 
-| Screen | Beat | Purpose |
-| ------ | ---- | ------- |
-| [Indent Create](../screen-specs/prd-01-purchase-indent/screen-indent-create.md) | ⑤ | Raise the shortfall, arriving from the stock screen |
-| [Indent Approval](../screen-specs/prd-01-purchase-indent/screen-indent-approval.md) | ⑥ | HO works the queue — including the auto-raised one |
+| Screen                                                                              | Beat | Purpose                                                             |
+| ----------------------------------------------------------------------------------- | ---- | ------------------------------------------------------------------- |
+| [Indent Create](../screen-specs/prd-01-purchase-indent/screen-indent-create.md)     | ⑤    | Raise the shortfall, arriving from the stock screen                 |
+| [Indent Approval](../screen-specs/prd-01-purchase-indent/screen-indent-approval.md) | ⑥    | PO officer's table — find the indent, including the auto-raised one |
+| [Indent Detail](../screen-specs/prd-01-purchase-indent/screen-indent-detail.md)     | ⑥/⑦  | Approve, reject, or convert to a PO — one indent at a time          |
 
 ## Dependencies
 
-| Direction | Module | For |
-| --------- | ------ | --- |
-| Reads | [PRD-DEMO-05 Inventory](../prd-05-inventory-management/prd.md) | Stock position, re-order level, the shortfall itself |
-| Reads | [PRD-DEMO-10 Production](../prd-10-production-planning/prd.md) | BOM explosion shortfall raises an indent |
-| Feeds | [PRD-DEMO-02 Purchase Order](../prd-02-purchase-order/prd.md) | An approved indent becomes a PO |
+| Direction | Module                                                         | For                                                  |
+| --------- | -------------------------------------------------------------- | ---------------------------------------------------- |
+| Reads     | [PRD-DEMO-05 Inventory](../prd-05-inventory-management/prd.md) | Stock position, re-order level, the shortfall itself |
+| Reads     | [PRD-DEMO-10 Production](../prd-10-production-planning/prd.md) | BOM explosion shortfall raises an indent             |
+| Feeds     | [PRD-DEMO-02 Purchase Order](../prd-02-purchase-order/prd.md)  | An approved indent becomes a PO                      |
 
 ## Open Questions
 

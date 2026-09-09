@@ -6,7 +6,8 @@ updated: 2026-09-02
 tags: [screen-spec, demo, purchase-order]
 prd: ../../prd-02-purchase-order/prd.md
 parent_spec: ../../../screen-specs/prd-03-po-creation/screen-po-create.md
-requirements: [REQ-PO-001, REQ-PO-003, REQ-PO-004, REQ-PO-005, REQ-PO-008, REQ-PO-009]
+requirements:
+  [REQ-PO-001, REQ-PO-003, REQ-PO-004, REQ-PO-005, REQ-PO-008, REQ-PO-009]
 ---
 
 # Screen — PO Create
@@ -25,12 +26,12 @@ The first screen in the demo where money is committed. Everything before it was 
 
 ## 1. Entry Points
 
-| From | Trigger | Context passed in |
-| ---- | ------- | ----------------- |
-| [Indent Approval](../prd-01-purchase-indent/screen-indent-approval.md) | **Create PO** on an approved indent | Indent lines carried forward — **this is beat ⑦** |
-| [PO List](screen-po-list.md) | **+ New PO** | Blank |
-| [Vendor Registry](../prd-07-vendor-management/screen-vendor-registry.md) | **Create PO** on a vendor | Vendor set, lines blank |
-| Main navigation | `Procurement → New PO` | Blank |
+| From                                                                     | Trigger                             | Context passed in                                 |
+| ------------------------------------------------------------------------ | ----------------------------------- | ------------------------------------------------- |
+| [Indent Detail](../prd-01-purchase-indent/screen-indent-detail.md)       | **Create PO** on an approved indent | Indent lines carried forward — **this is beat ⑦** |
+| [PO List](screen-po-list.md)                                             | **+ New PO**                        | Blank                                             |
+| [Vendor Registry](../prd-07-vendor-management/screen-vendor-registry.md) | **Create PO** on a vendor           | Vendor set, lines blank                           |
+| Main navigation                                                          | `Procurement → New PO`              | Blank                                             |
 
 ---
 
@@ -78,29 +79,29 @@ plants share a GSTIN, which matters for transfers, not for purchases.
 
 ### Header
 
-| Label | Format | Source | Notes |
-| ----- | ------ | ------ | ----- |
-| PO number | Read-only until saved | auto | `[ASSUMPTION: location-prefixed series]` |
-| Vendor | Type-ahead from the registry | `parties` | Active vendors only |
-| GSTIN | Read-only | `parties.gstin` | |
-| Payment terms | Read-only, editable per PO | `parties.payment_terms` | |
-| State / place of supply | Read-only | `parties.state_code` | Drives the tax split |
-| Source indents | Chips, removable | `PurchaseIndent` | `REQ-PO-001` |
-| PO date | Defaults to `DEMO_DAY` | server | |
+| Label                   | Format                       | Source                  | Notes                                    |
+| ----------------------- | ---------------------------- | ----------------------- | ---------------------------------------- |
+| PO number               | Read-only until saved        | auto                    | `[ASSUMPTION: location-prefixed series]` |
+| Vendor                  | Type-ahead from the registry | `parties`               | Active vendors only                      |
+| GSTIN                   | Read-only                    | `parties.gstin`         |                                          |
+| Payment terms           | Read-only, editable per PO   | `parties.payment_terms` |                                          |
+| State / place of supply | Read-only                    | `parties.state_code`    | Drives the tax split                     |
+| Source indents          | Chips, removable             | `PurchaseIndent`        | `REQ-PO-001`                             |
+| PO date                 | Defaults to `DEMO_DAY`       | server                  |                                          |
 
 ### Line grid
 
-| Label | Format | Source | Notes |
-| ----- | ------ | ------ | ----- |
-| Item | Type-ahead, or carried from the indent | `items` | |
-| Quantity | Decimal, defaults to the indent quantity | `IndentLineItem` | Editable — HO may buy more |
-| UoM | Read-only | `items.uom` | |
-| **Rate** | Currency, defaults to the vendor's last rate | seed register | 🔴 Invented. `C-` and `R-` references only |
-| HSN | Text, from the item master | `items.hsn` | |
-| Deliver to | Location dropdown | `Location` | `REQ-DM-002`, `REQ-PO-008` |
-| Due date | Date, defaults to `DEMO_DAY + vendor lead time` | computed | |
-| Amount | Computed | quantity × rate | |
-| Sub-total, tax, total | Computed | | Every figure marked illustrative |
+| Label                 | Format                                          | Source           | Notes                                      |
+| --------------------- | ----------------------------------------------- | ---------------- | ------------------------------------------ |
+| Item                  | Type-ahead, or carried from the indent          | `items`          |                                            |
+| Quantity              | Decimal, defaults to the indent quantity        | `IndentLineItem` | Editable — HO may buy more                 |
+| UoM                   | Read-only                                       | `items.uom`      |                                            |
+| **Rate**              | Currency, defaults to the vendor's last rate    | seed register    | 🔴 Invented. `C-` and `R-` references only |
+| HSN                   | Text, from the item master                      | `items.hsn`      |                                            |
+| Deliver to            | Location dropdown                               | `Location`       | `REQ-DM-002`, `REQ-PO-008`                 |
+| Due date              | Date, defaults to `DEMO_DAY + vendor lead time` | computed         |                                            |
+| Amount                | Computed                                        | quantity × rate  |                                            |
+| Sub-total, tax, total | Computed                                        |                  | Every figure marked illustrative           |
 
 **Every rate resolves from the seed register.** Nothing on this screen is typed as a number in a spec.
 Arithmetic is genuinely computed — Pyramid cannot check our seal-kit rate, but they will instantly spot
@@ -110,15 +111,15 @@ a total that does not tie.
 
 ## 4. CTAs
 
-| Control | Behaviour | Event |
-| ------- | --------- | ----- |
-| **Save Draft** | Persists, not sent, editable | `PO_CREATED` status Draft |
-| **Send to vendor** | Validates, commits, marks Sent, offers a PDF | `PO_CREATED` then `PO_SENT` |
-| **+ Add indent** | Picker of approved indents for the same vendor's items; lines append | `INDENT_CONVERTED` on save |
-| **+ Add line** | Free line, not from any indent | none |
-| **✕** | Removes a line. Warns if it is the last from an indent | none |
-| **Download PDF** | The PO document | none |
-| **Cancel** | Discards, confirming if dirty | none |
+| Control            | Behaviour                                                            | Event                       |
+| ------------------ | -------------------------------------------------------------------- | --------------------------- |
+| **Save Draft**     | Persists, not sent, editable                                         | `PO_CREATED` status Draft   |
+| **Send to vendor** | Validates, commits, marks Sent, offers a PDF                         | `PO_CREATED` then `PO_SENT` |
+| **+ Add indent**   | Picker of approved indents for the same vendor's items; lines append | `INDENT_CONVERTED` on save  |
+| **+ Add line**     | Free line, not from any indent                                       | none                        |
+| **✕**              | Removes a line. Warns if it is the last from an indent               | none                        |
+| **Download PDF**   | The PO document                                                      | none                        |
+| **Cancel**         | Discards, confirming if dirty                                        | none                        |
 
 `REQ-PO-009` makes the send method configurable — email, download or print. **The demo downloads.**
 Sending live mail from a demo dataset to a fictional vendor is a risk with no upside.
@@ -127,37 +128,37 @@ Sending live mail from a demo dataset to a fictional vendor is a risk with no up
 
 ## 5. Validations
 
-| Field | Rule | Message |
-| ----- | ---- | ------- |
-| Vendor | Required, active | "Pick a vendor." |
-| Lines | At least one | "Add at least one line." |
-| Quantity | `> 0` | "Quantity must be greater than zero." |
-| Rate | `> 0` to send; may be blank on a draft | "A rate is needed before this goes to the vendor." |
-| HSN | Required to send | "HSN is required — it drives GST." |
-| Deliver to | Required per line | "Say which location this line goes to." |
-| Due date | Not in the past | "That date has passed." |
-| Vendor state | Required | "The vendor has no state on file — GST cannot be computed. Fix the vendor first." |
-| Quantity above the indent | Warn, do not block | "Line 1 orders 6 against an approved 4. Ordering more than approved." |
-| Mixed vendors | Blocked | "One PO, one vendor. Remove the lines for Precision Closures or start a second PO." |
+| Field                     | Rule                                   | Message                                                                             |
+| ------------------------- | -------------------------------------- | ----------------------------------------------------------------------------------- |
+| Vendor                    | Required, active                       | "Pick a vendor."                                                                    |
+| Lines                     | At least one                           | "Add at least one line."                                                            |
+| Quantity                  | `> 0`                                  | "Quantity must be greater than zero."                                               |
+| Rate                      | `> 0` to send; may be blank on a draft | "A rate is needed before this goes to the vendor."                                  |
+| HSN                       | Required to send                       | "HSN is required — it drives GST."                                                  |
+| Deliver to                | Required per line                      | "Say which location this line goes to."                                             |
+| Due date                  | Not in the past                        | "That date has passed."                                                             |
+| Vendor state              | Required                               | "The vendor has no state on file — GST cannot be computed. Fix the vendor first."   |
+| Quantity above the indent | Warn, do not block                     | "Line 1 orders 6 against an approved 4. Ordering more than approved."               |
+| Mixed vendors             | Blocked                                | "One PO, one vendor. Remove the lines for Precision Closures or start a second PO." |
 
 ---
 
 ## 6. Conditional States
 
-| State | What the user sees |
-| ----- | ------------------ |
-| Loading | Header ready, item lookup disabled until the master resolves |
-| **From an approved indent** | Blue banner: *"From IND-U7-0186, approved today."* Lines pre-filled, rates from the vendor's last, all editable |
-| From a vendor | Vendor locked, lines blank |
-| Blank | Nothing pre-filled, cursor in *Vendor* |
-| Vendor with no last rate | Rate blank and focused, hint: *"No rate on file for this item."* **Never a guessed rate** |
-| Vendor with no GSTIN | Amber note; tax rows read *"Unregistered vendor — no GST."* Legitimate |
-| Interstate vendor | Tax rows switch to **IGST**; a note names the reason |
-| Draft saved | Chip **Draft**, *Send to vendor* still offered |
-| Sent | Read-only, chip **Sent**, redirect to [PO List](screen-po-list.md) — **carries the demo to beat ⑧** |
-| Indent already converted | Blocking notice naming the PO that took it |
-| Save error | Everything kept on screen, retry offered |
-| Restricted | *Design intent:* purchase team only. **Not enforced in the demo** |
+| State                       | What the user sees                                                                                              |
+| --------------------------- | --------------------------------------------------------------------------------------------------------------- |
+| Loading                     | Header ready, item lookup disabled until the master resolves                                                    |
+| **From an approved indent** | Blue banner: _"From IND-U7-0186, approved today."_ Lines pre-filled, rates from the vendor's last, all editable |
+| From a vendor               | Vendor locked, lines blank                                                                                      |
+| Blank                       | Nothing pre-filled, cursor in _Vendor_                                                                          |
+| Vendor with no last rate    | Rate blank and focused, hint: _"No rate on file for this item."_ **Never a guessed rate**                       |
+| Vendor with no GSTIN        | Amber note; tax rows read _"Unregistered vendor — no GST."_ Legitimate                                          |
+| Interstate vendor           | Tax rows switch to **IGST**; a note names the reason                                                            |
+| Draft saved                 | Chip **Draft**, _Send to vendor_ still offered                                                                  |
+| Sent                        | Read-only, chip **Sent**, redirect to [PO List](screen-po-list.md) — **carries the demo to beat ⑧**             |
+| Indent already converted    | Blocking notice naming the PO that took it                                                                      |
+| Save error                  | Everything kept on screen, retry offered                                                                        |
+| Restricted                  | _Design intent:_ purchase team only. **Not enforced in the demo**                                               |
 
 ---
 
