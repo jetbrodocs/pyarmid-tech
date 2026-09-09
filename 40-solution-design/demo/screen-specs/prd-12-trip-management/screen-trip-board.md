@@ -134,16 +134,16 @@ and the seed register's diesel and mileage figures exist for that PRD, not for t
 
 ## 4. CTAs
 
-| Control                                                          | Behaviour                                                                       | Event                         |
-| ---------------------------------------------------------------- | ------------------------------------------------------------------------------- | ----------------------------- |
-| Row click                                                        | Expands load, trail and status track                                            | none                          |
-| **Mark loading / In transit / Delivered / Returning / Complete** | One button, the next status only                                                | `TRIP_STATUS_UPDATED`         |
-| **Record POD**                                                   | Uploads or notes proof of delivery                                              | `POD_RECEIVED` — `REQ-FM-010` |
-| Dispatch chip                                                    | Opens [Dispatch Create](../prd-11-dispatch/screen-dispatch-create.md) read-only | none                          |
-| SO chip                                                          | Opens [SO Detail](../prd-08-sales-order/screen-so-detail.md)                    | none                          |
-| **+ New trip**                                                   | Opens [Trip Assignment](screen-trip-assignment.md)                              | none                          |
-| Status chip in the strip                                         | Filters the list                                                                | none                          |
-| **Vehicle history**                                              | Trips for this vehicle                                                          | `REQ-FM-011`                  |
+| Control                                                          | Behaviour                                                             | Event                         |
+| ---------------------------------------------------------------- | --------------------------------------------------------------------- | ----------------------------- |
+| Row click                                                        | Expands load, trail and status track                                  | none                          |
+| **Mark loading / In transit / Delivered / Returning / Complete** | One button, the next status only                                      | `TRIP_STATUS_UPDATED`         |
+| **Record POD**                                                   | Uploads or notes proof of delivery                                    | `POD_RECEIVED` — `REQ-FM-010` |
+| Dispatch chip                                                    | Opens [Dispatch Detail](../prd-11-dispatch/screen-dispatch-detail.md) | none                          |
+| SO chip                                                          | Opens [SO Detail](../prd-08-sales-order/screen-so-detail.md)          | none                          |
+| **+ New trip**                                                   | Opens [Trip Assignment](screen-trip-assignment.md)                    | none                          |
+| Status chip in the strip                                         | Filters the list                                                      | none                          |
+| **Vehicle history**                                              | Trips for this vehicle                                                | `REQ-FM-011`                  |
 
 **One button, the next status.** Same discipline as the LR timeline at beat ⑩: a free status picker
 lets a trip jump from Assigned to Completed and lose the delivery, which is the record the customer

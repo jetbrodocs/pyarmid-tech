@@ -2,7 +2,7 @@
 title: "PRD-DEMO-11 — Dispatch"
 status: draft
 created: 2026-09-02
-updated: 2026-09-02
+updated: 2026-09-09
 demo_beats: [20, 21]
 tags: [prd, demo, dispatch, challan, eway-bill, serial]
 source_prd: ../../prd-10-dispatch/prd.md
@@ -22,25 +22,36 @@ What is ready to leave today, and the documents the truck cannot leave without.
 pressing **Dispatch** is what deducts finished goods — confirmed practice, and the opposite of what
 every ERP in the room does.
 
+Beat ㉑ continues past the moment of dispatch:
+[Dispatch List](../screen-specs/prd-11-dispatch/screen-dispatch-list.md) lets anyone browse dispatches
+by date, and [Dispatch Detail](../screen-specs/prd-11-dispatch/screen-dispatch-detail.md) is where a
+truck gets assigned — any time after loading, not only in the seconds after pressing Dispatch.
+
+> **Revised 2026-09-09.** Dispatch list and detail were cut, folded into a "dispatched today" recovery
+> link on [Dispatch Queue](../screen-specs/prd-11-dispatch/screen-dispatch-queue.md), with truck
+> assignment reachable only from the toast right after dispatching. **That cut is reopened** — real
+> history with a date picker, and a permanent place to assign or change a vehicle.
+
 ## Demo Scope
 
-| In | Out |
-| -- | --- |
-| Dispatch queue sourced from the issued plan (`REQ-DS-001`, `002`) | Dispatch list and detail as separate screens |
-| Loaded quantity per line (`REQ-DS-003`) | Inter-plant challan path (`REQ-DS-005`) — transfers are cut |
-| Delivery challan (`REQ-DS-004`) | **Filing the e-Way Bill with the government portal** |
-| e-Way Bill above ₹50,000 (`REQ-DS-006`) | Sales invoice, e-invoice, IRN, TCS — [prd-11](../../prd-11-sales-invoice/prd.md) |
-| Outbound LR on dispatch (`REQ-DS-007`) | Return-to-plant on a refused delivery |
-| Serials dispatched (`REQ-DS-009`) | Route optimisation of any kind |
-| Full link to SO, challan, e-Way Bill, LR (`REQ-DS-008`) | — |
+| In                                                                | Out                                                                              |
+| ----------------------------------------------------------------- | -------------------------------------------------------------------------------- |
+| Dispatch queue sourced from the issued plan (`REQ-DS-001`, `002`) | Inter-plant challan path (`REQ-DS-005`) — transfers are cut                      |
+| Dispatch history by date, and per-dispatch detail (`REQ-DS-008`)  |                                                                                  |
+| Loaded quantity per line (`REQ-DS-003`)                           |                                                                                  |
+| Delivery challan (`REQ-DS-004`)                                   | **Filing the e-Way Bill with the government portal**                             |
+| e-Way Bill above ₹50,000 (`REQ-DS-006`)                           | Sales invoice, e-invoice, IRN, TCS — [prd-11](../../prd-11-sales-invoice/prd.md) |
+| Outbound LR on dispatch (`REQ-DS-007`)                            | Return-to-plant on a refused delivery                                            |
+| Serials dispatched (`REQ-DS-009`)                                 | Route optimisation of any kind                                                   |
+| Full link to SO, challan, e-Way Bill, LR (`REQ-DS-008`)           | —                                                                                |
 
 ## As-Is
 
-| What exists | What does not |
-| ----------- | ------------- |
-| Delivery challans and e-Way Bills, produced today | A link between what was planned, what was loaded, and what was invoiced |
-| A real challan showing `Export Type = "Without IGST"` | Any serial-level record of which units went to which customer |
-| — | A queue. What goes today is decided on the floor |
+| What exists                                           | What does not                                                           |
+| ----------------------------------------------------- | ----------------------------------------------------------------------- |
+| Delivery challans and e-Way Bills, produced today     | A link between what was planned, what was loaded, and what was invoiced |
+| A real challan showing `Export Type = "Without IGST"` | Any serial-level record of which units went to which customer           |
+| —                                                     | A queue. What goes today is decided on the floor                        |
 
 ## Goals
 
@@ -51,39 +62,39 @@ every ERP in the room does.
 
 ## Requirements
 
-| ID | Requirement | Demonstrated by |
-| -- | ----------- | --------------- |
-| `REQ-DS-001` | Queue sorted by due date then order age | [Dispatch Queue](../screen-specs/prd-11-dispatch/screen-dispatch-queue.md) |
-| `REQ-DS-002` | Pick SOs or lines for today | Checkboxes and the selection bar |
-| `REQ-DS-003` | Confirm quantities loaded per line | *Loaded* column on [Dispatch Create](../screen-specs/prd-11-dispatch/screen-dispatch-create.md) |
-| `REQ-DS-004` | Generate a delivery challan | Document strip |
-| `REQ-DS-006` | Generate an e-Way Bill | Above ₹50,000. **Payload built, not filed** |
-| `REQ-DS-007` | Outbound LR on dispatch | Created on posting |
-| `REQ-DS-008` | Link dispatch to SO, fleet assignment, challan, e-Way Bill, LR | Trail, and [PRD-DEMO-12](../prd-12-trip-management/prd.md) |
-| `REQ-DS-009` | Record serial numbers dispatched | Serial range per line |
-| `REQ-DS-010` | Batch-level dispatch for RM or bulk | Batch column where applicable |
-| `REQ-SCH-010` | Plan lines carry through to the queue | *From the plan issued −1 d* |
-| `REQ-DM-002` | Dispatch leaves a **location** | *From: Unit 7 — FG Yard* |
+| ID            | Requirement                                                    | Demonstrated by                                                                                                                   |
+| ------------- | -------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------- |
+| `REQ-DS-001`  | Queue sorted by due date then order age                        | [Dispatch Queue](../screen-specs/prd-11-dispatch/screen-dispatch-queue.md)                                                        |
+| `REQ-DS-002`  | Pick SOs or lines for today                                    | Checkboxes and the selection bar                                                                                                  |
+| `REQ-DS-003`  | Confirm quantities loaded per line                             | _Loaded_ column on [Dispatch Create](../screen-specs/prd-11-dispatch/screen-dispatch-create.md)                                   |
+| `REQ-DS-004`  | Generate a delivery challan                                    | Document strip                                                                                                                    |
+| `REQ-DS-006`  | Generate an e-Way Bill                                         | Above ₹50,000. **Payload built, not filed**                                                                                       |
+| `REQ-DS-007`  | Outbound LR on dispatch                                        | Created on posting                                                                                                                |
+| `REQ-DS-008`  | Link dispatch to SO, fleet assignment, challan, e-Way Bill, LR | [Dispatch Detail](../screen-specs/prd-11-dispatch/screen-dispatch-detail.md), and [PRD-DEMO-12](../prd-12-trip-management/prd.md) |
+| `REQ-DS-009`  | Record serial numbers dispatched                               | Serial range per line                                                                                                             |
+| `REQ-DS-010`  | Batch-level dispatch for RM or bulk                            | Batch column where applicable                                                                                                     |
+| `REQ-SCH-010` | Plan lines carry through to the queue                          | _From the plan issued −1 d_                                                                                                       |
+| `REQ-DM-002`  | Dispatch leaves a **location**                                 | _From: Unit 7 — FG Yard_                                                                                                          |
 
 ## Assumptions
 
-| ID | Assumption | Reality |
-| -- | ---------- | ------- |
-| inherited | Stock is committed at loading, not at order or plan | **Confirmed 2026-08-29** |
-| new | The challan number series is per plant | Units 6 and 7 share a GSTIN, which matters for inter-plant documents and may matter here |
-| new | Either dispatch or the fleet team may enter the vehicle number | Possibly one path too many |
-| inherited | Partial loads need no separate customer agreement | Supported, unevidenced |
-| `A-FM-05` | Outbound only — no inter-plant movement | **Deferred, not answered.** Must be re-asked before implementation |
+| ID        | Assumption                                                                                                                                  | Reality                                                                                                                                      |
+| --------- | ------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------- |
+| inherited | Stock is committed at loading, not at order or plan                                                                                         | **Confirmed 2026-08-29**                                                                                                                     |
+| new       | The challan number series is per plant                                                                                                      | Units 6 and 7 share a GSTIN, which matters for inter-plant documents and may matter here                                                     |
+| new       | Vehicle assignment is a separate act from dispatching, done on [Dispatch Detail](../screen-specs/prd-11-dispatch/screen-dispatch-detail.md) | **Revised 2026-09-09.** Previously modelled as happening only at dispatch time, which forced assignment before a truck was actually arranged |
+| inherited | Partial loads need no separate customer agreement                                                                                           | Supported, unevidenced                                                                                                                       |
+| `A-FM-05` | Outbound only — no inter-plant movement                                                                                                     | **Deferred, not answered.** Must be re-asked before implementation                                                                           |
 
 ## Data Model
 
-| Entity | Key attributes |
-| ------ | -------------- |
-| `Dispatch` | id, dispatch_number, consignee_address_id, **from_location_id**, dispatch_date, status, dispatched_by |
-| `DispatchLineItem` | id, dispatch_id, so_line_item_id, quantity_loaded, serial_range, batch |
-| `DeliveryChallan` | id, dispatch_id, challan_number, value, tax_split |
-| `EWayBill` | id, dispatch_id, eway_number, value, vehicle_number, generated_at |
-| `OutboundLR` | id, dispatch_id, lr_number, carrier_or_own, trip_id |
+| Entity             | Key attributes                                                                                        |
+| ------------------ | ----------------------------------------------------------------------------------------------------- |
+| `Dispatch`         | id, dispatch_number, consignee_address_id, **from_location_id**, dispatch_date, status, dispatched_by |
+| `DispatchLineItem` | id, dispatch_id, so_line_item_id, quantity_loaded, serial_range, batch                                |
+| `DeliveryChallan`  | id, dispatch_id, challan_number, value, tax_split                                                     |
+| `EWayBill`         | id, dispatch_id, eway_number, value, vehicle_number, generated_at                                     |
+| `OutboundLR`       | id, dispatch_id, lr_number, carrier_or_own, trip_id                                                   |
 
 **Events:** `DISPATCH_DRAFTED` · `DISPATCH_CREATED` · `STOCK_DISPATCHED` · `CHALLAN_GENERATED` ·
 `EWAY_BILL_GENERATED` · `OUTBOUND_LR_CREATED`.
@@ -94,8 +105,11 @@ every ERP in the room does.
   one document is not a preference, it is an invalid document. **Blocked, not warned.**
 - **Above ₹50,000 an e-Way Bill is required.** Statutory, so it blocks. Everything else about loading
   warns.
-- **An e-Way Bill needs a vehicle number**, which is why assignment writes back to a document that
-  already exists. Doing that by hand is how the bill stops matching the truck at the checkpoint.
+- **A vehicle is not required to dispatch.** The e-Way Bill's Part A generates from what is loaded;
+  Part B (the vehicle number) is added whenever a truck is assigned, on
+  [Dispatch Detail](../screen-specs/prd-11-dispatch/screen-dispatch-detail.md) — which may be before or
+  after the goods leave. Assignment always **writes back** to the same e-Way Bill; doing that by hand is
+  how the bill stops matching the truck at the checkpoint.
 - **Loaded, not planned, is the number that counts.** 294 loaded against 300 planned leaves 6 open on
   the order.
 - **Selecting lines reserves nothing.** Two selected lines can lean on the same free stock; the bar
@@ -105,21 +119,23 @@ every ERP in the room does.
 
 ## Screens
 
-| Screen | Beat | Purpose |
-| ------ | ---- | ------- |
-| [Dispatch Queue](../screen-specs/prd-11-dispatch/screen-dispatch-queue.md) | ⑳ | What is ready, from the issued plan, against real stock |
-| [Dispatch Create](../screen-specs/prd-11-dispatch/screen-dispatch-create.md) | ㉑ | Confirm the load; challan, e-Way Bill, outbound LR |
+| Screen                                                                       | Beat | Purpose                                                 |
+| ---------------------------------------------------------------------------- | ---- | ------------------------------------------------------- |
+| [Dispatch Queue](../screen-specs/prd-11-dispatch/screen-dispatch-queue.md)   | ⑳    | What is ready, from the issued plan, against real stock |
+| [Dispatch Create](../screen-specs/prd-11-dispatch/screen-dispatch-create.md) | ㉑   | Confirm the load; challan, e-Way Bill, outbound LR      |
+| [Dispatch List](../screen-specs/prd-11-dispatch/screen-dispatch-list.md)     | ㉑   | Every dispatch on a chosen date — triage only           |
+| [Dispatch Detail](../screen-specs/prd-11-dispatch/screen-dispatch-detail.md) | ㉑   | One dispatch, its documents, and its vehicle            |
 
 ## Dependencies
 
-| Direction | Module | For |
-| --------- | ------ | --- |
-| Reads | [PRD-DEMO-09 DDP](../prd-09-ddp/prd.md) | The issued plan that sources the queue |
-| Reads | [PRD-DEMO-08 Sales Order](../prd-08-sales-order/prd.md) | Consignee, rate, open balance |
-| Reads | [PRD-DEMO-05 Inventory](../prd-05-inventory-management/prd.md) | Free FG at the dispatching location |
-| Reads | [PRD-DEMO-10 Production](../prd-10-production-planning/prd.md) | The serial range that ships |
-| Feeds | [PRD-DEMO-12 Trip Management](../prd-12-trip-management/prd.md) | The dispatch a truck is assigned to |
-| Feeds | prd-11 Sales Invoice | **Designed, out of the demo** |
+| Direction | Module                                                          | For                                    |
+| --------- | --------------------------------------------------------------- | -------------------------------------- |
+| Reads     | [PRD-DEMO-09 DDP](../prd-09-ddp/prd.md)                         | The issued plan that sources the queue |
+| Reads     | [PRD-DEMO-08 Sales Order](../prd-08-sales-order/prd.md)         | Consignee, rate, open balance          |
+| Reads     | [PRD-DEMO-05 Inventory](../prd-05-inventory-management/prd.md)  | Free FG at the dispatching location    |
+| Reads     | [PRD-DEMO-10 Production](../prd-10-production-planning/prd.md)  | The serial range that ships            |
+| Feeds     | [PRD-DEMO-12 Trip Management](../prd-12-trip-management/prd.md) | The dispatch a truck is assigned to    |
+| Feeds     | prd-11 Sales Invoice                                            | **Designed, out of the demo**          |
 
 ## Open Questions
 

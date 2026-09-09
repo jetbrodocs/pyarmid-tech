@@ -15,9 +15,12 @@ requirements: [REQ-DS-001, REQ-DS-002, REQ-SCH-010]
 **Purpose:** What is ready to leave today, sourced from the issued plan and checked against real stock.
 
 > **Demo cut.** From prd-10's
-> [Dispatch Queue](../../../screen-specs/prd-10-dispatch/screen-dispatch-queue.md). Cut: dispatch list and
-> detail as separate screens — the queue plus [Dispatch Create](screen-dispatch-create.md) is the whole
-> flow for a demo. Kept: sourcing from the issued plan, which is what `REQ-SCH-010` promises.
+> [Dispatch Queue](../../../screen-specs/prd-10-dispatch/screen-dispatch-queue.md). Kept: sourcing from
+> the issued plan, which is what `REQ-SCH-010` promises.
+
+> **Revised 2026-09-09.** Dispatch list and detail were briefly cut, folded into a same-day recovery
+> link here. **That cut is reopened** — see [Dispatch List](screen-dispatch-list.md). This screen still
+> only ever shows today's undispatched lines; history and truck assignment live there.
 
 ---
 
@@ -141,7 +144,7 @@ ship-to. Two consignees on one document is not a preference — it is an invalid
 | Mixed consignees selected    | Blocking note in the bar; **Create dispatch** disabled                                                                               |
 | Same city                    | Blue note: _"Both ship to Ankleshwar."_                                                                                              |
 | Partially dispatched line    | Shows dispatched and balance                                                                                                         |
-| Dispatched today             | Moves out of the queue; a _"3 dispatched today"_ link recovers them                                                                  |
+| Dispatched today             | Moves out of the queue; a _"3 dispatched today"_ link opens [Dispatch List](screen-dispatch-list.md), filtered to today              |
 | Error                        | Retry card in the grid                                                                                                               |
 | Restricted                   | _Design intent:_ dispatch roles at their own plant. **Not enforced in the demo**                                                     |
 

@@ -26,7 +26,7 @@ sources:
 ## Summary
 
 **This is a scope cut, not a new module.** The thirteen PRDs describe the whole system; this folder
-describes **the slice we build and show Pyramid** — **one PRD per demo module**, and the 28 screens
+describes **the slice we build and show Pyramid** — **one PRD per demo module**, and the 30 screens
 those PRDs need.
 
 This page is the demo-wide layer: the cut, the spine, the seed data, the three new requirements, and the
@@ -61,7 +61,7 @@ data model, business rules and open questions.
 | 08  | [Sales Order](prd-08-sales-order/prd.md)                   | ⑭ ⑮   | [prd-09](../prd-09-sales-orders/prd.md)                                                          | 3       |
 | 09  | [DDP — Daily Dispatch Plan](prd-09-ddp/prd.md)             | ⑯ ⑰   | [prd-08](../prd-08-delivery-scheduling/prd.md)                                                   | 2       |
 | 10  | [Production Planning](prd-10-production-planning/prd.md)   | ⑱ ⑲   | [prd-07](../prd-07-production-planning/prd.md)                                                   | 2       |
-| 11  | [Dispatch](prd-11-dispatch/prd.md)                         | ⑳ ㉑  | [prd-10](../prd-10-dispatch/prd.md)                                                              | 2       |
+| 11  | [Dispatch](prd-11-dispatch/prd.md)                         | ⑳ ㉑  | [prd-10](../prd-10-dispatch/prd.md)                                                              | 4       |
 | 12  | [Trip Management](prd-12-trip-management/prd.md)           | ㉓ ㉔ | [prd-12](../prd-12-fleet-management/prd.md)                                                      | 2       |
 | 13  | [Vehicle Management](prd-13-vehicle-management/prd.md)     | ㉒    | [prd-12](../prd-12-fleet-management/prd.md)                                                      | 1       |
 
@@ -75,7 +75,7 @@ data model, business rules and open questions.
 **Numbering follows Pyramid's own module list, not the demo running order.** The beats column is the
 running order; the spine below is the script.
 
-All 24 screen specs live in [`screen-specs/`](screen-specs/_index.md), one sub-folder per demo PRD,
+All 30 screen specs live in [`screen-specs/`](screen-specs/_index.md), one sub-folder per demo PRD,
 mirroring the layout of the main `40-solution-design/screen-specs/`.
 
 > **`DDP` is read as Daily Dispatch Plan** — the sales-issued daily plan in prd-08, confirmed as real
@@ -119,7 +119,7 @@ with the screen that demonstrates each one.
 | [Sales Order](prd-08-sales-order/prd.md)                   | `REQ-SO-001`, `REQ-SO-002`, `REQ-SO-003`, `REQ-SO-006`, `REQ-SO-007`, `REQ-SO-008`, `REQ-SO-009`, `REQ-SO-010`, `REQ-SO-013`                                           |
 | [DDP](prd-09-ddp/prd.md)                                   | `REQ-SCH-004`, `REQ-SCH-005`, `REQ-SCH-006`, `REQ-SCH-007`, `REQ-SCH-008`, `REQ-SCH-010`                                                                               |
 | [Production Planning](prd-10-production-planning/prd.md)   | `REQ-PP-001`, `REQ-PP-002`, `REQ-PP-005`, `REQ-PP-006`, `REQ-PP-007`, `REQ-PP-008`, `REQ-PP-013`, `REQ-PP-014`                                                         |
-| [Dispatch](prd-11-dispatch/prd.md)                         | `REQ-DS-001`, `REQ-DS-002`, `REQ-DS-003`, `REQ-DS-004`, `REQ-DS-006`, `REQ-DS-008`                                                                                     |
+| [Dispatch](prd-11-dispatch/prd.md)                         | `REQ-DS-001`, `REQ-DS-002`, `REQ-DS-003`, `REQ-DS-004`, `REQ-DS-006`, `REQ-DS-008`, `REQ-DS-009`                                                                       |
 | [Trip Management](prd-12-trip-management/prd.md)           | `REQ-FM-002`, `REQ-FM-004`, `REQ-FM-005`, `REQ-FM-007`, `REQ-FM-008`, `REQ-FM-009`, `REQ-FM-012`                                                                       |
 | [Vehicle Management](prd-13-vehicle-management/prd.md)     | `REQ-FM-001`                                                                                                                                                           |
 
@@ -205,7 +205,7 @@ ACT 2 — ORDER TO DELIVERY
  ⑱  Work Order Create      BOM explosion against the plan line — shortfall detected
  ⑲  Production Run         serials generated, RM deducted on gross
  ⑳  Dispatch Queue         what is ready to go today
- ㉑ Dispatch Create        challan and e-Way Bill
+ ㉑ Dispatch Create + List + Detail   challan and e-Way Bill; browse by date; assign a truck any time
  ㉒ Vehicle Registry       the fleet master — add a truck, before one gets picked
  ㉓ Trip Assignment        truck and driver, availability checked
  ㉔ Trip Board             the fleet, live
@@ -262,7 +262,7 @@ It is not optional reading. The short version:
 
 ## Screens
 
-28 screens across the 13 PRDs. Full detail in [`screen-specs/`](screen-specs/_index.md); each PRD's
+30 screens across the 13 PRDs. Full detail in [`screen-specs/`](screen-specs/_index.md); each PRD's
 §Screens section lists its own.
 
 | Beat | Screen            | Demo PRD                                                      |
@@ -292,6 +292,8 @@ It is not optional reading. The short version:
 | ⑲    | Production Run    | [10 Production Planning](prd-10-production-planning/prd.md)   |
 | ⑳    | Dispatch Queue    | [11 Dispatch](prd-11-dispatch/prd.md)                         |
 | ㉑   | Dispatch Create   | [11 Dispatch](prd-11-dispatch/prd.md)                         |
+| ㉑   | Dispatch List     | [11 Dispatch](prd-11-dispatch/prd.md)                         |
+| ㉑   | Dispatch Detail   | [11 Dispatch](prd-11-dispatch/prd.md)                         |
 | ㉒   | Vehicle Registry  | [13 Vehicle Management](prd-13-vehicle-management/prd.md)     |
 | ㉓   | Trip Assignment   | [12 Trip Management](prd-12-trip-management/prd.md)           |
 | ㉔   | Trip Board        | [12 Trip Management](prd-12-trip-management/prd.md)           |

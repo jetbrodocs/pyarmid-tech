@@ -25,6 +25,11 @@ left the goods free.
 > outputs of this action, not screens to visit. Cut: the sales invoice (prd-11, out of the demo) and
 > the inter-plant challan path.
 
+> **Revised 2026-09-09.** Was the only place **Assign truck** existed, and only for the few seconds
+> before you navigated away. That action, and the record it acts on, now live permanently on
+> [Dispatch Detail](screen-dispatch-detail.md) — this screen hands off to it the moment a dispatch is
+> created, instead of staying on a read-only version of itself.
+
 ---
 
 ## 1. Entry Points
@@ -121,29 +126,28 @@ Today that is a stack of paper.
 
 ### Documents
 
-| Label               | Format                                                                                       | Source       |
-| ------------------- | -------------------------------------------------------------------------------------------- | ------------ |
-| Challan number      | `DC-U7-1140`                                                                                 | auto         |
-| Consignment value   | ₹, illustrative                                                                              | computed     |
-| e-Way Bill required | Yes above ₹50,000                                                                            | computed     |
-| e-Way Bill number   | On generation                                                                                | `eway_bills` |
-| Vehicle             | From [Trip Assignment](../prd-12-trip-management/screen-trip-assignment.md), or entered here | `vehicles`   |
-| Outbound LR         | Number                                                                                       | `OutboundLR` |
+| Label               | Format                                                                                | Source       |
+| ------------------- | ------------------------------------------------------------------------------------- | ------------ |
+| Challan number      | `DC-U7-1140`                                                                          | auto         |
+| Consignment value   | ₹, illustrative                                                                       | computed     |
+| e-Way Bill required | Yes above ₹50,000                                                                     | computed     |
+| e-Way Bill number   | On generation                                                                         | `eway_bills` |
+| Vehicle             | Not entered here — assigned afterward on [Dispatch Detail](screen-dispatch-detail.md) | `vehicles`   |
+| Outbound LR         | Number                                                                                | `OutboundLR` |
 
 ---
 
 ## 4. CTAs
 
-| Control                   | Behaviour                                                                                          | Event                                                                              |
-| ------------------------- | -------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------- |
-| **Dispatch**              | Validates, commits, **deducts FG**, creates challan and outbound LR                                | `DISPATCH_CREATED`, `STOCK_DISPATCHED`, `CHALLAN_GENERATED`, `OUTBOUND_LR_CREATED` |
-| **Save**                  | Persists as a draft; nothing deducted                                                              | `DISPATCH_DRAFTED`                                                                 |
-| **Generate** (e-Way Bill) | Builds the payload and shows the document                                                          | `EWAY_BILL_GENERATED`                                                              |
-| **Preview**               | Renders the challan                                                                                | none                                                                               |
-| **Download**              | PDF of challan or e-Way Bill                                                                       | none                                                                               |
-| Loaded quantity           | Recomputes value and the serial range                                                              | none                                                                               |
-| **Assign truck**          | Opens [Trip Assignment](../prd-12-trip-management/screen-trip-assignment.md) — **this is beat ㉓** | none                                                                               |
-| SO chip                   | Opens [SO Detail](../prd-08-sales-order/screen-so-detail.md)                                       | none                                                                               |
+| Control                   | Behaviour                                                           | Event                                                                              |
+| ------------------------- | ------------------------------------------------------------------- | ---------------------------------------------------------------------------------- |
+| **Dispatch**              | Validates, commits, **deducts FG**, creates challan and outbound LR | `DISPATCH_CREATED`, `STOCK_DISPATCHED`, `CHALLAN_GENERATED`, `OUTBOUND_LR_CREATED` |
+| **Save**                  | Persists as a draft; nothing deducted                               | `DISPATCH_DRAFTED`                                                                 |
+| **Generate** (e-Way Bill) | Builds the payload and shows the document                           | `EWAY_BILL_GENERATED`                                                              |
+| **Preview**               | Renders the challan                                                 | none                                                                               |
+| **Download**              | PDF of challan or e-Way Bill                                        | none                                                                               |
+| Loaded quantity           | Recomputes value and the serial range                               | none                                                                               |
+| SO chip                   | Opens [SO Detail](../prd-08-sales-order/screen-so-detail.md)        | none                                                                               |
 
 ---
 
@@ -159,33 +163,38 @@ Today that is a stack of paper.
 | Loaded          | Warn where above planned            | "310 loaded against a planned 300."                             |
 | Serial range    | Must match the loaded quantity      | "300 loaded, 294 serials selected."                             |
 | e-Way Bill      | Required above ₹50,000              | "This consignment is above ₹50,000. An e-Way Bill is required." |
-| Vehicle         | Required on the e-Way Bill          | "The e-Way Bill needs a vehicle number. Assign a truck first."  |
 | Place of supply | Required                            | "No state on the consignee — tax cannot be computed."           |
 | Dispatch date   | Not in the future                   | "That date has not happened."                                   |
 
 **The e-Way Bill rule is statutory, not a preference.** Above ₹50,000 the consignment cannot legally
 move without one, so it blocks. Everything else about loading warns.
 
+**Dispatching does not require a vehicle.** A truck is often arranged after loading, not before — the
+e-Way Bill's Part A (consignment details) generates from what is loaded; Part B (the vehicle number) is
+added on [Dispatch Detail](screen-dispatch-detail.md) whenever a truck is actually assigned. Blocking
+the dispatch itself on a vehicle would force a fiction: pick any truck now, or wait to dispatch goods
+that have already left the yard.
+
 ---
 
 ## 6. Conditional States
 
-| State                     | What the user sees                                                                                                         |
-| ------------------------- | -------------------------------------------------------------------------------------------------------------------------- |
-| Loading                   | Header ready, load grid resolves with stock                                                                                |
-| **From the queue**        | Consignee and lines pre-filled, loaded defaulted to planned, cursor in the first _Loaded_                                  |
-| Below free stock          | Green: _"All lines available at Unit 7 — FG Yard."_                                                                        |
-| Short                     | Amber line naming the gap; loaded capped at free stock with the balance staying open                                       |
-| Partial load              | Note: _"6 units stay open on SO-2288."_                                                                                    |
-| Under ₹50,000             | e-Way Bill row reads _"Not required — consignment under ₹50,000."_ Generation still offered                                |
-| Above ₹50,000, no vehicle | Amber: _"e-Way Bill needs a vehicle."_ **Dispatch** disabled with a link to trip assignment                                |
-| e-Way Bill generated      | Number and a **Download**, plus _"Not filed with the portal in this demo"_                                                 |
-| No serials                | Where the product is not serialised, the column reads `—`. Legitimate for RM and bulk                                      |
-| Interstate                | Documents switch to **IGST**, with a note naming the reason                                                                |
-| **Dispatched**            | Read-only, green header, toast: _"Dispatched. 300 units. DC-U7-1140."_ with **Assign truck** — carries the demo to beat ㉓ |
-| Draft                     | Chip **Draft**; nothing deducted, nothing documented                                                                       |
-| Error                     | Nothing committed; the load is kept on screen                                                                              |
-| Restricted                | _Design intent:_ dispatch roles at their own plant. **Not enforced in the demo**                                           |
+| State                         | What the user sees                                                                                                                                                                  |
+| ----------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Loading                       | Header ready, load grid resolves with stock                                                                                                                                         |
+| **From the queue**            | Consignee and lines pre-filled, loaded defaulted to planned, cursor in the first _Loaded_                                                                                           |
+| Below free stock              | Green: _"All lines available at Unit 7 — FG Yard."_                                                                                                                                 |
+| Short                         | Amber line naming the gap; loaded capped at free stock with the balance staying open                                                                                                |
+| Partial load                  | Note: _"6 units stay open on SO-2288."_                                                                                                                                             |
+| Under ₹50,000                 | e-Way Bill row reads _"Not required — consignment under ₹50,000."_ Generation still offered                                                                                         |
+| Above ₹50,000, no vehicle yet | e-Way Bill generates with Part A only. Blue note: _"Vehicle not yet assigned — add it on the dispatch record."_ **Dispatch** stays enabled                                          |
+| e-Way Bill generated          | Number and a **Download**, plus _"Not filed with the portal in this demo"_                                                                                                          |
+| No serials                    | Where the product is not serialised, the column reads `—`. Legitimate for RM and bulk                                                                                               |
+| Interstate                    | Documents switch to **IGST**, with a note naming the reason                                                                                                                         |
+| **Dispatched**                | Redirect to [Dispatch Detail](screen-dispatch-detail.md), toast: _"Dispatched. 300 units. DC-U7-1140."_ — **carries the demo to beat ㉑'s detail screen, where Assign truck lives** |
+| Draft                         | Chip **Draft**; nothing deducted, nothing documented                                                                                                                                |
+| Error                         | Nothing committed; the load is kept on screen                                                                                                                                       |
+| Restricted                    | _Design intent:_ dispatch roles at their own plant. **Not enforced in the demo**                                                                                                    |
 
 ---
 

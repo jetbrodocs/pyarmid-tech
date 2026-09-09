@@ -9,7 +9,7 @@ prd: ../_index.md
 
 # Demo — Screen List
 
-28 screens, in demo order. Derived from [`../_index.md`](../_index.md) §Screens.
+30 screens, in demo order. Derived from [`../_index.md`](../_index.md) §Screens.
 
 ## Act 1 — Procure to Stock
 
@@ -45,6 +45,8 @@ prd: ../_index.md
 | ⑲    | **Production Run**    | Record output, generate serials, deduct RM      | [screen-production-run.md](prd-10-production-planning/screen-production-run.md)       |
 | ⑳    | **Dispatch Queue**    | What is ready to go today                       | [screen-dispatch-queue.md](prd-11-dispatch/screen-dispatch-queue.md)                  |
 | ㉑   | **Dispatch Create**   | Confirm load; challan and e-Way Bill            | [screen-dispatch-create.md](prd-11-dispatch/screen-dispatch-create.md)                |
+| ㉑   | **Dispatch List**     | Every dispatch on a chosen date — triage only   | [screen-dispatch-list.md](prd-11-dispatch/screen-dispatch-list.md)                    |
+| ㉑   | **Dispatch Detail**   | One dispatch — documents and vehicle assignment | [screen-dispatch-detail.md](prd-11-dispatch/screen-dispatch-detail.md)                |
 | ㉒   | **Vehicle Registry**  | The fleet master — add and edit a truck         | [screen-vehicle-registry.md](prd-13-vehicle-management/screen-vehicle-registry.md)    |
 | ㉓   | **Trip Assignment**   | Truck and driver against a dispatch             | [screen-trip-assignment.md](prd-12-trip-management/screen-trip-assignment.md)         |
 | ㉔   | **Trip Board**        | Fleet status, live                              | [screen-trip-board.md](prd-12-trip-management/screen-trip-board.md)                   |
@@ -62,7 +64,7 @@ prd: ../_index.md
 5. **Dates render relative to `DEMO_DAY`.** Never hardcoded.
 6. **Stock resolves to a location, not a plant** — `REQ-DM-002`. Four locations, no bins, no racks.
 7. **All writes go through `/events/emit`.** Domain routers are GET-only.
-8. **Nothing off-script is reachable.** Navigation shows only these 28 screens. A dead link found live
+8. **Nothing off-script is reachable.** Navigation shows only these 30 screens. A dead link found live
    costs more than a missing feature.
 
 ## What these screens cannot do

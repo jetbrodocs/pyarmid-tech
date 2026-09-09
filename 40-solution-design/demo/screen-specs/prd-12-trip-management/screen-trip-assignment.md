@@ -32,11 +32,11 @@ today without a system.
 
 ## 1. Entry Points
 
-| From                                                            | Trigger                            | Context passed in                                    |
-| --------------------------------------------------------------- | ---------------------------------- | ---------------------------------------------------- |
-| [Dispatch Create](../prd-11-dispatch/screen-dispatch-create.md) | **Assign truck** after dispatching | `dispatch_id`, consignee, load — **this is beat ㉓** |
-| [Trip Board](screen-trip-board.md)                              | **+ New trip**                     | Blank                                                |
-| Main navigation                                                 | `Fleet → Assign`                   | Unassigned dispatches at the user's plant            |
+| From                                                            | Trigger                                  | Context passed in                                    |
+| --------------------------------------------------------------- | ---------------------------------------- | ---------------------------------------------------- |
+| [Dispatch Detail](../prd-11-dispatch/screen-dispatch-detail.md) | **Assign truck ▸** or **Change vehicle** | `dispatch_id`, consignee, load — **this is beat ㉓** |
+| [Trip Board](screen-trip-board.md)                              | **+ New trip**                           | Blank                                                |
+| Main navigation                                                 | `Fleet → Assign`                         | Unassigned dispatches at the user's plant            |
 
 ---
 
@@ -137,7 +137,7 @@ for costing later — and says exactly that if asked.
 | Driver row                  | Selects                                                                                                                        | none                                                                         |
 | **Add to this trip**        | Attaches another dispatch to the same trip — the two-orders-one-truck case                                                     | `DISPATCH_ATTACHED`                                                          |
 | Unavailable row → trip link | Opens that trip on [Trip Board](screen-trip-board.md)                                                                          | none                                                                         |
-| **View dispatch**           | Opens [Dispatch Create](../prd-11-dispatch/screen-dispatch-create.md) read-only                                                | none                                                                         |
+| **View dispatch**           | Opens [Dispatch Detail](../prd-11-dispatch/screen-dispatch-detail.md)                                                          | none                                                                         |
 | **+ Add vehicle**           | No result in the vehicle picker — opens [Vehicle Registry](../prd-13-vehicle-management/screen-vehicle-registry.md) as a modal | none                                                                         |
 
 ---
