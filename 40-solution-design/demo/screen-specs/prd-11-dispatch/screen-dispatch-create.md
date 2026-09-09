@@ -6,7 +6,8 @@ updated: 2026-09-09
 tags: [screen-spec, demo, dispatch, challan, eway-bill]
 prd: ../../prd-11-dispatch/prd.md
 parent_spec: ../../../screen-specs/prd-10-dispatch/screen-dispatch-create.md
-requirements: [REQ-DS-003, REQ-DS-004, REQ-DS-006, REQ-DS-008, REQ-DS-009, REQ-FM-007]
+requirements:
+  [REQ-DS-003, REQ-DS-004, REQ-DS-006, REQ-DS-008, REQ-DS-009, REQ-FM-007]
 ---
 
 # Screen — Dispatch Create
@@ -28,11 +29,11 @@ left the goods free.
 
 ## 1. Entry Points
 
-| From | Trigger | Context passed in |
-| ---- | ------- | ----------------- |
-| [Dispatch Queue](screen-dispatch-queue.md) | **Create dispatch** | Selected lines, consignee, plant — **this is beat ㉑** |
-| Main navigation | `Dispatch → New Dispatch` | Blank; consignee picker first |
-| [Trip Assignment](../prd-12-trip-management/screen-trip-assignment.md) | **Add to this trip** | Dispatch attached to a trip |
+| From                                                                   | Trigger                   | Context passed in                                      |
+| ---------------------------------------------------------------------- | ------------------------- | ------------------------------------------------------ |
+| [Dispatch Queue](screen-dispatch-queue.md)                             | **Create dispatch**       | Selected lines, consignee, plant — **this is beat ㉑** |
+| Main navigation                                                        | `Dispatch → New Dispatch` | Blank; consignee picker first                          |
+| [Trip Assignment](../prd-12-trip-management/screen-trip-assignment.md) | **Add to this trip**      | Dispatch attached to a trip                            |
 
 ---
 
@@ -73,12 +74,12 @@ is how a system quietly stops matching the yard.
 
 ### The documents, and which are real
 
-| Document | Status in the demo |
-| -------- | ------------------ |
-| **Delivery challan** | Generated, previewable, downloadable. `REQ-DS-004` |
-| **e-Way Bill** | Generated where the consignment value exceeds ₹50,000. **Not filed with the government portal in the demo** — the payload is built and shown |
-| **Outbound LR** | Created on dispatch and carried into [Trip Assignment](../prd-12-trip-management/screen-trip-assignment.md). `REQ-DS-007`, `REQ-FM-007` |
-| **Sales invoice** | **Out of the demo.** prd-11 designs it |
+| Document             | Status in the demo                                                                                                                           |
+| -------------------- | -------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Delivery challan** | Generated, previewable, downloadable. `REQ-DS-004`                                                                                           |
+| **e-Way Bill**       | Generated where the consignment value exceeds ₹50,000. **Not filed with the government portal in the demo** — the payload is built and shown |
+| **Outbound LR**      | Created on dispatch and carried into [Trip Assignment](../prd-12-trip-management/screen-trip-assignment.md). `REQ-DS-007`, `REQ-FM-007`      |
+| **Sales invoice**    | **Out of the demo.** prd-11 designs it                                                                                                       |
 
 Do not imply the e-Way Bill is filed. It is a real integration with a real government system, and
 claiming a live filing that has not been built is the kind of thing that surfaces at go-live.
@@ -95,72 +96,72 @@ Today that is a stack of paper.
 
 ### Header
 
-| Label | Format | Source | Notes |
-| ----- | ------ | ------ | ----- |
-| Dispatch number | Read-only until saved | auto | |
-| Consignee | Name + site, read-only from the queue | `party_addresses` | One per dispatch |
-| Buyer | Where different from the consignee | `parties` | `REQ-SO-003` |
-| Place of supply | State | `party_addresses.state_code` | Drives the tax on the documents |
-| From location | Name | `Location` | `REQ-DM-002` |
-| Dispatch date | Defaults to `DEMO_DAY` | user | |
-| Dispatched by | **Position** | `users` | Never a real name |
+| Label           | Format                                | Source                       | Notes                           |
+| --------------- | ------------------------------------- | ---------------------------- | ------------------------------- |
+| Dispatch number | Read-only until saved                 | auto                         |                                 |
+| Consignee       | Name + site, read-only from the queue | `party_addresses`            | One per dispatch                |
+| Buyer           | Where different from the consignee    | `parties`                    | `REQ-SO-003`                    |
+| Place of supply | State                                 | `party_addresses.state_code` | Drives the tax on the documents |
+| From location   | Name                                  | `Location`                   | `REQ-DM-002`                    |
+| Dispatch date   | Defaults to `DEMO_DAY`                | user                         |                                 |
+| Dispatched by   | **Position**                          | `users`                      | Never a real name               |
 
 ### Load grid
 
-| Label | Format | Source | Notes |
-| ----- | ------ | ------ | ----- |
-| SO | Number + link | `sales_orders` | `REQ-DS-008` |
-| Product | SKU name | `items.name` | Real names |
-| Planned | Integer | `DispatchPlanLine` | |
-| **Loaded** | Editable, defaults to planned | user | `REQ-DS-003` |
-| Free FG | Integer | `StockPosition` | |
-| Serial range | `…-0412` to `…-0711` | `ProductionUnit` | `REQ-DS-009` |
-| Batch | Where the item is batch-tracked | `REQ-DS-010` | For RM or bulk |
-| Rate, value | ₹, illustrative marker | `SOLineItem.rate` | Needed for the e-Way Bill threshold |
+| Label        | Format                          | Source             | Notes                               |
+| ------------ | ------------------------------- | ------------------ | ----------------------------------- |
+| SO           | Number + link                   | `sales_orders`     | `REQ-DS-008`                        |
+| Product      | SKU name                        | `items.name`       | Real names                          |
+| Planned      | Integer                         | `DispatchPlanLine` |                                     |
+| **Loaded**   | Editable, defaults to planned   | user               | `REQ-DS-003`                        |
+| Free FG      | Integer                         | `StockPosition`    |                                     |
+| Serial range | `…-0412` to `…-0711`            | `ProductionUnit`   | `REQ-DS-009`                        |
+| Batch        | Where the item is batch-tracked | `REQ-DS-010`       | For RM or bulk                      |
+| Rate, value  | ₹, illustrative marker          | `SOLineItem.rate`  | Needed for the e-Way Bill threshold |
 
 ### Documents
 
-| Label | Format | Source |
-| ----- | ------ | ------ |
-| Challan number | `DC-U7-1140` | auto |
-| Consignment value | ₹, illustrative | computed |
-| e-Way Bill required | Yes above ₹50,000 | computed |
-| e-Way Bill number | On generation | `eway_bills` |
-| Vehicle | From [Trip Assignment](../prd-12-trip-management/screen-trip-assignment.md), or entered here | `vehicles` |
-| Outbound LR | Number | `OutboundLR` |
+| Label               | Format                                                                                       | Source       |
+| ------------------- | -------------------------------------------------------------------------------------------- | ------------ |
+| Challan number      | `DC-U7-1140`                                                                                 | auto         |
+| Consignment value   | ₹, illustrative                                                                              | computed     |
+| e-Way Bill required | Yes above ₹50,000                                                                            | computed     |
+| e-Way Bill number   | On generation                                                                                | `eway_bills` |
+| Vehicle             | From [Trip Assignment](../prd-12-trip-management/screen-trip-assignment.md), or entered here | `vehicles`   |
+| Outbound LR         | Number                                                                                       | `OutboundLR` |
 
 ---
 
 ## 4. CTAs
 
-| Control | Behaviour | Event |
-| ------- | --------- | ----- |
-| **Dispatch** | Validates, commits, **deducts FG**, creates challan and outbound LR | `DISPATCH_CREATED`, `STOCK_DISPATCHED`, `CHALLAN_GENERATED`, `OUTBOUND_LR_CREATED` |
-| **Save** | Persists as a draft; nothing deducted | `DISPATCH_DRAFTED` |
-| **Generate** (e-Way Bill) | Builds the payload and shows the document | `EWAY_BILL_GENERATED` |
-| **Preview** | Renders the challan | none |
-| **Download** | PDF of challan or e-Way Bill | none |
-| Loaded quantity | Recomputes value and the serial range | none |
-| **Assign truck** | Opens [Trip Assignment](../prd-12-trip-management/screen-trip-assignment.md) — **this is beat ㉓** | none |
-| SO chip | Opens [SO List](../prd-08-sales-order/screen-so-list.md) expanded | none |
+| Control                   | Behaviour                                                                                          | Event                                                                              |
+| ------------------------- | -------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------- |
+| **Dispatch**              | Validates, commits, **deducts FG**, creates challan and outbound LR                                | `DISPATCH_CREATED`, `STOCK_DISPATCHED`, `CHALLAN_GENERATED`, `OUTBOUND_LR_CREATED` |
+| **Save**                  | Persists as a draft; nothing deducted                                                              | `DISPATCH_DRAFTED`                                                                 |
+| **Generate** (e-Way Bill) | Builds the payload and shows the document                                                          | `EWAY_BILL_GENERATED`                                                              |
+| **Preview**               | Renders the challan                                                                                | none                                                                               |
+| **Download**              | PDF of challan or e-Way Bill                                                                       | none                                                                               |
+| Loaded quantity           | Recomputes value and the serial range                                                              | none                                                                               |
+| **Assign truck**          | Opens [Trip Assignment](../prd-12-trip-management/screen-trip-assignment.md) — **this is beat ㉓** | none                                                                               |
+| SO chip                   | Opens [SO Detail](../prd-08-sales-order/screen-so-detail.md)                                       | none                                                                               |
 
 ---
 
 ## 5. Validations
 
-| Field | Rule | Message |
-| ----- | ---- | ------- |
-| Consignee | Required | "Pick who this ships to." |
-| Consignee | One per dispatch | "One dispatch, one consignee." |
-| Loaded | `≥ 0`, at least one line above zero | "Nothing is loaded." |
-| Loaded | Not above free FG at the location | "300 loaded against 294 free at Unit 7 — FG Yard." |
-| Loaded | Warn where below planned | "294 of 300 loaded. 6 stay open on SO-2288." |
-| Loaded | Warn where above planned | "310 loaded against a planned 300." |
-| Serial range | Must match the loaded quantity | "300 loaded, 294 serials selected." |
-| e-Way Bill | Required above ₹50,000 | "This consignment is above ₹50,000. An e-Way Bill is required." |
-| Vehicle | Required on the e-Way Bill | "The e-Way Bill needs a vehicle number. Assign a truck first." |
-| Place of supply | Required | "No state on the consignee — tax cannot be computed." |
-| Dispatch date | Not in the future | "That date has not happened." |
+| Field           | Rule                                | Message                                                         |
+| --------------- | ----------------------------------- | --------------------------------------------------------------- |
+| Consignee       | Required                            | "Pick who this ships to."                                       |
+| Consignee       | One per dispatch                    | "One dispatch, one consignee."                                  |
+| Loaded          | `≥ 0`, at least one line above zero | "Nothing is loaded."                                            |
+| Loaded          | Not above free FG at the location   | "300 loaded against 294 free at Unit 7 — FG Yard."              |
+| Loaded          | Warn where below planned            | "294 of 300 loaded. 6 stay open on SO-2288."                    |
+| Loaded          | Warn where above planned            | "310 loaded against a planned 300."                             |
+| Serial range    | Must match the loaded quantity      | "300 loaded, 294 serials selected."                             |
+| e-Way Bill      | Required above ₹50,000              | "This consignment is above ₹50,000. An e-Way Bill is required." |
+| Vehicle         | Required on the e-Way Bill          | "The e-Way Bill needs a vehicle number. Assign a truck first."  |
+| Place of supply | Required                            | "No state on the consignee — tax cannot be computed."           |
+| Dispatch date   | Not in the future                   | "That date has not happened."                                   |
 
 **The e-Way Bill rule is statutory, not a preference.** Above ₹50,000 the consignment cannot legally
 move without one, so it blocks. Everything else about loading warns.
@@ -169,22 +170,22 @@ move without one, so it blocks. Everything else about loading warns.
 
 ## 6. Conditional States
 
-| State | What the user sees |
-| ----- | ------------------ |
-| Loading | Header ready, load grid resolves with stock |
-| **From the queue** | Consignee and lines pre-filled, loaded defaulted to planned, cursor in the first *Loaded* |
-| Below free stock | Green: *"All lines available at Unit 7 — FG Yard."* |
-| Short | Amber line naming the gap; loaded capped at free stock with the balance staying open |
-| Partial load | Note: *"6 units stay open on SO-2288."* |
-| Under ₹50,000 | e-Way Bill row reads *"Not required — consignment under ₹50,000."* Generation still offered |
-| Above ₹50,000, no vehicle | Amber: *"e-Way Bill needs a vehicle."* **Dispatch** disabled with a link to trip assignment |
-| e-Way Bill generated | Number and a **Download**, plus *"Not filed with the portal in this demo"* |
-| No serials | Where the product is not serialised, the column reads `—`. Legitimate for RM and bulk |
-| Interstate | Documents switch to **IGST**, with a note naming the reason |
-| **Dispatched** | Read-only, green header, toast: *"Dispatched. 300 units. DC-U7-1140."* with **Assign truck** — carries the demo to beat ㉓ |
-| Draft | Chip **Draft**; nothing deducted, nothing documented |
-| Error | Nothing committed; the load is kept on screen |
-| Restricted | *Design intent:* dispatch roles at their own plant. **Not enforced in the demo** |
+| State                     | What the user sees                                                                                                         |
+| ------------------------- | -------------------------------------------------------------------------------------------------------------------------- |
+| Loading                   | Header ready, load grid resolves with stock                                                                                |
+| **From the queue**        | Consignee and lines pre-filled, loaded defaulted to planned, cursor in the first _Loaded_                                  |
+| Below free stock          | Green: _"All lines available at Unit 7 — FG Yard."_                                                                        |
+| Short                     | Amber line naming the gap; loaded capped at free stock with the balance staying open                                       |
+| Partial load              | Note: _"6 units stay open on SO-2288."_                                                                                    |
+| Under ₹50,000             | e-Way Bill row reads _"Not required — consignment under ₹50,000."_ Generation still offered                                |
+| Above ₹50,000, no vehicle | Amber: _"e-Way Bill needs a vehicle."_ **Dispatch** disabled with a link to trip assignment                                |
+| e-Way Bill generated      | Number and a **Download**, plus _"Not filed with the portal in this demo"_                                                 |
+| No serials                | Where the product is not serialised, the column reads `—`. Legitimate for RM and bulk                                      |
+| Interstate                | Documents switch to **IGST**, with a note naming the reason                                                                |
+| **Dispatched**            | Read-only, green header, toast: _"Dispatched. 300 units. DC-U7-1140."_ with **Assign truck** — carries the demo to beat ㉓ |
+| Draft                     | Chip **Draft**; nothing deducted, nothing documented                                                                       |
+| Error                     | Nothing committed; the load is kept on screen                                                                              |
+| Restricted                | _Design intent:_ dispatch roles at their own plant. **Not enforced in the demo**                                           |
 
 ---
 

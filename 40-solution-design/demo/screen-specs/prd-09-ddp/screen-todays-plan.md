@@ -2,7 +2,7 @@
 title: "Screen — Today's Plan"
 status: draft
 created: 2026-09-02
-updated: 2026-09-02
+updated: 2026-09-09
 tags: [screen-spec, demo, ddp, plant, acknowledgement]
 prd: ../../prd-09-ddp/prd.md
 parent_spec: ../../../screen-specs/prd-08-delivery-scheduling/screen-todays-plan-plant.md
@@ -26,12 +26,12 @@ issues in Bombay, and it is at Unit 7 before anyone puts the phone down.
 
 ## 1. Entry Points
 
-| From | Trigger | Context passed in |
-| ---- | ------- | ----------------- |
-| Main navigation | `Production → Today's Plan` | The issued plan for the user's plant and `DEMO_DAY` |
-| Home | *Plan issued — not acknowledged* tile | Same |
-| Notification | Sales issues or revises a plan | `plan_id` |
-| [Work Order Create](../prd-10-production-planning/screen-work-order-create.md) | **← Back to plan** | Same plan |
+| From                                                                           | Trigger                               | Context passed in                                   |
+| ------------------------------------------------------------------------------ | ------------------------------------- | --------------------------------------------------- |
+| Main navigation                                                                | `Production → Today's Plan`           | The issued plan for the user's plant and `DEMO_DAY` |
+| Home                                                                           | _Plan issued — not acknowledged_ tile | Same                                                |
+| Notification                                                                   | Sales issues or revises a plan        | `plan_id`                                           |
+| [Work Order Create](../prd-10-production-planning/screen-work-order-create.md) | **← Back to plan**                    | Same plan                                           |
 
 ---
 
@@ -88,47 +88,47 @@ problem would be showing a system we have not built and Pyramid has not describe
 
 ## 3. Data Points Displayed
 
-| Label | Format | Source | Notes |
-| ----- | ------ | ------ | ----- |
-| Plant | Name | `Location` | The user's plant |
-| Plan date | Relative | `DispatchPlan.plan_date` | |
-| Issued by / at | *"sales −0 d 17:40"* | `PLAN_ISSUED` | Position, never a name |
-| Version | `v1` · `v2` | `DispatchPlan.version` | `REQ-SCH-009` |
-| Acknowledged | Position + timestamp, or *"not yet"* | `PLAN_ACKNOWLEDGED` | `REQ-SCH-007` |
-| SO / customer | Number + name | `sales_orders` | |
-| Product | SKU name | `items.name` | Real names |
-| Planned quantity | Integer | `DispatchPlanLine.quantity` | Read-only to the plant |
-| Free FG stock | Integer | `StockPosition` FG at this plant | Free until loaded |
-| **To make** | Integer | plan − free FG, across the plan | The plant's number |
-| Work order | Chip + link, or a **WO** action | `work_orders` | `REQ-SCH-010` |
-| Note from sales | Free text | `DispatchPlanLine.note` | |
-| Flag | Reason + revised quantity | `PLAN_SHORTFALL_FLAGGED` | `REQ-SCH-008` |
+| Label            | Format                               | Source                           | Notes                  |
+| ---------------- | ------------------------------------ | -------------------------------- | ---------------------- |
+| Plant            | Name                                 | `Location`                       | The user's plant       |
+| Plan date        | Relative                             | `DispatchPlan.plan_date`         |                        |
+| Issued by / at   | _"sales −0 d 17:40"_                 | `PLAN_ISSUED`                    | Position, never a name |
+| Version          | `v1` · `v2`                          | `DispatchPlan.version`           | `REQ-SCH-009`          |
+| Acknowledged     | Position + timestamp, or _"not yet"_ | `PLAN_ACKNOWLEDGED`              | `REQ-SCH-007`          |
+| SO / customer    | Number + name                        | `sales_orders`                   |                        |
+| Product          | SKU name                             | `items.name`                     | Real names             |
+| Planned quantity | Integer                              | `DispatchPlanLine.quantity`      | Read-only to the plant |
+| Free FG stock    | Integer                              | `StockPosition` FG at this plant | Free until loaded      |
+| **To make**      | Integer                              | plan − free FG, across the plan  | The plant's number     |
+| Work order       | Chip + link, or a **WO** action      | `work_orders`                    | `REQ-SCH-010`          |
+| Note from sales  | Free text                            | `DispatchPlanLine.note`          |                        |
+| Flag             | Reason + revised quantity            | `PLAN_SHORTFALL_FLAGGED`         | `REQ-SCH-008`          |
 
 ---
 
 ## 4. CTAs
 
-| Control | Behaviour | Event |
-| ------- | --------- | ----- |
-| **Acknowledge plan** | Confirms, stamps position and time. Visible to sales at once | `PLAN_ACKNOWLEDGED` |
-| **Flag a shortfall** | Per line: reason and revised quantity, both required | `PLAN_SHORTFALL_FLAGGED` |
-| **WO** on a line | Opens [Work Order Create](../prd-10-production-planning/screen-work-order-create.md) with product, plan line and the *to make* quantity — **this is beat ⑱** | none |
-| SO chip | Opens [SO List](../prd-08-sales-order/screen-so-list.md) expanded | none |
-| FG stock figure | Opens [Stock by Location](../prd-05-inventory-management/screen-stock-by-location.md) filtered | none |
-| **View v1** | On a revision, diffs against the previous version | none |
+| Control              | Behaviour                                                                                                                                                    | Event                    |
+| -------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------ |
+| **Acknowledge plan** | Confirms, stamps position and time. Visible to sales at once                                                                                                 | `PLAN_ACKNOWLEDGED`      |
+| **Flag a shortfall** | Per line: reason and revised quantity, both required                                                                                                         | `PLAN_SHORTFALL_FLAGGED` |
+| **WO** on a line     | Opens [Work Order Create](../prd-10-production-planning/screen-work-order-create.md) with product, plan line and the _to make_ quantity — **this is beat ⑱** | none                     |
+| SO chip              | Opens [SO Detail](../prd-08-sales-order/screen-so-detail.md)                                                                                                 | none                     |
+| FG stock figure      | Opens [Stock by Location](../prd-05-inventory-management/screen-stock-by-location.md) filtered                                                               | none                     |
+| **View v1**          | On a revision, diffs against the previous version                                                                                                            | none                     |
 
 ---
 
 ## 5. Validations
 
-| Field / action | Rule | Message |
-| -------------- | ---- | ------- |
-| Acknowledge | Once per version | "Already acknowledged at 17:52." |
-| Acknowledge | Warn where a line is flagged | "One line is flagged short. Acknowledging says the rest will be met." |
-| Flag — reason | Required, ≥ 10 characters | "Say why this line cannot be met. Sales reads this." |
-| Flag — revised quantity | `≥ 0`, below the planned quantity | "A revision above the plan is not a shortfall." |
-| Raise work order | Blocked before acknowledgement | "Acknowledge the plan first." |
-| Raise work order | Warn where one already exists for the line | "WO-1183 is already open against this line." |
+| Field / action          | Rule                                       | Message                                                               |
+| ----------------------- | ------------------------------------------ | --------------------------------------------------------------------- |
+| Acknowledge             | Once per version                           | "Already acknowledged at 17:52."                                      |
+| Acknowledge             | Warn where a line is flagged               | "One line is flagged short. Acknowledging says the rest will be met." |
+| Flag — reason           | Required, ≥ 10 characters                  | "Say why this line cannot be met. Sales reads this."                  |
+| Flag — revised quantity | `≥ 0`, below the planned quantity          | "A revision above the plan is not a shortfall."                       |
+| Raise work order        | Blocked before acknowledgement             | "Acknowledge the plan first."                                         |
+| Raise work order        | Warn where one already exists for the line | "WO-1183 is already open against this line."                          |
 
 **Work orders wait for acknowledgement** on purpose. Production starting against a plan the plant has
 not read is exactly the gap the acknowledgement exists to close.
@@ -137,20 +137,20 @@ not read is exactly the gap the acknowledgement exists to close.
 
 ## 6. Conditional States
 
-| State | What the user sees |
-| ----- | ------------------ |
-| Loading | Header ready, lines skeleton |
-| **Issued, not acknowledged** | Blue banner: *"Sales issued this at 17:40. Acknowledge to start work orders."* |
-| Acknowledged | Green header with the position and time. **Acknowledge** withdrawn |
-| **Revised after acknowledgement** | Amber banner: *"Sales revised this plan (v2) after you acknowledged v1. 1 line changed."* with a diff and a fresh acknowledgement |
-| No plan issued | *"No plan issued for Unit 7 today."* — **an absence, stated**, not an empty grid |
-| Lines competing for stock | Amber strip naming the competition and the total to make |
-| Line flagged | Amber row, reason and revised quantity shown, visible to sales |
-| Fully covered by stock | *To make* reads `0`; the line needs no work order |
-| Work order open | Chip with status; the **WO** action withdrawn |
-| Plan met | Green strip: *"All lines covered or in production."* |
-| Error | Retry card; the header keeps the issued facts |
-| Restricted | *Design intent:* a plant sees only its own plan. **Not enforced in the demo** |
+| State                             | What the user sees                                                                                                                |
+| --------------------------------- | --------------------------------------------------------------------------------------------------------------------------------- |
+| Loading                           | Header ready, lines skeleton                                                                                                      |
+| **Issued, not acknowledged**      | Blue banner: _"Sales issued this at 17:40. Acknowledge to start work orders."_                                                    |
+| Acknowledged                      | Green header with the position and time. **Acknowledge** withdrawn                                                                |
+| **Revised after acknowledgement** | Amber banner: _"Sales revised this plan (v2) after you acknowledged v1. 1 line changed."_ with a diff and a fresh acknowledgement |
+| No plan issued                    | _"No plan issued for Unit 7 today."_ — **an absence, stated**, not an empty grid                                                  |
+| Lines competing for stock         | Amber strip naming the competition and the total to make                                                                          |
+| Line flagged                      | Amber row, reason and revised quantity shown, visible to sales                                                                    |
+| Fully covered by stock            | _To make_ reads `0`; the line needs no work order                                                                                 |
+| Work order open                   | Chip with status; the **WO** action withdrawn                                                                                     |
+| Plan met                          | Green strip: _"All lines covered or in production."_                                                                              |
+| Error                             | Retry card; the header keeps the issued facts                                                                                     |
+| Restricted                        | _Design intent:_ a plant sees only its own plan. **Not enforced in the demo**                                                     |
 
 ---
 

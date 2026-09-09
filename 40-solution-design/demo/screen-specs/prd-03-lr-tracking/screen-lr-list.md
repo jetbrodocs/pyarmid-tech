@@ -2,7 +2,7 @@
 title: "Screen — LR List"
 status: draft
 created: 2026-09-04
-updated: 2026-09-04
+updated: 2026-09-09
 tags: [screen-spec, demo, lr, list, ageing]
 prd: ../../prd-03-lr-tracking/prd.md
 parent_spec: ../../../screen-specs/prd-04-lr-tracking/screen-inbound-lr-list.md
@@ -29,7 +29,7 @@ queue — _"what do I need to chase today."_
 | ----------------------------------------------------------------------------------------- | --------------------------- | ------------------------------------------- |
 | Main navigation                                                                           | `Procurement → LR Tracking` | All open LRs                                |
 | [Indent Approval](../prd-01-purchase-indent/screen-indent-approval.md) → PO Create → sent | —                           | —                                           |
-| [PO List](../prd-02-purchase-order/screen-po-list.md)                                     | LR chip on the trail        | Filtered to that PO                         |
+| [PO Detail](../prd-02-purchase-order/screen-po-detail.md)                                 | LR chip on the trail        | Filtered to that PO                         |
 | Alert to the store team                                                                   | Threshold breached          | Filtered to the breaching LR — `REQ-LR-203` |
 | [GRN Create](../prd-04-grn/screen-grn-create.md)                                          | LR reference                | Filtered                                    |
 
@@ -76,16 +76,16 @@ is the row type this screen exists to make impossible to ignore.
 
 ## 3. Data Points Displayed
 
-| Column            | Format                                                                          | Source                     | Notes                                             |
-| ----------------- | ------------------------------------------------------------------------------- | -------------------------- | ------------------------------------------------- |
-| LR                | Phlo LR number, monospace                                                       | `InboundLR.lr_number`      | Tracking reference on hover                       |
-| Carrier           | Name                                                                            | `Carrier.name`             |                                                   |
-| PO                | Number, links to [PO List](../prd-02-purchase-order/screen-po-list.md) expanded | `.po_id`                   | `—` when none                                     |
-| Stage             | Chip, five values                                                               | `.stage`                   | Below                                             |
-| **Time in stage** | Days; amber past warning, red past breach                                       | derived + seeded threshold | `REQ-LR-201`                                      |
-| Total age         | Days since dispatch, on hover                                                   | derived                    | Secondary                                         |
-| To location       | Name                                                                            | `Location.name`            | `REQ-DM-002`                                      |
-| Source            | `manual` chip                                                                   | `.last_update_source`      | Only source in this demo — no carrier integration |
+| Column            | Format                                                                     | Source                     | Notes                                             |
+| ----------------- | -------------------------------------------------------------------------- | -------------------------- | ------------------------------------------------- |
+| LR                | Phlo LR number, monospace                                                  | `InboundLR.lr_number`      | Tracking reference on hover                       |
+| Carrier           | Name                                                                       | `Carrier.name`             |                                                   |
+| PO                | Number, links to [PO Detail](../prd-02-purchase-order/screen-po-detail.md) | `.po_id`                   | `—` when none                                     |
+| Stage             | Chip, five values                                                          | `.stage`                   | Below                                             |
+| **Time in stage** | Days; amber past warning, red past breach                                  | derived + seeded threshold | `REQ-LR-201`                                      |
+| Total age         | Days since dispatch, on hover                                              | derived                    | Secondary                                         |
+| To location       | Name                                                                       | `Location.name`            | `REQ-DM-002`                                      |
+| Source            | `manual` chip                                                              | `.last_update_source`      | Only source in this demo — no carrier integration |
 
 ### Stages (`REQ-LR-101`)
 
@@ -109,7 +109,7 @@ is the row type this screen exists to make impossible to ignore.
 | Row click                    | [LR Detail](screen-lr-detail.md)                                      | none                |
 | Row menu → **Advance stage** | [LR Stage Update](screen-lr-stage-update.md), next stage pre-selected | prd-03 stage events |
 | Row menu → **Create GRN**    | Received rows only — hands off to prd-04 GRN                          | none                |
-| PO link                      | [PO List](../prd-02-purchase-order/screen-po-list.md), expanded       | none                |
+| PO link                      | [PO Detail](../prd-02-purchase-order/screen-po-detail.md)             | none                |
 | Filters, stage chips         | Re-query                                                              | none                |
 | Breaching only               | Toggle filter                                                         | none                |
 

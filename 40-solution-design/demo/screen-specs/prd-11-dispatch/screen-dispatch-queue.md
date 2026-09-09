@@ -23,12 +23,12 @@ requirements: [REQ-DS-001, REQ-DS-002, REQ-SCH-010]
 
 ## 1. Entry Points
 
-| From | Trigger | Context passed in |
-| ---- | ------- | ----------------- |
-| Main navigation | `Dispatch → Queue` | Today's queue at the user's plant |
-| Home | *N ready to dispatch* tile | Same |
-| [Production Run](../prd-10-production-planning/screen-production-run.md) | After posting | Queue with the newly-made line ready — **this is beat ⑳** |
-| [Today's Plan](../prd-09-ddp/screen-todays-plan.md) | **Dispatch** on a covered line | Filtered to that line |
+| From                                                                     | Trigger                        | Context passed in                                         |
+| ------------------------------------------------------------------------ | ------------------------------ | --------------------------------------------------------- |
+| Main navigation                                                          | `Dispatch → Queue`             | Today's queue at the user's plant                         |
+| Home                                                                     | _N ready to dispatch_ tile     | Same                                                      |
+| [Production Run](../prd-10-production-planning/screen-production-run.md) | After posting                  | Queue with the newly-made line ready — **this is beat ⑳** |
+| [Today's Plan](../prd-09-ddp/screen-todays-plan.md)                      | **Dispatch** on a covered line | Filtered to that line                                     |
 
 ---
 
@@ -81,47 +81,47 @@ automatically; the fleet team decides, and no route optimisation is claimed anyw
 
 ## 3. Data Points Displayed
 
-| Label | Format | Source | Notes |
-| ----- | ------ | ------ | ----- |
-| Plant | Name | `Location` | |
-| Source plan | *"issued −1 d"* + link | `DispatchPlan` | `REQ-SCH-010` |
-| Selected | Checkbox | user | `REQ-DS-002` |
-| SO | Number + link | `sales_orders` | |
-| Customer | Name | `parties.name` | Fictional set |
-| Ship to | City + site | `party_addresses` | Consignee, not bill-to |
-| Product | SKU name | `items.name` | Real names |
-| Planned quantity | Integer | `DispatchPlanLine.quantity` | |
-| Free FG at this plant | Integer | `StockPosition` FG | Free until loaded |
-| Short | Amber marker | planned − free | Where the plant could not make it |
-| Due | Relative | `DeliveryScheduleLine.due_date` | Red when overdue |
-| Order age | On hover | `DEMO_DAY − so.created_at` | Secondary sort |
-| Already dispatched | Integer | prior dispatches | `REQ-SO-010` |
+| Label                 | Format                 | Source                          | Notes                             |
+| --------------------- | ---------------------- | ------------------------------- | --------------------------------- |
+| Plant                 | Name                   | `Location`                      |                                   |
+| Source plan           | _"issued −1 d"_ + link | `DispatchPlan`                  | `REQ-SCH-010`                     |
+| Selected              | Checkbox               | user                            | `REQ-DS-002`                      |
+| SO                    | Number + link          | `sales_orders`                  |                                   |
+| Customer              | Name                   | `parties.name`                  | Fictional set                     |
+| Ship to               | City + site            | `party_addresses`               | Consignee, not bill-to            |
+| Product               | SKU name               | `items.name`                    | Real names                        |
+| Planned quantity      | Integer                | `DispatchPlanLine.quantity`     |                                   |
+| Free FG at this plant | Integer                | `StockPosition` FG              | Free until loaded                 |
+| Short                 | Amber marker           | planned − free                  | Where the plant could not make it |
+| Due                   | Relative               | `DeliveryScheduleLine.due_date` | Red when overdue                  |
+| Order age             | On hover               | `DEMO_DAY − so.created_at`      | Secondary sort                    |
+| Already dispatched    | Integer                | prior dispatches                | `REQ-SO-010`                      |
 
 ---
 
 ## 4. CTAs
 
-| Control | Behaviour | Event |
-| ------- | --------- | ----- |
-| Checkbox | Selects a line | none |
-| **Create dispatch** | Opens [Dispatch Create](screen-dispatch-create.md) with the selected lines — **this is beat ㉑** | none |
-| Row click | Expands: schedule line, work order, serials available | none |
-| SO chip | Opens [SO List](../prd-08-sales-order/screen-so-list.md) expanded | none |
-| FG figure | Opens [Stock by Location](../prd-05-inventory-management/screen-stock-by-location.md) filtered | none |
-| **Show short lines** | Toggle | none |
-| Plan link | Opens [Today's Plan](../prd-09-ddp/screen-todays-plan.md) | none |
+| Control              | Behaviour                                                                                        | Event |
+| -------------------- | ------------------------------------------------------------------------------------------------ | ----- |
+| Checkbox             | Selects a line                                                                                   | none  |
+| **Create dispatch**  | Opens [Dispatch Create](screen-dispatch-create.md) with the selected lines — **this is beat ㉑** | none  |
+| Row click            | Expands: schedule line, work order, serials available                                            | none  |
+| SO chip              | Opens [SO Detail](../prd-08-sales-order/screen-so-detail.md)                                     | none  |
+| FG figure            | Opens [Stock by Location](../prd-05-inventory-management/screen-stock-by-location.md) filtered   | none  |
+| **Show short lines** | Toggle                                                                                           | none  |
+| Plan link            | Opens [Today's Plan](../prd-09-ddp/screen-todays-plan.md)                                        | none  |
 
 ---
 
 ## 5. Validations
 
-| Action | Rule | Message |
-| ------ | ---- | ------- |
-| Create dispatch | At least one line | "Select what is going out." |
+| Action          | Rule                       | Message                                                                                   |
+| --------------- | -------------------------- | ----------------------------------------------------------------------------------------- |
+| Create dispatch | At least one line          | "Select what is going out."                                                               |
 | Create dispatch | One consignee per dispatch | "These lines ship to two different consignees. One dispatch, one consignee — create two." |
-| Selection | Warn beyond free stock | "500 selected against 498 free. Two drums short." |
-| Selection | Warn on mixed plants | "These lines are at different plants." |
-| Short line | Selectable, warns | "Only 240 of 300 exist. The dispatch will be partial." |
+| Selection       | Warn beyond free stock     | "500 selected against 498 free. Two drums short."                                         |
+| Selection       | Warn on mixed plants       | "These lines are at different plants."                                                    |
+| Short line      | Selectable, warns          | "Only 240 of 300 exist. The dispatch will be partial."                                    |
 
 **One consignee per dispatch is a block**, because a delivery challan and an e-Way Bill name a single
 ship-to. Two consignees on one document is not a preference — it is an invalid document.
@@ -130,20 +130,20 @@ ship-to. Two consignees on one document is not a preference — it is an invalid
 
 ## 6. Conditional States
 
-| State | What the user sees |
-| ----- | ------------------ |
-| Loading | Header ready, grid skeleton |
-| **Empty** | *"Nothing ready to dispatch at Unit 7 today."* — states the plant and the day |
-| No plan issued | *"No plan was issued for today."* with a link to [DDP Builder](../prd-09-ddp/screen-ddp-builder.md). The queue is not silently empty |
-| Short line | Amber row, marker naming the gap, still selectable |
-| Overdue line | Red due date, sorted to the top |
-| Selection exceeds free stock | Amber selection bar naming the gap |
-| Mixed consignees selected | Blocking note in the bar; **Create dispatch** disabled |
-| Same city | Blue note: *"Both ship to Ankleshwar."* |
-| Partially dispatched line | Shows dispatched and balance |
-| Dispatched today | Moves out of the queue; a *"3 dispatched today"* link recovers them |
-| Error | Retry card in the grid |
-| Restricted | *Design intent:* dispatch roles at their own plant. **Not enforced in the demo** |
+| State                        | What the user sees                                                                                                                   |
+| ---------------------------- | ------------------------------------------------------------------------------------------------------------------------------------ |
+| Loading                      | Header ready, grid skeleton                                                                                                          |
+| **Empty**                    | _"Nothing ready to dispatch at Unit 7 today."_ — states the plant and the day                                                        |
+| No plan issued               | _"No plan was issued for today."_ with a link to [DDP Builder](../prd-09-ddp/screen-ddp-builder.md). The queue is not silently empty |
+| Short line                   | Amber row, marker naming the gap, still selectable                                                                                   |
+| Overdue line                 | Red due date, sorted to the top                                                                                                      |
+| Selection exceeds free stock | Amber selection bar naming the gap                                                                                                   |
+| Mixed consignees selected    | Blocking note in the bar; **Create dispatch** disabled                                                                               |
+| Same city                    | Blue note: _"Both ship to Ankleshwar."_                                                                                              |
+| Partially dispatched line    | Shows dispatched and balance                                                                                                         |
+| Dispatched today             | Moves out of the queue; a _"3 dispatched today"_ link recovers them                                                                  |
+| Error                        | Retry card in the grid                                                                                                               |
+| Restricted                   | _Design intent:_ dispatch roles at their own plant. **Not enforced in the demo**                                                     |
 
 ---
 

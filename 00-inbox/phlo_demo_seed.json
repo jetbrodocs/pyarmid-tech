@@ -239,7 +239,8 @@
       "item_type": "raw_material",
       "uom": "KG",
       "seed_rate": 100.0,
-      "rate_ref": "R1"
+      "rate_ref": "R1",
+      "reorder_point": 2000
     },
     {
       "sku": "RM-REGRIND",
@@ -266,7 +267,8 @@
       "item_type": "raw_material",
       "uom": "KG",
       "seed_rate": 300.0,
-      "rate_ref": "R4"
+      "rate_ref": "R4",
+      "reorder_point": 25
     },
     {
       "sku": "RM-CRCA-COIL",
@@ -285,6 +287,256 @@
       "uom": "KG",
       "seed_rate": 70.0,
       "rate_ref": "R6"
+    },
+    {
+      "sku": "ACC-BUNG",
+      "name": "BUNG",
+      "category": "accessory",
+      "item_type": "raw_material",
+      "uom": "NOS",
+      "hsn": "39235010",
+      "seed_rate": 15.0
+    },
+    {
+      "sku": "ACC-CAP-SEAL",
+      "name": "CAP SEAL",
+      "category": "accessory",
+      "item_type": "raw_material",
+      "uom": "NOS",
+      "hsn": "39235010",
+      "seed_rate": 5.0
+    },
+    {
+      "sku": "ACC-CAP-SPANNER",
+      "name": "CAP SPANNER",
+      "category": "accessory",
+      "item_type": "raw_material",
+      "uom": "NOS",
+      "hsn": "82041110",
+      "seed_rate": 80.0
+    },
+    {
+      "sku": "ACC-CLICHING-COVER",
+      "name": "CLICHING COVER",
+      "category": "accessory",
+      "item_type": "raw_material",
+      "uom": "NOS",
+      "hsn": "39235010",
+      "seed_rate": 20.0
+    },
+    {
+      "sku": "ACC-DG-CAP",
+      "name": "DG CAP",
+      "category": "accessory",
+      "item_type": "raw_material",
+      "uom": "NOS",
+      "hsn": "39235010",
+      "seed_rate": 25.0
+    },
+    {
+      "sku": "ACC-DRIP-PAN",
+      "name": "DRIP PAN",
+      "category": "accessory",
+      "item_type": "raw_material",
+      "uom": "NOS",
+      "hsn": "39235010",
+      "seed_rate": 150.0
+    },
+    {
+      "sku": "ACC-DUMMY-CAP",
+      "name": "DUMMY CAP",
+      "category": "accessory",
+      "item_type": "raw_material",
+      "uom": "NOS",
+      "hsn": "39235010",
+      "seed_rate": 5.0
+    },
+    {
+      "sku": "ACC-ELBOW-IBC",
+      "name": "ELBOW (IBC)",
+      "category": "accessory",
+      "item_type": "raw_material",
+      "uom": "NOS",
+      "hsn": "39235010",
+      "seed_rate": 60.0
+    },
+    {
+      "sku": "ACC-FOT-CAP",
+      "name": "FOT CAP",
+      "category": "accessory",
+      "item_type": "raw_material",
+      "uom": "NOS",
+      "hsn": "39235010",
+      "seed_rate": 35.0
+    },
+    {
+      "sku": "ACC-FOT-LOCK",
+      "name": "FOT LOCK",
+      "category": "accessory",
+      "item_type": "raw_material",
+      "uom": "NOS",
+      "hsn": "39235010",
+      "seed_rate": 20.0
+    },
+    {
+      "sku": "ACC-FOT-PLASTIC-RING",
+      "name": "FOT PLASTIC RING",
+      "category": "accessory",
+      "item_type": "raw_material",
+      "uom": "NOS",
+      "hsn": "39235010",
+      "seed_rate": 25.0
+    },
+    {
+      "sku": "ACC-FOT-RUBBER-RING",
+      "name": "FOT RUBBER RING",
+      "category": "accessory",
+      "item_type": "raw_material",
+      "uom": "NOS",
+      "hsn": "40169340",
+      "seed_rate": 15.0
+    },
+    {
+      "sku": "ACC-HANDLE",
+      "name": "HANDLE",
+      "category": "accessory",
+      "item_type": "raw_material",
+      "uom": "NOS",
+      "hsn": "39235010",
+      "seed_rate": 30.0
+    },
+    {
+      "sku": "ACC-INSERT",
+      "name": "INSERT",
+      "category": "accessory",
+      "item_type": "raw_material",
+      "uom": "NOS",
+      "hsn": "39235010",
+      "seed_rate": 10.0
+    },
+    {
+      "sku": "ACC-LUGS",
+      "name": "LUGS",
+      "category": "accessory",
+      "item_type": "raw_material",
+      "uom": "NOS",
+      "hsn": "39235010",
+      "seed_rate": 8.0
+    },
+    {
+      "sku": "ACC-MZ-CAP",
+      "name": "M/Z CAP",
+      "category": "accessory",
+      "item_type": "raw_material",
+      "uom": "NOS",
+      "hsn": "39235010",
+      "seed_rate": 12.0
+    },
+    {
+      "sku": "ACC-MS-RING",
+      "name": "MS RING",
+      "category": "accessory",
+      "item_type": "raw_material",
+      "uom": "NOS",
+      "hsn": "73269099",
+      "seed_rate": 45.0
+    },
+    {
+      "sku": "ACC-PP-CAP",
+      "name": "PP CAP",
+      "category": "accessory",
+      "item_type": "raw_material",
+      "uom": "NOS",
+      "hsn": "39235010",
+      "seed_rate": 10.0
+    },
+    {
+      "sku": "ACC-PIN",
+      "name": "PIN",
+      "category": "accessory",
+      "item_type": "raw_material",
+      "uom": "NOS",
+      "hsn": "39235010",
+      "seed_rate": 5.0
+    },
+    {
+      "sku": "ACC-PLAIN-CAP",
+      "name": "PLAIN CAP",
+      "category": "accessory",
+      "item_type": "raw_material",
+      "uom": "NOS",
+      "hsn": "39235010",
+      "seed_rate": 8.0
+    },
+    {
+      "sku": "ACC-PLASTIC-RING",
+      "name": "PLASTIC RING",
+      "category": "accessory",
+      "item_type": "raw_material",
+      "uom": "NOS",
+      "hsn": "39235010",
+      "seed_rate": 18.0
+    },
+    {
+      "sku": "ACC-PRINTED-CAP-SEAL",
+      "name": "PRINTED CAP SEAL (BRANDED)",
+      "category": "accessory",
+      "item_type": "raw_material",
+      "uom": "NOS",
+      "hsn": "83099030",
+      "seed_rate": 12.0
+    },
+    {
+      "sku": "ACC-RING-OTHER",
+      "name": "RING - OTHER",
+      "category": "accessory",
+      "item_type": "raw_material",
+      "uom": "NOS",
+      "hsn": "39235010",
+      "seed_rate": 20.0
+    },
+    {
+      "sku": "ACC-SECURITY-FLAP",
+      "name": "SECURITY FLAP",
+      "category": "accessory",
+      "item_type": "raw_material",
+      "uom": "NOS",
+      "hsn": "39235010",
+      "seed_rate": 15.0
+    },
+    {
+      "sku": "ACC-SPACER",
+      "name": "SPACER",
+      "category": "accessory",
+      "item_type": "raw_material",
+      "uom": "NOS",
+      "hsn": "39233090",
+      "seed_rate": 10.0
+    },
+    {
+      "sku": "ACC-SPONGE-GASKET",
+      "name": "SPONGE GASKET",
+      "category": "accessory",
+      "item_type": "raw_material",
+      "uom": "NOS",
+      "hsn": "39235010",
+      "seed_rate": 8.0
+    },
+    {
+      "sku": "ACC-TOP-SEAL-CAP",
+      "name": "TOP SEAL CAP",
+      "category": "accessory",
+      "item_type": "raw_material",
+      "uom": "NOS",
+      "seed_rate": 10.0
+    },
+    {
+      "sku": "ACC-VENT-FITTING",
+      "name": "VENT FITTING",
+      "category": "accessory",
+      "item_type": "raw_material",
+      "uom": "NOS",
+      "seed_rate": 35.0
     },
     {
       "sku": "SFG-IBC-INNER",
@@ -952,7 +1204,7 @@
     {
       "item_sku": "RM-HDPE-HXM-TR571",
       "location_code": "U7-RM",
-      "quantity": 500,
+      "quantity": 1240.0,
       "reason": "opening_balance_correction",
       "uom_override": "KG"
     },
@@ -973,7 +1225,21 @@
     {
       "item_sku": "RM-REGRIND",
       "location_code": "U7-RM",
-      "quantity": 80,
+      "quantity": 380.5,
+      "reason": "opening_balance_correction",
+      "uom_override": "KG"
+    },
+    {
+      "item_sku": "RM-UV-STABILISER",
+      "location_code": "U7-RM",
+      "quantity": 42.0,
+      "reason": "opening_balance_correction",
+      "uom_override": "KG"
+    },
+    {
+      "item_sku": "RM-MASTERBATCH",
+      "location_code": "U7-RM",
+      "quantity": 20.0,
       "reason": "opening_balance_correction",
       "uom_override": "KG"
     },

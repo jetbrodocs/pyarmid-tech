@@ -9,7 +9,7 @@ prd: ../_index.md
 
 # Demo — Screen List
 
-26 screens, in demo order. Derived from [`../_index.md`](../_index.md) §Screens.
+28 screens, in demo order. Derived from [`../_index.md`](../_index.md) §Screens.
 
 ## Act 1 — Procure to Stock
 
@@ -23,7 +23,8 @@ prd: ../_index.md
 | ⑥    | **Indent Approval**   | PO officer's table — find the indent                  | [screen-indent-approval.md](prd-01-purchase-indent/screen-indent-approval.md)          |
 | ⑥ ⑦  | **Indent Detail**     | Approve, reject, or convert one indent to a PO        | [screen-indent-detail.md](prd-01-purchase-indent/screen-indent-detail.md)              |
 | ⑦    | **PO Create**         | Approved indent becomes a purchase order              | [screen-po-create.md](prd-02-purchase-order/screen-po-create.md)                       |
-| ⑧    | **PO List**           | Open POs with ageing and receipt status               | [screen-po-list.md](prd-02-purchase-order/screen-po-list.md)                           |
+| ⑧    | **PO List**           | Open POs — age, status, received %. Triage only       | [screen-po-list.md](prd-02-purchase-order/screen-po-list.md)                           |
+| ⑧    | **PO Detail**         | One PO and its full indent→PO→LR→GRN trail            | [screen-po-detail.md](prd-02-purchase-order/screen-po-detail.md)                       |
 | ⑨    | **LR Create**         | Record an inbound LR against a PO                     | [screen-lr-create.md](prd-03-lr-tracking/screen-lr-create.md)                          |
 | ⑨    | **LR List**           | Inbound LRs across the five stages                    | [screen-lr-list.md](prd-03-lr-tracking/screen-lr-list.md)                              |
 | ⑨ ⑩  | **LR Stage Update**   | Mark a stage forward                                  | [screen-lr-stage-update.md](prd-03-lr-tracking/screen-lr-stage-update.md)              |
@@ -36,7 +37,8 @@ prd: ../_index.md
 | Beat | Screen                | Purpose                                         | Spec                                                                                  |
 | ---- | --------------------- | ----------------------------------------------- | ------------------------------------------------------------------------------------- |
 | ⑭    | **SO Create**         | Key an order received by any channel            | [screen-so-create.md](prd-08-sales-order/screen-so-create.md)                         |
-| ⑮    | **SO List**           | Order pipeline with ageing                      | [screen-so-list.md](prd-08-sales-order/screen-so-list.md)                             |
+| ⑮    | **SO List**           | Order pipeline with ageing — triage only        | [screen-so-list.md](prd-08-sales-order/screen-so-list.md)                             |
+| ⑮    | **SO Detail**         | One order — lines, schedule, fulfilment trail   | [screen-so-detail.md](prd-08-sales-order/screen-so-detail.md)                         |
 | ⑯    | **DDP Builder**       | Draft, adjust and issue the daily dispatch plan | [screen-ddp-builder.md](prd-09-ddp/screen-ddp-builder.md)                             |
 | ⑰    | **Today's Plan**      | Plant view: acknowledge, flag shortfall         | [screen-todays-plan.md](prd-09-ddp/screen-todays-plan.md)                             |
 | ⑱    | **Work Order Create** | Raise against a plan line; explode the BOM      | [screen-work-order-create.md](prd-10-production-planning/screen-work-order-create.md) |
@@ -60,7 +62,7 @@ prd: ../_index.md
 5. **Dates render relative to `DEMO_DAY`.** Never hardcoded.
 6. **Stock resolves to a location, not a plant** — `REQ-DM-002`. Four locations, no bins, no racks.
 7. **All writes go through `/events/emit`.** Domain routers are GET-only.
-8. **Nothing off-script is reachable.** Navigation shows only these 26 screens. A dead link found live
+8. **Nothing off-script is reachable.** Navigation shows only these 28 screens. A dead link found live
    costs more than a missing feature.
 
 ## What these screens cannot do

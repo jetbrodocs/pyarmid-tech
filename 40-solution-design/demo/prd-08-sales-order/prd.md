@@ -2,7 +2,7 @@
 title: "PRD-DEMO-08 — Sales Order"
 status: draft
 created: 2026-09-02
-updated: 2026-09-02
+updated: 2026-09-09
 demo_beats: [14, 15]
 tags: [prd, demo, sales-order, gst, schedule]
 source_prd: ../../prd-09-sales-orders/prd.md
@@ -18,29 +18,36 @@ screens: ../screen-specs/prd-08-sales-order/
 
 An order arrives by email, WhatsApp or a phone call and the Bombay sales team keys it, with a **delivery
 schedule** attached: how much, to which plant, on which date. Beat ⑮ is the open order book with ageing
-and progress.
+and progress; beat ⑮ continues on
+[SO Detail](../screen-specs/prd-08-sales-order/screen-so-detail.md), where the lines, schedule and full
+fulfilment trail render on their own screen.
 
 **The schedule lines are the join to the rest of Act 2** — [PRD-DEMO-09](../prd-09-ddp/prd.md)
 auto-drafts the daily dispatch plan from exactly these.
 
+> **Revised 2026-09-09.** SO Detail was cut, merged into the list as an expanding row. **That cut is
+> reopened** — the trail now has its own screen, reached by clicking an SO number, matching the same
+> reopened cut on [PRD-DEMO-02 PO Detail](../prd-02-purchase-order/prd.md).
+
 ## Demo Scope
 
-| In | Out |
-| -- | --- |
-| Order capture with the **channel** recorded (`REQ-SO-002`) | Customer-specific product modifications (`REQ-SO-012`) |
-| Bill-to / ship-to split and place of supply (`REQ-SO-003`, `004`) | Cancellation and the rework path (`REQ-SO-013`–`015`) |
-| GST computed at order time (`REQ-SO-005`) | Credit checking against terms |
-| Delivery schedule lines (`REQ-SCH-001`–`003`) | Fulfilment reporting, demand trend, customer concentration |
-| Status and ageing (`REQ-SO-007`, `008`) | SO detail as a separate screen — merged into the list |
-| Order pipeline (`REQ-DP-001`) | Sales invoice — [prd-11](../../prd-11-sales-invoice/prd.md), out of the demo |
+| In                                                                           | Out                                                                          |
+| ---------------------------------------------------------------------------- | ---------------------------------------------------------------------------- |
+| Order capture with the **channel** recorded (`REQ-SO-002`)                   | Customer-specific product modifications (`REQ-SO-012`)                       |
+| Bill-to / ship-to split and place of supply (`REQ-SO-003`, `004`)            | Rework once a cancelled order has produced stock (`REQ-SO-014`, `015`)       |
+| GST computed at order time (`REQ-SO-005`)                                    | Credit checking against terms                                                |
+| Delivery schedule lines (`REQ-SCH-001`–`003`)                                | Fulfilment reporting, demand trend, customer concentration                   |
+| Status and ageing (`REQ-SO-007`, `008`)                                      | Event log                                                                    |
+| Fulfilment trail and cancellation, on their own screen (`REQ-SO-009`, `013`) |                                                                              |
+| Order pipeline (`REQ-DP-001`)                                                | Sales invoice — [prd-11](../../prd-11-sales-invoice/prd.md), out of the demo |
 
 ## As-Is
 
-| What exists | What does not |
-| ----------- | ------------- |
-| Orders arrive **by any channel** — email, WhatsApp, verbal — and sales keys them at **Bombay** | Any record of which channel an order came from |
-| A delivery schedule, issued daily to the plants | Anything anyone has actually seen. **The artefact Phlo replaces has never been shown to us** |
-| — | An order book with age, progress, or what is overdue |
+| What exists                                                                                    | What does not                                                                                |
+| ---------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------- |
+| Orders arrive **by any channel** — email, WhatsApp, verbal — and sales keys them at **Bombay** | Any record of which channel an order came from                                               |
+| A delivery schedule, issued daily to the plants                                                | Anything anyone has actually seen. **The artefact Phlo replaces has never been shown to us** |
+| —                                                                                              | An order book with age, progress, or what is overdue                                         |
 
 > **Everything known about this process is testimony from one call.** The intake flow is stated, not
 > watched, and the pricing model has never been described at all.
@@ -54,37 +61,38 @@ auto-drafts the daily dispatch plan from exactly these.
 
 ## Requirements
 
-| ID | Requirement | Demonstrated by |
-| -- | ----------- | --------------- |
-| `REQ-SO-001` | Create an SO: customer, consignee, lines, quantities, rates, due date | [SO Create](../screen-specs/prd-08-sales-order/screen-so-create.md) |
-| `REQ-SO-002` | Order arrives by email / WhatsApp / verbal; **channel recorded** | *Received by* field. **Confirmed practice** |
-| `REQ-SO-003` | Consignee / buyer split | Two header fields |
-| `REQ-SO-004` | Place of supply for GST | Derived from the consignee |
-| `REQ-SO-005` | GST computed at order time | Totals strip |
-| `REQ-SO-006` | Lines: product, quantity, rate, UoM, HSN | Line grid |
-| `REQ-SO-007` | Status through to Fully Dispatched | Chips on [SO List](../screen-specs/prd-08-sales-order/screen-so-list.md) |
-| `REQ-SO-008` | Ageing — days since creation, days overdue | Age and due columns |
-| `REQ-SO-009` | Link to work orders and dispatches | Expanded trail |
-| `REQ-SO-010` | Partial dispatch | Progress bar, split |
-| `REQ-SCH-001`–`003` | Schedule lines: product, quantity, plant, due date; scheduled vs produced vs dispatched | Schedule strip and the expanded row |
-| `REQ-DP-001` | Order pipeline by product, customer, due date, age | The list itself, sorted by due date |
+| ID                  | Requirement                                                                             | Demonstrated by                                                                       |
+| ------------------- | --------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------- |
+| `REQ-SO-001`        | Create an SO: customer, consignee, lines, quantities, rates, due date                   | [SO Create](../screen-specs/prd-08-sales-order/screen-so-create.md)                   |
+| `REQ-SO-002`        | Order arrives by email / WhatsApp / verbal; **channel recorded**                        | _Received by_ field. **Confirmed practice**                                           |
+| `REQ-SO-003`        | Consignee / buyer split                                                                 | Two header fields                                                                     |
+| `REQ-SO-004`        | Place of supply for GST                                                                 | Derived from the consignee                                                            |
+| `REQ-SO-005`        | GST computed at order time                                                              | Totals strip                                                                          |
+| `REQ-SO-006`        | Lines: product, quantity, rate, UoM, HSN                                                | Line grid                                                                             |
+| `REQ-SO-007`        | Status through to Fully Dispatched                                                      | Chips on [SO List](../screen-specs/prd-08-sales-order/screen-so-list.md)              |
+| `REQ-SO-008`        | Ageing — days since creation, days overdue                                              | Age and due columns                                                                   |
+| `REQ-SO-009`        | Link to work orders and dispatches                                                      | [SO Detail](../screen-specs/prd-08-sales-order/screen-so-detail.md) trail             |
+| `REQ-SO-010`        | Partial dispatch                                                                        | Progress bar, split                                                                   |
+| `REQ-SO-013`        | Cancel an order                                                                         | [SO Detail](../screen-specs/prd-08-sales-order/screen-so-detail.md)                   |
+| `REQ-SCH-001`–`003` | Schedule lines: product, quantity, plant, due date; scheduled vs produced vs dispatched | Schedule strip on [SO Detail](../screen-specs/prd-08-sales-order/screen-so-detail.md) |
+| `REQ-DP-001`        | Order pipeline by product, customer, due date, age                                      | The list itself, sorted by due date                                                   |
 
 ## Assumptions
 
-| ID | Assumption | Reality |
-| -- | ---------- | ------- |
-| inherited | Per-SKU pricing with an override | **The real model is unknown.** The largest invention in Act 2 |
-| inherited | Sales splits a line across plants at order entry | The plant may reasonably want a say |
-| inherited | A customer PO reference exists | Field present, optional, unevidenced |
-| confirmed | Stock is **not** allocated at order time | Free until loaded onto the truck — confirmed 2026-08-29 |
+| ID        | Assumption                                       | Reality                                                       |
+| --------- | ------------------------------------------------ | ------------------------------------------------------------- |
+| inherited | Per-SKU pricing with an override                 | **The real model is unknown.** The largest invention in Act 2 |
+| inherited | Sales splits a line across plants at order entry | The plant may reasonably want a say                           |
+| inherited | A customer PO reference exists                   | Field present, optional, unevidenced                          |
+| confirmed | Stock is **not** allocated at order time         | Free until loaded onto the truck — confirmed 2026-08-29       |
 
 ## Data Model
 
-| Entity | Key attributes |
-| ------ | -------------- |
-| `SalesOrder` | id, so_number, customer_party_id, consignee_address_id, channel, received_on, status, created_at, customer_po_ref |
-| `SOLineItem` | id, so_id, item_id, quantity, uom, rate, hsn, due_date |
-| `DeliveryScheduleLine` | id, so_line_item_id, quantity, due_date, plant_id, produced_qty, dispatched_qty |
+| Entity                 | Key attributes                                                                                                    |
+| ---------------------- | ----------------------------------------------------------------------------------------------------------------- |
+| `SalesOrder`           | id, so_number, customer_party_id, consignee_address_id, channel, received_on, status, created_at, customer_po_ref |
+| `SOLineItem`           | id, so_id, item_id, quantity, uom, rate, hsn, due_date                                                            |
+| `DeliveryScheduleLine` | id, so_line_item_id, quantity, due_date, plant_id, produced_qty, dispatched_qty                                   |
 
 **Events:** `SO_CREATED` · `SO_CONFIRMED` · `SCHEDULE_LINE_UPDATED`.
 
@@ -101,19 +109,20 @@ auto-drafts the daily dispatch plan from exactly these.
 
 ## Screens
 
-| Screen | Beat | Purpose |
-| ------ | ---- | ------- |
-| [SO Create](../screen-specs/prd-08-sales-order/screen-so-create.md) | ⑭ | Key the order and schedule its deliveries |
-| [SO List](../screen-specs/prd-08-sales-order/screen-so-list.md) | ⑮ | Order book: ageing, progress, trail |
+| Screen                                                              | Beat | Purpose                                                   |
+| ------------------------------------------------------------------- | ---- | --------------------------------------------------------- |
+| [SO Create](../screen-specs/prd-08-sales-order/screen-so-create.md) | ⑭    | Key the order and schedule its deliveries                 |
+| [SO List](../screen-specs/prd-08-sales-order/screen-so-list.md)     | ⑮    | Order book — age, due date, status, progress. Triage only |
+| [SO Detail](../screen-specs/prd-08-sales-order/screen-so-detail.md) | ⑮    | One order, its schedule, and its full fulfilment trail    |
 
 ## Dependencies
 
-| Direction | Module | For |
-| --------- | ------ | --- |
-| Reads | Party master ([PRD-DEMO-07](../prd-07-vendor-management/prd.md) entity, customer role) | Customer, consignee, GSTIN, state |
-| Feeds | [PRD-DEMO-09 DDP](../prd-09-ddp/prd.md) | Schedule lines become the daily plan |
-| Feeds | [PRD-DEMO-10 Production](../prd-10-production-planning/prd.md) | Work orders run against firm orders — **confirmed** |
-| Feeds | [PRD-DEMO-11 Dispatch](../prd-11-dispatch/prd.md) | The dispatch queue |
+| Direction | Module                                                                                 | For                                                 |
+| --------- | -------------------------------------------------------------------------------------- | --------------------------------------------------- |
+| Reads     | Party master ([PRD-DEMO-07](../prd-07-vendor-management/prd.md) entity, customer role) | Customer, consignee, GSTIN, state                   |
+| Feeds     | [PRD-DEMO-09 DDP](../prd-09-ddp/prd.md)                                                | Schedule lines become the daily plan                |
+| Feeds     | [PRD-DEMO-10 Production](../prd-10-production-planning/prd.md)                         | Work orders run against firm orders — **confirmed** |
+| Feeds     | [PRD-DEMO-11 Dispatch](../prd-11-dispatch/prd.md)                                      | The dispatch queue                                  |
 
 ## Open Questions
 

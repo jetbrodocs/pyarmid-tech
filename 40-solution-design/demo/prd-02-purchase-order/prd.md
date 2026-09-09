@@ -2,7 +2,7 @@
 title: "PRD-DEMO-02 — Purchase Order"
 status: draft
 created: 2026-09-02
-updated: 2026-09-02
+updated: 2026-09-09
 demo_beats: [7, 8]
 tags: [prd, demo, purchase-order, procurement]
 source_prd: ../../prd-03-po-creation/prd.md
@@ -20,28 +20,32 @@ An approved indent becomes a purchase order against a chosen vendor, at an agree
 named location. **The first screen in the demo where money is committed** — everything before it was a
 request.
 
-Beat ⑧ then shows the open order book with ageing and, on an expanding row, **the full downstream
-trail**: indent → PO → LR → GRN. That trail is what does not exist today.
+Beat ⑧ shows the open order book with ageing; beat ⑧ continues on
+[PO Detail](../screen-specs/prd-02-purchase-order/screen-po-detail.md), where **the full downstream
+trail** — indent → PO → LR → GRN — renders on its own screen. That trail is what does not exist today.
+
+> **Revised 2026-09-09.** PO Detail was cut, merged into the list as an expanding row. **That cut is
+> reopened** — the trail now has its own screen, reached by clicking a PO number.
 
 ## Demo Scope
 
-| In | Out |
-| -- | --- |
-| PO from one or more approved indents (`REQ-PO-001`) | Path A direct PO (`REQ-PO-002`) — promoters buy resin and steel outside any flow |
-| Vendor selection and rate (`REQ-PO-003`, `REQ-PO-004`) | Quotation, negotiation, vendor comparison |
-| Per-line destination location (`REQ-PO-008`) | PO amendment and revision |
-| Status and ageing (`REQ-PO-005`, `REQ-PO-006`) | Vendor invoice, three-way match (`REQ-PO-201`–`206`) |
-| Downstream trail (`REQ-PO-007`) | PO detail as a separate screen — merged into the list |
-| PDF download (`REQ-PO-009`) | Sending live email to a vendor |
+| In                                                     | Out                                                                              |
+| ------------------------------------------------------ | -------------------------------------------------------------------------------- |
+| PO from one or more approved indents (`REQ-PO-001`)    | Path A direct PO (`REQ-PO-002`) — promoters buy resin and steel outside any flow |
+| Vendor selection and rate (`REQ-PO-003`, `REQ-PO-004`) | Quotation, negotiation, vendor comparison                                        |
+| Per-line destination location (`REQ-PO-008`)           | PO amendment and revision                                                        |
+| Status and ageing (`REQ-PO-005`, `REQ-PO-006`)         | Vendor invoice, three-way match (`REQ-PO-201`–`206`)                             |
+| Downstream trail, on its own screen (`REQ-PO-007`)     | Event log                                                                        |
+| PDF download (`REQ-PO-009`)                            | Sending live email to a vendor                                                   |
 
 ## As-Is
 
-| What exists | What does not |
-| ----------- | ------------- |
-| Purchase team converts approved indents to POs in UdyogERP | Any link from a PO to what was actually received |
-| PO carries item, quantity, rate, HSN | Ageing, or any view of what is still open |
-| — | A destination below plant level |
-| — | Vendor invoice matching. Named in the gap analysis as a direct cause of the procurement gap |
+| What exists                                                | What does not                                                                               |
+| ---------------------------------------------------------- | ------------------------------------------------------------------------------------------- |
+| Purchase team converts approved indents to POs in UdyogERP | Any link from a PO to what was actually received                                            |
+| PO carries item, quantity, rate, HSN                       | Ageing, or any view of what is still open                                                   |
+| —                                                          | A destination below plant level                                                             |
+| —                                                          | Vendor invoice matching. Named in the gap analysis as a direct cause of the procurement gap |
 
 ## Goals
 
@@ -52,34 +56,34 @@ trail**: indent → PO → LR → GRN. That trail is what does not exist today.
 
 ## Requirements
 
-| ID | Requirement | Demonstrated by |
-| -- | ----------- | --------------- |
-| `REQ-PO-001` | Create a PO from one or more approved indents | [PO Create](../screen-specs/prd-02-purchase-order/screen-po-create.md) |
-| `REQ-PO-003` | Select a vendor from the registry | Vendor header |
-| `REQ-PO-004` | Line items: item, quantity, rate, UoM, HSN, delivery date | Line grid |
-| `REQ-PO-005` | Status: Draft · Sent · Acknowledged · Partially Received · Fully Received · Closed · Cancelled | Chips on [PO List](../screen-specs/prd-02-purchase-order/screen-po-list.md) |
-| `REQ-PO-006` | PO ageing — days since creation, days since last receipt | Age column, amber at 14 days, red at 21 |
-| `REQ-PO-007` | Link PO to indents, LRs, GRNs | The expanded trail row |
-| `REQ-PO-008` | Multi-destination PO | Per-line location |
-| `REQ-PO-009` | PO sent to the vendor, method configurable | **Download only** in the demo |
-| `REQ-DM-002` | **A PO line names a location** | *Deliver to* column |
+| ID           | Requirement                                                                                    | Demonstrated by                                                              |
+| ------------ | ---------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------- |
+| `REQ-PO-001` | Create a PO from one or more approved indents                                                  | [PO Create](../screen-specs/prd-02-purchase-order/screen-po-create.md)       |
+| `REQ-PO-003` | Select a vendor from the registry                                                              | Vendor header                                                                |
+| `REQ-PO-004` | Line items: item, quantity, rate, UoM, HSN, delivery date                                      | Line grid                                                                    |
+| `REQ-PO-005` | Status: Draft · Sent · Acknowledged · Partially Received · Fully Received · Closed · Cancelled | Chips on [PO List](../screen-specs/prd-02-purchase-order/screen-po-list.md)  |
+| `REQ-PO-006` | PO ageing — days since creation, days since last receipt                                       | Age column, amber at 14 days, red at 21                                      |
+| `REQ-PO-007` | Link PO to indents, LRs, GRNs                                                                  | [PO Detail](../screen-specs/prd-02-purchase-order/screen-po-detail.md) trail |
+| `REQ-PO-008` | Multi-destination PO                                                                           | Per-line location                                                            |
+| `REQ-PO-009` | PO sent to the vendor, method configurable                                                     | **Download only** in the demo                                                |
+| `REQ-DM-002` | **A PO line names a location**                                                                 | _Deliver to_ column                                                          |
 
 ## Assumptions
 
-| ID | Assumption | Reality |
-| -- | ---------- | ------- |
+| ID        | Assumption                                             | Reality                                                                         |
+| --------- | ------------------------------------------------------ | ------------------------------------------------------------------------------- |
 | inherited | The purchase team sets the rate from the vendor's last | No quotation or negotiation step is modelled, and there almost certainly is one |
-| inherited | Vendor lead time drives the default due date | Nothing evidences that Pyramid records lead times |
-| inherited | The PO number series is location-prefixed | Matches the invoice pattern in obs-05. Unconfirmed |
-| new | 14 and 21 days are the ageing thresholds | **Invented.** Must be Pyramid's numbers before build |
+| inherited | Vendor lead time drives the default due date           | Nothing evidences that Pyramid records lead times                               |
+| inherited | The PO number series is location-prefixed              | Matches the invoice pattern in obs-05. Unconfirmed                              |
+| new       | 14 and 21 days are the ageing thresholds               | **Invented.** Must be Pyramid's numbers before build                            |
 
 ## Data Model
 
-| Entity | Key attributes |
-| ------ | -------------- |
-| `PurchaseOrder` | id, po_number, party_id, status, created_at, sent_at, payment_terms, source_indent_ids |
-| `POLineItem` | id, po_id, item_id, quantity, uom, rate, hsn, **location_id**, due_date |
-| `Party` (vendor role) | See [PRD-DEMO-07](../prd-07-vendor-management/prd.md) |
+| Entity                | Key attributes                                                                         |
+| --------------------- | -------------------------------------------------------------------------------------- |
+| `PurchaseOrder`       | id, po_number, party_id, status, created_at, sent_at, payment_terms, source_indent_ids |
+| `POLineItem`          | id, po_id, item_id, quantity, uom, rate, hsn, **location_id**, due_date                |
+| `Party` (vendor role) | See [PRD-DEMO-07](../prd-07-vendor-management/prd.md)                                  |
 
 **Events:** `PO_CREATED` · `PO_SENT` · `PO_CLOSED` · `INDENT_CONVERTED`.
 
@@ -95,19 +99,20 @@ trail**: indent → PO → LR → GRN. That trail is what does not exist today.
 
 ## Screens
 
-| Screen | Beat | Purpose |
-| ------ | ---- | ------- |
-| [PO Create](../screen-specs/prd-02-purchase-order/screen-po-create.md) | ⑦ | Indent becomes an order against a vendor |
-| [PO List](../screen-specs/prd-02-purchase-order/screen-po-list.md) | ⑧ | Open orders, ageing, and the downstream trail |
+| Screen                                                                 | Beat | Purpose                                            |
+| ---------------------------------------------------------------------- | ---- | -------------------------------------------------- |
+| [PO Create](../screen-specs/prd-02-purchase-order/screen-po-create.md) | ⑦    | Indent becomes an order against a vendor           |
+| [PO List](../screen-specs/prd-02-purchase-order/screen-po-list.md)     | ⑧    | Open orders — age, status, received %, triage only |
+| [PO Detail](../screen-specs/prd-02-purchase-order/screen-po-detail.md) | ⑧    | One PO and its full downstream trail               |
 
 ## Dependencies
 
-| Direction | Module | For |
-| --------- | ------ | --- |
-| Reads | [PRD-DEMO-01 Indent](../prd-01-purchase-indent/prd.md) | Approved indents and their lines |
-| Reads | [PRD-DEMO-07 Vendor](../prd-07-vendor-management/prd.md) | Vendor, GSTIN, state, terms, last rate |
-| Feeds | [PRD-DEMO-03 LR Tracking](../prd-03-lr-tracking/prd.md) | An LR is recorded against a PO |
-| Feeds | [PRD-DEMO-04 GRN](../prd-04-grn/prd.md) | A receipt is made against a PO |
+| Direction | Module                                                   | For                                    |
+| --------- | -------------------------------------------------------- | -------------------------------------- |
+| Reads     | [PRD-DEMO-01 Indent](../prd-01-purchase-indent/prd.md)   | Approved indents and their lines       |
+| Reads     | [PRD-DEMO-07 Vendor](../prd-07-vendor-management/prd.md) | Vendor, GSTIN, state, terms, last rate |
+| Feeds     | [PRD-DEMO-03 LR Tracking](../prd-03-lr-tracking/prd.md)  | An LR is recorded against a PO         |
+| Feeds     | [PRD-DEMO-04 GRN](../prd-04-grn/prd.md)                  | A receipt is made against a PO         |
 
 ## Open Questions
 

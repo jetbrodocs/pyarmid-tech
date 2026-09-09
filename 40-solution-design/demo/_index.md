@@ -26,7 +26,7 @@ sources:
 ## Summary
 
 **This is a scope cut, not a new module.** The thirteen PRDs describe the whole system; this folder
-describes **the slice we build and show Pyramid** — **one PRD per demo module**, and the 24 screens
+describes **the slice we build and show Pyramid** — **one PRD per demo module**, and the 28 screens
 those PRDs need.
 
 This page is the demo-wide layer: the cut, the spine, the seed data, the three new requirements, and the
@@ -52,13 +52,13 @@ data model, business rules and open questions.
 | #   | Demo PRD                                                   | Beats | Derived from                                                                                     | Screens |
 | --- | ---------------------------------------------------------- | ----- | ------------------------------------------------------------------------------------------------ | ------- |
 | 01  | [Purchase Indent](prd-01-purchase-indent/prd.md)           | ⑤ ⑥   | [prd-02](../prd-02-purchase-indent/prd.md)                                                       | 3       |
-| 02  | [Purchase Order](prd-02-purchase-order/prd.md)             | ⑦ ⑧   | [prd-03](../prd-03-po-creation/prd.md)                                                           | 2       |
+| 02  | [Purchase Order](prd-02-purchase-order/prd.md)             | ⑦ ⑧   | [prd-03](../prd-03-po-creation/prd.md)                                                           | 3       |
 | 03  | [LR Tracking](prd-03-lr-tracking/prd.md)                   | ⑨ ⑩   | [prd-04](../prd-04-lr-tracking/prd.md)                                                           | 4       |
 | 04  | [GRN](prd-04-grn/prd.md)                                   | ⑪     | [prd-05](../prd-05-grn/prd.md)                                                                   | 1       |
 | 05  | [Inventory Management](prd-05-inventory-management/prd.md) | ④ ⑫ ⑬ | [prd-06](../prd-06-inventory-management/prd.md), [prd-01](../prd-01-inventory-visibility/prd.md) | 2       |
 | 06  | [BOM Management (Master)](prd-06-bom-management/prd.md)    | ② ③   | [prd-07](../prd-07-production-planning/prd.md)                                                   | 2       |
 | 07  | [Vendor Management](prd-07-vendor-management/prd.md)       | ①     | [prd-03](../prd-03-po-creation/prd.md)                                                           | 1       |
-| 08  | [Sales Order](prd-08-sales-order/prd.md)                   | ⑭ ⑮   | [prd-09](../prd-09-sales-orders/prd.md)                                                          | 2       |
+| 08  | [Sales Order](prd-08-sales-order/prd.md)                   | ⑭ ⑮   | [prd-09](../prd-09-sales-orders/prd.md)                                                          | 3       |
 | 09  | [DDP — Daily Dispatch Plan](prd-09-ddp/prd.md)             | ⑯ ⑰   | [prd-08](../prd-08-delivery-scheduling/prd.md)                                                   | 2       |
 | 10  | [Production Planning](prd-10-production-planning/prd.md)   | ⑱ ⑲   | [prd-07](../prd-07-production-planning/prd.md)                                                   | 2       |
 | 11  | [Dispatch](prd-11-dispatch/prd.md)                         | ⑳ ㉑  | [prd-10](../prd-10-dispatch/prd.md)                                                              | 2       |
@@ -116,7 +116,7 @@ with the screen that demonstrates each one.
 | [LR Tracking](prd-03-lr-tracking/prd.md)                   | `REQ-LR-001`, `REQ-LR-004`, `REQ-LR-101`, `REQ-LR-102`, `REQ-LR-103`, `REQ-LR-104`, `REQ-LR-105`, `REQ-LR-201`, `REQ-LR-203`, `REQ-LR-303`, `REQ-LR-304`, `REQ-LR-305` |
 | [GRN](prd-04-grn/prd.md)                                   | `REQ-GRN-001`, `REQ-GRN-002`, `REQ-GRN-003`, `REQ-GRN-005`, `REQ-GRN-006`, `REQ-GRN-008`                                                                               |
 | [Inventory Management](prd-05-inventory-management/prd.md) | `REQ-IV-001`, `REQ-IV-002`, `REQ-IV-003`, `REQ-IM-001`, `REQ-IM-014`, `REQ-IM-015`                                                                                     |
-| [Sales Order](prd-08-sales-order/prd.md)                   | `REQ-SO-001`, `REQ-SO-002`, `REQ-SO-003`, `REQ-SO-006`, `REQ-SO-007`, `REQ-SO-009`                                                                                     |
+| [Sales Order](prd-08-sales-order/prd.md)                   | `REQ-SO-001`, `REQ-SO-002`, `REQ-SO-003`, `REQ-SO-006`, `REQ-SO-007`, `REQ-SO-008`, `REQ-SO-009`, `REQ-SO-010`, `REQ-SO-013`                                           |
 | [DDP](prd-09-ddp/prd.md)                                   | `REQ-SCH-004`, `REQ-SCH-005`, `REQ-SCH-006`, `REQ-SCH-007`, `REQ-SCH-008`, `REQ-SCH-010`                                                                               |
 | [Production Planning](prd-10-production-planning/prd.md)   | `REQ-PP-001`, `REQ-PP-002`, `REQ-PP-005`, `REQ-PP-006`, `REQ-PP-007`, `REQ-PP-008`, `REQ-PP-013`, `REQ-PP-014`                                                         |
 | [Dispatch](prd-11-dispatch/prd.md)                         | `REQ-DS-001`, `REQ-DS-002`, `REQ-DS-003`, `REQ-DS-004`, `REQ-DS-006`, `REQ-DS-008`                                                                                     |
@@ -190,7 +190,7 @@ ACT 1 — PROCURE TO STOCK
  ⑤  Indent Create          store team raises the shortfall  (auto-raised one already waiting)
  ⑥  Indent Approval        HO approves
  ⑦  PO Create              indent becomes a PO against a vendor
- ⑧  PO List                ageing, status, what is still open
+ ⑧  PO List + PO Detail    ageing and status; click a PO for the full indent→PO→LR→GRN trail
  ⑨  LR Create + LR List   8 inbound LRs recorded directly in Phlo, across all five stages
  ⑩  LR Detail              one LR stuck At Carrier Facility — 3 days. Alert fired
  ⑪  GRN Create             material arrives, quantity variance inside tolerance
@@ -199,7 +199,7 @@ ACT 1 — PROCURE TO STOCK
 
 ACT 2 — ORDER TO DELIVERY
  ⑭  SO Create              order arrives by WhatsApp, keyed at Bombay
- ⑮  SO List                pipeline, ageing, what is due
+ ⑮  SO List + SO Detail    pipeline, ageing; click an order for lines, schedule, trail
  ⑯  DDP Builder            Phlo drafts tomorrow's plan; sales adjusts and issues it
  ⑰  Today's Plan           Unit 7 acknowledges; flags a shortfall on one line
  ⑱  Work Order Create      BOM explosion against the plan line — shortfall detected
@@ -262,7 +262,7 @@ It is not optional reading. The short version:
 
 ## Screens
 
-26 screens across the 13 PRDs. Full detail in [`screen-specs/`](screen-specs/_index.md); each PRD's
+28 screens across the 13 PRDs. Full detail in [`screen-specs/`](screen-specs/_index.md); each PRD's
 §Screens section lists its own.
 
 | Beat | Screen            | Demo PRD                                                      |
@@ -276,6 +276,7 @@ It is not optional reading. The short version:
 | ⑥ ⑦  | Indent Detail     | [01 Purchase Indent](prd-01-purchase-indent/prd.md)           |
 | ⑦    | PO Create         | [02 Purchase Order](prd-02-purchase-order/prd.md)             |
 | ⑧    | PO List           | [02 Purchase Order](prd-02-purchase-order/prd.md)             |
+| ⑧    | PO Detail         | [02 Purchase Order](prd-02-purchase-order/prd.md)             |
 | ⑨    | LR Create         | [03 LR Tracking](prd-03-lr-tracking/prd.md)                   |
 | ⑨    | LR List           | [03 LR Tracking](prd-03-lr-tracking/prd.md)                   |
 | ⑨ ⑩  | LR Stage Update   | [03 LR Tracking](prd-03-lr-tracking/prd.md)                   |
@@ -284,6 +285,7 @@ It is not optional reading. The short version:
 | ⑬    | Stock Adjustment  | [05 Inventory Management](prd-05-inventory-management/prd.md) |
 | ⑭    | SO Create         | [08 Sales Order](prd-08-sales-order/prd.md)                   |
 | ⑮    | SO List           | [08 Sales Order](prd-08-sales-order/prd.md)                   |
+| ⑮    | SO Detail         | [08 Sales Order](prd-08-sales-order/prd.md)                   |
 | ⑯    | DDP Builder       | [09 DDP](prd-09-ddp/prd.md)                                   |
 | ⑰    | Today's Plan      | [09 DDP](prd-09-ddp/prd.md)                                   |
 | ⑱    | Work Order Create | [10 Production Planning](prd-10-production-planning/prd.md)   |

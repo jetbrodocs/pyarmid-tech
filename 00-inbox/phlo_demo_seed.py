@@ -181,7 +181,7 @@ CARRIERS = [
 # ═══════════════════════════════════════════════════════════════════════════
 # MODULE 05 — ITEMS
 # All items across all modules. SKU is the unique key.
-# Categories: hdpe_resin, regrind, colourant, additive, raw_steel,
+# Categories: hdpe_resin, regrind, colourant, additive, raw_steel, accessory,
 #             spares, component, consumable, sfg, bought_component,
 #             finished_goods_plastic, finished_goods_ms, finished_goods_ibc
 #
@@ -191,7 +191,9 @@ CARRIERS = [
 # something Pyramid buys in (raw_material / bought_component / spares /
 # consumable), makes internally (semi_finished_good), or sells
 # (finished_good).
-#   raw_material        — hdpe_resin, regrind, colourant, additive, raw_steel
+#   raw_material        — hdpe_resin, regrind, colourant, additive, raw_steel,
+#                          accessory (real types from obs-01 — caps, bungs,
+#                          rings, gaskets, handles fitted to a drum/IBC)
 #   semi_finished_good   — sfg
 #   bought_component      — bought_component
 #   spares                — spares
@@ -209,12 +211,53 @@ ITEMS = [
     {"sku": "CON-LUBE-GREASE",     "name": "LUBRICANT GREASE",           "category": "consumable","item_type": "consumable",         "uom": "KG",  "hsn": "2710", "seed_rate": 300.00},
 
     # ── Raw materials (BOM inputs) ────────────────────────────────────
-    {"sku": "RM-HDPE-HXM-TR571",   "name": "HDPE RESIN HXM TR-571",     "category": "hdpe_resin","item_type": "raw_material",        "uom": "KG",  "seed_rate": 100.00, "rate_ref": "R1"},
+    {"sku": "RM-HDPE-HXM-TR571",   "name": "HDPE RESIN HXM TR-571",     "category": "hdpe_resin","item_type": "raw_material",        "uom": "KG",  "seed_rate": 100.00, "rate_ref": "R1", "reorder_point": 2000},
     {"sku": "RM-REGRIND",          "name": "REGRIND / RECLAIM GRANULE",  "category": "regrind",   "item_type": "raw_material",        "uom": "KG",  "seed_rate": 60.00,  "rate_ref": "R2"},
     {"sku": "RM-MASTERBATCH",      "name": "MASTER BATCH (COLOURANT)",   "category": "colourant", "item_type": "raw_material",        "uom": "KG",  "seed_rate": 250.00, "rate_ref": "R3"},
-    {"sku": "RM-UV-STABILISER",    "name": "UV STABILISER",              "category": "additive",  "item_type": "raw_material",        "uom": "KG",  "seed_rate": 300.00, "rate_ref": "R4"},
+    {"sku": "RM-UV-STABILISER",    "name": "UV STABILISER",              "category": "additive",  "item_type": "raw_material",        "uom": "KG",  "seed_rate": 300.00, "rate_ref": "R4", "reorder_point": 25},
     {"sku": "RM-CRCA-COIL",        "name": "CRCA COIL",                  "category": "raw_steel", "item_type": "raw_material",        "uom": "KG",  "seed_rate": 60.00,  "rate_ref": "R5"},
     {"sku": "RM-GP-COIL-090X65",   "name": "GP COIL 0.90 × 65 MM",      "category": "raw_steel", "item_type": "raw_material",        "uom": "KG",  "seed_rate": 70.00,  "rate_ref": "R6"},
+
+    # ── Accessory RM — real Pyramid types, from obs-01-item-master-structure.md
+    # §Accessory Types (30) and 00-inbox/HDPE_Ecomm_SKU_Structure_Normalized.xlsx
+    # (T1_ProductType — the source obs-01 was built from). These are the
+    # bought-in parts fitted to a drum/IBC (caps, bungs, rings, gaskets,
+    # handles) — real names, real HSN codes (from the workbook's
+    # View_Combined sheet, most-common code per type), never seen priced.
+    # Rates below are invented placeholders, per demo-data-policy §4. None of
+    # these are exercised by a modelled BOM; they exist so the RM catalogue
+    # reads like Pyramid's real one (150 accessory SKUs across these 30
+    # types), not just the 6 items the 3 demo BOMs happen to consume.
+    # Excluded: "Corner Protector" (already seeded as CMP-CORNER-PROT, a Path B
+    # spare) and "Other Accessory" (a catch-all bucket, not a discrete item).
+    {"sku": "ACC-BUNG",              "name": "BUNG",                          "category": "accessory", "item_type": "raw_material", "uom": "NOS", "hsn": "39235010", "seed_rate": 15.00},
+    {"sku": "ACC-CAP-SEAL",          "name": "CAP SEAL",                      "category": "accessory", "item_type": "raw_material", "uom": "NOS", "hsn": "39235010", "seed_rate": 5.00},
+    {"sku": "ACC-CAP-SPANNER",       "name": "CAP SPANNER",                   "category": "accessory", "item_type": "raw_material", "uom": "NOS", "hsn": "82041110", "seed_rate": 80.00},
+    {"sku": "ACC-CLICHING-COVER",    "name": "CLICHING COVER",                "category": "accessory", "item_type": "raw_material", "uom": "NOS", "hsn": "39235010", "seed_rate": 20.00},
+    {"sku": "ACC-DG-CAP",            "name": "DG CAP",                        "category": "accessory", "item_type": "raw_material", "uom": "NOS", "hsn": "39235010", "seed_rate": 25.00},
+    {"sku": "ACC-DRIP-PAN",          "name": "DRIP PAN",                      "category": "accessory", "item_type": "raw_material", "uom": "NOS", "hsn": "39235010", "seed_rate": 150.00},
+    {"sku": "ACC-DUMMY-CAP",         "name": "DUMMY CAP",                     "category": "accessory", "item_type": "raw_material", "uom": "NOS", "hsn": "39235010", "seed_rate": 5.00},
+    {"sku": "ACC-ELBOW-IBC",         "name": "ELBOW (IBC)",                   "category": "accessory", "item_type": "raw_material", "uom": "NOS", "hsn": "39235010", "seed_rate": 60.00},
+    {"sku": "ACC-FOT-CAP",           "name": "FOT CAP",                       "category": "accessory", "item_type": "raw_material", "uom": "NOS", "hsn": "39235010", "seed_rate": 35.00},
+    {"sku": "ACC-FOT-LOCK",          "name": "FOT LOCK",                      "category": "accessory", "item_type": "raw_material", "uom": "NOS", "hsn": "39235010", "seed_rate": 20.00},
+    {"sku": "ACC-FOT-PLASTIC-RING",  "name": "FOT PLASTIC RING",              "category": "accessory", "item_type": "raw_material", "uom": "NOS", "hsn": "39235010", "seed_rate": 25.00},
+    {"sku": "ACC-FOT-RUBBER-RING",   "name": "FOT RUBBER RING",               "category": "accessory", "item_type": "raw_material", "uom": "NOS", "hsn": "40169340", "seed_rate": 15.00},
+    {"sku": "ACC-HANDLE",            "name": "HANDLE",                        "category": "accessory", "item_type": "raw_material", "uom": "NOS", "hsn": "39235010", "seed_rate": 30.00},
+    {"sku": "ACC-INSERT",            "name": "INSERT",                        "category": "accessory", "item_type": "raw_material", "uom": "NOS", "hsn": "39235010", "seed_rate": 10.00},
+    {"sku": "ACC-LUGS",              "name": "LUGS",                          "category": "accessory", "item_type": "raw_material", "uom": "NOS", "hsn": "39235010", "seed_rate": 8.00},
+    {"sku": "ACC-MZ-CAP",            "name": "M/Z CAP",                       "category": "accessory", "item_type": "raw_material", "uom": "NOS", "hsn": "39235010", "seed_rate": 12.00},
+    {"sku": "ACC-MS-RING",           "name": "MS RING",                       "category": "accessory", "item_type": "raw_material", "uom": "NOS", "hsn": "73269099", "seed_rate": 45.00},
+    {"sku": "ACC-PP-CAP",            "name": "PP CAP",                        "category": "accessory", "item_type": "raw_material", "uom": "NOS", "hsn": "39235010", "seed_rate": 10.00},
+    {"sku": "ACC-PIN",               "name": "PIN",                           "category": "accessory", "item_type": "raw_material", "uom": "NOS", "hsn": "39235010", "seed_rate": 5.00},
+    {"sku": "ACC-PLAIN-CAP",         "name": "PLAIN CAP",                     "category": "accessory", "item_type": "raw_material", "uom": "NOS", "hsn": "39235010", "seed_rate": 8.00},
+    {"sku": "ACC-PLASTIC-RING",      "name": "PLASTIC RING",                  "category": "accessory", "item_type": "raw_material", "uom": "NOS", "hsn": "39235010", "seed_rate": 18.00},
+    {"sku": "ACC-PRINTED-CAP-SEAL",  "name": "PRINTED CAP SEAL (BRANDED)",    "category": "accessory", "item_type": "raw_material", "uom": "NOS", "hsn": "83099030", "seed_rate": 12.00},
+    {"sku": "ACC-RING-OTHER",        "name": "RING - OTHER",                  "category": "accessory", "item_type": "raw_material", "uom": "NOS", "hsn": "39235010", "seed_rate": 20.00},
+    {"sku": "ACC-SECURITY-FLAP",     "name": "SECURITY FLAP",                 "category": "accessory", "item_type": "raw_material", "uom": "NOS", "hsn": "39235010", "seed_rate": 15.00},
+    {"sku": "ACC-SPACER",            "name": "SPACER",                        "category": "accessory", "item_type": "raw_material", "uom": "NOS", "hsn": "39233090", "seed_rate": 10.00},
+    {"sku": "ACC-SPONGE-GASKET",     "name": "SPONGE GASKET",                 "category": "accessory", "item_type": "raw_material", "uom": "NOS", "hsn": "39235010", "seed_rate": 8.00},
+    {"sku": "ACC-TOP-SEAL-CAP",      "name": "TOP SEAL CAP",                  "category": "accessory", "item_type": "raw_material", "uom": "NOS", "seed_rate": 10.00},
+    {"sku": "ACC-VENT-FITTING",      "name": "VENT FITTING",                  "category": "accessory", "item_type": "raw_material", "uom": "NOS", "seed_rate": 35.00},
 
     # ── BOM SFGs ──────────────────────────────────────────────────────
     {"sku": "SFG-IBC-INNER",       "name": "INNER CONTAINER 1000 L",                "category": "sfg",    "item_type": "semi_finished_good", "uom": "NOS"},
@@ -555,10 +598,17 @@ STOCK_POSITIONS = [
     # MS barrel at Unit 6 is ZERO — shortfall in beat ⑰ is real, not typed
 
     # RM — enough to look inhabited
-    {"item_sku": "RM-HDPE-HXM-TR571","location_code": "U7-RM",     "quantity": 500, "reason": "opening_balance_correction", "uom_override": "KG"},
+    # HDPE and regrind quantities match the canonical figures already fixed in
+    # screen-stock-by-location.md and screen-work-order-create.md — both short
+    # against the 260-unit HDPE drum work order at beat ⑱, which is the point.
+    {"item_sku": "RM-HDPE-HXM-TR571","location_code": "U7-RM",     "quantity": 1240.0, "reason": "opening_balance_correction", "uom_override": "KG"},
     {"item_sku": "RM-CRCA-COIL",     "location_code": "U6",        "quantity": 200, "reason": "opening_balance_correction", "uom_override": "KG"},
     {"item_sku": "RM-GP-COIL-090X65","location_code": "U7-RM",     "quantity": 150, "reason": "opening_balance_correction", "uom_override": "KG"},
-    {"item_sku": "RM-REGRIND",       "location_code": "U7-RM",     "quantity": 80,  "reason": "opening_balance_correction", "uom_override": "KG"},
+    {"item_sku": "RM-REGRIND",       "location_code": "U7-RM",     "quantity": 380.5, "reason": "opening_balance_correction", "uom_override": "KG"},
+    # Comfortably stocked — the "not short" line in the beat ⑱ explosion, so the
+    # HDPE drum's third BOM input reads 2 materials short out of 3, not 3 of 3.
+    {"item_sku": "RM-UV-STABILISER", "location_code": "U7-RM",     "quantity": 42.0, "reason": "opening_balance_correction", "uom_override": "KG"},
+    {"item_sku": "RM-MASTERBATCH",   "location_code": "U7-RM",     "quantity": 20.0, "reason": "opening_balance_correction", "uom_override": "KG"},
 
     # Spares — deliberately low to trigger indent
     {"item_sku": "SPR-SEAL-KIT-01",  "location_code": "U7-SPARES", "quantity": 1,   "reason": "opening_balance_correction"},

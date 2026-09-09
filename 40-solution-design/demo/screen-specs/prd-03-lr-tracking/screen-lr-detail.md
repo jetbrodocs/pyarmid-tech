@@ -2,7 +2,7 @@
 title: "Screen — LR Detail"
 status: draft
 created: 2026-09-02
-updated: 2026-09-04
+updated: 2026-09-09
 tags: [screen-spec, demo, lr, timeline, alert]
 prd: ../../prd-03-lr-tracking/prd.md
 parent_spec: ../../../screen-specs/prd-04-lr-tracking/screen-inbound-lr-detail.md
@@ -28,12 +28,12 @@ collect.
 
 ## 1. Entry Points
 
-| From                                                  | Trigger              | Context passed in  |
-| ----------------------------------------------------- | -------------------- | ------------------ |
-| [LR List](screen-lr-list.md)                          | Row click            | `lr_id`            |
-| [LR Create](screen-lr-create.md)                      | After save           | `lr_id`, toast     |
-| [PO List](../prd-02-purchase-order/screen-po-list.md) | LR chip on the trail | `lr_id`            |
-| [GRN Create](../prd-04-grn/screen-grn-create.md)      | LR chip              | `lr_id`, read-only |
+| From                                                      | Trigger              | Context passed in  |
+| --------------------------------------------------------- | -------------------- | ------------------ |
+| [LR List](screen-lr-list.md)                              | Row click            | `lr_id`            |
+| [LR Create](screen-lr-create.md)                          | After save           | `lr_id`, toast     |
+| [PO Detail](../prd-02-purchase-order/screen-po-detail.md) | LR chip on the trail | `lr_id`            |
+| [GRN Create](../prd-04-grn/screen-grn-create.md)          | LR chip              | `lr_id`, read-only |
 
 ---
 
@@ -83,16 +83,16 @@ the column exists in the data model for the day an `api`/`lookup` carrier is add
 
 ### Header
 
-| Label              | Format                                                                          | Source                                                        |
-| ------------------ | ------------------------------------------------------------------------------- | ------------------------------------------------------------- |
-| LR number          | Monospace                                                                       | `.lr_number`                                                  |
-| Carrier            | Name                                                                            | `Carrier.name`                                                |
-| Tracking reference | Monospace, deep-linked if a template exists                                     | `.tracking_reference`                                         |
-| PO                 | Number, links to [PO List](../prd-02-purchase-order/screen-po-list.md) expanded | `.po_id`                                                      |
-| Vendor             | Name                                                                            | `Party.name`                                                  |
-| Destination        | Location name                                                                   | `Location.name`                                               |
-| Expected material  | Item and quantity                                                               | this LR's own `.quantity`, or the PO's lines when none is set |
-| Attachment         | Scan or photo                                                                   | framework `Attachment`                                        |
+| Label              | Format                                                                     | Source                                                        |
+| ------------------ | -------------------------------------------------------------------------- | ------------------------------------------------------------- |
+| LR number          | Monospace                                                                  | `.lr_number`                                                  |
+| Carrier            | Name                                                                       | `Carrier.name`                                                |
+| Tracking reference | Monospace, deep-linked if a template exists                                | `.tracking_reference`                                         |
+| PO                 | Number, links to [PO Detail](../prd-02-purchase-order/screen-po-detail.md) | `.po_id`                                                      |
+| Vendor             | Name                                                                       | `Party.name`                                                  |
+| Destination        | Location name                                                              | `Location.name`                                               |
+| Expected material  | Item and quantity                                                          | this LR's own `.quantity`, or the PO's lines when none is set |
+| Attachment         | Scan or photo                                                              | framework `Attachment`                                        |
 
 ### Timeline row
 
@@ -129,7 +129,7 @@ late and here is who was told and when_ is a system.
 | **Create GRN**        | Appears only at `Received`. Hands off to prd-04 GRN                           | none                 |
 | **Attach**            | Add a document                                                                | `FILE_ATTACHED`      |
 | **⋯ Correct a stage** | Edits a recorded timestamp on this LR. **Reason required**; original retained | `LR_STAGE_CORRECTED` |
-| PO chip               | Opens [PO List](../prd-02-purchase-order/screen-po-list.md), expanded         | none                 |
+| PO chip               | Opens [PO Detail](../prd-02-purchase-order/screen-po-detail.md)               | none                 |
 | **← LR List**         | Back to the queue                                                             | none                 |
 
 **Correcting a stage never overwrites.** It supersedes, and both entries stay visible.

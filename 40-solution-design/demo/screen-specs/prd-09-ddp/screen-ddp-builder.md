@@ -2,7 +2,7 @@
 title: "Screen — DDP Builder"
 status: draft
 created: 2026-09-02
-updated: 2026-09-08
+updated: 2026-09-09
 tags: [screen-spec, demo, ddp, dispatch-plan, scheduling]
 prd: ../../prd-09-ddp/prd.md
 parent_spec: ../../../screen-specs/prd-08-delivery-scheduling/screen-dispatch-plan-builder.md
@@ -121,7 +121,7 @@ invites the plan to be sequenced by invoice value, which is not what anyone at P
 | **+ Add line**  | Picker of open schedule lines, including later dates                                                | none                 |
 | **Re-draft**    | Rebuilds from current schedule lines, keeping manual edits                                          | `PLAN_REDRAFTED`     |
 | **Revise**      | On an issued plan — opens `v2` — `REQ-SCH-009`                                                      | `PLAN_REVISED`       |
-| SO chip         | Opens [SO List](../prd-08-sales-order/screen-so-list.md) expanded                                   | none                 |
+| SO chip         | Opens [SO Detail](../prd-08-sales-order/screen-so-detail.md)                                        | none                 |
 | FG stock figure | Opens [Stock by Location](../prd-05-inventory-management/screen-stock-by-location.md) filtered      | none                 |
 
 **Issuing is the commitment.** Before it, the plan is Phlo's opinion; after it, a plant head has
