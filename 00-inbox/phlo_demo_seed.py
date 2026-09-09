@@ -184,45 +184,59 @@ CARRIERS = [
 # Categories: hdpe_resin, regrind, colourant, additive, raw_steel,
 #             spares, component, consumable, sfg, bought_component,
 #             finished_goods_plastic, finished_goods_ms, finished_goods_ibc
+#
+# item_type — coarse bucket derived from category, matching the
+# demo-data-policy §4 rate-register grouping. This is what tells a screen
+# (e.g. the PI item search, REQ-DM-002 Path A exclusion) whether an item is
+# something Pyramid buys in (raw_material / bought_component / spares /
+# consumable), makes internally (semi_finished_good), or sells
+# (finished_good).
+#   raw_material        — hdpe_resin, regrind, colourant, additive, raw_steel
+#   semi_finished_good   — sfg
+#   bought_component      — bought_component
+#   spares                — spares
+#   component             — component (Path B machinery part, not a BOM input)
+#   consumable            — consumable
+#   finished_good         — finished_goods_plastic, finished_goods_ms, finished_goods_ibc
 # ═══════════════════════════════════════════════════════════════════════════
 
 ITEMS = [
     # ── Path B spares & consumables (prd-01 indent, prd-02 PO) ────────
-    {"sku": "SPR-SEAL-KIT-01",     "name": "HYDRAULIC SEAL KIT",         "category": "spares",    "uom": "NOS", "hsn": "4016", "seed_rate": 150.00, "reorder_point": 2, "reorder_qty": 6},
-    {"sku": "SPR-VBELT-B58",       "name": "V-BELT B-58",                "category": "spares",    "uom": "NOS", "hsn": "4010", "seed_rate": 450.00},
-    {"sku": "CMP-CORNER-PROT",     "name": "CORNER PROTECTOR",           "category": "component", "uom": "NOS", "hsn": "3926", "seed_rate": 40.00},
-    {"sku": "CMP-SCREW-NYLOCK-6X20","name": "SCREW WITH NYLOCK NUT 6X20","category": "component", "uom": "NOS", "hsn": "7318", "seed_rate": 5.00},
-    {"sku": "CON-LUBE-GREASE",     "name": "LUBRICANT GREASE",           "category": "consumable","uom": "KG",  "hsn": "2710", "seed_rate": 300.00},
+    {"sku": "SPR-SEAL-KIT-01",     "name": "HYDRAULIC SEAL KIT",         "category": "spares",    "item_type": "spares",             "uom": "NOS", "hsn": "4016", "seed_rate": 150.00, "reorder_point": 2, "reorder_qty": 6},
+    {"sku": "SPR-VBELT-B58",       "name": "V-BELT B-58",                "category": "spares",    "item_type": "spares",             "uom": "NOS", "hsn": "4010", "seed_rate": 450.00},
+    {"sku": "CMP-CORNER-PROT",     "name": "CORNER PROTECTOR",           "category": "component", "item_type": "component",          "uom": "NOS", "hsn": "3926", "seed_rate": 40.00},
+    {"sku": "CMP-SCREW-NYLOCK-6X20","name": "SCREW WITH NYLOCK NUT 6X20","category": "component", "item_type": "component",          "uom": "NOS", "hsn": "7318", "seed_rate": 5.00},
+    {"sku": "CON-LUBE-GREASE",     "name": "LUBRICANT GREASE",           "category": "consumable","item_type": "consumable",         "uom": "KG",  "hsn": "2710", "seed_rate": 300.00},
 
     # ── Raw materials (BOM inputs) ────────────────────────────────────
-    {"sku": "RM-HDPE-HXM-TR571",   "name": "HDPE RESIN HXM TR-571",     "category": "hdpe_resin","uom": "KG",  "seed_rate": 100.00, "rate_ref": "R1"},
-    {"sku": "RM-REGRIND",          "name": "REGRIND / RECLAIM GRANULE",  "category": "regrind",   "uom": "KG",  "seed_rate": 60.00,  "rate_ref": "R2"},
-    {"sku": "RM-MASTERBATCH",      "name": "MASTER BATCH (COLOURANT)",   "category": "colourant", "uom": "KG",  "seed_rate": 250.00, "rate_ref": "R3"},
-    {"sku": "RM-UV-STABILISER",    "name": "UV STABILISER",              "category": "additive",  "uom": "KG",  "seed_rate": 300.00, "rate_ref": "R4"},
-    {"sku": "RM-CRCA-COIL",        "name": "CRCA COIL",                  "category": "raw_steel", "uom": "KG",  "seed_rate": 60.00,  "rate_ref": "R5"},
-    {"sku": "RM-GP-COIL-090X65",   "name": "GP COIL 0.90 × 65 MM",      "category": "raw_steel", "uom": "KG",  "seed_rate": 70.00,  "rate_ref": "R6"},
+    {"sku": "RM-HDPE-HXM-TR571",   "name": "HDPE RESIN HXM TR-571",     "category": "hdpe_resin","item_type": "raw_material",        "uom": "KG",  "seed_rate": 100.00, "rate_ref": "R1"},
+    {"sku": "RM-REGRIND",          "name": "REGRIND / RECLAIM GRANULE",  "category": "regrind",   "item_type": "raw_material",        "uom": "KG",  "seed_rate": 60.00,  "rate_ref": "R2"},
+    {"sku": "RM-MASTERBATCH",      "name": "MASTER BATCH (COLOURANT)",   "category": "colourant", "item_type": "raw_material",        "uom": "KG",  "seed_rate": 250.00, "rate_ref": "R3"},
+    {"sku": "RM-UV-STABILISER",    "name": "UV STABILISER",              "category": "additive",  "item_type": "raw_material",        "uom": "KG",  "seed_rate": 300.00, "rate_ref": "R4"},
+    {"sku": "RM-CRCA-COIL",        "name": "CRCA COIL",                  "category": "raw_steel", "item_type": "raw_material",        "uom": "KG",  "seed_rate": 60.00,  "rate_ref": "R5"},
+    {"sku": "RM-GP-COIL-090X65",   "name": "GP COIL 0.90 × 65 MM",      "category": "raw_steel", "item_type": "raw_material",        "uom": "KG",  "seed_rate": 70.00,  "rate_ref": "R6"},
 
     # ── BOM SFGs ──────────────────────────────────────────────────────
-    {"sku": "SFG-IBC-INNER",       "name": "INNER CONTAINER 1000 L",                "category": "sfg",    "uom": "NOS"},
-    {"sku": "SFG-CAGE-BIG",        "name": "CAGE TYPE — BIG",                       "category": "sfg",    "uom": "NOS"},
-    {"sku": "SFG-TAIL-PIPE",       "name": "TAIL PIPE 18×15×1×4175",               "category": "sfg",    "uom": "NOS"},
-    {"sku": "SFG-CUT-VBAR-1018",   "name": "CUT VERTICAL BAR 1018",                "category": "sfg",    "uom": "NOS"},
-    {"sku": "SFG-HBAR-4230",       "name": "HORIZONTAL BAR 16×16×0.9×4230",        "category": "sfg",    "uom": "NOS"},
-    {"sku": "SFG-VBAR-5130",       "name": "VERTICAL BAR 16×16×0.9×5130",          "category": "sfg",    "uom": "NOS"},
-    {"sku": "SFG-MS-BODY-SHEET",   "name": "BODY SHEET 0.97 × 914",               "category": "sfg",    "uom": "NOS"},
-    {"sku": "SFG-MS-LID-SHEET",    "name": "LID SHEET 0.9 × 1320 × 655MM",        "category": "sfg",    "uom": "NOS"},
-    {"sku": "SFG-CORRUGATED-SHEET","name": "CORRUGATED SHEET 2-PLY 36X75",         "category": "sfg",    "uom": "NOS"},
+    {"sku": "SFG-IBC-INNER",       "name": "INNER CONTAINER 1000 L",                "category": "sfg",    "item_type": "semi_finished_good", "uom": "NOS"},
+    {"sku": "SFG-CAGE-BIG",        "name": "CAGE TYPE — BIG",                       "category": "sfg",    "item_type": "semi_finished_good", "uom": "NOS"},
+    {"sku": "SFG-TAIL-PIPE",       "name": "TAIL PIPE 18×15×1×4175",               "category": "sfg",    "item_type": "semi_finished_good", "uom": "NOS"},
+    {"sku": "SFG-CUT-VBAR-1018",   "name": "CUT VERTICAL BAR 1018",                "category": "sfg",    "item_type": "semi_finished_good", "uom": "NOS"},
+    {"sku": "SFG-HBAR-4230",       "name": "HORIZONTAL BAR 16×16×0.9×4230",        "category": "sfg",    "item_type": "semi_finished_good", "uom": "NOS"},
+    {"sku": "SFG-VBAR-5130",       "name": "VERTICAL BAR 16×16×0.9×5130",          "category": "sfg",    "item_type": "semi_finished_good", "uom": "NOS"},
+    {"sku": "SFG-MS-BODY-SHEET",   "name": "BODY SHEET 0.97 × 914",               "category": "sfg",    "item_type": "semi_finished_good", "uom": "NOS"},
+    {"sku": "SFG-MS-LID-SHEET",    "name": "LID SHEET 0.9 × 1320 × 655MM",        "category": "sfg",    "item_type": "semi_finished_good", "uom": "NOS"},
+    {"sku": "SFG-CORRUGATED-SHEET","name": "CORRUGATED SHEET 2-PLY 36X75",         "category": "sfg",    "item_type": "semi_finished_good", "uom": "NOS"},
 
     # ── BOM bought components ─────────────────────────────────────────
-    {"sku": "CMP-PIPE-INSERT-70MM", "name": "PIPE INSERT 70MM",                    "category": "bought_component", "uom": "NOS", "seed_rate": 25.00,  "rate_ref": "C3"},
-    {"sku": "CMP-PALLET-CPFLAT",    "name": "PALLET — CP-FLAT (COMPOSITE)",        "category": "bought_component", "uom": "NOS", "seed_rate": 900.00, "rate_ref": "C4"},
-    {"sku": "CMP-VALVE-BTF3-DN50",  "name": "VALVE — BTF 3 INCH DN50",             "category": "bought_component", "uom": "NOS", "seed_rate": 450.00, "rate_ref": "C1"},
-    {"sku": "CMP-STRETCH-FILM",     "name": "STRETCH FILM",                        "category": "consumable",       "uom": "KG"},
+    {"sku": "CMP-PIPE-INSERT-70MM", "name": "PIPE INSERT 70MM",                    "category": "bought_component", "item_type": "bought_component", "uom": "NOS", "seed_rate": 25.00,  "rate_ref": "C3"},
+    {"sku": "CMP-PALLET-CPFLAT",    "name": "PALLET — CP-FLAT (COMPOSITE)",        "category": "bought_component", "item_type": "bought_component", "uom": "NOS", "seed_rate": 900.00, "rate_ref": "C4"},
+    {"sku": "CMP-VALVE-BTF3-DN50",  "name": "VALVE — BTF 3 INCH DN50",             "category": "bought_component", "item_type": "bought_component", "uom": "NOS", "seed_rate": 450.00, "rate_ref": "C1"},
+    {"sku": "CMP-STRETCH-FILM",     "name": "STRETCH FILM",                        "category": "consumable",       "item_type": "consumable",       "uom": "KG"},
 
     # ── Finished goods ────────────────────────────────────────────────
-    {"sku": "FG-HDPE-DRUM-235",     "name": "235 LTR HM-HDPE DRUM N/M 8.5 KG",                                  "category": "finished_goods_plastic", "uom": "NOS", "seed_rate": 1200.00, "rate_ref": "F2"},
-    {"sku": "FG-MS-BARREL-210",     "name": "CRCA 210 LTR CLOSE MOUTH BARREL 16 KGS",                           "category": "finished_goods_ms",      "uom": "NOS", "seed_rate": 1800.00, "rate_ref": "F3"},
-    {"sku": "FG-IBC-1000",          "name": "1000 LTR IBC HM-HDPE BULK CONTAINER CP-FLAT DN50 QD BV 2.5 INCH",  "category": "finished_goods_ibc",     "uom": "NOS", "seed_rate": 10000.00,"rate_ref": "F1"},
+    {"sku": "FG-HDPE-DRUM-235",     "name": "235 LTR HM-HDPE DRUM N/M 8.5 KG",                                  "category": "finished_goods_plastic", "item_type": "finished_good", "uom": "NOS", "seed_rate": 1200.00, "rate_ref": "F2"},
+    {"sku": "FG-MS-BARREL-210",     "name": "CRCA 210 LTR CLOSE MOUTH BARREL 16 KGS",                           "category": "finished_goods_ms",      "item_type": "finished_good", "uom": "NOS", "seed_rate": 1800.00, "rate_ref": "F3"},
+    {"sku": "FG-IBC-1000",          "name": "1000 LTR IBC HM-HDPE BULK CONTAINER CP-FLAT DN50 QD BV 2.5 INCH",  "category": "finished_goods_ibc",     "item_type": "finished_good", "uom": "NOS", "seed_rate": 10000.00,"rate_ref": "F1"},
 ]
 
 
